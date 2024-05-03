@@ -1,0 +1,8 @@
+- [ ] Evidenziare nomi e verbi nella specifica informale
+- [ ] Costruire la lista dei requisiti, tabella del glossario dei termini
+- [ ] Tabelle dei requisiti funzionali/sui dati, tabella dei vincoli
+- [ ] Modellazione dei casi d'uso, definizione dei casi d'uso e degli attori
+- [ ] Diagramma dei casi d'uso
+- [ ] Scenari
+- [ ] Class Diagram
+- [ ] Sequence Diagram
