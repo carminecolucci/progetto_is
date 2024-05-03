@@ -4,9 +4,16 @@
 
 \usepackage[a4paper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
 
-\usepackage{amsmath}
-\usepackage{graphicx}
+% \usepackage{amsmath}
+% \usepackage{graphicx}
 \usepackage[hidelinks]{hyperref}
+
+\usepackage[dvipsnames]{xcolor}		% colori legenda
+\colorlet{ColorClass}{Cyan}
+\colorlet{ColorAttr}{BurntOrange}
+\colorlet{ColorFunc}{GreenYellow}
+\colorlet{ColorActor}{Red}
+\colorlet{ColorClassActor}{Thistle}
 
 \title{Titolo}
 \author{Autori}
@@ -14,6 +21,9 @@
 \begin{document}
 \maketitle
 
+\tableofcontents
+
 \include{chapters/specifiche_informali.tex}
+\include{chapters/requisiti.tex}
 
 \end{document}
