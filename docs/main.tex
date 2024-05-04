@@ -8,12 +8,18 @@
 % \usepackage{graphicx}
 \usepackage[hidelinks]{hyperref}
 
+\usepackage{soul}
 \usepackage[dvipsnames]{xcolor}		% colori legenda
 \colorlet{ColorClass}{Cyan}
 \colorlet{ColorAttr}{BurntOrange}
 \colorlet{ColorFunc}{GreenYellow}
 \colorlet{ColorActor}{Red}
 \colorlet{ColorClassActor}{Thistle}
+\newcommand{\Class}[1]{\sethlcolor{ColorClass}\hl{#1}}
+\newcommand{\Attr}[1]{\sethlcolor{ColorAttr}\hl{#1}}
+\newcommand{\Func}[1]{\sethlcolor{ColorFunc}\hl{#1}}
+\newcommand{\Actor}[1]{\sethlcolor{ColorActor}\hl{#1}}
+\newcommand{\ClassActor}[1]{\sethlcolor{ColorClassActor}\hl{#1}}
 
 \title{Titolo}
 \author{Autori}
