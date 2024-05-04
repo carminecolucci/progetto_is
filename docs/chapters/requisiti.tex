@@ -3,12 +3,76 @@
 \section{Analisi Nomi--Verbi}
 Il progetto consiste nello sviluppo di un sistema integrato per la gestione di una farmacia, che incorpora funzionalità avanzate per ottimizzare sia le operazioni interne che le interazioni con i clienti.
 
-\noindent Il sistema gestisce le vendite di farmaci online ed al tal fine possiede un catalogo di tutti i farmaci che sono in vendita. Il catalogo dunque contiene un insieme di farmaci, caratterizzati da nome, codice identificativo (stringa alfa-numerica di 20 caratteri), prezzo e tipologia di farmaco: farmaco da banco o farmaco da prescrizione. Il sistema deve permettere al farmacista di poter visualizzare il catalogo e di aggiornarlo, potendo aggiungere, modificare o eliminare un prodotto.
+\noindent Il sistema gestisce le vendite di farmaci online ed al tal fine possiede un \Class{catalogo} di tutti i farmaci che sono in vendita. Il catalogo dunque contiene un insieme di \Class{farmaci}, caratterizzati da \Attr{nome}, \Attr{codice identificativo} (stringa alfa-numerica di 20 caratteri), \Attr{prezzo} e \Attr{tipologia di farmaco}: farmaco da banco o farmaco da prescrizione. Il sistema deve permettere al farmacista di poter \Func{visualizzare il catalogo} e di aggiornarlo, potendo \Func{aggiungere, modificare o eliminare un prodotto}.
 
-\noindent I clienti possono accedere al catalogo online della farmacia solo previa registrazione, ed un database mantiene salvate le loro informazioni personali, incluso lo storico dei farmaci da essi acquistati, sia normalmente che tramite prescrizione.
+\noindent I \ClassActor{clienti} possono \Func{accedere al catalogo} online della farmacia solo previa registrazione, ed un database mantiene salvate le loro \Attr{informazioni personali}, incluso lo \Attr{storico dei farmaci da essi acquistati}, sia normalmente che tramite prescrizione.
 
-\noindent Il sistema deve presentare un'interfaccia al cliente che permette di creare un ordine consultando il catalogo, e di poter selezionare l'eventuale possesso della prescrizione per poter acquistare i farmaci non da banco. Nel caso in cui un utente provi ad acquistare un farmaco senza prescrizione il sistema deve generare un opportuno messaggio di errore.
+\noindent Il sistema deve presentare un'interfaccia al cliente che permette di \Func{creare un} \Class{ordine} \Func{consultando il catalogo}, e di poter selezionare l'eventuale possesso della prescrizione per poter acquistare i farmaci non da banco. \Func{Nel caso in cui un utente provi ad acquistare un farmaco senza prescrizione il sistema deve generare un opportuno messaggio di errore}.
 
-\noindent Ogni volta che un cliente effettua un ordine le quantità in magazzino del farmaco devono essere opportunamente decrementate ed in caso di terminazione delle scorte, un ordine di acquisto deve essere creato con una quantità di prodotto da ordinare di default. \`E compito del farmacista poter visualizzare l'elenco degli ordini d'acquisto in corso e registrare l'avvenuta consegna di un ordine, con opportuno incremento delle quantità in magazzino.
+\noindent \Func{Ogni volta che un cliente effettua un ordine le quantità in magazzino del farmaco devono essere opportunamente decrementate} ed \Func{in caso di terminazione delle scorte, un} \Class{ordine di acquisto} \Func{deve essere creato con una quantità di prodotto da ordinare di default}. \`E compito del \Actor{farmacista} poter \Func{visualizzare l'elenco degli ordini d'acquisto in corso} e \Func{registrare l'avvenuta consegna di un ordine, con opportuno incremento delle quantità in magazzino}.
 
-\noindent Infine, una caratteristica distintiva di questo sistema è il ruolo del ``Direttore della Farmacia'', che ha accesso a strumenti analitici e di reporting per una gestione strategica delle attività commerciali. Il direttore ha la capacità di generare report dettagliati. Questi report forniscono insight sui farmaci venduti e sull'incasso generato in un dato periodo (in una specifica data oppure in un intervallo compreso fra due date). In particolare, il sistema differenzia tra le vendite da banco, che contribuiscono all'incasso della farmacia, e le vendite di farmaci su prescrizione, che non generano incassi diretti. I report includeranno dati come il numero totale di farmaci venduti, la categoria di vendita (da banco o su prescrizione) e l'incasso totale delle vendite da banco.
+\noindent Infine, una caratteristica distintiva di questo sistema è il ruolo del ``\Actor{Direttore della Farmacia}'', che ha accesso a strumenti analitici e di reporting per una gestione strategica delle attività commerciali. Il direttore ha la capacità di \Func{generare report dettagliati}. Questi \Class{report} forniscono insight sui \Attr{farmaci venduti} e sull'\Attr{incasso generato in un dato periodo} (in una specifica data oppure in un intervallo compreso fra due date). In particolare, il sistema differenzia tra le vendite da banco, che contribuiscono all'incasso della farmacia, e le vendite di farmaci su prescrizione, che non generano incassi diretti. I report includeranno dati come \Attr{il numero totale di farmaci venduti}, \Attr{la categoria di vendita} (da banco o su prescrizione) e \Attr{l'incasso totale delle vendite da banco}.
+
+\begin{table}[h]
+	\centering
+	\begin{tblr}{
+		colspec = lllll,
+		hlines = {1pt}, colsep = 12pt
+		}
+		\textcolor{ColorClass}{$\blacklozenge$} Classe &
+		\textcolor{ColorAttr}{$\blacklozenge$} Attributo &
+		\textcolor{ColorFunc}{$\blacklozenge$} Funzionalità &
+		\textcolor{ColorActor}{$\blacklozenge$} Attore &
+		\textcolor{ColorClassActor}{$\blacklozenge$} Classe--Attore \\
+	\end{tblr}
+\end{table}
+
+\section{Revisione dei Requisiti}
+
+\begin{enumerate}
+	\item Il sistema gestisce un catalogo di tutti i farmaci che sono in vendita;
+	\item I farmaci sono caratterizzati da nome,
+	codice identificativo, prezzo e tipologia di farmaco;
+	\item Un farmaco può essere da banco o da prescrizione;
+	\item Il sistema deve permettere al farmacista di poter visualizzare
+	il catalogo;
+	\item Il sistema deve permettere al farmacista di aggiungere un prodotto;
+	\item Il sistema deve permettere al farmacista di modificare un prodotto;
+	\item Il sistema deve permettere al farmacista di eliminare un prodotto;
+	\item Il sistema deve offrire al cliente una funzionalità per registrarsi;
+	\item Di ogni cliente si vogliono memorizzare le informazioni personali e lo storico dei farmaci acquistati;
+	\item Il sistema deve offrire al cliente una funzionalità per visualizzare il catalogo;
+	\item Il sistema deve permettere al cliente di creare un ordine consultando il catalogo;
+	\item Il sistema deve generare un messaggio di errore se il cliente prova ad acquistare un farmaco da prescrizione senza averla;
+	\item Ogni volta che un cliente effettua un ordine, il sistema deve opportunamente aggiornare le scorte;
+	\item Il sistema deve generare un ordine di acquisto in caso di terminazione delle scorte di un prodotto;
+	\item Il sistema deve permettere al farmacista una funzionalità per visualizzare l'elenco degli ordini d'acquisto in corso;
+	\item Il sistema deve permettere al farmacista una funzionalità per registrare l'avvenuta consegna di un ordine d'acquisto, con opportuno incremento delle quantità in magazzino;
+	\item Il sistema deve permettere al Direttore di generare report dettagliati;
+	\item Il report fornisce informazioni sul numero totale di farmaci venduti, sulla loro categoria di vendita e sull'incasso totale in un dato periodo;
+	\item Nella generazione dei report, soltanto le vendite da banco contribuiscono al calcolo dell'incasso totale;
+\end{enumerate}
+
+\section{Glossario dei Termini}
+
+\begin{tblr}{
+	colspec = lll,
+	hlines, vlines,
+	row{1} = {font=\bfseries}
+}
+	Termine & Descrizione & Sinonimi \\
+	doaif & aodhc & oadi \\
+\end{tblr}
+
+\section{Classificazione dei Requisiti}
+
+\subsection{Requisiti Funzionali}
+
+\begin{tblr}{
+	colspec = lll,
+	hlines, vlines,
+	row{1} = {font=\bfseries}
+}
+	ID & Requisito & Origine \\
+	doaif & aodhc & oadi \\
+\end{tblr}
