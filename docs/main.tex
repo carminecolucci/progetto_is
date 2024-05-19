@@ -2,7 +2,9 @@
 
 \usepackage[italian]{babel}
 
-\usepackage[a4paper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+\usepackage[a4paper,top=2cm,bottom=2cm,left=2cm,right=2cm,marginparwidth=1.75cm,showframe]{geometry}
+
+% \usepackage{showframe}
 
 \usepackage{amsmath, amssymb}
 % \usepackage{graphicx}
@@ -22,6 +24,17 @@
 \newcommand{\Func}[1]{\sethlcolor{ColorFunc}\hl{#1}}
 \newcommand{\Actor}[1]{\sethlcolor{ColorActor}\hl{#1}}
 \newcommand{\ClassActor}[1]{\sethlcolor{ColorClassActor}\hl{#1}}
+
+% requisiti
+\newcommand{\Req}[2]{\textsc{#1$_{#2}$}}
+
+% \NewTblrTheme{reqtheme}{
+% 	\SetTblrStyle{firsthead}{font=\bfseries}
+% 	\SetTblrInner{
+% 		colspec = lXl,
+% 		hlines, vlines,
+% 	}
+% }
 
 \usepackage{tabularray}
 

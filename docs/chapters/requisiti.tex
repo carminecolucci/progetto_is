@@ -30,38 +30,50 @@ Il progetto consiste nello sviluppo di un sistema integrato per la gestione di u
 \section{Revisione dei Requisiti}
 
 \begin{enumerate}
-	\item Il sistema gestisce un catalogo di tutti i farmaci che sono in vendita;
-	\item I farmaci sono caratterizzati da nome,
-	codice identificativo, prezzo e tipologia di farmaco;
+	\item Il sistema deve gestire un catalogo di tutti i farmaci che sono in vendita;
+	\item I farmaci sono caratterizzati da nome, codice identificativo, prezzo e tipologia di farmaco;
 	\item Un farmaco può essere da banco o da prescrizione;
-	\item Il sistema deve permettere al farmacista di poter visualizzare
-	il catalogo;
+	\item Il sistema deve permettere al farmacista di poter visualizzare il catalogo;
 	\item Il sistema deve permettere al farmacista di aggiungere un prodotto;
 	\item Il sistema deve permettere al farmacista di modificare un prodotto;
 	\item Il sistema deve permettere al farmacista di eliminare un prodotto;
-	\item Il sistema deve offrire al cliente una funzionalità per registrarsi;
+	\item Il sistema deve permettere al cliente di registrarsi;
 	\item Di ogni cliente si vogliono memorizzare le informazioni personali e lo storico dei farmaci acquistati;
-	\item Il sistema deve offrire al cliente una funzionalità per visualizzare il catalogo;
+	\item Il sistema deve permettere al cliente di visualizzare il catalogo;
 	\item Il sistema deve permettere al cliente di creare un ordine consultando il catalogo;
 	\item Il sistema deve generare un messaggio di errore se il cliente prova ad acquistare un farmaco da prescrizione senza averla;
 	\item Ogni volta che un cliente effettua un ordine, il sistema deve opportunamente aggiornare le scorte;
 	\item Il sistema deve generare un ordine di acquisto in caso di terminazione delle scorte di un prodotto;
-	\item Il sistema deve permettere al farmacista una funzionalità per visualizzare l'elenco degli ordini d'acquisto in corso;
-	\item Il sistema deve permettere al farmacista una funzionalità per registrare l'avvenuta consegna di un ordine d'acquisto, con opportuno incremento delle quantità in magazzino;
+	\item Il sistema deve permettere al farmacista di visualizzare l'elenco degli ordini d'acquisto in corso;
+	\item Il sistema deve permettere al farmacista di registrare l'avvenuta consegna di un ordine d'acquisto, con opportuno incremento delle quantità in magazzino;
 	\item Il sistema deve permettere al Direttore di generare report dettagliati;
 	\item Il report fornisce informazioni sul numero totale di farmaci venduti, sulla loro categoria di vendita e sull'incasso totale in un dato periodo;
 	\item Nella generazione dei report, soltanto le vendite da banco contribuiscono al calcolo dell'incasso totale;
 \end{enumerate}
 
+\subsection{Requisiti Aggiuntivi}
+
+In seguito ad un ulteriore colloquio tenuto con il committente, si è ritenuto opportuno introdurre i seguenti requisiti:
+
+\begin{enumerate}
+	\setcounter{enumi}{19}
+	% \addtocounter{enumi}{19}
+	\item Il sistema deve permettere al farmacista di visualizzare gli ordini dei clienti;
+	\item Il sistema deve permettere al farmacista di gestire gli ordini dei clienti;
+\end{enumerate}
+
 \section{Glossario dei Termini}
 
 \begin{tblr}{
-	colspec = lll,
+	colspec = lXl,
 	hlines, vlines,
 	row{1} = {font=\bfseries}
 }
 	Termine & Descrizione & Sinonimi \\
-	doaif & aodhc & oadi \\
+	Cliente & Cliente che ha effettuato la registrazione & Cliente registrato \\
+	Ordine & Ordine generato dal cliente & \\
+	Ordine d'acquisto & Ordine di scorte generato automaticamente dal sistema & \\
+	Report & {Documento che fornisce al Direttore insight sui farmaci venduti \\ e sull'incasso generato in un dato periodo} & \\
 \end{tblr}
 
 \section{Classificazione dei Requisiti}
@@ -69,10 +81,50 @@ Il progetto consiste nello sviluppo di un sistema integrato per la gestione di u
 \subsection{Requisiti Funzionali}
 
 \begin{tblr}{
-	colspec = lll,
+	colspec = lXl,
 	hlines, vlines,
 	row{1} = {font=\bfseries}
-}
+	}
 	ID & Requisito & Origine \\
-	doaif & aodhc & oadi \\
+	\Req{rf}{01} & Il sistema deve gestire un catalogo di tutti i farmaci che sono in vendita & 1 \\
+	\Req{rf}{02} & Il sistema deve permettere al farmacista di poter visualizzare il catalogo & 4 \\
+	\Req{rf}{03} & Il sistema deve permettere al farmacista di aggiungere un prodotto & 5 \\
+	\Req{rf}{04} & Il sistema deve permettere al farmacista di modificare un prodotto & 6 \\
+	\Req{rf}{05} & Il sistema deve permettere al farmacista di eliminare un prodotto & 7 \\
+	\Req{rf}{06} & Il sistema deve permettere al cliente di registrarsi & 8 \\
+	\Req{rf}{07} & Il sistema deve permettere al cliente di visualizzare il catalogo & 10 \\
+	\Req{rf}{08} & Il sistema deve permettere al cliente di creare un ordine consultando il catalogo & 11 \\
+	\Req{rf}{09} & {Il sistema deve generare un messaggio di errore se il cliente prova ad acquistare \\ un farmaco da prescrizione senza averla} & 12 \\
+	\Req{rf}{10} & {Ogni volta che un cliente effettua un ordine, \\ il sistema deve opportunamente aggiornare le scorte} & 13 \\
+	\Req{rf}{11} & {Il sistema deve generare un ordine di acquisto in caso di terminazione \\ delle scorte di un prodotto} & 14 \\
+	\Req{rf}{12} & {Il sistema deve permettere al farmacista di visualizzare \\ l'elenco degli ordini d'acquisto in corso} & 15 \\
+	\Req{rf}{13} & {Il sistema deve permettere al farmacista di registrare l'avvenuta consegna \\ di un ordine d'acquisto, con opportuno incremento delle quantità in magazzino} & 16 \\
+	\Req{rf}{14} & Il sistema deve permettere al Direttore di generare report dettagliati & 17 \\
+	\Req{rf}{15} & Il sistema deve permettere al farmacista di visualizzare gli ordini dei clienti & 20 \\
+	\Req{rf}{16} & Il sistema deve permettere al farmacista di gestire gli ordini dei clienti & 21 \\
+\end{tblr}
+
+\subsection{Requisiti sui Dati}
+
+\begin{tblr}{
+	colspec = lXl,
+	hlines, vlines,
+	row{1} = {font=\bfseries}
+	}
+	ID & Requisito & Origine \\
+	\Req{rd}{01} & {I farmaci sono caratterizzati da nome, codice identificativo, \\ prezzo e tipologia di farmaco} & 2 \\
+	\Req{rd}{02} & Un farmaco può essere da banco o da prescrizione & 3 \\
+	\Req{rd}{03} & {Di ogni cliente si vogliono memorizzare le informazioni personali e \\ lo storico dei farmaci acquistati} & 9 \\
+	\Req{rd}{04} & {Il report fornisce informazioni sul numero totale di farmaci venduti, \\ sulla loro categoria di vendita e sull'incasso totale in un dato periodo} & 18 \\
+\end{tblr}
+
+\subsection{Vincoli/Altri Requisiti}
+
+\begin{tblr}{
+	colspec = lXl,
+	hlines, vlines,
+	row{1} = {font=\bfseries}
+	}
+	ID & Requisito & Origine \\
+	\Req{v}{01} & {Nella generazione dei report, soltanto le vendite da banco contribuiscono \\ al calcolo dell'incasso totale} & 19 \\
 \end{tblr}
