@@ -1,7 +1,7 @@
 - [x] Evidenziare nomi e verbi nella specifica informale
 - [x] Costruire la lista dei requisiti
 - [x] Tabella del glossario dei termini
-- [ ] Tabelle dei requisiti funzionali/sui dati, tabella dei vincoli
+- [x] Tabelle dei requisiti funzionali/sui dati, tabella dei vincoli
 - [ ] Modellazione dei casi d'uso, definizione dei casi d'uso e degli attori
 - [ ] Diagramma dei casi d'uso
 - [ ] Scenari
@@ -17,3 +17,5 @@
 1. Gestione dell'incasso stampato dal report: doppio report.
 
 1. Serve memorizzare il prezzo per il farmaco da prescrizione? SI
+
+1. CreaOrdine e RegistraConsegnaOrdineAcquisto hanno bisogno di includere un caso d'uso extra chiamato "AggiornaScorte"?
