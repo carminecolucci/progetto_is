@@ -24,3 +24,12 @@
 	No, nel diagramma dei casi d'uso non vanno scritti tutti i dettagli. È utile descrivere gli scenari per identificare tutti i casi d'uso.
 
 ### Domande da chiedere
+1. Farmacista e Direttore sono utenti del sistema che si registrano come utenti normali? Come rappresentarlo nello use case? Hanno interfacce diverse?
+
+1. Casi d'uso senza attore? Esempio di GeneraOrdineAcquisto
+
+1. Che attore mettiamo nello scenario di CercaProdotto?
+
+1. Validazione dei dati di input in ogni caso d'uso?
+
+1. CreaOrdine è troppo grande?
