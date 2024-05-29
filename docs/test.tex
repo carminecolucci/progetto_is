@@ -1,0 +1,117 @@
+\documentclass[openany]{book}
+
+\usepackage[italian]{babel}
+
+\usepackage[a4paper,top=2cm,bottom=2cm,left=2cm,right=2cm,marginparwidth=1.75cm]{geometry}
+
+\usepackage{showframe}
+
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage[hidelinks]{hyperref}
+
+% Define colors for name-verb analysis and legend
+% https://www.overleaf.com/learn/latex/Using_colors_in_LaTeX
+\usepackage{soul}
+\usepackage[dvipsnames]{xcolor}
+
+\usepackage{tabularray}
+\UseTblrLibrary{varwidth}
+\usepackage{enumitem}
+
+\NewTblrEnviron{scenery}
+\SetTblrInner[scenery]{
+	hlines, vlines,
+	rowsep=1pt,
+	row{1} = {bg=black, fg=white, font=\bfseries},
+	column{1} = {font=\bfseries},
+	measure=vbox, stretch=-1
+}
+
+
+\begin{document}
+
+% \begin{table}[!hbp]
+% 	\centering
+% 	\begin{scenery}{
+% 		colspec = lXl
+% 	}
+% 	cella11 & cella12 & cella13 \\
+% 	cella21 & cella22 & cella23 \\
+% 	cella31 & cella32 & cella33 \\
+% 	\end{scenery}
+% \end{table}
+
+% \begin{table}[!hbp]
+% 	\centering
+% 	\begin{scenery}{
+% 		colspec = lXl
+% 		}
+% 		cella11 & cella12 & cella13 \\
+% 		cella21 & cella22 & cella23 \\
+% 		cella31 & cella32 & cella33 \\
+% 	\end{scenery}
+% \end{table}
+
+% RegistraUtente
+\begin{table}[!hbp]
+	\centering
+	\begin{scenery}{colspec=lX}
+		Caso d'uso: & RegistraUtente \\
+		Attore primario & Cliente non registrato \\
+		Attore secondario & Nessuno \\
+		Descrizione & Un utente si registra al sistema \\
+		Pre-condizioni & - \\
+		{Sequenza di eventi \\ principale} &
+		\begin{enumerate}
+			\item Il cliente richiede al sistema di registrarlo
+			\item Il sistema richiede al cliente i dati necessari per la registrazione blab lasca aodif caij
+			\item Il cliente inserisce le informazioni richieste
+			\item Il sistema valida il contenuto dei dati inseriti
+			\item Se il controllo ha esito positivo
+			\begin{enumerate}[label*=\arabic*.]
+				\item Il sistema registra il cliente
+			\end{enumerate}
+			\item Altrimenti
+			\begin{enumerate}[label*=\arabic*.]
+				\item Il sistema mostra un messaggio di errore
+			\end{enumerate}
+		\end{enumerate} \\
+		Post-condizioni & Il cliente è correttamente registrato nel sistema \\
+		Casi d'uso correlati & Nessuno \\
+		{Sequenza di eventi \\ alternativi} & -
+	\end{scenery}
+\end{table}
+
+% RegistraUtente
+\begin{table}[!hbp]
+	\centering
+	\begin{scenery}{lX}
+		Caso d'uso: & RegistraUtente \\
+		Attore primario & Cliente non registrato \\
+		Attore secondario & Nessuno \\
+		Descrizione & Un utente si registra al sistema \\
+		Pre-condizioni & - \\
+		{Sequenza di eventi \\ principale} & \parbox{10cm}{
+		\begin{enumerate}
+			\item Il cliente richiede al sistema di registrarlo
+			\item Il sistema richiede al cliente i dati necessari per la registrazione
+			\item Il cliente inserisce le informazioni richieste
+			\item Il sistema valida il contenuto dei dati inseriti
+			\item Se il controllo ha esito positivo
+			\begin{enumerate}[label*=\arabic*.]
+				\item Il sistema registra il cliente
+			\end{enumerate}
+			\item Altrimenti
+			\begin{enumerate}[label*=\arabic*.]
+				\item Il sistema mostra un messaggio di errore
+			\end{enumerate}
+		\end{enumerate}
+		}\\
+		Post-condizioni & Il cliente è correttamente registrato nel sistema \\
+		Casi d'uso correlati & Nessuno \\
+		{Sequenza di eventi \\ alternativi} & -
+	\end{scenery}
+\end{table}
+
+\end{document}
