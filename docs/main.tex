@@ -28,17 +28,19 @@
 % requisiti
 \newcommand{\Req}[2]{\textsc{#1$_{#2}$}}
 
-% \NewTblrTheme{reqtheme}{
-% 	\SetTblrStyle{firsthead}{font=\bfseries}
-% 	\SetTblrInner{
-% 		colspec = lXl,
-% 		hlines, vlines,
-% 	}
-% }
-
 \usepackage{tabularray}
 \UseTblrLibrary{varwidth}
 \usepackage{enumitem}
+
+% Tabella per gli scenari
+\NewTblrEnviron{scenery}
+\SetTblrInner[scenery]{
+	hlines, vlines,
+	rowsep=1pt,
+	row{1} = {bg=black, fg=white, font=\bfseries},
+	column{1} = {font=\bfseries},
+	measure=vbox, stretch=-1
+}
 
 \title{Titolo}
 \author{Autori}
