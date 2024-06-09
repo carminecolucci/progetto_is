@@ -19,16 +19,18 @@
 \begin{enumerate}
 	\item VisualizzaCatalogo % RF01, RF06
 	\item AggiungiProdotto % RF02
+	\item CercaProdotto % RF18
 	\item ModificaProdotto % RF03
 	\item EliminaProdotto % RF04
 	\item RegistraUtente % RF05
-	\item CreaOrdine % RF07, RF09
+	\item CreaOrdine % RF07, RF09, RF17
+	\item GeneraOrdineAcquisto % RF10
 	\item VisualizzaOrdiniAcquisto % RF11
 	\item RegistraConsegnaOrdineAcquisto % RF12
 	\item GeneraReport % RF13
 	\item VisualizzaOrdiniFarmacia % RF14
-	\item VisualizzaOrdiniCliente % ?????????????????
 	\item RitiroOrdine % RF15
+	\item VisualizzaOrdiniCliente % RF16
 \end{enumerate}
 
 \paragraph{Casi d'uso di inclusione}
@@ -47,13 +49,14 @@
 		row{1} = {font=\bfseries}
 	}
 	Caso d'uso & Attori primari & {Attori \\ secondari} & Incl. / Ext. & Requisito \\
-	VisualizzaCatalogo & {Cliente / \\ Farmacista} & - & - & \Req{rf}{01}/\Req{rf}{06} \\
+	VisualizzaCatalogo & {Cliente / \\ Farmacista} & - & - & {\Req{rf}{01} \\ \Req{rf}{06}} \\
 	AggiungiProdotto & Farmacista & - & - & \Req{rf}{02} \\
+	CercaProdotto & Cliente & - & - & \Req{rf}{18} \\
 	ModificaProdotto & Farmacista & - & {Include \\ CercaProdotto} & \Req{rf}{03} \\
 	EliminaProdotto & Farmacista & - & {Include \\ CercaProdotto} & \Req{rf}{04} \\
 	RegistraUtente & {Cliente \\ non registrato} & - & - & \Req{rf}{05} \\
-	CreaOrdine & Cliente & - & {Include \\ CercaProdotto} & {\Req{rf}{07}/\Req{rf}{09}} \\
-	GeneraOrdineAcquisto & - & - & Incluso in CreaOrdine & \Req{rf}{10} \\
+	CreaOrdine & Cliente & - & {Include \\ CercaProdotto} & {\Req{rf}{07} \\ \Req{rf}{09} \\ \Req{rf}{17}} \\
+	GeneraOrdineAcquisto & Cliente & - & Incluso in CreaOrdine & \Req{rf}{10} \\
 	VisualizzaOrdiniAcquisto & Farmacista & - & - & \Req{rf}{11} \\
 	RegistraConsegnaOrdineAcquisto & Farmacista & - & {Include \\ VisualizzaOrdiniAcquisto} & \Req{rf}{12} \\
 	GeneraReport & Direttore & - & - & \Req{rf}{13} \\
@@ -140,6 +143,27 @@
 			\end{enumerate}
 		\end{enumerate} \\
 	Post-condizioni & Il farmaco è aggiunto al catalogo \\
+	Casi d'uso correlati & Nessuno \\
+	Sequenza di eventi alternativi & -
+	\end{scenery}
+\end{table}
+
+% CercaProdotto
+\begin{table}[!hbp]
+	\centering
+	\begin{scenery}{colspec=lX}
+	Caso d'uso: & CercaProdotto \\
+	Attore primario & Cliente \\
+	Attore secondario & Nessuno \\
+	Descrizione & Il cliente cerca un prodotto all'interno del catalogo \\
+	Pre-condizioni & - \\
+	Sequenza di eventi principale &
+		\begin{enumerate}
+			\item Il cliente richiede al sistema di cercare un prodotto nel catalogo
+			\item Il sistema richiede al cliente i parametri di ricerca
+			\item Il sistema mostra il farmaco ricercato
+		\end{enumerate} \\
+	Post-condizioni & - \\
 	Casi d'uso correlati & Nessuno \\
 	Sequenza di eventi alternativi & -
 	\end{scenery}
@@ -263,10 +287,9 @@
 		Pre-condizioni & Esiste l'ordine nel sistema \\
 		Sequenza di eventi principale &
 			\begin{enumerate}
-				\item Il cliente arriva in farmacia e richiede il ritiro di un ordine
+				\item Il cliente arriva in farmacia e richiede il ritiro di un ordine mostrando la ricevuta
 				\item include (VisualizzaOrdiniFarmacia)
 				\item Il farmacista richiede al sistema di modificare lo stato dell'ordine
-				\item Il sistema modifica lo stato dell'ordine
 			\end{enumerate} \\
 		Post-condizioni & Lo stato dell'ordine è stato correttamente modificato \\
 		Casi d'uso correlati & Nessuno \\
@@ -294,7 +317,7 @@
 	\end{scenery}
 \end{table}
 
-% TODO CreaOrdine, TODO prescrizione
+% CreaOrdine
 \begin{table}[!hbp]
 	\centering
 	\begin{scenery}{colspec=lX}
@@ -310,6 +333,8 @@
 				\begin{enumerate}[label*=\arabic*.]
 					\item Il sistema richiede al cliente i criteri di ricerca
 					\item include (CercaProdotto)
+					\item Se viene richiesto un farmaco non da banco, il sistema chiede conferma del possesso della prescrizione
+					% \item Se il farmaco è da prescrizione, il sistema verifica che il cliente ne sia in possesso
 					\item Il sistema richiede al cliente quante copie del prodotto aggiungere all'ordine
 					\item Il cliente seleziona la quantità di farmaco desiderata
 				\end{enumerate}
@@ -319,6 +344,7 @@
 					% assumiamo che le scorte siano ok
 					\item Il sistema verifica che le scorte siano sufficienti
 					\item Il sistema crea l'ordine con i farmaci inseriti e aggiorna le scorte
+					\item Il sistema genera una ricevuta per il cliente
 					\item punto di estensione: GeneraOrdineAcquisto
 				\end{enumerate}
 				\item Altrimenti
@@ -330,8 +356,14 @@
 		Casi d'uso correlati & Nessuno \\
 		Sequenza di eventi alternativi &
 			\begin{enumerate}
-				\item Al punto 4.1 il sistema rileva che le scorte non sono sufficienti
-				\item L'ordine viene annullato
+				\item Al punto 2.3, il sistema mostra un messaggio di errore se il cliente non è in possesso della prescrizione
+				\begin{enumerate}[label*=\arabic*.]
+					\item L'ordine viene annullato
+				\end{enumerate}
+				\item Al punto 4.1, il sistema rileva che le scorte non sono sufficienti
+					\begin{enumerate}[label*=\arabic*.]
+						\item L'ordine viene annullato
+					\end{enumerate}
 			\end{enumerate} \\
 	\end{scenery}
 \end{table}
@@ -341,7 +373,7 @@
 	\centering
 	\begin{scenery}{colspec=lX}
 		Caso d'uso d'estensione: & GeneraOrdineAcquisto \\
-		Attore primario & ?????? \\
+		Attore primario & Cliente \\
 		Attore secondario & - \\
 		Descrizione & Il sistema genera un ordine di fornitura \\
 		Pre-condizioni & Le scorte di uno o più prodotti sono terminate \\
@@ -354,7 +386,7 @@
 				\item Il sistema crea l'ordine d'acquisto
 			\end{enumerate} \\
 		Post-condizioni & Viene generato un nuovo ordine d'acquisto \\
-		Casi d'uso correlati & Nessuno \\
+		Casi d'uso correlati & CreaOrdine \\
 		Sequenza di eventi alternativi & -
 	\end{scenery}
 \end{table}

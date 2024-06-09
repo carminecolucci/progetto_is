@@ -2,9 +2,9 @@
 - [x] Costruire la lista dei requisiti
 - [x] Tabella del glossario dei termini
 - [x] Tabelle dei requisiti funzionali/sui dati, tabella dei vincoli
-- [ ] Modellazione dei casi d'uso, definizione dei casi d'uso e degli attori
-- [ ] Diagramma dei casi d'uso
-- [ ] Scenari
+- [x] Modellazione dei casi d'uso, definizione dei casi d'uso e degli attori
+- [x] Diagramma dei casi d'uso
+- [x] Scenari
 - [ ] Class Diagram
 - [ ] Sequence Diagram
 
@@ -23,13 +23,10 @@
 
 	No, nel diagramma dei casi d'uso non vanno scritti tutti i dettagli. È utile descrivere gli scenari per identificare tutti i casi d'uso.
 
+1. Farmacista e Direttore sono utenti del sistema che si registrano come utenti normali. Come rappresentarlo nello use case?
+	Gerarchia.
 ### Domande da chiedere
-1. Farmacista e Direttore sono utenti del sistema che si registrano come utenti normali? Come rappresentarlo nello use case? Hanno interfacce diverse?
 
-1. Casi d'uso senza attore? Esempio di GeneraOrdineAcquisto
+1. Validazione dei dati di input in ogni caso d'uso? 
 
-1. Che attore mettiamo nello scenario di CercaProdotto?
-
-1. Validazione dei dati di input in ogni caso d'uso?
-
-1. CreaOrdine è troppo grande?
+1. Il direttore e il farmacista devono registrarsi come il cliente? O sono già stabiliti, e devono solo fare il login?
