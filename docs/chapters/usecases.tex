@@ -94,7 +94,7 @@
 			\end{enumerate} \\
 		Post-condizioni & Il cliente è correttamente registrato nel sistema \\
 		Casi d'uso correlati & Nessuno \\
-		Sequenza di eventi alternativi & -
+		Sequenza di eventi alternativa & -
 	\end{scenery}
 \end{table}
 
@@ -114,7 +114,7 @@
 			\end{enumerate} \\
 		Post-condizioni & - \\
 		Casi d'uso correlati & Nessuno \\
-		Sequenza di eventi alternativi & -
+		Sequenza di eventi alternativa & -
 	\end{scenery}
 \end{table}
 
@@ -144,7 +144,7 @@
 		\end{enumerate} \\
 	Post-condizioni & Il farmaco è aggiunto al catalogo \\
 	Casi d'uso correlati & Nessuno \\
-	Sequenza di eventi alternativi & -
+	Sequenza di eventi alternativa & -
 	\end{scenery}
 \end{table}
 
@@ -165,7 +165,7 @@
 		\end{enumerate} \\
 	Post-condizioni & - \\
 	Casi d'uso correlati & Nessuno \\
-	Sequenza di eventi alternativi & -
+	Sequenza di eventi alternativa & -
 	\end{scenery}
 \end{table}
 
@@ -181,13 +181,13 @@
 	Sequenza di eventi principale &
 		\begin{enumerate}
 			\item Il farmacista richiede al sistema di modificare un farmaco nel catalogo
-			\item include (CercaProdotto)
+			\item \textit{include} (CercaProdotto)
 			\item Il sistema mostra i dati del prodotto richiesto
 			\item Il farmacista modifica le informazioni del prodotto
 		\end{enumerate} \\
 	Post-condizioni & I dati del farmaco sono stati modificati \\
 	Casi d'uso correlati & Nessuno \\
-	Sequenza di eventi alternativi & -
+	Sequenza di eventi alternativa & -
 	\end{scenery}
 \end{table}
 
@@ -203,14 +203,14 @@
 		Sequenza di eventi principale &
 			\begin{enumerate}
 				\item Il farmacista richiede al sistema di eliminare un farmaco nel catalogo
-				\item include (CercaProdotto)
+				\item \textit{include} (CercaProdotto)
 				\item Il sistema mostra i dati del prodotto richiesto
 				\item Il farmacista conferma la rimozione del prodotto
 				\item Il sistema elimina il prodotto dal catalogo
 			\end{enumerate} \\
 		Post-condizioni & Il farmaco è eliminato dal catalogo \\
 		Casi d'uso correlati & Nessuno \\
-		Sequenza di eventi alternativi & -
+		Sequenza di eventi alternativa & -
 	\end{scenery}
 \end{table}
 
@@ -230,7 +230,7 @@
 			\end{enumerate} \\
 		Post-condizioni & L'elenco degli ordini di acquisto è stato mostrato a video \\
 		Casi d'uso correlati & Nessuno \\
-		Sequenza di eventi alternativi & -
+		Sequenza di eventi alternativa & -
 	\end{scenery}
 \end{table}
 
@@ -246,13 +246,13 @@
 		Sequenza di eventi principale &
 			\begin{enumerate}
 				\item Il farmacista richiede al sistema di visualizzare gli ordini d'acquisto
-				\item include (VisualizzaOrdiniAcquisto)
+				\item \textit{include} (VisualizzaOrdiniAcquisto)
 				\item Il farmacista registra l'avvenuta consegna della fornitura di interesse
 				\item Il sistema aggiorna le scorte dei farmaci contenuti nella fornitura
 			\end{enumerate} \\
 		Post-condizioni & La consegna dell'ordine di acquisto è registrata e le scorte sono aggiornate \\
 		Casi d'uso correlati & Nessuno \\
-		Sequenza di eventi alternativi & -
+		Sequenza di eventi alternativa & -
 	\end{scenery}
 \end{table}
 
@@ -272,7 +272,7 @@
 			\end{enumerate} \\
 		Post-condizioni & L'elenco degli ordini dei clienti è mostrato a video \\
 		Casi d'uso correlati & Nessuno \\
-		Sequenza di eventi alternativi & -
+		Sequenza di eventi alternativa & -
 	\end{scenery}
 \end{table}
 
@@ -288,12 +288,12 @@
 		Sequenza di eventi principale &
 			\begin{enumerate}
 				\item Il cliente arriva in farmacia e richiede il ritiro di un ordine mostrando la ricevuta
-				\item include (VisualizzaOrdiniFarmacia)
+				\item \textit{include} (VisualizzaOrdiniFarmacia)
 				\item Il farmacista richiede al sistema di modificare lo stato dell'ordine
 			\end{enumerate} \\
 		Post-condizioni & Lo stato dell'ordine è stato correttamente modificato \\
 		Casi d'uso correlati & Nessuno \\
-		Sequenza di eventi alternativi & -
+		Sequenza di eventi alternativa & -
 	\end{scenery}
 \end{table}
 
@@ -313,7 +313,7 @@
 			\end{enumerate} \\
 		Post-condizioni & Viene mostrato lo storico degli ordini del cliente \\
 		Casi d'uso correlati & Nessuno \\
-		Sequenza di eventi alternativi & -
+		Sequenza di eventi alternativa & -
 	\end{scenery}
 \end{table}
 
@@ -332,7 +332,7 @@
 				\item Finché il cliente non termina l'inserimento
 				\begin{enumerate}[label*=\arabic*.]
 					\item Il sistema richiede al cliente i criteri di ricerca
-					\item include (CercaProdotto)
+					\item \textit{include} (CercaProdotto)
 					\item Se viene richiesto un farmaco non da banco, il sistema chiede conferma del possesso della prescrizione
 					% \item Se il farmaco è da prescrizione, il sistema verifica che il cliente ne sia in possesso
 					\item Il sistema richiede al cliente quante copie del prodotto aggiungere all'ordine
@@ -345,7 +345,7 @@
 					\item Il sistema verifica che le scorte siano sufficienti
 					\item Il sistema crea l'ordine con i farmaci inseriti e aggiorna le scorte
 					\item Il sistema genera una ricevuta per il cliente
-					\item punto di estensione: GeneraOrdineAcquisto
+					\item \textit{punto di estensione}: GeneraOrdineAcquisto
 				\end{enumerate}
 				\item Altrimenti
 				\begin{enumerate}[label*=\arabic*.]
@@ -354,7 +354,7 @@
 			\end{enumerate} \\
 		Post-condizioni & È stato correttamente generato un ordine \\
 		Casi d'uso correlati & Nessuno \\
-		Sequenza di eventi alternativi &
+		Sequenza di eventi alternativa &
 			\begin{enumerate}
 				\item Al punto 2.3, il sistema mostra un messaggio di errore se il cliente non è in possesso della prescrizione
 				\begin{enumerate}[label*=\arabic*.]
@@ -387,7 +387,7 @@
 			\end{enumerate} \\
 		Post-condizioni & Viene generato un nuovo ordine d'acquisto \\
 		Casi d'uso correlati & CreaOrdine \\
-		Sequenza di eventi alternativi & -
+		Sequenza di eventi alternativa & -
 	\end{scenery}
 \end{table}
 
@@ -409,8 +409,6 @@
 			\end{enumerate} \\
 		Post-condizioni & Viene generato un nuovo report \\
 		Casi d'uso correlati & Nessuno \\
-		Sequenza di eventi alternativi & -
+		Sequenza di eventi alternativa & -
 	\end{scenery}
 \end{table}
-
-% CercaProdotto
