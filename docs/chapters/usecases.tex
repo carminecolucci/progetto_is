@@ -22,7 +22,7 @@
 	\item CercaProdotto % RF18
 	\item ModificaProdotto % RF03
 	\item EliminaProdotto % RF04
-	\item RegistraUtente % RF05
+	\item RegistraCliente % RF05
 	\item CreaOrdine % RF07, RF09, RF17
 	\item GeneraOrdineAcquisto % RF10
 	\item VisualizzaOrdiniAcquisto % RF11
@@ -55,7 +55,7 @@
 	CercaProdotto & Cliente & - & - & \Req{rf}{18} \\
 	ModificaProdotto & Farmacista & - & {Include \\ CercaProdotto} & \Req{rf}{03} \\
 	EliminaProdotto & Farmacista & - & {Include \\ CercaProdotto} & \Req{rf}{04} \\
-	RegistraUtente & {Cliente \\ non registrato} & - & - & \Req{rf}{05} \\
+	RegistraCliente & {Cliente \\ non registrato} & - & - & \Req{rf}{05} \\
 	CreaOrdine & Cliente & - & {Include \\ CercaProdotto} & {\Req{rf}{07} \\ \Req{rf}{09} \\ \Req{rf}{17}} \\
 	GeneraOrdineAcquisto & Cliente & - & Incluso in CreaOrdine & \Req{rf}{10} \\
 	VisualizzaOrdiniAcquisto & Farmacista & - & - & \Req{rf}{11} \\
@@ -69,14 +69,14 @@
 
 \section{Scenari}
 
-% RegistraUtente
+% RegistraCliente
 \begin{table}[!hbp]
 	\centering
 	\begin{scenery}{colspec=lX}
-		Caso d'uso: & RegistraUtente \\
+		Caso d'uso: & RegistraCliente \\
 		Attore primario & Cliente non registrato \\
 		Attore secondario & Nessuno \\
-		Descrizione & Un utente si registra al sistema \\
+		Descrizione & Un cliente si registra al sistema \\
 		Pre-condizioni & - \\
 		Sequenza di eventi principale &
 			\begin{enumerate}
