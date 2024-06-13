@@ -31,6 +31,7 @@
 	\item VisualizzaOrdiniFarmacia % RF14
 	\item RitiroOrdine % RF15
 	\item VisualizzaOrdiniCliente % RF16
+	\item GeneraOrdineAcquistoFarmacista % RF19
 \end{enumerate}
 
 \paragraph{Casi d'uso di inclusione}
@@ -63,7 +64,7 @@
 	VisualizzaOrdiniFarmacia & Farmacista & - & - & \Req{rf}{14} \\
 	RitiroOrdine & Cliente & Farmacista & {Include \\ VisualizzaOrdiniFarmacia} & \Req{rf}{15} \\
 	VisualizzaOrdiniCliente & Cliente & - & - & \Req{rf}{16} \\
-
+	GeneraOrdineAcquistoFarmacista & Farmacista & - & - & \Req{rf}{18}
 \end{tblr}
 
 \section{Scenari}
@@ -80,8 +81,7 @@
 		Sequenza di eventi principale &
 			\begin{enumerate}
 				\item Il cliente richiede al sistema di registrarlo
-				\item Il sistema richiede al cliente i dati necessari per la registrazione
-				\item Il cliente inserisce le informazioni richieste
+				\item Il cliente inserisce le informazioni richieste: username, password, nome, cognome, data di nascita, luogo di nascita, sesso, codice fiscale (vedi \hyperref[rd03]{\Req{rd}{03}})
 				\item Il sistema valida il contenuto dei dati inseriti
 				\item Se il controllo ha esito positivo
 				\begin{enumerate}[label*=\arabic*.]
@@ -103,13 +103,13 @@
 	\centering
 	\begin{scenery}{colspec=lX}
 		Caso d'uso: & VisualizzaCatalogo \\
-		Attore primario & Cliente o Farmacista \\
+		Attore primario & UtenteRegistrato \\
 		Attore secondario & Nessuno \\
-		Descrizione & Un cliente o un farmacista visualizzano il catalogo della farmacia \\
+		Descrizione & Un utente visualizza il catalogo della farmacia \\
 		Pre-condizioni & Aver effettuato l'accesso al sistema \\
 		Sequenza di eventi principale &
 			\begin{enumerate}
-				\item Viene richiesta la visualizzazione del catalogo
+				\item L'utente richiede al sistema di visualizzare il catalogo
 				\item Il sistema mostra il catalogo della farmacia
 			\end{enumerate} \\
 		Post-condizioni & - \\
@@ -130,8 +130,7 @@
 	Sequenza di eventi principale &
 		\begin{enumerate}
 			\item Il farmacista richiede al sistema di inserire un nuovo farmaco nel catalogo
-			\item Il sistema richiede al farmacista le informazioni riguardanti il farmaco
-			\item Il farmacista inserisce i dati richiesti dal sistema
+			\item Il farmacista inserisce i dati del farmaco (vedi \hyperref[rd01]{\Req{rd}{01}}, \hyperref[rd02]{\Req{rd}{02}})
 			\item Il sistema valida il contenuto dei dati inseriti
 			\item Se il controllo ha successo
 			\begin{enumerate}[label*=\arabic*.]
@@ -160,7 +159,7 @@
 	Sequenza di eventi principale &
 		\begin{enumerate}
 			\item Il cliente richiede al sistema di cercare un prodotto nel catalogo
-			\item Il sistema richiede al cliente i parametri di ricerca
+			\item Il cliente inserisce i parametri di ricerca
 			\item Il sistema mostra il farmaco ricercato
 		\end{enumerate} \\
 	Post-condizioni & - \\
@@ -331,11 +330,9 @@
 				\item Il cliente richiede al sistema di creare un ordine
 				\item Finché il cliente non termina l'inserimento
 				\begin{enumerate}[label*=\arabic*.]
-					\item Il sistema richiede al cliente i criteri di ricerca
 					\item \textit{include} (CercaProdotto)
 					\item Se viene richiesto un farmaco non da banco, il sistema chiede conferma del possesso della prescrizione
 					% \item Se il farmaco è da prescrizione, il sistema verifica che il cliente ne sia in possesso
-					\item Il sistema richiede al cliente quante copie del prodotto aggiungere all'ordine
 					\item Il cliente seleziona la quantità di farmaco desiderata
 				\end{enumerate}
 				\item Il sistema mostra al cliente il resoconto dell'ordine e l'importo totale
@@ -391,6 +388,31 @@
 	\end{scenery}
 \end{table}
 
+% GeneraOrdineAcquistoFarmacista
+\begin{table}[!hbp]
+	\centering
+	\begin{scenery}{colspec=lX}
+		Caso d'uso: & GeneraOrdineAcquistoFarmacista \\
+		Attore primario & Farmacista \\
+		Attore secondario & - \\
+		Descrizione & Il farmacista genera un ordine di fornitura \\
+		Pre-condizioni & - \\
+		Sequenza di eventi principale &
+			\begin{enumerate}
+				\item Per ogni farmaco da ordinare
+				\begin{enumerate}[label*=\arabic*.]
+					\item \textit{include} (CercaProdotto)
+					\item Il farmacista inserisce la quantità da ordinare
+					\item Il sistema aggiunge il farmaco all'ordine d'acquisto
+				\end{enumerate}
+				\item Il sistema crea l'ordine d'acquisto
+			\end{enumerate} \\
+		Post-condizioni & Viene generato un nuovo ordine d'acquisto \\
+		Casi d'uso correlati & - \\
+		Sequenza di eventi alternativa & -
+	\end{scenery}
+\end{table}
+
 % TODO GeneraReport
 \begin{table}[!hbp]
 	\centering
@@ -403,7 +425,6 @@
 		Sequenza di eventi principale &
 			\begin{enumerate}
 				\item Il Direttore richiede al sistema di generare un report
-				\item Il sistema richiede al Direttore di inserire un intervallo di date
 				\item Il Direttore inserisce un intervallo di date
 				\item Il sistema genera e mostra il report
 			\end{enumerate} \\

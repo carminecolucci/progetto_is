@@ -30,3 +30,6 @@
 1. Validazione dei dati di input in ogni caso d'uso? 
 
 1. Il direttore e il farmacista devono registrarsi come il cliente? O sono già stabiliti, e devono solo fare il login?
+
+1. CercaProdotto può essere fatta dal Cliente o dal Farmacista. Consideriamo come attore primario l'Utente?
+

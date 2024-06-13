@@ -62,6 +62,7 @@ In seguito ad un ulteriore colloquio tenuto con il committente, si è ritenuto o
 	\item Il sistema deve permettere al cliente di visualizzare i propri ordini;
 	\item Il sistema deve generare una ricevuta per il cliente in seguito alla creazione di un ordine.
 	\item Il sistema deve permettere al cliente di cercare un farmaco all'interno del catalogo.
+	\item Il sistema deve permettere al farmacista di ordinare nuove forniture di un farmaco.
 \end{enumerate}
 
 \section{Glossario dei Termini}
@@ -108,7 +109,8 @@ In seguito ad un ulteriore colloquio tenuto con il committente, si è ritenuto o
 	\Req{rf}{15} & Il sistema deve permettere al farmacista di gestire gli ordini dei clienti & 20 \\
 	\Req{rf}{16} & Il sistema deve permettere al cliente di visualizzare i propri ordini & 21 \\
 	\Req{rf}{17} & Il sistema deve generare una ricevuta per il cliente in seguito alla creazione di un ordine & 22 \\
-	\Req{rf}{18} & Il sistema deve permettere al cliente di cercare un farmaco all'interno del catalogo & 23
+	\Req{rf}{18} & Il sistema deve permettere al cliente di cercare un farmaco all'interno del catalogo & 23 \\
+	\Req{rf}{19} & Il sistema deve permettere al farmacista di ordinare nuove forniture di un farmaco. & 24
 \end{tblr}
 
 \subsection{Requisiti sui Dati}
@@ -119,10 +121,10 @@ In seguito ad un ulteriore colloquio tenuto con il committente, si è ritenuto o
 	row{1} = {font=\bfseries}
 	}
 	ID & Requisito & Origine \\
-	\Req{rd}{01} & {I farmaci sono caratterizzati da nome, codice identificativo, \\ prezzo e tipologia di farmaco} & 1 \\
-	\Req{rd}{02} & Un farmaco può essere da banco o da prescrizione & 2 \\
-	\Req{rd}{03} & {Di ogni cliente si vogliono memorizzare le informazioni personali e \\ lo storico dei farmaci acquistati} & 8 \\
-	\Req{rd}{04} & {Il report fornisce informazioni sul numero totale di farmaci venduti, \\ sulla loro categoria di vendita e sull'incasso totale in un dato periodo} & 17 \\
+	\label{rd01}\Req{rd}{01} & {I farmaci sono caratterizzati da nome, codice identificativo, \\ prezzo e tipologia di farmaco} & 1 \\
+	\label{rd02}\Req{rd}{02} & Un farmaco può essere da banco o da prescrizione & 2 \\
+	\label{rd03}\Req{rd}{03} & {Di ogni cliente si vogliono memorizzare le informazioni personali e \\ lo storico dei farmaci acquistati} & 8 \\
+	\label{rd04}\Req{rd}{04} & {Il report fornisce informazioni sul numero totale di farmaci venduti, \\ sulla loro categoria di vendita e sull'incasso totale in un dato periodo} & 17 \\
 \end{tblr}
 
 \subsection{Vincoli/Altri Requisiti}
