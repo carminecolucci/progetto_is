@@ -4,6 +4,7 @@
 
 \paragraph{Attori primari}
 \begin{itemize}
+	\item UtenteRegistrato
 	\item Cliente
 	\item Farmacista
 	\item Direttore
@@ -12,7 +13,7 @@
 
 \paragraph{Attori secondari}
 \begin{itemize}
-	\item TODO
+	\item Farmacista
 \end{itemize}
 
 \paragraph{Casi d'uso}
@@ -30,13 +31,15 @@
 	\item GeneraReport % RF13
 	\item VisualizzaOrdiniFarmacia % RF14
 	\item RitiroOrdine % RF15
-	\item VisualizzaOrdiniCliente % RF16
+	\item VisualizzaStoricoOrdini % RF16
 	\item GeneraOrdineAcquistoFarmacista % RF19
 \end{enumerate}
 
 \paragraph{Casi d'uso di inclusione}
 \begin{enumerate}
 	\item CercaProdotto
+	\item VisualizzaOrdiniFarmacia
+	\item VisualizzaOrdiniAcquisto
 \end{enumerate}
 
 \paragraph{Casi d'uso di estensione}
@@ -50,9 +53,9 @@
 		row{1} = {font=\bfseries}
 	}
 	Caso d'uso & Attori primari & {Attori \\ secondari} & Incl. / Ext. & Requisito \\
-	VisualizzaCatalogo & {Cliente / \\ Farmacista} & - & - & {\Req{rf}{01} \\ \Req{rf}{06}} \\
+	VisualizzaCatalogo & UtenteRegistrato & - & - & {\Req{rf}{01} \\ \Req{rf}{06}} \\
 	AggiungiProdotto & Farmacista & - & - & \Req{rf}{02} \\
-	CercaProdotto & Cliente & - & - & \Req{rf}{18} \\
+	CercaProdotto & UtenteRegistrato & - & - & \Req{rf}{18} \\
 	ModificaProdotto & Farmacista & - & {Include \\ CercaProdotto} & \Req{rf}{03} \\
 	EliminaProdotto & Farmacista & - & {Include \\ CercaProdotto} & \Req{rf}{04} \\
 	RegistraCliente & {Cliente \\ non registrato} & - & - & \Req{rf}{05} \\
@@ -63,7 +66,7 @@
 	GeneraReport & Direttore & - & - & \Req{rf}{13} \\
 	VisualizzaOrdiniFarmacia & Farmacista & - & - & \Req{rf}{14} \\
 	RitiroOrdine & Cliente & Farmacista & {Include \\ VisualizzaOrdiniFarmacia} & \Req{rf}{15} \\
-	VisualizzaOrdiniCliente & Cliente & - & - & \Req{rf}{16} \\
+	VisualizzaStoricoOrdini & Cliente & - & - & \Req{rf}{16} \\
 	GeneraOrdineAcquistoFarmacista & Farmacista & - & - & \Req{rf}{18}
 \end{tblr}
 
@@ -152,14 +155,14 @@
 	\centering
 	\begin{scenery}{colspec=lX}
 	Caso d'uso: & CercaProdotto \\
-	Attore primario & Cliente \\
+	Attore primario & UtenteRegistrato \\
 	Attore secondario & Nessuno \\
-	Descrizione & Il cliente cerca un prodotto all'interno del catalogo \\
+	Descrizione & L'utente cerca un prodotto all'interno del catalogo \\
 	Pre-condizioni & - \\
 	Sequenza di eventi principale &
 		\begin{enumerate}
-			\item Il cliente richiede al sistema di cercare un prodotto nel catalogo
-			\item Il cliente inserisce i parametri di ricerca
+			\item L'utente richiede al sistema di cercare un prodotto nel catalogo
+			\item L'utente inserisce i parametri di ricerca
 			\item Il sistema mostra il farmaco ricercato
 		\end{enumerate} \\
 	Post-condizioni & - \\
@@ -296,11 +299,11 @@
 	\end{scenery}
 \end{table}
 
-% VisualizzaOrdiniCliente
+% VisualizzaStoricoOrdini
 \begin{table}[!hbp]
 	\centering
 	\begin{scenery}{colspec=lX}
-		Caso d'uso: & VisualizzaOrdiniCliente \\
+		Caso d'uso: & VisualizzaStoricoOrdini \\
 		Attore primario & Cliente \\
 		Attore secondario & - \\
 		Descrizione & Un cliente visualizza lo storico dei suoi ordini \\
@@ -413,7 +416,7 @@
 	\end{scenery}
 \end{table}
 
-% TODO GeneraReport
+% GeneraReport
 \begin{table}[!hbp]
 	\centering
 	\begin{scenery}{colspec=lX}
