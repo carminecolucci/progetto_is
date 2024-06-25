@@ -19,10 +19,10 @@
 \paragraph{Casi d'uso}
 \begin{enumerate}
 	\item VisualizzaCatalogo % RF01, RF06
-	\item AggiungiProdotto % RF02
-	\item CercaProdotto % RF18
-	\item ModificaProdotto % RF03
-	\item EliminaProdotto % RF04
+	\item AggiungiFarmaco % RF02
+	\item CercaFarmaco % RF18
+	\item ModificaFarmaco % RF03
+	\item EliminaFarmaco % RF04
 	\item RegistraCliente % RF05
 	\item CreaOrdine % RF07, RF09, RF17
 	\item GeneraOrdineAcquisto % RF10
@@ -37,7 +37,7 @@
 
 \paragraph{Casi d'uso di inclusione}
 \begin{enumerate}
-	\item CercaProdotto
+	\item CercaFarmaco
 	\item VisualizzaOrdiniFarmacia
 	\item VisualizzaOrdiniAcquisto
 \end{enumerate}
@@ -54,12 +54,12 @@
 	}
 	Caso d'uso & Attori primari & {Attori \\ secondari} & Incl. / Ext. & Requisito \\
 	VisualizzaCatalogo & UtenteRegistrato & - & - & {\Req{rf}{01} \\ \Req{rf}{06}} \\
-	AggiungiProdotto & Farmacista & - & - & \Req{rf}{02} \\
-	CercaProdotto & UtenteRegistrato & - & - & \Req{rf}{18} \\
-	ModificaProdotto & Farmacista & - & {Include \\ CercaProdotto} & \Req{rf}{03} \\
-	EliminaProdotto & Farmacista & - & {Include \\ CercaProdotto} & \Req{rf}{04} \\
+	AggiungiFarmaco & Farmacista & - & - & \Req{rf}{02} \\
+	CercaFarmaco & UtenteRegistrato & - & - & \Req{rf}{18} \\
+	ModificaFarmaco & Farmacista & - & {Include \\ CercaFarmaco} & \Req{rf}{03} \\
+	EliminaFarmaco & Farmacista & - & {Include \\ CercaFarmaco} & \Req{rf}{04} \\
 	RegistraCliente & {Cliente \\ non registrato} & - & - & \Req{rf}{05} \\
-	CreaOrdine & Cliente & - & {Include \\ CercaProdotto} & {\Req{rf}{07} \\ \Req{rf}{09} \\ \Req{rf}{17}} \\
+	CreaOrdine & Cliente & - & {Include \\ CercaFarmaco} & {\Req{rf}{07} \\ \Req{rf}{09} \\ \Req{rf}{17}} \\
 	GeneraOrdineAcquisto & Cliente & - & Incluso in CreaOrdine & \Req{rf}{10} \\
 	VisualizzaOrdiniAcquisto & Farmacista & - & - & \Req{rf}{11} \\
 	RegistraConsegnaOrdineAcquisto & Farmacista & - & {Include \\ VisualizzaOrdiniAcquisto} & \Req{rf}{12} \\
@@ -121,11 +121,11 @@
 	\end{scenery}
 \end{table}
 
-% AggiungiProdotto
+% AggiungiFarmaco
 \begin{table}[!hbp]
 	\centering
 	\begin{scenery}{colspec=lX}
-	Caso d'uso: & AggiungiProdotto \\
+	Caso d'uso: & AggiungiFarmaco \\
 	Attore primario & Farmacista \\
 	Attore secondario & Nessuno \\
 	Descrizione & Un farmacista aggiunge un nuovo farmaco al catalogo della farmacia \\
@@ -150,18 +150,18 @@
 	\end{scenery}
 \end{table}
 
-% CercaProdotto
+% CercaFarmaco
 \begin{table}[!hbp]
 	\centering
 	\begin{scenery}{colspec=lX}
-	Caso d'uso: & CercaProdotto \\
+	Caso d'uso: & CercaFarmaco \\
 	Attore primario & UtenteRegistrato \\
 	Attore secondario & Nessuno \\
-	Descrizione & L'utente cerca un prodotto all'interno del catalogo \\
+	Descrizione & L'utente cerca un farmaco all'interno del catalogo \\
 	Pre-condizioni & - \\
 	Sequenza di eventi principale &
 		\begin{enumerate}
-			\item L'utente richiede al sistema di cercare un prodotto nel catalogo
+			\item L'utente richiede al sistema di cercare un farmaco nel catalogo
 			\item L'utente inserisce i parametri di ricerca
 			\item Il sistema mostra il farmaco ricercato
 		\end{enumerate} \\
@@ -171,11 +171,11 @@
 	\end{scenery}
 \end{table}
 
-% ModificaProdotto
+% ModificaFarmaco
 \begin{table}[!hbp]
 	\centering
 	\begin{scenery}{colspec=lX}
-	Caso d'uso: & ModificaProdotto \\
+	Caso d'uso: & ModificaFarmaco \\
 	Attore primario & Farmacista \\
 	Attore secondario & Nessuno \\
 	Descrizione & Un farmacista modifica un farmaco presente nel catalogo della farmacia \\
@@ -183,9 +183,9 @@
 	Sequenza di eventi principale &
 		\begin{enumerate}
 			\item Il farmacista richiede al sistema di modificare un farmaco nel catalogo
-			\item \textit{include} (CercaProdotto)
-			\item Il sistema mostra i dati del prodotto richiesto
-			\item Il farmacista modifica le informazioni del prodotto
+			\item \textit{include} (CercaFarmaco)
+			\item Il sistema mostra i dati del farmaco richiesto
+			\item Il farmacista modifica le informazioni del farmaco
 		\end{enumerate} \\
 	Post-condizioni & I dati del farmaco sono stati modificati \\
 	Casi d'uso correlati & Nessuno \\
@@ -193,11 +193,11 @@
 	\end{scenery}
 \end{table}
 
-% EliminaProdotto
+% EliminaFarmaco
 \begin{table}[!hbp]
 	\centering
 	\begin{scenery}{colspec=lX}
-		Caso d'uso: & EliminaProdotto \\
+		Caso d'uso: & EliminaFarmaco \\
 		Attore primario & Farmacista \\
 		Attore secondario & Nessuno \\
 		Descrizione & Un farmacista elimina un farmaco presente nel catalogo della farmacia \\
@@ -205,10 +205,10 @@
 		Sequenza di eventi principale &
 			\begin{enumerate}
 				\item Il farmacista richiede al sistema di eliminare un farmaco nel catalogo
-				\item \textit{include} (CercaProdotto)
-				\item Il sistema mostra i dati del prodotto richiesto
-				\item Il farmacista conferma la rimozione del prodotto
-				\item Il sistema elimina il prodotto dal catalogo
+				\item \textit{include} (CercaFarmaco)
+				\item Il sistema mostra i dati del farmaco richiesto
+				\item Il farmacista conferma la rimozione del farmaco
+				\item Il sistema elimina il farmaco dal catalogo
 			\end{enumerate} \\
 		Post-condizioni & Il farmaco è eliminato dal catalogo \\
 		Casi d'uso correlati & Nessuno \\
@@ -333,7 +333,7 @@
 				\item Il cliente richiede al sistema di creare un ordine
 				\item Finché il cliente non termina l'inserimento
 				\begin{enumerate}[label*=\arabic*.]
-					\item \textit{include} (CercaProdotto)
+					\item \textit{include} (CercaFarmaco)
 					\item Se viene richiesto un farmaco non da banco, il sistema chiede conferma del possesso della prescrizione
 					% \item Se il farmaco è da prescrizione, il sistema verifica che il cliente ne sia in possesso
 					\item Il cliente seleziona la quantità di farmaco desiderata
@@ -404,7 +404,7 @@
 			\begin{enumerate}
 				\item Per ogni farmaco da ordinare
 				\begin{enumerate}[label*=\arabic*.]
-					\item \textit{include} (CercaProdotto)
+					\item \textit{include} (CercaFarmaco)
 					\item Il farmacista inserisce la quantità da ordinare
 					\item Il sistema aggiunge il farmaco all'ordine d'acquisto
 				\end{enumerate}
