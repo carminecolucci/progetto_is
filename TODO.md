@@ -7,6 +7,7 @@
 - [x] Scenari
 - [ ] Class Diagram
 - [ ] Sequence Diagram
+- [ ] Aggiungere caso di farmaco non trovato nello scenario del caso d'uso CercaProdotto
 
 ### Domande fatte a ricevimento
 1. Come viene gestita la vendita di un farmaco? (ordine/spedizione/consegna). Differenza con l'ordine di acquisto?
@@ -25,11 +26,14 @@
 
 1. Farmacista e Direttore sono utenti del sistema che si registrano come utenti normali. Come rappresentarlo nello use case?
 	Gerarchia.
+
+1. CercaProdotto può essere fatta dal Cliente o dal Farmacista. Consideriamo come attore primario l'Utente?
+
 ### Domande da chiedere
 
 1. Validazione dei dati di input in ogni caso d'uso? 
 
 1. Il direttore e il farmacista devono registrarsi come il cliente? O sono già stabiliti, e devono solo fare il login?
 
-1. CercaProdotto può essere fatta dal Cliente o dal Farmacista. Consideriamo come attore primario l'Utente?
+1. Sequence del cercaFarmaco
 
