@@ -5,9 +5,16 @@
 - [x] Modellazione dei casi d'uso, definizione dei casi d'uso e degli attori
 - [x] Diagramma dei casi d'uso
 - [x] Scenari
-- [ ] Class Diagram
-- [ ] Sequence Diagram
+- [x] Class Diagram di analisi
+- [ ] Sequence Diagram di analisi
 - [ ] Aggiungere caso di farmaco non trovato nello scenario del caso d'uso CercaFarmaco
+- [ ] Tabella di copertura dei requisiti funzionali
+- [ ] Piano di test funzionale
+- [ ] Class Diagram di progettazione
+- [ ] Sequence Diagram di progettazione
+- [ ] Implementazione Java, diagramma di deployment, documentazione javadoc
+- [ ] Testing strutturale
+- [ ] Testing funzionale
 
 ### Domande fatte a ricevimento
 1. Come viene gestita la vendita di un farmaco? (ordine/spedizione/consegna). Differenza con l'ordine di acquisto?
@@ -27,13 +34,10 @@
 1. Farmacista e Direttore sono utenti del sistema che si registrano come utenti normali. Come rappresentarlo nello use case?
 	Gerarchia.
 
-1. CercaFarmaco può essere fatta dal Cliente o dal Farmacista. Consideriamo come attore primario l'Utente?
+1. CercaFarmaco può essere fatta dal Cliente o dal Farmacista. Consideriamo come attore primario l'Utente? Risolto su vpp con la gerarchia
+
+1. Validazione dei dati di input in ogni caso d'uso? Superfluo in fase di analisi
+
+1. Il direttore e il farmacista devono registrarsi come il cliente? O sono già stabiliti, e devono solo fare il login? Solo login
 
 ### Domande da chiedere
-
-1. Validazione dei dati di input in ogni caso d'uso? 
-
-1. Il direttore e il farmacista devono registrarsi come il cliente? O sono già stabiliti, e devono solo fare il login?
-
-1. Sequence del cercaFarmaco
-
