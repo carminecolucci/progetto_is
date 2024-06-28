@@ -2,74 +2,96 @@
 
 \section{Attori e Casi d'Uso}
 
-\paragraph{Attori primari}
-\begin{itemize}
-	\item UtenteRegistrato
-	\item Cliente
-	\item Farmacista
-	\item Direttore
-	\item Cliente non registrato
-\end{itemize}
+\begin{table}[h]
+	\centering
+	\begin{tblr}{colspec=XX}
+		\begin{minipage}[t]{\linewidth}
+			\paragraph{Attori primari}
+			\begin{itemize}
+				\item UtenteRegistrato
+				\item Cliente
+				\item Farmacista
+				\item Direttore
+				\item Cliente non registrato
+			\end{itemize}
+		\end{minipage} &
+		\begin{minipage}[t]{\linewidth}
+			\paragraph{Attori secondari}
+			\begin{itemize}
+				\item Farmacista
+			\end{itemize}
+		\end{minipage} \\
+	\end{tblr}
+\end{table}
 
-\paragraph{Attori secondari}
-\begin{itemize}
-	\item Farmacista
-\end{itemize}
+\begin{table}[h]
+	\centering
+	\begin{tblr}{colspec=XX}
+		\begin{minipage}[t]{\linewidth}
+			\paragraph{Casi d'uso}
+			\begin{enumerate}
+				\item VisualizzaCatalogo % RF01, RF06
+				\item AggiungiFarmaco % RF02
+				\item CercaFarmaco % RF18
+				\item ModificaFarmaco % RF03
+				\item EliminaFarmaco % RF04
+				\item RegistraCliente % RF05
+				\item CreaOrdine % RF07, RF09, RF17
+				\item GeneraOrdineAcquisto % RF10
+				\item VisualizzaOrdiniAcquisto % RF11
+				\item RegistraConsegnaOrdineAcquisto % RF12
+				\item GeneraReport % RF13
+				\item VisualizzaOrdiniFarmacia % RF14
+				\item RitiroOrdine % RF15
+				\item VisualizzaStoricoOrdini % RF16
+				\item GeneraOrdineAcquistoFarmacista % RF19
+			\end{enumerate}
+		\end{minipage} &
+		\begin{minipage}[t]{\linewidth}
+			\paragraph{Casi d'uso di inclusione}
+			\begin{enumerate}
+				\item CercaFarmaco
+				\item VisualizzaOrdiniFarmacia
+				\item VisualizzaOrdiniAcquisto
+			\end{enumerate}
 
-\paragraph{Casi d'uso}
-\begin{enumerate}
-	\item VisualizzaCatalogo % RF01, RF06
-	\item AggiungiFarmaco % RF02
-	\item CercaFarmaco % RF18
-	\item ModificaFarmaco % RF03
-	\item EliminaFarmaco % RF04
-	\item RegistraCliente % RF05
-	\item CreaOrdine % RF07, RF09, RF17
-	\item GeneraOrdineAcquisto % RF10
-	\item VisualizzaOrdiniAcquisto % RF11
-	\item RegistraConsegnaOrdineAcquisto % RF12
-	\item GeneraReport % RF13
-	\item VisualizzaOrdiniFarmacia % RF14
-	\item RitiroOrdine % RF15
-	\item VisualizzaStoricoOrdini % RF16
-	\item GeneraOrdineAcquistoFarmacista % RF19
-\end{enumerate}
+			\paragraph{Casi d'uso di estensione}
+			\begin{enumerate}
+				\item GeneraOrdineAcquisto % RF10
+			\end{enumerate}
+		\end{minipage}
+	\end{tblr}
+\end{table}
 
-\paragraph{Casi d'uso di inclusione}
-\begin{enumerate}
-	\item CercaFarmaco
-	\item VisualizzaOrdiniFarmacia
-	\item VisualizzaOrdiniAcquisto
-\end{enumerate}
-
-\paragraph{Casi d'uso di estensione}
-\begin{enumerate}
-	\item GeneraOrdineAcquisto % RF10
-\end{enumerate}
-
-\begin{tblr}{
+\begin{table}[!hbp]
+	\centering
+	\begin{tblr}{
 		colspec = lllll,
 		hlines,
 		row{1} = {font=\bfseries}
 	}
-	Caso d'uso & Attori primari & {Attori \\ secondari} & Incl. / Ext. & Requisito \\
-	VisualizzaCatalogo & UtenteRegistrato & - & - & {\Req{rf}{01} \\ \Req{rf}{06}} \\
-	AggiungiFarmaco & Farmacista & - & - & \Req{rf}{02} \\
-	CercaFarmaco & UtenteRegistrato & - & - & \Req{rf}{18} \\
-	ModificaFarmaco & Farmacista & - & {Include \\ CercaFarmaco} & \Req{rf}{03} \\
-	EliminaFarmaco & Farmacista & - & {Include \\ CercaFarmaco} & \Req{rf}{04} \\
-	RegistraCliente & {Cliente \\ non registrato} & - & - & \Req{rf}{05} \\
-	CreaOrdine & Cliente & - & {Include \\ CercaFarmaco} & {\Req{rf}{07} \\ \Req{rf}{09} \\ \Req{rf}{17}} \\
-	GeneraOrdineAcquisto & Cliente & - & Incluso in CreaOrdine & \Req{rf}{10} \\
-	VisualizzaOrdiniAcquisto & Farmacista & - & - & \Req{rf}{11} \\
-	RegistraConsegnaOrdineAcquisto & Farmacista & - & {Include \\ VisualizzaOrdiniAcquisto} & \Req{rf}{12} \\
-	GeneraReport & Direttore & - & - & \Req{rf}{13} \\
-	VisualizzaOrdiniFarmacia & Farmacista & - & - & \Req{rf}{14} \\
-	RitiroOrdine & Cliente & Farmacista & {Include \\ VisualizzaOrdiniFarmacia} & \Req{rf}{15} \\
-	VisualizzaStoricoOrdini & Cliente & - & - & \Req{rf}{16} \\
-	GeneraOrdineAcquistoFarmacista & Farmacista & - & - & \Req{rf}{18}
-\end{tblr}
+		Caso d'uso & Attori primari & {Attori \\ secondari} & Incl. / Ext. & Requisito \\
+		VisualizzaCatalogo & UtenteRegistrato & - & - & {\Req{rf}{01} \\ \Req{rf}{06}} \\
+		AggiungiFarmaco & Farmacista & - & - & \Req{rf}{02} \\
+		CercaFarmaco & UtenteRegistrato & - & - & \Req{rf}{18} \\
+		ModificaFarmaco & Farmacista & - & {Include \\ CercaFarmaco} & \Req{rf}{03} \\
+		EliminaFarmaco & Farmacista & - & {Include \\ CercaFarmaco} & \Req{rf}{04} \\
+		RegistraCliente & {Cliente \\ non registrato} & - & - & \Req{rf}{05} \\
+		CreaOrdine & Cliente & - & {Include \\ CercaFarmaco} & {\Req{rf}{07} \\ \Req{rf}{09} \\ \Req{rf}{17}} \\
+		GeneraOrdineAcquisto & Cliente & - & Incluso in CreaOrdine & \Req{rf}{10} \\
+		VisualizzaOrdiniAcquisto & Farmacista & - & - & \Req{rf}{11} \\
+		RegistraConsegnaOrdineAcquisto & Farmacista & - & {Include \\ VisualizzaOrdiniAcquisto} & \Req{rf}{12} \\
+		GeneraReport & Direttore & - & - & \Req{rf}{13} \\
+		VisualizzaOrdiniFarmacia & Farmacista & - & - & \Req{rf}{14} \\
+		RitiroOrdine & Cliente & Farmacista & {Include \\ VisualizzaOrdiniFarmacia} & \Req{rf}{15} \\
+		VisualizzaStoricoOrdini & Cliente & - & - & \Req{rf}{16} \\
+		GeneraOrdineAcquistoFarmacista & Farmacista & - & - & \Req{rf}{18}
+	\end{tblr}
+\end{table}
 
+\section{Diagramma dei Casi d'Uso}
+% TODO: add image from vpp or create diagram with tikzuml package
+\includegraphics[width=\linewidth]{chapters/usecases/UseCaseFarmacia}
 \section{Scenari}
 
 \input{chapters/usecases/RegistraCliente}
