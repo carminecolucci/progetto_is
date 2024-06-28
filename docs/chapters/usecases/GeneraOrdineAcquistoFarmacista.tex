@@ -1,0 +1,23 @@
+\begin{table}[!hbp]
+	\centering
+	\begin{scenery}{colspec=lX}
+		Caso d'uso: & GeneraOrdineAcquistoFarmacista \\
+		Attore primario & Farmacista \\
+		Attore secondario & - \\
+		Descrizione & Il farmacista genera un ordine di fornitura \\
+		Pre-condizioni & - \\
+		{Sequenza di eventi \\ principale} &
+			\begin{enumerate}
+				\item Per ogni farmaco da ordinare
+				\begin{enumerate}[label*=\arabic*.]
+					\item \textit{include} (CercaFarmaco)
+					\item Il farmacista inserisce la quantità da ordinare
+					\item Il sistema aggiunge il farmaco all'ordine d'acquisto
+				\end{enumerate}
+				\item Il sistema crea l'ordine d'acquisto
+			\end{enumerate} \\
+		Post-condizioni & Viene generato un nuovo ordine d'acquisto \\
+		Casi d'uso correlati & - \\
+		{Sequenza di eventi \\ alternativa} & -
+	\end{scenery}
+\end{table}

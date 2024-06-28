@@ -1,0 +1,20 @@
+\begin{table}[!hbp]
+	\centering
+	\begin{scenery}{colspec=lX}
+		Caso d'uso: & RegistraConsegnaOrdineAcquisto \\
+		Attore primario & Farmacista \\
+		Attore secondario & Nessuno \\
+		Descrizione & Un farmacista registra l'avvenuta consegna di un ordine d'acquisto \\
+		Pre-condizioni & - \\
+		{Sequenza di eventi \\ principale} &
+			\begin{enumerate}
+				\item Il farmacista richiede al sistema di visualizzare gli ordini d'acquisto
+				\item \textit{include} (VisualizzaOrdiniAcquisto)
+				\item Il farmacista registra l'avvenuta consegna della fornitura di interesse
+				\item Il sistema aggiorna le scorte dei farmaci contenuti nella fornitura
+			\end{enumerate} \\
+		Post-condizioni & La consegna dell'ordine di acquisto è registrata e le scorte sono aggiornate \\
+		Casi d'uso correlati & Nessuno \\
+		{Sequenza di eventi \\ alternativa} & -
+	\end{scenery}
+\end{table}

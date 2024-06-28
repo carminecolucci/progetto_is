@@ -1,0 +1,19 @@
+\begin{table}[!hbp]
+	\centering
+	\begin{scenery}{colspec=lX}
+		Caso d'uso: & RitiroOrdine \\
+		Attore primario & Cliente \\
+		Attore secondario & Farmacista \\
+		Descrizione & Un cliente ritira l'ordine effettuato online \\
+		Pre-condizioni & Esiste l'ordine nel sistema \\
+		{Sequenza di eventi \\ principale} &
+			\begin{enumerate}
+				\item Il cliente arriva in farmacia e richiede il ritiro di un ordine mostrando la ricevuta
+				\item \textit{include} (VisualizzaOrdiniFarmacia)
+				\item Il farmacista richiede al sistema di modificare lo stato dell'ordine
+			\end{enumerate} \\
+		Post-condizioni & Lo stato dell'ordine è stato correttamente modificato \\
+		Casi d'uso correlati & Nessuno \\
+		{Sequenza di eventi \\ alternativa} & -
+	\end{scenery}
+\end{table}

@@ -1,0 +1,20 @@
+\begin{table}[!hbp]
+	\centering
+	\begin{scenery}{colspec=lX}
+	Caso d'uso: & ModificaFarmaco \\
+	Attore primario & Farmacista \\
+	Attore secondario & Nessuno \\
+	Descrizione & Un farmacista modifica un farmaco presente nel catalogo della farmacia \\
+	Pre-condizioni & - \\
+	{Sequenza di eventi \\ principale} &
+		\begin{enumerate}
+			\item Il farmacista richiede al sistema di modificare un farmaco nel catalogo
+			\item \textit{include} (CercaFarmaco)
+			\item Il sistema mostra i dati del farmaco richiesto
+			\item Il farmacista modifica le informazioni del farmaco
+		\end{enumerate} \\
+	Post-condizioni & I dati del farmaco sono stati modificati \\
+	Casi d'uso correlati & Nessuno \\
+	{Sequenza di eventi \\ alternativa} & -
+	\end{scenery}
+\end{table}

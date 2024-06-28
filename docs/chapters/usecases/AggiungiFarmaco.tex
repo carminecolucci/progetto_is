@@ -1,0 +1,27 @@
+\begin{table}[!hbp]
+	\centering
+	\begin{scenery}{colspec=lX}
+	Caso d'uso: & AggiungiFarmaco \\
+	Attore primario & Farmacista \\
+	Attore secondario & Nessuno \\
+	Descrizione & Un farmacista aggiunge un nuovo farmaco al catalogo della farmacia \\
+	Pre-condizioni & - \\
+	{Sequenza di eventi \\ principale} &
+		\begin{enumerate}
+			\item Il farmacista richiede al sistema di inserire un nuovo farmaco nel catalogo
+			\item Il farmacista inserisce i dati del farmaco (vedi \hyperref[rd01]{\Req{rd}{01}}, \hyperref[rd02]{\Req{rd}{02}})
+			\item Il sistema valida il contenuto dei dati inseriti
+			\item Se il controllo ha successo
+			\begin{enumerate}[label*=\arabic*.]
+				\item Il sistema aggiunge il farmaco al catalogo
+			\end{enumerate}
+			\item Altrimenti
+			\begin{enumerate}[label*=\arabic*.]
+				\item Il sistema mostra un messaggio di errore
+			\end{enumerate}
+		\end{enumerate} \\
+	Post-condizioni & Il farmaco è aggiunto al catalogo \\
+	Casi d'uso correlati & Nessuno \\
+	{Sequenza di eventi \\ alternativa} & -
+	\end{scenery}
+\end{table}
