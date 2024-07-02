@@ -42,7 +42,7 @@
 				\item RegistraConsegnaOrdineAcquisto % RF12
 				\item GeneraReport % RF13
 				\item VisualizzaOrdiniFarmacia % RF14
-				\item RitiroOrdine % RF15
+				\item RitiraOrdine % RF15
 				\item VisualizzaStoricoOrdini % RF16
 				\item GeneraOrdineAcquistoFarmacista % RF19
 			\end{enumerate}
@@ -83,7 +83,7 @@
 		RegistraConsegnaOrdineAcquisto & Farmacista & - & {Include \\ VisualizzaOrdiniAcquisto} & \Req{rf}{12} \\
 		GeneraReport & Direttore & - & - & \Req{rf}{13} \\
 		VisualizzaOrdiniFarmacia & Farmacista & - & - & \Req{rf}{14} \\
-		RitiroOrdine & Cliente & Farmacista & {Include \\ VisualizzaOrdiniFarmacia} & \Req{rf}{15} \\
+		RitiraOrdine & Cliente & Farmacista & {Include \\ VisualizzaOrdiniFarmacia} & \Req{rf}{15} \\
 		VisualizzaStoricoOrdini & Cliente & - & - & \Req{rf}{16} \\
 		GeneraOrdineAcquistoFarmacista & Farmacista & - & - & \Req{rf}{18}
 	\end{tblr}
@@ -103,7 +103,7 @@
 \input{chapters/usecases/VisualizzaOrdiniAcquisto}
 \input{chapters/usecases/RegistraConsegnaOrdineAcquisto}
 \input{chapters/usecases/VisualizzaOrdiniFarmacia}
-\input{chapters/usecases/RitiroOrdine}
+\input{chapters/usecases/RitiraOrdine}
 \input{chapters/usecases/VisualizzaStoricoOrdini}
 \input{chapters/usecases/CreaOrdine}
 \input{chapters/usecases/GeneraOrdineAcquisto}

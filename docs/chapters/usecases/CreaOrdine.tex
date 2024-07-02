@@ -9,19 +9,19 @@
 		{Sequenza di eventi \\ principale} &
 			\begin{enumerate}
 				\item Il cliente richiede al sistema di creare un ordine
-				\item Finché il cliente non termina l'inserimento
+				\item Il sistema mostra a video la lista dei farmaci
+				\item Finché il cliente vuole aggiungere farmaci all'ordine
 				\begin{enumerate}[label*=\arabic*.]
-					\item \textit{include} (CercaFarmaco)
 					\item Se viene richiesto un farmaco non da banco, il sistema chiede conferma del possesso della prescrizione
 					\item Il cliente seleziona la quantità di farmaco desiderata
+					\item Il sistema verifica che le scorte siano sufficienti
+					\item Il sistema crea l'ordine con i farmaci inseriti e aggiorna le scorte
+					\item \textit{punto di estensione}: GeneraOrdineAcquisto
 				\end{enumerate}
 				\item Il sistema mostra al cliente il resoconto dell'ordine e l'importo totale
 				\item Se il cliente conferma l'acquisto
 				\begin{enumerate}[label*=\arabic*.]
-					\item Il sistema verifica che le scorte siano sufficienti
-					\item Il sistema crea l'ordine con i farmaci inseriti e aggiorna le scorte
-					\item Il sistema genera una ricevuta per il cliente
-					\item \textit{punto di estensione}: GeneraOrdineAcquisto
+					\item Il sistema restituisce una ricevuta al cliente
 				\end{enumerate}
 				\item Altrimenti
 				\begin{enumerate}[label*=\arabic*.]
@@ -32,13 +32,13 @@
 		Casi d'uso correlati & Nessuno \\
 		{Sequenza di eventi \\ alternativa} &
 			\begin{enumerate}
-				\item Al punto 2.3, il sistema mostra un messaggio di errore se il cliente non è in possesso della prescrizione
+				\item Al punto 3.1, il sistema mostra un messaggio di errore se il cliente non è in possesso della prescrizione
 				\begin{enumerate}[label*=\arabic*.]
-					\item L'ordine viene annullato
+					\item Il farmaco non viene aggiunto all'ordine, il caso d'uso prosegue al punto 3
 				\end{enumerate}
-				\item Al punto 4.1, il sistema rileva che le scorte non sono sufficienti
+				\item Al punto 3.3, il sistema rileva che le scorte non sono sufficienti
 					\begin{enumerate}[label*=\arabic*.]
-						\item L'ordine viene annullato
+						\item Il farmaco viene rimosso dall'ordine
 					\end{enumerate}
 			\end{enumerate} \\
 	\end{scenery}
