@@ -36,7 +36,7 @@
 				\item ModificaFarmaco % RF03
 				\item EliminaFarmaco % RF04
 				\item RegistraCliente % RF05
-				\item CreaOrdine % RF07, RF09, RF17
+				\item CreaOrdine % RF07, RF08, RF09, RF17
 				\item GeneraOrdineAcquisto % RF10
 				\item VisualizzaOrdiniAcquisto % RF11
 				\item RegistraConsegnaOrdineAcquisto % RF12
@@ -73,11 +73,10 @@
 		Caso d'uso & Attori primari & {Attori \\ secondari} & Incl. / Ext. & Requisito \\
 		VisualizzaCatalogo & UtenteRegistrato & - & - & {\Req{rf}{01} \\ \Req{rf}{06}} \\
 		AggiungiFarmaco & Farmacista & - & - & \Req{rf}{02} \\
-		CercaFarmaco & UtenteRegistrato & - & - & \Req{rf}{18} \\
 		ModificaFarmaco & Farmacista & - & {Include \\ CercaFarmaco} & \Req{rf}{03} \\
 		EliminaFarmaco & Farmacista & - & {Include \\ CercaFarmaco} & \Req{rf}{04} \\
 		RegistraCliente & {Cliente \\ non registrato} & - & - & \Req{rf}{05} \\
-		CreaOrdine & Cliente & - & {Include \\ CercaFarmaco} & {\Req{rf}{07} \\ \Req{rf}{09} \\ \Req{rf}{17}} \\
+		CreaOrdine & Cliente & - & {Include \\ CercaFarmaco} & {\Req{rf}{07} \\ \Req{rf}{08} \\ \Req{rf}{09} \\ \Req{rf}{17}} \\
 		GeneraOrdineAcquisto & Cliente & - & Incluso in CreaOrdine & \Req{rf}{10} \\
 		VisualizzaOrdiniAcquisto & Farmacista & - & - & \Req{rf}{11} \\
 		RegistraConsegnaOrdineAcquisto & Farmacista & - & {Include \\ VisualizzaOrdiniAcquisto} & \Req{rf}{12} \\
@@ -85,7 +84,8 @@
 		VisualizzaOrdiniFarmacia & Farmacista & - & - & \Req{rf}{14} \\
 		RitiraOrdine & Cliente & Farmacista & {Include \\ VisualizzaOrdiniFarmacia} & \Req{rf}{15} \\
 		VisualizzaStoricoOrdini & Cliente & - & - & \Req{rf}{16} \\
-		GeneraOrdineAcquistoFarmacista & Farmacista & - & - & \Req{rf}{18}
+		CercaFarmaco & UtenteRegistrato & - & - & \Req{rf}{18} \\
+		GeneraOrdineAcquistoFarmacista & Farmacista & - & - & \Req{rf}{19}
 	\end{tblr}
 \end{table}
 
@@ -109,3 +109,41 @@
 \input{chapters/usecases/GeneraOrdineAcquisto}
 \input{chapters/usecases/GeneraOrdineAcquistoFarmacista}
 \input{chapters/usecases/GeneraReport}
+
+
+\section{Diagramma delle Classi}
+
+\section{Diagrammi di Sequenza}
+
+\section{Verifica Completezza dei Requisiti}
+\begin{itemize}
+	\item \Req{rf}{01}, \Req{rf}{06} Modellati in UCD da VisualizzaCatalogo con l'attore UtenteRegistrato e con il caso d'uso UC1
+	\item \Req{rf}{02} Modellato in UCD da AggiungiFarmaco con l'attore primario Farmacista
+	\item \Req{rf}{03} Modellato in UCD da ModificaFarmaco con l'attore primario Farmacista
+	\item \Req{rf}{04} Modellato in UCD da EliminaFarmaco con l'attore primario Farmacista
+	\item \Req{rf}{05} Modellato in UCD da RegistraCliente con l'attore primario Cliente non Registrato
+	\item \Req{rf}{07}, \Req{rf}{08}, \Req{rf}{09}, \Req{rf}{10}, \Req{rf}{17} Modellati in UCD da CreaOrdine con l'attore primario Cliente
+	\item \Req{rf}{11} Modellato in UCD da VisualizzaOrdiniAcquisto con l'attore primario Farmacista
+	\item \Req{rf}{12} Modellato in UCD da RegistraConsegnaOrdineAcquisto con l'attore primario Farmacista
+	\item \Req{rf}{13} Modellato in UCD da GeneraReport con l'attore primario Direttore
+	\item \Req{rf}{14} Modellato in UCD da VisualizzaOrdiniFarmacia con l'attore primario Farmacista
+	\item \Req{rf}{15} Modellato in UCD da RitiraOrdine con l'attore primario Cliente e attore secondario Farmacista
+	\item \Req{rf}{16} Modellato in UCD da VisualizzaStoricoOrdini con l'attore primario Cliente
+	\item \Req{rf}{18} Modellato in UCD da CercaFarmaco con l'attore primario UtenteRegistrato
+	\item \Req{rf}{19} Modellato in UCD da GeneraOrdineAcquistoFarmacista con l'attore primario Farmacista
+	\item \Req{rd}{01}, \Req{rd}{02} Modellato nel CD dalla classe Farmaco
+	\item \Req{rd}{03} Modellato nel CD dalla classe Cliente
+	\item \Req{rd}{04} Modellato nel CD dalla classe Report
+\end{itemize}
+
+\begin{table}[h]
+	\centering
+	\begin{tblr}{
+		colspec = lllll,
+		hlines = {1pt}, colsep = 12pt
+		}
+		UCD = Use Case Diagram &
+		CD = Class Diagram &
+		SD = Sequence Diagram \\
+	\end{tblr}
+\end{table}

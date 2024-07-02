@@ -6,9 +6,8 @@
 - [x] Diagramma dei casi d'uso
 - [x] Scenari
 - [x] Class Diagram di analisi
-- [ ] Sequence Diagram di analisi
-- [ ] Aggiungere caso di farmaco non trovato nello scenario del caso d'uso CercaFarmaco
-- [ ] Tabella di copertura dei requisiti funzionali
+- [x] Sequence Diagram di analisi
+- [x] Tabella di copertura dei requisiti funzionali
 - [ ] Piano di test funzionale
 - [ ] Class Diagram di progettazione
 - [ ] Sequence Diagram di progettazione
