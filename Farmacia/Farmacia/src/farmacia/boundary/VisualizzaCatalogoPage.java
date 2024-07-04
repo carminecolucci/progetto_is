@@ -1,6 +1,4 @@
-package boundary;
-
-import com.sun.tools.javac.Main;
+package farmacia.boundary;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

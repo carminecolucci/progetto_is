@@ -1,7 +1,6 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
+package farmacia;//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-import boundary.LoginPage;
-import boundary.Prova;
+import farmacia.boundary.LoginPage;
 
 import javax.swing.*;
 

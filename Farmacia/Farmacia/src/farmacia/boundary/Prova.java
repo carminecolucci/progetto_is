@@ -1,4 +1,4 @@
-package boundary;
+package farmacia.boundary;
 
 import javax.swing.*;
 
