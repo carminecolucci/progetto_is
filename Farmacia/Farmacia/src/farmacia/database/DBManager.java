@@ -110,4 +110,7 @@ public class DBManager {
 
 		return result;
 	}
+
+	public static class FarmacoDAO {
+	}
 }

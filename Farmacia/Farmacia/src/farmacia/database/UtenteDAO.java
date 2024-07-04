@@ -27,6 +27,16 @@ public class UtenteDAO {
 		this.caricaDaDB(id);
 	}
 
+	public UtenteDAO(String username) throws DBException {
+		int id = cercaInDB(username);
+		if (id == 0) {
+			throw new DBException(String.format("Utente '%s' non esistente", username));
+		}
+
+		this.id = id;
+		this.caricaDaDB(id);
+	}
+
 	public void createUtente(String nome, String cognome, String username, String password, Date dataNascita, String email) throws DBException {
 		if (cercaInDB(username) != 0) {
 			throw new DBException(String.format("Utente '%s' già esistente", username));
@@ -35,6 +45,7 @@ public class UtenteDAO {
 		if (salvaInDB(nome, cognome, username, password, dataNascita, email) == 0)
 			throw new DBException(String.format("Errore durante la registrazione dell'utente '%s'", username));
 
+		this.id = cercaInDB(username);
 		this.nome = nome;
 		this.cognome = cognome;
 		this.username = username;
@@ -48,23 +59,24 @@ public class UtenteDAO {
 		String query = String.format("SELECT * FROM utenti WHERE id = %d;", id);
 
 		try (ResultSet rs = DBManager.getInstance().selectQuery(query)) {
-			while (rs.next()) {
+			if (rs.next()) {
 				this.nome = rs.getString("nome");
 				this.cognome = rs.getString("cognome");
 				this.username = rs.getString("username");
 				this.email = rs.getString("email");
 				this.password = rs.getString("password");
 				this.dataNascita = rs.getDate("dataNascita");
-				this.tipoUtente = TipoUtente.valueOf(rs.getString("tipoUtente"));
+				this.tipoUtente = TipoUtente.valueOf(rs.getString("tipo"));
 			}
 		} catch (ClassNotFoundException | SQLException e) {
-			logger.warning(String.format("Errore durante il caricamento dal database di un utente con " +
-				"id %d.%n%s", id, e.getMessage()));
+			logger.warning(String.format("Errore durante il caricamento dal database di un utente con id %d.%n%s",
+				id, e.getMessage())
+			);
 			throw new DBException("Errore nel caricamento di un utente");
 		}
 	}
 
-	private int cercaInDB(String username) throws DBException {
+	public int cercaInDB(String username) throws DBException {
 		String query = String.format("SELECT * FROM utenti WHERE username = '%s';", username);
 		logger.info(query);
 		int id = -1;
@@ -82,7 +94,7 @@ public class UtenteDAO {
 
 	private int salvaInDB(String nome, String cognome, String username, String password, Date dataNascita, String email) throws DBException {
 		String query = String.format("INSERT INTO utenti (nome, cognome, username, password, dataNascita, tipoUtente, email)" +
-				"VALUES (%s, %s, %s, %s, %s, %d, %s);",
+				"VALUES ('%s', '%s', '%s', '%s', '%s', %d, '%s');",
 			nome, cognome, username, password, dataNascita, TipoUtente.CLIENTE.ordinal(), email
 		);
 
@@ -168,5 +180,9 @@ public class UtenteDAO {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public static class OrdineDAO {
+
 	}
 }
