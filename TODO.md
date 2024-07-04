@@ -40,3 +40,7 @@
 1. Il direttore e il farmacista devono registrarsi come il cliente? O sono già stabiliti, e devono solo fare il login? Solo login
 
 ### Domande da chiedere
+
+1. Una volta ottenuta una lista di FarmacoDAO quando facciamo VisualizzaCatalogo, come facciamo a mostrare tutti i farmaci a livello del boundary?
+2. Se a livello Boundary, Controller ed Entity in CreaOrdine passiamo una Map(int, int) fatta di ID e quantità, a livello DB l'OrdineDAO deve avere una Map(FarmacoDAO, int) oppure continua ad andar bene una Map(int, int)? 
+3. Quando visualizziamo gli ordini del cliente, la soluzione Map(int, int) ci porterebbe a dover prendere gli id dei singoli farmaci nell'ordine, avere un FarmacoDAO per ogni farmaco specifico che a livello Entity verrà poi convertito: va bene?
