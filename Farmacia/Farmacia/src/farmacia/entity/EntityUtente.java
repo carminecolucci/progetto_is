@@ -1,5 +1,6 @@
 package farmacia.entity;
 
+import farmacia.TipoUtente;
 import farmacia.database.UtenteDAO;
 import farmacia.exceptions.DBException;
 
@@ -12,6 +13,7 @@ public class EntityUtente {
 	private String nome;
 	private String cognome;
 	private Date dataNascita;
+	private TipoUtente tipoUtente;
 	private String email;
 
 	/**
@@ -19,12 +21,13 @@ public class EntityUtente {
 	 */
 	public EntityUtente() { }
 
-	public EntityUtente(String username, String password, String nome, String cognome, Date dataNascita, String email) {
+	public EntityUtente(String username, String password, String nome, String cognome, Date dataNascita, TipoUtente tipoUtente, String email) {
 		this.username = username;
 		this.password = password;
 		this.nome = nome;
 		this.cognome = cognome;
 		this.dataNascita = dataNascita;
+		this.tipoUtente = tipoUtente;
 		this.email = email;
 	}
 
@@ -40,6 +43,7 @@ public class EntityUtente {
 		this.nome = utenteDAO.getNome();
 		this.cognome = utenteDAO.getCognome();
 		this.dataNascita = utenteDAO.getDataNascita();
+		this.tipoUtente = utenteDAO.getTipoUtente();
 		this.email = utenteDAO.getEmail();
 	}
 

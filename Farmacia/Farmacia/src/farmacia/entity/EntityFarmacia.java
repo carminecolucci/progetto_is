@@ -1,5 +1,7 @@
 package farmacia.entity;
 
+import farmacia.TipoUtente;
+import farmacia.database.OrdineDAO;
 import farmacia.database.UtenteDAO;
 import farmacia.exceptions.DBException;
 import farmacia.exceptions.LoginFailedException;
@@ -48,15 +50,30 @@ public class EntityFarmacia {
 	}
 
 	public void loginUtente(String username, String password) throws LoginFailedException {
-		UtenteDAO utenteDAO = new UtenteDAO();
-		// TODO
+		try {
+			UtenteDAO utenteDAO = new UtenteDAO(username);
+			if (utenteDAO.getPassword().equals(password)) {
+				EntityUtente utenteLoggato;
+				if (utenteDAO.getTipoUtente() == TipoUtente.CLIENTE) {
+					utenteLoggato = new EntityCliente(utenteDAO);
+				} else {
+					utenteLoggato = new EntityUtente(utenteDAO);
+				}
+				Sessione.getInstance().setUtenteCorrente(utenteLoggato);
+			} else {
+				throw new LoginFailedException("Login fallito, password errata");
+			}
+		} catch (DBException e) {
+			throw new LoginFailedException("Login dell'utente " + username + " fallita");
+		}
+
 	}
 
 	/**
 	 *
 	 */
 	public ArrayList<EntityOrdine> visualizzaOrdini() {
-
+		// TODO: necessito di OrdineDAO.getOrdini()
 	}
 
 	/**
@@ -69,8 +86,8 @@ public class EntityFarmacia {
 	/**
 	 *
 	 */
-	public void visualizzaOrdiniAcquisto() {
-
+	public ArrayList<EntityOrdineAcquisto> visualizzaOrdiniAcquisto() {
+		// TODO: necessito di OrdineAcquistoDAO.getOrdiniAcquisto()
 	}
 
 }
