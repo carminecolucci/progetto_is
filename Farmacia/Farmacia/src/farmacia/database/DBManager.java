@@ -1,10 +1,6 @@
 package farmacia.database;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 /**
  * Classe del package database nel modello BCED, essa implementa il Database Manager.
@@ -33,6 +29,7 @@ public class DBManager {
 
 	/**
 	 * Password di accesso al database.
+	 * TODO: Use env vars
 	 */
 	public static final String PASSWORD = "carmine";
 
@@ -87,8 +84,10 @@ public class DBManager {
 	 */
 	public int executeQuery(String query) throws ClassNotFoundException, SQLException {
 		Connection conn = getConnection();
-		Statement statement = conn.createStatement();
-		int ret = statement.executeUpdate(query);
+		int ret;
+		try (Statement statement = conn.createStatement()) {
+			ret = statement.executeUpdate(query);
+		}
 		conn.close();
 
 		return ret;

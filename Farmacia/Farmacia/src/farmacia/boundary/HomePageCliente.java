@@ -9,4 +9,13 @@ public class HomePageCliente extends JFrame {
 	private JButton visualizzaIlCatalogoButton;
 	private JButton cercaUnFarmacoButton;
 	private JButton visualizzaITuoiOrdiniButton;
+
+	public HomePageCliente() {
+		setTitle("Farmacia");
+		setSize(500, 500);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);
+		setContentPane(mainPanel);
+		setVisible(true);
+	}
 }

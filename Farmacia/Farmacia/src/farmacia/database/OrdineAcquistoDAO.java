@@ -132,7 +132,7 @@ public class OrdineAcquistoDAO {
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se non ci sono ordini di acquisto.
 	 */
 	public static ArrayList<OrdineAcquistoDAO> getOrdiniAcquisto() throws DBException {
-
+		// TODO: SELECT *, List<>
 		String query = "SELECT id FROM ordini_acquisto;";
 		ArrayList<OrdineAcquistoDAO> listaOrdiniAcquistoDAO = new ArrayList<>();
 		try (ResultSet rs = DBManager.getInstance().selectQuery(query)) {

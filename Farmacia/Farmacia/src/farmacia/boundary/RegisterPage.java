@@ -65,29 +65,26 @@ public class RegisterPage extends JFrame {
 			}
 		});
 
-		boxMese.addPropertyChangeListener(new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				String[] mesi31 = {"1", "3", "7", "8", "10", "12"};
-				ArrayList<String> mesi31array = new ArrayList<>(Arrays.asList(mesi31));
-				boxGiorno.removeAllItems();
-				if (mesi31array.contains(boxMese.getSelectedItem().toString())) {
-					// è stato selezionato un mese da 31 giorni
-					for (int i = 1; i <= 31; i++) {
-						boxGiorno.addItem(i);
-					}
-				} else if (boxMese.getSelectedItem().toString().equals("2")) {
-					// è stato selezionato febbraio
-					int anno = Integer.parseInt(boxAnno.getSelectedItem().toString());
-					int limit = (anno % 4) == 0 ? 29 : 28;
-					for (int i = 1; i <= limit; i++) {
-						boxGiorno.addItem(i);
-					}
-				} else {
-					// è stato selezionato un mese da 30 giorni
-					for (int i = 1; i <= 30; i++) {
-						boxGiorno.addItem(i);
-					}
+		boxMese.addActionListener(e -> {
+			String[] mesi31 = {"1", "3", "7", "8", "10", "12"};
+			ArrayList<String> mesi31array = new ArrayList<>(Arrays.asList(mesi31));
+			boxGiorno.removeAllItems();
+			if (mesi31array.contains(boxMese.getSelectedItem().toString())) {
+				// è stato selezionato un mese da 31 giorni
+				for (int i = 1; i <= 31; i++) {
+					boxGiorno.addItem(i);
+				}
+			} else if (boxMese.getSelectedItem().toString().equals("2")) {
+				// è stato selezionato febbraio
+				int anno = Integer.parseInt(boxAnno.getSelectedItem().toString());
+				int limit = (anno % 4) == 0 ? 29 : 28;
+				for (int i = 1; i <= limit; i++) {
+					boxGiorno.addItem(i);
+				}
+			} else {
+				// è stato selezionato un mese da 30 giorni
+				for (int i = 1; i <= 30; i++) {
+					boxGiorno.addItem(i);
 				}
 			}
 		});

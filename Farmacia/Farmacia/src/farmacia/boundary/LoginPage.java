@@ -32,7 +32,7 @@ public class LoginPage extends JFrame {
 				DTO dto = controllerUtenti.getUtenteCorrente();
 				String msg = String.format("Login Effettuato. Benvenuto %s %s %s.", dto.get("nome"), dto.get("cognome"), dto.get("tipoUtente"));
 				JOptionPane.showMessageDialog(loginPanel, msg, "Login Effettuato", JOptionPane.PLAIN_MESSAGE);
-				switch ((String) dto.get("tipoUtente")) {
+				switch (dto.get("tipoUtente").toString()) {
 					case "CLIENTE":
 						JFrame homePageCliente = new HomePageCliente();
 						break;
@@ -45,7 +45,7 @@ public class LoginPage extends JFrame {
 						JFrame homePageDirettore = new HomePageDirettore();
 						break;
 				}
-				dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)); // chiudo la finestra di login
+				// dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)); // chiudo la finestra di login
 			} catch (LoginFailedException | DBException ex) {
 				JOptionPane.showMessageDialog(loginPanel, ex.getMessage(), "Errore Login", JOptionPane.ERROR_MESSAGE);
 			}
