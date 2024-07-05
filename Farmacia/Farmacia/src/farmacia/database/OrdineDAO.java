@@ -30,6 +30,7 @@ public class OrdineDAO {
 	public OrdineDAO(String id, Date dataCreazione, int cliente) {
 		this.id = id;
 		this.dataCreazione = dataCreazione;
+		this.ritirato = false;
 		this.cliente = cliente;
 		this.ordiniFarmaci = new HashMap<>();
 	}
