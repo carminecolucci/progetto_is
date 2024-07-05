@@ -117,18 +117,18 @@
             </constraints>
             <properties>
               <model>
-                <item value="Gennaio"/>
-                <item value="Febbraio"/>
-                <item value="Marzo"/>
-                <item value="Aprile"/>
-                <item value="Maggio"/>
-                <item value="Giugno"/>
-                <item value="Luglio"/>
-                <item value="Agosto"/>
-                <item value="Settembre"/>
-                <item value="Ottobre"/>
-                <item value="Novembre"/>
-                <item value="Dicembre"/>
+                <item value="1"/>
+                <item value="2"/>
+                <item value="3"/>
+                <item value="4"/>
+                <item value="5"/>
+                <item value="6"/>
+                <item value="7"/>
+                <item value="8"/>
+                <item value="9"/>
+                <item value="10"/>
+                <item value="11"/>
+                <item value="12"/>
               </model>
             </properties>
           </component>

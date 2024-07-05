@@ -88,8 +88,8 @@ public class EntityFarmacia {
 	/**
 	 *
 	 */
-	public List<EntityOrdineAcquisto> visualizzaOrdiniAcquisto() {
+	//public List<EntityOrdineAcquisto> visualizzaOrdiniAcquisto() {
 		// TODO: necessito di OrdineAcquistoDAO.getOrdiniAcquisto()
-	}
+	//}
 
 }
