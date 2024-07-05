@@ -43,7 +43,7 @@ public class EntityFarmacia {
 		try {
 			nuovoCliente.salvaInDB();
 		} catch (DBException e) {
-			throw new RegistrationFailedException("Registrazione dell'utente " + username + " fallita");
+			throw new RegistrationFailedException("Registrazione dell'utente " + username + " fallita. " + e.getMessage());
 		}
 	}
 
@@ -62,7 +62,7 @@ public class EntityFarmacia {
 				throw new LoginFailedException("Login fallito, password errata");
 			}
 		} catch (DBException e) {
-			throw new LoginFailedException("Login dell'utente " + username + " fallita");
+			throw new LoginFailedException("Login dell'utente " + username + " fallita. " + e.getMessage());
 		}
 
 	}

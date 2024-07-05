@@ -42,6 +42,10 @@ public class UtenteDAO {
 			throw new DBException(String.format("Utente '%s' già esistente", username));
 		}
 
+		if (cercaEmailInDB(email)) {
+			throw new DBException(String.format("Email '%s' già esistente", email));
+		}
+
 		if (salvaInDB(nome, cognome, username, password, dataNascita, email) == 0)
 			throw new DBException(String.format("Errore durante la registrazione dell'utente '%s'", username));
 
@@ -66,7 +70,7 @@ public class UtenteDAO {
 				this.email = rs.getString("email");
 				this.password = rs.getString("password");
 				this.dataNascita = rs.getDate("dataNascita");
-				this.tipoUtente = TipoUtente.valueOf(rs.getString("tipo"));
+				this.tipoUtente = TipoUtente.fromInt(rs.getInt("tipo"));
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			logger.warning(String.format("Errore durante il caricamento dal database di un utente con id %d.%n%s",
@@ -90,6 +94,18 @@ public class UtenteDAO {
 			throw new DBException(String.format("Errore nella ricerca dell'utente '%s'", username));
 		}
 		return id;
+	}
+
+	private boolean cercaEmailInDB(String email) throws DBException {
+		String query = String.format("SELECT * FROM utenti WHERE email = '%s';", email);
+		logger.info(query);
+		try (ResultSet rs = DBManager.getInstance().selectQuery(query)) {
+			return rs.next();
+		} catch (ClassNotFoundException | SQLException e) {
+			logger.warning(String.format("Errore nella ricerca dell'utente '%s'.%n%s",
+				username, e.getMessage()));
+			throw new DBException(String.format("Errore nella ricerca dell'email '%s'", email));
+		}
 	}
 
 	private int salvaInDB(String nome, String cognome, String username, String password, Date dataNascita, String email) throws DBException {

@@ -32,31 +32,22 @@ public class ControllerUtenti {
 		return uniqueInstance;
 	}
 
-	public void registraCliente(String username, String password, String nome, String cognome, Date dataNascita, String email) {
+	public void registraCliente(String username, String password, String nome, String cognome, Date dataNascita, String email) throws RegistrationFailedException {
 		EntityFarmacia farmacia = EntityFarmacia.getInstance();
-		try {
-			farmacia.registraCliente(username, password, nome, cognome, dataNascita, email);
-		} catch (RegistrationFailedException e) {
-			throw new RuntimeException(e);
-		}
+		farmacia.registraCliente(username, password, nome, cognome, dataNascita, email);
 	}
 
-	public void loginUtente(String username, String password) {
+	public void loginUtente(String username, String password) throws LoginFailedException {
 		EntityFarmacia farmacia = EntityFarmacia.getInstance();
-		try {
-			farmacia.loginUtente(username, password);
-		} catch (LoginFailedException e) {
-			throw new RuntimeException(e);
-		}
+		farmacia.loginUtente(username, password);
 	}
 
 	public DTO getUtenteCorrente() {
 		EntityUtente utenteCorrente = Sessione.getInstance().getUtenteCorrente();
 		DTO dto = new DTO();
-		// TODO: sistemare
-		dto.setCampo1(utenteCorrente.getNome());
-		dto.setCampo2(utenteCorrente.getCognome());
-		dto.setCampo3(utenteCorrente.getUsername());
+		dto.set("nome", utenteCorrente.getNome());
+		dto.set("cognome", utenteCorrente.getCognome());
+		dto.set("tipoUtente", utenteCorrente.getTipoUtente());
 		return dto;
 	}
 }

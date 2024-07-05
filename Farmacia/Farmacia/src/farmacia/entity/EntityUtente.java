@@ -55,6 +55,14 @@ public class EntityUtente {
 		this.id = id;
 	}
 
+	public TipoUtente getTipoUtente() {
+		return tipoUtente;
+	}
+
+	public void setTipoUtente(TipoUtente tipoUtente) {
+		this.tipoUtente = tipoUtente;
+	}
+
 	public String getUsername() {
 		return username;
 	}

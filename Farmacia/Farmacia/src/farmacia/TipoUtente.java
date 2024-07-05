@@ -3,5 +3,9 @@ package farmacia;
 public enum TipoUtente {
 	CLIENTE,
 	FARMACISTA,
-	DIRETTORE
+	DIRETTORE;
+
+	public static TipoUtente fromInt(int x) {
+		return TipoUtente.values()[x];
+	}
 }
