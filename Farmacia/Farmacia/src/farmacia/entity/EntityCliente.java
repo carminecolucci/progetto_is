@@ -1,6 +1,7 @@
 package farmacia.entity;
 
 import farmacia.TipoUtente;
+import farmacia.database.OrdineDAO;
 import farmacia.database.UtenteDAO;
 import farmacia.exceptions.DBException;
 import farmacia.exceptions.FarmacoNotFoundException;
@@ -18,11 +19,12 @@ public class EntityCliente extends EntityUtente {
 		super(username, password, nome, cognome, dataNascita, TipoUtente.CLIENTE, email);
 	}
 
-	public EntityCliente(UtenteDAO utenteDAO) {
+	public EntityCliente(UtenteDAO utenteDAO) throws DBException {
 		// se chiamo questo costruttore, significa che sono già registrato
 		super(utenteDAO);
-		storicoOrdini = new ArrayList<>();
-		// TODO: popolare lo storico ordini attraverso OrdineDAO
+		for (OrdineDAO ordineDAO : OrdineDAO.getOrdiniByCliente(utenteDAO.getId())) {
+			storicoOrdini.add(new EntityOrdine(ordineDAO));
+		}
 	}
 
 	public EntityCliente(int id) throws DBException {
@@ -50,7 +52,9 @@ public class EntityCliente extends EntityUtente {
 				ordine.aggiungiOrdineFarmaco(farmaco, farmaciQuantita.get(idFarmaco));
 				int scorteResidue = catalogo.decrementaScorte(idFarmaco, farmaciQuantita.get(idFarmaco));
 				if (scorteResidue == 0) {
-					// TODO: fai partire un ordine di acquisto per questo farmaco
+					EntityOrdineAcquisto ordineAcquisto = new EntityOrdineAcquisto();
+					ordineAcquisto.aggiungiOrdineAcquistoFarmaco(farmaco, 50); // TODO esportare questa costante
+					ordineAcquisto.salvaInDB();
 				}
 			}
 			ordine.salvaInDB();

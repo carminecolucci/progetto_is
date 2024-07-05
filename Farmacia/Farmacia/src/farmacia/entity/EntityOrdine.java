@@ -37,7 +37,7 @@ public class EntityOrdine {
 	/**
 	 * Funzione che permette di creare un nuovo Ordine nel DB a partire da
 	 * un'istanza di <code>EntityOrdine</code> già popolata.
-	 * @throws DBException Lanciata quando si cerca di salvare un utente già registrato
+	 * @throws DBException Errore generico del DB
 	 */
 	public void salvaInDB() throws DBException {
 		this.id = UUID.randomUUID().toString();
@@ -56,10 +56,6 @@ public class EntityOrdine {
 
 	public String getId() {
 		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
 	}
 
 	public Date getDataCreazione() {

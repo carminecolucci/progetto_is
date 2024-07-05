@@ -4,6 +4,7 @@ import farmacia.dto.DTO;
 import farmacia.entity.EntityFarmacia;
 import farmacia.entity.EntityUtente;
 import farmacia.entity.Sessione;
+import farmacia.exceptions.DBException;
 import farmacia.exceptions.LoginFailedException;
 import farmacia.exceptions.RegistrationFailedException;
 
@@ -32,12 +33,12 @@ public class ControllerUtenti {
 		return uniqueInstance;
 	}
 
-	public void registraCliente(String username, String password, String nome, String cognome, Date dataNascita, String email) throws RegistrationFailedException {
+	public void registraCliente(String username, String password, String nome, String cognome, Date dataNascita, String email) throws RegistrationFailedException, DBException {
 		EntityFarmacia farmacia = EntityFarmacia.getInstance();
 		farmacia.registraCliente(username, password, nome, cognome, dataNascita, email);
 	}
 
-	public void loginUtente(String username, String password) throws LoginFailedException {
+	public void loginUtente(String username, String password) throws LoginFailedException, DBException {
 		EntityFarmacia farmacia = EntityFarmacia.getInstance();
 		farmacia.loginUtente(username, password);
 	}

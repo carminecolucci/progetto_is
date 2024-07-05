@@ -21,9 +21,8 @@ public class EntityCatalogo {
 	 * Costruttore privato per impedire la creazione di istanze multiple.
 	 */
 	private EntityCatalogo() {
-		FarmacoDAO farmacoDAO = new FarmacoDAO();
 		try {
-			for (FarmacoDAO farmaco : farmacoDAO.getFarmaci()) {
+			for (FarmacoDAO farmaco : FarmacoDAO.getFarmaci()) {
 				try {
 					farmaci.add(new EntityFarmaco(farmaco));
 				} catch (NullPointerException e) {

@@ -55,6 +55,12 @@ public class OrdineAcquistoDAO {
 		this.ordineAcquistoFarmaci.put(new FarmacoDAO(idFarmaco), quantita);
 	}
 
+	public void createOrdineAcquisto() throws DBException {
+		if (salvaInDB() == 0) {
+			throw new DBException(String.format("Errore nella creazione della ordine '%s'", id));
+		}
+	}
+
 	/**
 	 * Funzione privata che popola l'OrdineAcquistoDAO consultando il DB.
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se l'ordine di acquisto non esiste.
@@ -125,7 +131,7 @@ public class OrdineAcquistoDAO {
 	 * @return La lista contenente gli ordini di acquisto registrati presso la farmacia.
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se non ci sono ordini di acquisto.
 	 */
-	public ArrayList<OrdineAcquistoDAO> getOrdiniAcquisto() throws DBException {
+	public static ArrayList<OrdineAcquistoDAO> getOrdiniAcquisto() throws DBException {
 
 		String query = "SELECT id FROM ordini_acquisto;";
 		ArrayList<OrdineAcquistoDAO> listaOrdiniAcquistoDAO = new ArrayList<>();
@@ -137,7 +143,7 @@ public class OrdineAcquistoDAO {
 		} catch (ClassNotFoundException | SQLException e) {
 			logger.warning(String.format("Errore durante il caricamento degli ordini di acquisto" +
 					".%n%s", e.getMessage()));
-			throw new DBException("Errore nel caricamento di un ordine di acquisto.");
+			throw new DBException("Errore durante il caricamento iniziale degli ordini di acquisto: " + e.getMessage());
 		}
 		return listaOrdiniAcquistoDAO;
 	}
