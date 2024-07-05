@@ -1,16 +1,21 @@
 package farmacia.entity;
 
+import farmacia.TipoUtente;
 import farmacia.database.UtenteDAO;
 import farmacia.exceptions.DBException;
+import farmacia.exceptions.FarmacoNotFoundException;
+import farmacia.exceptions.OrderCreationFailedException;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Date;
+import java.util.Map;
 
 public class EntityCliente extends  EntityUtente {
-	ArrayList<EntityOrdine> storicoOrdini;
+	List<EntityOrdine> storicoOrdini;
 
 	public EntityCliente(String username, String password, String nome, String cognome, Date dataNascita, String email) {
-		super(username, password, nome, cognome, dataNascita, email);
+		super(username, password, nome, cognome, dataNascita, TipoUtente.CLIENTE, email);
 	}
 
 	public EntityCliente(UtenteDAO utenteDAO) {
@@ -20,8 +25,34 @@ public class EntityCliente extends  EntityUtente {
 		// TODO: popolare lo storico ordini attraverso OrdineDAO
 	}
 
-	public ArrayList<EntityOrdine> visualizzaStoricoOrdini() {
+	public List<EntityOrdine> visualizzaStoricoOrdini() {
 		return storicoOrdini;
+	}
+
+	/**
+	 * Funzione che permette di creare un nuovo Ordine di un cliente già loggato.
+	 * @param farmaciQuantita una serie di coppie (idFarmaco, quantita).
+	 * @throws OrderCreationFailedException lanciata quando un farmaco non viene trovato o quando le scorte sono insufficienti
+	 */
+	public void creaOrdine(Map<Integer, Integer> farmaciQuantita) throws OrderCreationFailedException {
+		EntityCatalogo catalogo = EntityCatalogo.getInstance();
+		if (!catalogo.checkScorte(farmaciQuantita)) {
+			throw new OrderCreationFailedException("Ordine non creato per mancanza scorte");
+		}
+		EntityOrdine ordine = new EntityOrdine();
+		try {
+			for (Integer idFarmaco : farmaciQuantita.keySet()) {
+				EntityFarmaco farmaco = catalogo.cercaFarmaco(idFarmaco);
+				ordine.aggiungiOrdineFarmaco(farmaco, farmaciQuantita.get(idFarmaco));
+				int scortaResidua = catalogo.decrementaScorte(idFarmaco, farmaciQuantita.get(idFarmaco));
+				if (scortaResidua == 0) {
+					// TODO: fai partire un ordine di acquisto per questo farmaco
+				}
+			}
+			// TODO: salva l'ordine sul DB
+		} catch (FarmacoNotFoundException e) {
+			throw new OrderCreationFailedException("Errore creazione ordine, farmaco non trovato");
+		}
 	}
 
 	/**
