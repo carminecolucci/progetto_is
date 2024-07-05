@@ -1,6 +1,5 @@
 package farmacia.database;
 
-import farmacia.TipoOrdine;
 import farmacia.exceptions.DBException;
 
 import java.sql.ResultSet;
@@ -24,8 +23,9 @@ public class OrdineDAO {
 
 	/**
 	 * Costruttore che crea un nuovo <code>OrdineDAO</code>, che dovrà essere popolato con <code>aggiungiOrdineFarmaco</code>
-	 * @param dataCreazione
-	 * @param cliente
+	 * @param id id dell'ordine
+	 * @param dataCreazione data di creazione dell'ordine
+	 * @param cliente id del cliente che ha generato l'ordine
 	 */
 	public OrdineDAO(String id, Date dataCreazione, int cliente) {
 		this.id = id;
@@ -126,7 +126,7 @@ public class OrdineDAO {
 	 * @throws DBException se non si possono caricare gli ordiniFarmaci
 	 */
 	private void caricaOrdiniFarmaciDaDB() throws DBException {
-		String query = String.format("SELECT * FROM ordini_farmaci WHERE id = %d", this.id);
+		String query = String.format("SELECT * FROM ordini_farmaci WHERE id = '%s'", this.id);
 		try (ResultSet rs = DBManager.getInstance().selectQuery(query)) {
 			while (rs.next()) {
 				int idFarmaco = rs.getInt("farmaco");
@@ -135,7 +135,7 @@ public class OrdineDAO {
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			logger.warning(String.format("Errore durante il caricamento di un ordine con id " +
-				"%d.%n%s", this.id, e.getMessage()));
+				"'%s'.%n%s", this.id, e.getMessage()));
 			throw new DBException("Errore nel caricamento di un ordine");
 		}
 	}
@@ -155,10 +155,10 @@ public class OrdineDAO {
 		try {
 			rs = DBManager.getInstance().executeQuery(query);
 		} catch (ClassNotFoundException | SQLException e) {
-			logger.warning(String.format("Errore durante l'inserimento dell'ordine '%d' nel database.%n%s",
+			logger.warning(String.format("Errore durante l'inserimento dell'ordine '%s' nel database.%n%s",
 				this.id, e.getMessage())
 			);
-			throw new DBException(String.format("Errore nel salvataggio dell'ordine '%d'", this.id));
+			throw new DBException(String.format("Errore nel salvataggio dell'ordine '%s'", this.id));
 		}
 
 		query = "INSERT INTO ordini_farmaci (ordine, farmaco, quantita) " +
