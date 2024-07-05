@@ -2,7 +2,6 @@ package farmacia.entity;
 
 import farmacia.database.FarmacoDAO;
 import farmacia.database.OrdineDAO;
-import farmacia.database.UtenteDAO;
 import farmacia.exceptions.DBException;
 
 import java.time.LocalDateTime;
@@ -30,7 +29,7 @@ public class EntityOrdine {
 		this.ritirato = ordineDAO.isRitirato();
 		this.dataCreazione = ordineDAO.getDataCreazione();
 		this.cliente = new EntityCliente(ordineDAO.getCliente());
-		for (Map.Entry<FarmacoDAO, Integer> entry : ordineDAO.getOrdiniFarmaci().entrySet()) {
+		for (Map.Entry<FarmacoDAO, Integer> entry : ordineDAO.getOrdineFarmaci().entrySet()) {
 			quantitaFarmaci.put(new EntityFarmaco(entry.getKey()), entry.getValue());
 		}
 	}

@@ -14,7 +14,7 @@ public class OrdineAcquistoDAO {
 	private String id;
 	private Date dataCreazione;
 	private boolean ricevuto;
-	private Map<FarmacoDAO, Integer> ordineAcquistoFarmaco;
+	private Map<FarmacoDAO, Integer> ordineAcquistoFarmaci;
 
 	private static final Logger logger = Logger.getLogger("OrdineAcquistoDAO");
 
@@ -42,7 +42,7 @@ public class OrdineAcquistoDAO {
 		this.id = id;
 		this.dataCreazione = dataCreazione;
 		this.ricevuto = false;
-		this.ordineAcquistoFarmaco = new HashMap<>();
+		this.ordineAcquistoFarmaci = new HashMap<>();
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class OrdineAcquistoDAO {
 	 */
 
 	public void aggiungiOrdineAcquistoFarmaco(int idFarmaco, int quantita) throws DBException {
-		this.ordineAcquistoFarmaco.put(new FarmacoDAO(idFarmaco), quantita);
+		this.ordineAcquistoFarmaci.put(new FarmacoDAO(idFarmaco), quantita);
 	}
 
 	/**
@@ -80,7 +80,7 @@ public class OrdineAcquistoDAO {
 			while (rs.next()) {
 				int idFarmaco = rs.getInt("farmaco");
 				int quantita = rs.getInt("quantita");
-				this.ordineAcquistoFarmaco.put(new FarmacoDAO(idFarmaco), quantita);
+				this.ordineAcquistoFarmaci.put(new FarmacoDAO(idFarmaco), quantita);
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			logger.warning(String.format("Errore durante il caricamento dell'ordine di acquisto con id " +
@@ -111,7 +111,7 @@ public class OrdineAcquistoDAO {
 
 		query = "INSERT INTO ordini_acquisto_farmaci (ordine_acquisto, farmaco, quantita) " +
 				"VALUES ('%s', %d, %d);";
-		for (Map.Entry<FarmacoDAO, Integer> item: this.ordineAcquistoFarmaco.entrySet()) {
+		for (Map.Entry<FarmacoDAO, Integer> item: this.ordineAcquistoFarmaci.entrySet()) {
 			try {
 				rs = DBManager.getInstance().executeQuery(String.format(query, this.id, item.getKey().getId(), item.getValue()));
 			} catch (ClassNotFoundException | SQLException e) {
@@ -168,11 +168,11 @@ public class OrdineAcquistoDAO {
 		this.ricevuto = ricevuto;
 	}
 
-	public Map<FarmacoDAO, Integer> getOrdineAcquistoFarmaco() {
-		return ordineAcquistoFarmaco;
+	public Map<FarmacoDAO, Integer> getOrdineAcquistoFarmaci() {
+		return ordineAcquistoFarmaci;
 	}
 
-	public void setOrdineAcquistoFarmaco(Map<FarmacoDAO, Integer> ordineAcquistoFarmaco) {
-		this.ordineAcquistoFarmaco = ordineAcquistoFarmaco;
+	public void setOrdineAcquistoFarmaci(Map<FarmacoDAO, Integer> ordineAcquistoFarmaci) {
+		this.ordineAcquistoFarmaci = ordineAcquistoFarmaci;
 	}
 }

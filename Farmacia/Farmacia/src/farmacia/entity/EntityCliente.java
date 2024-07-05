@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Date;
 import java.util.Map;
 
-public class EntityCliente extends  EntityUtente {
+public class EntityCliente extends EntityUtente {
 	List<EntityOrdine> storicoOrdini;
 
 	public EntityCliente(String username, String password, String nome, String cognome, Date dataNascita, String email) {

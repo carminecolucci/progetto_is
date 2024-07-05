@@ -11,7 +11,7 @@ public class OrdineDAO {
 	private String id;
 	private Date dataCreazione;
 	private boolean ritirato;
-	private Map<FarmacoDAO, Integer> ordiniFarmaci;
+	private Map<FarmacoDAO, Integer> ordineFarmaci;
 	private int cliente;
 
 	private static final Logger logger = Logger.getLogger("OrdineDAO");
@@ -32,7 +32,7 @@ public class OrdineDAO {
 		this.dataCreazione = dataCreazione;
 		this.ritirato = false;
 		this.cliente = cliente;
-		this.ordiniFarmaci = new HashMap<>();
+		this.ordineFarmaci = new HashMap<>();
 	}
 
 	public OrdineDAO(String id) throws DBException {
@@ -73,7 +73,7 @@ public class OrdineDAO {
 	 * @throws DBException se non si può caricare il <code>FarmacoDAO</code> dal DB.
 	 */
 	public void aggiungiOrdineFarmaco(int idFarmaco, int quantita) throws DBException {
-		this.ordiniFarmaci.put(new FarmacoDAO(idFarmaco), quantita);
+		this.ordineFarmaci.put(new FarmacoDAO(idFarmaco), quantita);
 	}
 
 	/**
@@ -129,8 +129,8 @@ public class OrdineDAO {
 	}
 
 	/**
-	 * Funzione di utilità per caricare gli ordiniFarmaci
-	 * @throws DBException se non si possono caricare gli ordiniFarmaci
+	 * Funzione di utilità per caricare gli ordineFarmaci
+	 * @throws DBException se non si possono caricare gli ordineFarmaci
 	 */
 	private void caricaOrdiniFarmaciDaDB() throws DBException {
 		String query = String.format("SELECT * FROM ordini_farmaci WHERE id = '%s'", this.id);
@@ -138,7 +138,7 @@ public class OrdineDAO {
 			while (rs.next()) {
 				int idFarmaco = rs.getInt("farmaco");
 				int quantita = rs.getInt("quantita");
-				this.ordiniFarmaci.put(new FarmacoDAO(idFarmaco), quantita);
+				this.ordineFarmaci.put(new FarmacoDAO(idFarmaco), quantita);
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			logger.warning(String.format("Errore durante il caricamento di un ordine con id " +
@@ -170,7 +170,7 @@ public class OrdineDAO {
 
 		query = "INSERT INTO ordini_farmaci (ordine, farmaco, quantita) " +
 				"VALUES (%d, %d, %d);";
-		for (Map.Entry<FarmacoDAO, Integer> item: ordiniFarmaci.entrySet()) {
+		for (Map.Entry<FarmacoDAO, Integer> item: ordineFarmaci.entrySet()) {
 			try {
 				rs = DBManager.getInstance().executeQuery(String.format(query,
 					this.id, item.getKey().getId(), item.getValue())
@@ -207,8 +207,8 @@ public class OrdineDAO {
 		this.ritirato = ritirato;
 	}
 
-	public Map<FarmacoDAO, Integer> getOrdiniFarmaci() {
-		return ordiniFarmaci;
+	public Map<FarmacoDAO, Integer> getOrdineFarmaci() {
+		return ordineFarmaci;
 	}
 
 	public int getCliente() {
