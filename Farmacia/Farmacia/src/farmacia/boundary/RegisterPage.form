@@ -76,39 +76,7 @@
               <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <model>
-                <item value="1"/>
-                <item value="2"/>
-                <item value="3"/>
-                <item value="4"/>
-                <item value="5"/>
-                <item value="6"/>
-                <item value="7"/>
-                <item value="8"/>
-                <item value="9"/>
-                <item value="10"/>
-                <item value="11"/>
-                <item value="12"/>
-                <item value="13"/>
-                <item value="14"/>
-                <item value="15"/>
-                <item value="16"/>
-                <item value="17"/>
-                <item value="18"/>
-                <item value="19"/>
-                <item value="20"/>
-                <item value="21"/>
-                <item value="22"/>
-                <item value="23"/>
-                <item value="24"/>
-                <item value="25"/>
-                <item value="26"/>
-                <item value="27"/>
-                <item value="28"/>
-                <item value="29"/>
-                <item value="30"/>
-                <item value="31"/>
-              </model>
+              <model/>
             </properties>
           </component>
           <component id="d1d7b" class="javax.swing.JComboBox" binding="boxMese">
