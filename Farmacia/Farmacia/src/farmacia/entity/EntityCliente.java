@@ -25,6 +25,10 @@ public class EntityCliente extends  EntityUtente {
 		// TODO: popolare lo storico ordini attraverso OrdineDAO
 	}
 
+	public EntityCliente(int id) throws DBException {
+		this(new UtenteDAO(id));
+	}
+
 	public List<EntityOrdine> visualizzaStoricoOrdini() {
 		return storicoOrdini;
 	}
@@ -49,9 +53,11 @@ public class EntityCliente extends  EntityUtente {
 					// TODO: fai partire un ordine di acquisto per questo farmaco
 				}
 			}
-			// TODO: salva l'ordine sul DB
+			ordine.salvaInDB();
 		} catch (FarmacoNotFoundException e) {
 			throw new OrderCreationFailedException("Errore creazione ordine, farmaco non trovato");
+		} catch (DBException e) {
+			throw new OrderCreationFailedException(e.getMessage());
 		}
 	}
 

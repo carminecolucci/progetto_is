@@ -57,7 +57,19 @@ public class EntityCatalogo {
 	}
 
 	public void modificaFarmaco(int id, float prezzo, boolean prescrizione, String nome, int scorta) throws FarmacoNotFoundException {
-		// TODO: necessito di FarmacoDAO.updateFarmaco()
+		try {
+			FarmacoDAO.aggiornaFarmacoDB(id, prezzo, prescrizione, nome, scorta);
+			for (EntityFarmaco farmaco : farmaci) {
+				if (farmaco.getId() == id) {
+					farmaco.setPrezzo(prezzo);
+					farmaco.setPrescrizione(prescrizione);
+					farmaco.setNome(nome);
+					farmaco.setScorta(scorta);
+				}
+			}
+		} catch (DBException e) {
+			throw new FarmacoNotFoundException(e.getMessage());
+		}
 	}
 
 	public EntityFarmaco cercaFarmaco(int id) throws FarmacoNotFoundException {
@@ -80,7 +92,11 @@ public class EntityCatalogo {
 			if (farmaco.getId() == idFarmaco) {
 				int differenza = farmaco.getScorta() - quantita;
 				farmaco.setScorta(differenza);
-				this.modificaFarmaco(farmaco.getId(), farmaco.getPrezzo(), farmaco.isPrescrizione(), farmaco.getNome(), farmaco.getScorta());
+				try {
+					FarmacoDAO.aggiornaScorteDB(farmaco.getId(), farmaco.getScorta());
+				} catch (DBException e) {
+					throw new FarmacoNotFoundException("Farmaco non trovato");
+				}
 				return differenza;
 			}
 		}

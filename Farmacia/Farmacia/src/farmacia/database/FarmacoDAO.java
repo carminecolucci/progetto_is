@@ -210,7 +210,7 @@ public class FarmacoDAO {
 	 * @param nuoveScorte Nuove scorte da impostare per il farmaco.
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se il farmaco non esiste.
 	 */
-	private static void aggiornaScorteDB(int id, int nuoveScorte) throws DBException {
+	public static void aggiornaScorteDB(int id, int nuoveScorte) throws DBException {
 		FarmacoDAO farmacoDaModificare = new FarmacoDAO(id);
 		String nomeFarmacoDaModificare = farmacoDaModificare.getNome();
 		String query = String.format("UPDATE farmaci SET scorta = %d WHERE id = %d;", nuoveScorte, id);
@@ -232,7 +232,7 @@ public class FarmacoDAO {
 	 * @param nuoveScorte Nuove scorte da impostare per il farmaco.
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se il farmaco non esiste.
 	 */
-	private static void aggiornaFarmacoDB(int id, float nuovoPrezzo, boolean nuovaPrescrizione, String nuovoNome, int nuoveScorte) throws DBException {
+	public static void aggiornaFarmacoDB(int id, float nuovoPrezzo, boolean nuovaPrescrizione, String nuovoNome, int nuoveScorte) throws DBException {
 		FarmacoDAO farmacoDaModificare = new FarmacoDAO(id);
 		String nomeFarmacoDaModificare = farmacoDaModificare.getNome();
 
@@ -244,7 +244,8 @@ public class FarmacoDAO {
 		try {
 			rs = DBManager.getInstance().executeQuery(query);
 		} catch (ClassNotFoundException | SQLException e) {
-			logger.warning("Errore durante l'aggiornamento del farmaco '%s'." + nomeFarmacoDaModificare);
+			logger.warning(String.format("Errore durante l'aggiornamento del farmaco '%s'.", nomeFarmacoDaModificare));
+			throw new DBException("Errore durante l'aggiornamento del farmaco");
 		}
 
 	}

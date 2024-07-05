@@ -9,10 +9,8 @@ import farmacia.exceptions.RegistrationFailedException;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-/**
- * Classe del package entity nel modello BCED, essa implementa la sessione utente.
- */
 public class EntityFarmacia {
 
 	/**
@@ -72,8 +70,12 @@ public class EntityFarmacia {
 	/**
 	 *
 	 */
-	public ArrayList<EntityOrdine> visualizzaOrdini() {
-		// TODO: necessito di OrdineDAO.getOrdini()
+	public List<EntityOrdine> visualizzaOrdini() throws DBException {
+		List<EntityOrdine> ordini = new ArrayList<>();
+		for (OrdineDAO ordineDAO : OrdineDAO.visualizzaOrdini()) {
+			ordini.add(new EntityOrdine(ordineDAO));
+		}
+		return ordini;
 	}
 
 	/**
@@ -86,7 +88,7 @@ public class EntityFarmacia {
 	/**
 	 *
 	 */
-	public ArrayList<EntityOrdineAcquisto> visualizzaOrdiniAcquisto() {
+	public List<EntityOrdineAcquisto> visualizzaOrdiniAcquisto() {
 		// TODO: necessito di OrdineAcquistoDAO.getOrdiniAcquisto()
 	}
 
