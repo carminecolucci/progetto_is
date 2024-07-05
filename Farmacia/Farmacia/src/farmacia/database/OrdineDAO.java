@@ -19,7 +19,7 @@ public class OrdineDAO {
 	/**
 	 * Costruttore di default di <code>OrdineDAO</code>
 	 */
-	public OrdineDAO() {}
+	private OrdineDAO() {}
 
 	/**
 	 * Costruttore che crea un nuovo <code>OrdineDAO</code>, che dovrà essere popolato con <code>aggiungiOrdineFarmaco</code>
@@ -38,6 +38,12 @@ public class OrdineDAO {
 	public OrdineDAO(String id) throws DBException {
 		this.id = id;
 		this.caricaDaDB(id);
+	}
+
+	public void createOrdine() throws DBException {
+		if (salvaInDB() == 0) {
+			throw new DBException(String.format("Errore nella creazione della ordine '%s'", id));
+		}
 	}
 
 	/**
