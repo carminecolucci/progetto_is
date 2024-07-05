@@ -51,7 +51,6 @@ public class OrdineAcquistoDAO {
 	 * @param quantita La quantità di farmaco desiderata.
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se il farmaco non esiste.
 	 */
-
 	public void aggiungiOrdineAcquistoFarmaco(int idFarmaco, int quantita) throws DBException {
 		this.ordineAcquistoFarmaci.put(new FarmacoDAO(idFarmaco), quantita);
 	}
@@ -78,7 +77,7 @@ public class OrdineAcquistoDAO {
 		query = String.format("SELECT * from ordini_acquisto_farmaci WHERE id = '%s';", this.id);
 		try (ResultSet rs = DBManager.getInstance().selectQuery(query)) {
 			while (rs.next()) {
-				int idFarmaco = rs.getInt("farmaco");
+				int idFarmaco = rs.getInt("farmacoAcquisto");
 				int quantita = rs.getInt("quantita");
 				this.ordineAcquistoFarmaci.put(new FarmacoDAO(idFarmaco), quantita);
 			}
@@ -109,7 +108,7 @@ public class OrdineAcquistoDAO {
 			throw new DBException(String.format("Errore nel salvataggio dell'ordine di acquisto'%s'.", this.id));
 		}
 
-		query = "INSERT INTO ordini_acquisto_farmaci (ordine_acquisto, farmaco, quantita) " +
+		query = "INSERT INTO ordini_acquisto_farmaci (ordineAcquisto, farmacoAcquisto, quantita) " +
 				"VALUES ('%s', %d, %d);";
 		for (Map.Entry<FarmacoDAO, Integer> item: this.ordineAcquistoFarmaci.entrySet()) {
 			try {

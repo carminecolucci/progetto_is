@@ -93,7 +93,7 @@ public class UtenteDAO {
 	}
 
 	private int salvaInDB(String nome, String cognome, String username, String password, Date dataNascita, String email) throws DBException {
-		String query = String.format("INSERT INTO utenti (nome, cognome, username, password, dataNascita, tipoUtente, email)" +
+		String query = String.format("INSERT INTO utenti (nome, cognome, username, password, dataNascita, tipo, email) " +
 				"VALUES ('%s', '%s', '%s', '%s', '%s', %d, '%s');",
 			nome, cognome, username, password, dataNascita, TipoUtente.CLIENTE.ordinal(), email
 		);

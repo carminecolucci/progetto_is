@@ -88,7 +88,7 @@ public class OrdineDAO {
 		try (ResultSet rs = DBManager.getInstance().selectQuery(query)) {
 			while (rs.next()) {
 				OrdineDAO ordine = new OrdineDAO();
-				ordine.id = rs.getString("id"); // TODO: Cambia il nome dell'id nel DB
+				ordine.id = rs.getString("id");
 				ordine.dataCreazione = rs.getDate("dataCreazione");
 				ordine.ritirato = rs.getBoolean("ritirato");
 				ordine.cliente = rs.getInt("cliente");
@@ -153,7 +153,7 @@ public class OrdineDAO {
 	 * @throws DBException se non si può inserire l'ordine nel DB
 	 */
 	private int salvaInDB() throws DBException {
-		String query = String.format("INSERT INTO ordini (dataCreazione, ritirato, tipoOrdine, cliente) " +
+		String query = String.format("INSERT INTO ordini (dataCreazione, ritirato, cliente) " +
 						"VALUES ('%s', %d, %d);",
 						dataCreazione, ritirato ? 1 : 0, cliente
 		);
@@ -169,7 +169,7 @@ public class OrdineDAO {
 		}
 
 		query = "INSERT INTO ordini_farmaci (ordine, farmaco, quantita) " +
-				"VALUES (%d, %d, %d);";
+				"VALUES ('%s', %d, %d);";
 		for (Map.Entry<FarmacoDAO, Integer> item: ordineFarmaci.entrySet()) {
 			try {
 				rs = DBManager.getInstance().executeQuery(String.format(query,

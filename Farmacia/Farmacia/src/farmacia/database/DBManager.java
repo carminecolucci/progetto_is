@@ -64,10 +64,8 @@ public class DBManager {
 	 * @throws SQLException in caso di errore nella chiusura della connessione.
 	 */
 	public Connection getConnection() throws ClassNotFoundException, SQLException {
-		Connection conn = null;
 		Class.forName(DRIVER);
-		conn = DriverManager.getConnection(URL+DBNAME,USERNAME,PASSWORD);
-
+		Connection conn = DriverManager.getConnection(URL+DBNAME,USERNAME,PASSWORD);
 		return conn;
 	}
 
@@ -109,8 +107,5 @@ public class DBManager {
 		ResultSet result = statement.executeQuery(query);
 
 		return result;
-	}
-
-	public static class FarmacoDAO {
 	}
 }
