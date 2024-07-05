@@ -20,6 +20,8 @@ public class OrdineDAO {
 
 	private static final Logger logger = Logger.getLogger("OrdineDAO");
 
+	public OrdineDAO() {}
+
 	public OrdineDAO(Date dataCreazione, TipoOrdine tipoOrdine, int utente) {
 		this.dataCreazione = dataCreazione;
 		this.tipoOrdine = tipoOrdine;
