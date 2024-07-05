@@ -8,7 +8,7 @@ public class EntityFarmaco {
     private float prezzo;
     private boolean prescrizione;
     private String nome;
-    private int scorta;
+    private int scorte;
 
     public EntityFarmaco() {}
 
@@ -17,19 +17,19 @@ public class EntityFarmaco {
         this.prezzo = farmacoDAO.getPrezzo();
         this.prescrizione = farmacoDAO.isPrescrizione();
         this.nome = farmacoDAO.getNome();
-        this.scorta = farmacoDAO.getScorta();
+        this.scorte = farmacoDAO.getScorte();
     }
 
-    public EntityFarmaco(float prezzo, boolean prescrizione, String nome, int scorta) {
+    public EntityFarmaco(float prezzo, boolean prescrizione, String nome, int scorte) {
         this.prezzo = prezzo;
         this.prescrizione = prescrizione;
         this.nome = nome;
-        this.scorta = scorta;
+        this.scorte = scorte;
     }
 
     public void salvaInDB() throws DBException {
         FarmacoDAO nuovoFarmaco = new FarmacoDAO();
-        nuovoFarmaco.createFarmaco(this.prezzo, this.prescrizione, this.nome, this.scorta);
+        nuovoFarmaco.createFarmaco(this.prezzo, this.prescrizione, this.nome, this.scorte);
         this.id = nuovoFarmaco.getId();
     }
 
@@ -65,11 +65,11 @@ public class EntityFarmaco {
         this.nome = nome;
     }
 
-    public int getScorta() {
-        return scorta;
+    public int getScorte() {
+        return scorte;
     }
 
-    public void setScorta(int scorta) {
-        this.scorta = scorta;
+    public void setScorte(int scorte) {
+        this.scorte = scorte;
     }
 }

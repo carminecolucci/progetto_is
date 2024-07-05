@@ -19,7 +19,7 @@
 1. Come viene gestita la vendita di un farmaco? (ordine/spedizione/consegna). Differenza con l'ordine di acquisto?
 
 	Ordine con pagamento online e ritiro in farmacia.
-	Quando viene generato l'ordine, la scorta e l'incasso vengono aggiornati, e l'ordine assume lo stato PENDING.
+	Quando viene generato l'ordine, la scorte e l'incasso vengono aggiornati, e l'ordine assume lo stato PENDING.
 	Quando il cliente andrà in farmacia a ritirare, il farmacista aggiornerà lo stato dell'ordine a RITIRATO.
 
 1. Gestione dell'incasso stampato dal report: doppio report.

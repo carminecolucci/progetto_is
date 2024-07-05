@@ -48,8 +48,8 @@ public class EntityCliente extends EntityUtente {
 			for (Integer idFarmaco : farmaciQuantita.keySet()) {
 				EntityFarmaco farmaco = catalogo.cercaFarmaco(idFarmaco);
 				ordine.aggiungiOrdineFarmaco(farmaco, farmaciQuantita.get(idFarmaco));
-				int scortaResidua = catalogo.decrementaScorte(idFarmaco, farmaciQuantita.get(idFarmaco));
-				if (scortaResidua == 0) {
+				int scorteResidue = catalogo.decrementaScorte(idFarmaco, farmaciQuantita.get(idFarmaco));
+				if (scorteResidue == 0) {
 					// TODO: fai partire un ordine di acquisto per questo farmaco
 				}
 			}

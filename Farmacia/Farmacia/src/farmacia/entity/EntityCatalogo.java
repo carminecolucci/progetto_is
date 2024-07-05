@@ -46,8 +46,8 @@ public class EntityCatalogo {
 		return uniqueInstance;
 	}
 
-	public void aggiungiFarmaco(float prezzo, boolean prescrizione, String nome, int scortaIniziale) throws FarmacoCreationFailedException {
-		EntityFarmaco nuovoFarmaco = new EntityFarmaco(prezzo, prescrizione, nome, scortaIniziale);
+	public void aggiungiFarmaco(float prezzo, boolean prescrizione, String nome, int scorteIniziali) throws FarmacoCreationFailedException {
+		EntityFarmaco nuovoFarmaco = new EntityFarmaco(prezzo, prescrizione, nome, scorteIniziali);
 		try {
 			nuovoFarmaco.salvaInDB();
 			farmaci.add(nuovoFarmaco);
@@ -56,15 +56,15 @@ public class EntityCatalogo {
 		}
 	}
 
-	public void modificaFarmaco(int id, float prezzo, boolean prescrizione, String nome, int scorta) throws FarmacoNotFoundException {
+	public void modificaFarmaco(int id, float prezzo, boolean prescrizione, String nome, int scorte) throws FarmacoNotFoundException {
 		try {
-			FarmacoDAO.aggiornaFarmacoDB(id, prezzo, prescrizione, nome, scorta);
+			FarmacoDAO.aggiornaFarmacoDB(id, prezzo, prescrizione, nome, scorte);
 			for (EntityFarmaco farmaco : farmaci) {
 				if (farmaco.getId() == id) {
 					farmaco.setPrezzo(prezzo);
 					farmaco.setPrescrizione(prescrizione);
 					farmaco.setNome(nome);
-					farmaco.setScorta(scorta);
+					farmaco.setScorte(scorte);
 				}
 			}
 		} catch (DBException e) {
@@ -90,10 +90,10 @@ public class EntityCatalogo {
 	public int decrementaScorte(int idFarmaco, int quantita) throws FarmacoNotFoundException {
 		for (EntityFarmaco farmaco : farmaci) {
 			if (farmaco.getId() == idFarmaco) {
-				int differenza = farmaco.getScorta() - quantita;
-				farmaco.setScorta(differenza);
+				int differenza = farmaco.getScorte() - quantita;
+				farmaco.setScorte(differenza);
 				try {
-					FarmacoDAO.aggiornaScorteDB(farmaco.getId(), farmaco.getScorta());
+					FarmacoDAO.aggiornaScorteDB(farmaco.getId(), farmaco.getScorte());
 				} catch (DBException e) {
 					throw new FarmacoNotFoundException("Farmaco non trovato");
 				}
@@ -113,7 +113,7 @@ public class EntityCatalogo {
 			for (EntityFarmaco farmaco : farmaci) {
 				if (farmaco.getId() == id) {
 					trovato = true;
-					if (farmaco.getScorta() - farmacoQuantita.get(id) < 0) {
+					if (farmaco.getScorte() - farmacoQuantita.get(id) < 0) {
 						return false;
 					}
 				}

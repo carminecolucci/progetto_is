@@ -12,7 +12,7 @@ public class FarmacoDAO {
 	private float prezzo;
 	private boolean prescrizione;
 	private String nome;
-	private int scorta;
+	private int scorte;
 
 	private static final Logger logger = Logger.getLogger("FarmacoDAO");
 
@@ -37,14 +37,14 @@ public class FarmacoDAO {
 	 * @param prezzo Il prezzo del farmaco.
 	 * @param prescrizione Se il farmaco richiede una prescrizione per la vendita.
 	 * @param nome Il nome del farmaco.
-	 * @param scorta Le scorte del farmaco.
+	 * @param scorte Le scorte del farmaco.
 	 */
-	private FarmacoDAO(int id, float prezzo, boolean prescrizione, String nome, int scorta) {
+	private FarmacoDAO(int id, float prezzo, boolean prescrizione, String nome, int scorte) {
 		this.id = id;
 		this.prezzo = prezzo;
 		this.prescrizione = prescrizione;
 		this.nome = nome;
-		this.scorta = scorta;
+		this.scorte = scorte;
 	}
 
 	/**
@@ -52,22 +52,22 @@ public class FarmacoDAO {
 	 * @param prezzo Il prezzo del farmaco.
 	 * @param prescrizione Se il farmaco richiede o meno una prescrizione per la vendita.
 	 * @param nome Il nome del farmaco.
-	 * @param scorta Le scorte del farmaco.
+	 * @param scorte Le scorte del farmaco.
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se il farmaco non esiste.
 	 */
-	public void createFarmaco(float prezzo, boolean prescrizione, String nome, int scorta) throws DBException {
+	public void createFarmaco(float prezzo, boolean prescrizione, String nome, int scorte) throws DBException {
 		if (cercaInDB(nome) != 0) {
 			throw new DBException(String.format("Farmaco '%s' già esistente", nome));
 		}
 
-		if (salvaInDB(prezzo, prescrizione, nome, scorta) == 0)
+		if (salvaInDB(prezzo, prescrizione, nome, scorte) == 0)
 			throw new DBException(String.format("Errore durante la registrazione del farmaco '%s'.", nome));
 
 		this.id = cercaInDB(nome);
 		this.prezzo = prezzo;
 		this.prescrizione = prescrizione;
 		this.nome = nome;
-		this.scorta = scorta;
+		this.scorte = scorte;
 	}
 	/**
 	 * Funzione privata che popola il FarmacoDAO consultando il DB.
@@ -81,7 +81,7 @@ public class FarmacoDAO {
 				this.prezzo = rs.getFloat("prezzo");
 				this.prescrizione = rs.getBoolean("prescrizione");
 				this.nome = rs.getString("nome");
-				this.scorta = rs.getInt("scorta");
+				this.scorte = rs.getInt("scorte");
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			logger.warning(String.format("Errore durante il caricamento dal database del farmaco con" +
@@ -117,14 +117,14 @@ public class FarmacoDAO {
 	 * @param prezzo Il prezzo del farmaco.
 	 * @param prescrizione Se il farmaco richiede o meno una prescrizione per la vendita.
 	 * @param nome Il nome del farmaco.
-	 * @param scorta Le scorte del farmaco.
+	 * @param scorte Le scorte del farmaco.
 	 * @return '1' se il farmaco è stato inserito, '-1' altrimenti.
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se non è stato possibile aggiungere il farmaco.
 	 */
-	private int salvaInDB(float prezzo, boolean prescrizione, String nome, int scorta) throws DBException {
-		String query = String.format("INSERT INTO farmaci (prezzo, prescrizione, nome, scorta)" +
+	private int salvaInDB(float prezzo, boolean prescrizione, String nome, int scorte) throws DBException {
+		String query = String.format("INSERT INTO farmaci (prezzo, prescrizione, nome, scorte)" +
 				"VALUES (%f, %d, '%s', %d);",
-			prezzo, prescrizione ? 1 : 0, nome, scorta
+			prezzo, prescrizione ? 1 : 0, nome, scorte
 		);
 
 		int rs = -1;
@@ -173,8 +173,8 @@ public class FarmacoDAO {
 				float prezzo = rs.getFloat("prezzo");
 				boolean prescrizione = rs.getBoolean("prescrizione");
 				String nome = rs.getString("nome");
-				int scorta = rs.getInt("scorta");
-				FarmacoDAO queryFarmacoDAO = new FarmacoDAO(id, prezzo, prescrizione, nome, scorta);
+				int scorte = rs.getInt("scorte");
+				FarmacoDAO queryFarmacoDAO = new FarmacoDAO(id, prezzo, prescrizione, nome, scorte);
 				arrayListFarmacoDAO.add(queryFarmacoDAO);
 			}
 		} catch (ClassNotFoundException | SQLException e) {
@@ -213,7 +213,7 @@ public class FarmacoDAO {
 	public static void aggiornaScorteDB(int id, int nuoveScorte) throws DBException {
 		FarmacoDAO farmacoDaModificare = new FarmacoDAO(id);
 		String nomeFarmacoDaModificare = farmacoDaModificare.getNome();
-		String query = String.format("UPDATE farmaci SET scorta = %d WHERE id = %d;", nuoveScorte, id);
+		String query = String.format("UPDATE farmaci SET scorte = %d WHERE id = %d;", nuoveScorte, id);
 		logger.info(query);
 		int rs = -1;
 		try {
@@ -237,7 +237,7 @@ public class FarmacoDAO {
 		String nomeFarmacoDaModificare = farmacoDaModificare.getNome();
 
 		String query = String.format("UPDATE farmaci SET prezzo = %f, prescrizione = %d, " +
-							"nome = '%s', scorta = %d WHERE id = %d;",
+							"nome = '%s', scorte = %d WHERE id = %d;",
 							nuovoPrezzo, nuovaPrescrizione ? 1 : 0, nuovoNome, nuoveScorte, id);
 		logger.info(query);
 		int rs = -1;
@@ -274,12 +274,12 @@ public class FarmacoDAO {
 		this.nome = nome;
 	}
 
-	public int getScorta() {
-		return scorta;
+	public int getScorte() {
+		return scorte;
 	}
 
-	public void setScorta(int scorta) {
-		this.scorta = scorta;
+	public void setScorte(int scorte) {
+		this.scorte = scorte;
 	}
 
 	public int getId() {
