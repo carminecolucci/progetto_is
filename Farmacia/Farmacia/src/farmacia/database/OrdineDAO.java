@@ -1,95 +1,173 @@
 package farmacia.database;
 
-import farmacia.TipoOrdine;
 import farmacia.exceptions.DBException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 
 public class OrdineDAO {
-	private int id; // TODO: Da dove viene?
+	private String id;
 	private Date dataCreazione;
 	private boolean ritirato;
-	private TipoOrdine tipoOrdine;
-	private Map<FarmacoDAO, Integer> ordineFarmaco;
-	private int utente;
+	private Map<FarmacoDAO, Integer> ordiniFarmaci;
+	private int cliente;
 
 	private static final Logger logger = Logger.getLogger("OrdineDAO");
 
+	/**
+	 * Costruttore di default di <code>OrdineDAO</code>
+	 */
 	public OrdineDAO() {}
 
-	public OrdineDAO(Date dataCreazione, TipoOrdine tipoOrdine, int utente) {
+	/**
+	 * Costruttore che crea un nuovo <code>OrdineDAO</code>, che dovrà essere popolato con <code>aggiungiOrdineFarmaco</code>
+	 * @param id id dell'ordine
+	 * @param dataCreazione data di creazione dell'ordine
+	 * @param cliente id del cliente che ha generato l'ordine
+	 */
+	public OrdineDAO(String id, Date dataCreazione, int cliente) {
+		this.id = id;
 		this.dataCreazione = dataCreazione;
-		this.tipoOrdine = tipoOrdine;
-		this.utente = utente;
-		this.ordineFarmaco = new HashMap<>();
+		this.cliente = cliente;
+		this.ordiniFarmaci = new HashMap<>();
 	}
 
-	public OrdineDAO(int id) throws DBException {
+	public OrdineDAO(String id) throws DBException {
 		this.id = id;
 		this.caricaDaDB(id);
 	}
 
-	public void aggiungiOrdineFarmaco(int idFarmaco, int quantita) throws DBException {
-		ordineFarmaco.put(new FarmacoDAO(idFarmaco), quantita);
+	/**
+	 * Funzione che ritorna tutti gli ordini effettuati dai clienti della farmacia
+	 * @throws DBException se non si può prelevare gli ordini dal DB
+	 */
+	public static List<OrdineDAO> visualizzaOrdini() throws DBException {
+		String query = "SELECT * FROM ordini;";
+		return OrdineDAO.caricaOrdiniDaDB(query);
 	}
 
-	private void caricaDaDB(int id) throws DBException {
-		String query = String.format("SELECT * FROM ordini WHERE id = %d;", id);
+	/**
+	 * Funzione che ritorna tutti gli ordini effettuati dal cliente
+	 * @param cliente id del cliente
+	 * @return lista di ordini
+	 * @throws DBException se non si può prelevare gli ordini dal DB
+	 */
+	public static List<OrdineDAO> getOrdiniByCliente(int cliente) throws DBException {
+		String query = String.format("SELECT * FROM ordini WHERE cliente = %d;", cliente);
+		return OrdineDAO.caricaOrdiniDaDB(query);
+	}
+
+	/**
+	 * Aggiunge la coppia <<code>FarmacoDAO</code>, quantità> alla lista di farmaci contenuti nell'ordine
+	 * @param idFarmaco id del farmaco da ordinare
+	 * @param quantita la quantità del farmaco
+	 * @throws DBException se non si può caricare il <code>FarmacoDAO</code> dal DB.
+	 */
+	public void aggiungiOrdineFarmaco(int idFarmaco, int quantita) throws DBException {
+		this.ordiniFarmaci.put(new FarmacoDAO(idFarmaco), quantita);
+	}
+
+	/**
+	 * Funzione di utilità per caricare tutti gli ordini dal DB che soddisfano una query
+	 * @param query da cercare nel DB
+	 * @return <code>List&lt;OrdineDAO&gt;</code> lista di ordini
+	 * @throws DBException se non si può caricare gli ordini dal DB
+	 */
+	private static List<OrdineDAO> caricaOrdiniDaDB(String query) throws DBException {
+		List<OrdineDAO> ordini = new ArrayList<>();
+
+		try (ResultSet rs = DBManager.getInstance().selectQuery(query)) {
+			while (rs.next()) {
+				OrdineDAO ordine = new OrdineDAO();
+				ordine.id = rs.getString("id"); // TODO: Cambia il nome dell'id nel DB
+				ordine.dataCreazione = rs.getDate("dataCreazione");
+				ordine.ritirato = rs.getBoolean("ritirato");
+				ordine.cliente = rs.getInt("cliente");
+				ordine.caricaOrdiniFarmaciDaDB();
+				ordini.add(ordine);
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			logger.warning(String.format("Errore durante il caricamento degli ordini dei clienti.%n%s", e.getMessage()));
+			throw new DBException("Errore nel caricamento degli ordini dei clienti");
+		}
+
+		return ordini;
+	}
+
+	/**
+	 * Funzione di utilità che carica un ordine dal DB a partire dal suo id
+	 * @param id id dell'ordine dal caricare
+	 * @throws DBException se non si può caricare un ordine dal DB
+	 */
+	private void caricaDaDB(String id) throws DBException {
+		String query = String.format("SELECT * FROM ordini WHERE id = '%s';", id);
 
 		try (ResultSet rs = DBManager.getInstance().selectQuery(query)) {
 			if (rs.next()) {
+				this.id = rs.getString("id");
 				this.dataCreazione = rs.getDate("dataCreazione");
 				this.ritirato = rs.getBoolean("ritirato");
-				this.tipoOrdine = TipoOrdine.fromInt(rs.getInt("tipo"));
-				this.utente = rs.getInt("utente");
+				this.cliente = rs.getInt("cliente");
 			}
 		} catch (ClassNotFoundException | SQLException e) {
-			logger.warning(String.format("Errore durante il caricamento di un ordine con id %d.%n%s",
+			logger.warning(String.format("Errore durante il caricamento di un ordine con id '%s'.%n%s",
 				id, e.getMessage())
 			);
 			throw new DBException("Errore nel caricamento di un ordine");
 		}
 
-		query = String.format("SELECT * FROM ordini_farmaci WHERE id = %d", id);
+		this.caricaOrdiniFarmaciDaDB();
+	}
+
+	/**
+	 * Funzione di utilità per caricare gli ordiniFarmaci
+	 * @throws DBException se non si possono caricare gli ordiniFarmaci
+	 */
+	private void caricaOrdiniFarmaciDaDB() throws DBException {
+		String query = String.format("SELECT * FROM ordini_farmaci WHERE id = '%s'", this.id);
 		try (ResultSet rs = DBManager.getInstance().selectQuery(query)) {
 			while (rs.next()) {
 				int idFarmaco = rs.getInt("farmaco");
 				int quantita = rs.getInt("quantita");
-				this.ordineFarmaco.put(new FarmacoDAO(idFarmaco), quantita);
+				this.ordiniFarmaci.put(new FarmacoDAO(idFarmaco), quantita);
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			logger.warning(String.format("Errore durante il caricamento di un ordine con id " +
-				"%d.%n%s", id, e.getMessage()));
+				"'%s'.%n%s", this.id, e.getMessage()));
 			throw new DBException("Errore nel caricamento di un ordine");
 		}
 	}
 
+	/**
+	 * Funzione di utilità per inserire l'ordine nel DB
+	 * @return il numero di righe inserite
+	 * @throws DBException se non si può inserire l'ordine nel DB
+	 */
 	private int salvaInDB() throws DBException {
-		String query = String.format("INSERT INTO ordini (dataCreazione, ritirato, tipoOrdine, utente) " +
-						"VALUES ('%s', %d, %d, %d);",
-						dataCreazione, ritirato ? 1 : 0, tipoOrdine.ordinal(), utente
+		String query = String.format("INSERT INTO ordini (dataCreazione, ritirato, tipoOrdine, cliente) " +
+						"VALUES ('%s', %d, %d);",
+						dataCreazione, ritirato ? 1 : 0, cliente
 		);
 
 		int rs = -1;
 		try {
 			rs = DBManager.getInstance().executeQuery(query);
 		} catch (ClassNotFoundException | SQLException e) {
-			logger.warning(String.format("Errore durante l'inserimento dell'ordine '%d' nel database.%n%s",
+			logger.warning(String.format("Errore durante l'inserimento dell'ordine '%s' nel database.%n%s",
 				this.id, e.getMessage())
 			);
-			throw new DBException(String.format("Errore nel salvataggio dell'ordine '%d'", this.id));
+			throw new DBException(String.format("Errore nel salvataggio dell'ordine '%s'", this.id));
 		}
 
 		query = "INSERT INTO ordini_farmaci (ordine, farmaco, quantita) " +
 				"VALUES (%d, %d, %d);";
-		for (Map.Entry<FarmacoDAO, Integer> item: ordineFarmaco.entrySet()) {
+		for (Map.Entry<FarmacoDAO, Integer> item: ordiniFarmaci.entrySet()) {
 			try {
-				rs = DBManager.getInstance().executeQuery(String.format(query, this.id, item.getKey().getId(), item.getValue()));
+				rs = DBManager.getInstance().executeQuery(String.format(query,
+					this.id, item.getKey().getId(), item.getValue())
+				);
 			} catch (ClassNotFoundException | SQLException e) {
 				logger.warning("Errore durante l'inserimento dell'ordine");
 			}
@@ -98,11 +176,11 @@ public class OrdineDAO {
 		return rs;
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -122,23 +200,15 @@ public class OrdineDAO {
 		this.ritirato = ritirato;
 	}
 
-	public TipoOrdine getTipoOrdine() {
-		return tipoOrdine;
+	public Map<FarmacoDAO, Integer> getOrdiniFarmaci() {
+		return ordiniFarmaci;
 	}
 
-	public void setTipoOrdine(TipoOrdine tipoOrdine) {
-		this.tipoOrdine = tipoOrdine;
+	public int getCliente() {
+		return cliente;
 	}
 
-	public Map<FarmacoDAO, Integer> getOrdineFarmaco() {
-		return ordineFarmaco;
-	}
-
-	public int getUtente() {
-		return utente;
-	}
-
-	public void setUtente(int utente) {
-		this.utente = utente;
+	public void setCliente(int cliente) {
+		this.cliente = cliente;
 	}
 }
