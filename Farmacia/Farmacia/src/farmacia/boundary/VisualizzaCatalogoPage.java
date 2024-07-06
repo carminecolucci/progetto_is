@@ -26,9 +26,10 @@ public class VisualizzaCatalogoPage extends JFrame {
 		for(DTO farmaco: listDTO){
 			model.addRow(new Object[]{farmaco.get("nome"), farmaco.get("prezzo"), farmaco.get("prescrizione")});
 		}
-		setVisible(true);
 		setSize(500, 500);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setContentPane(mainPanel);
+		setVisible(true);
 	}
 
 	public static void main(String[] args) {

@@ -21,6 +21,7 @@ public class EntityCatalogo {
 	 * Costruttore privato per impedire la creazione di istanze multiple.
 	 */
 	private EntityCatalogo() {
+		farmaci = new ArrayList<>();
 		try {
 			for (FarmacoDAO farmaco : FarmacoDAO.getFarmaci()) {
 				try {

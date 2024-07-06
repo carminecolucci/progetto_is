@@ -1,6 +1,8 @@
 package farmacia.boundary;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class HomePageCliente extends JFrame {
 
@@ -18,5 +20,12 @@ public class HomePageCliente extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setContentPane(homePanel);
+		setVisible(true);
+		btnVisualizzaCatalogo.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFrame visualizzaCatalogo = new VisualizzaCatalogoPage();
+			}
+		});
 	}
 }
