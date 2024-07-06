@@ -1,3 +1,8 @@
+\chapter{Piano di Test Funzionale}
+
+\section{RegistraCliente}
+
+\subsubsection*{Category Partition Testing}
 % \tiny
 % \scriptsize
 % \footnotesize
@@ -9,15 +14,9 @@
 % \huge
 % \Huge
 
-\chapter{Piano di Test Funzionale}
-
-\section{RegistraCliente}
-
-\paragraph{Category Partition Testing}
-
-\begin{table}[h]
+\begin{table}[!hbp]
 	\centering
-	\small
+	\footnotesize
 	\begin{tblr}{
 		colspec = XXXXXX,
 		hlines, vlines,
@@ -57,26 +56,28 @@
 	\end{tblr}
 \end{table}
 
-Il numero di test da effettuarsi senza particolari vincoli è: $3 \cdot 3 \cdot 3 \cdot 3 \cdot 3 \cdot 2 = 486$. Introduciamo i vincoli \texttt{[ERROR]}. Il numero di test da eseguire per testare singolarmente i vincoli è 11 (2 per Nome, 2 per Cognome, 2 per Username, 2 per Password, 2 per Email, 1 per DataNascita). Il numero di test risultante è 12: $(1 \cdot 1 \cdot 1 \cdot 1 \cdot 1 \cdot 1) + 11 = 12$.
+\noindent Il numero di test da effettuarsi senza particolari vincoli è: $3 \cdot 3 \cdot 3 \cdot 3 \cdot 3 \cdot 2 = 486$.
 
-\paragraph{Test Suite}
+\noindent Introduciamo i vincoli \texttt{[ERROR]}. Il numero di test da eseguire per testare singolarmente i vincoli è 11 (2 per Nome, 2 per Cognome, 2 per Username, 2 per Password, 2 per Email, 1 per DataNascita).
 
-\begin{table}[h]
+\noindent Il numero di test risultante è 12: $(1 \cdot 1 \cdot 1 \cdot 1 \cdot 1 \cdot 1) + 11 = 12$.
+
+\subsubsection*{Test Suite}
+
+\begin{table}[!hbp]
 	\centering
 	\footnotesize
-	\begin{longtblr}[
-			label = none
-		]{
-			colspec = lXXllXX,
+	\begin{tblr}{
+			colspec = lXXXlXX,
 			hlines, vlines,
 			row{1} = {font=\bfseries},
-			rowhead = 1,
+			measure=vbox
 		}
 		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-condizioni \\ Attese} \\
 		1 &
 		Tutti gli input validi &
 		Nome, Cognome, Username, Password, Email, DataNascita validi &
-		- &
+		Il cliente non è ancora registrato nel sistema &
 		{Nome: Mario \\ Cognome: Rossi \\ Username: mariorossi \\ Password: miapassword \\ Email: mariorossi@gmail.com \\ DataNascita: 22-06-1989} &
 		Registrazione effettuata & Il cliente è stato correttamente registrato nel sistema \\
 		2 &
@@ -93,6 +94,19 @@ Il numero di test da effettuarsi senza particolari vincoli è: $3 \cdot 3 \cdot 
 		{Nome: \\ Cognome: Rossi \\ Username: mariorossi \\ Password: miapassword \\ Email: mariorossi@gmail.com \\ DataNascita: 22-06-1989} &
 		Inserire un nome &
 		- \\
+	\end{tblr}
+\end{table}
+
+\begin{table}[!hbp]
+	\centering
+	\footnotesize
+	\begin{tblr}{
+			colspec = lXXXlXX,
+			hlines, vlines,
+			row{1} = {font=\bfseries},
+			measure=vbox
+		}
+		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-condizioni \\ Attese} \\
 		4 &
 		Cognome $>$ 45 caratteri &
 		Cognome $>$ 45 caratteri \texttt{[ERROR]}, Nome, Username, Password, Email, DataNascita validi &
@@ -107,5 +121,146 @@ Il numero di test da effettuarsi senza particolari vincoli è: $3 \cdot 3 \cdot 
 		{Nome: Mario \\ Cognome: \\ Username: mariorossi \\ Password: miapassword \\ Email: mariorossi@gmail.com \\ DataNascita: 22-06-1989} &
 		Inserire un cognome &
 		- \\
-	\end{longtblr}
+		6 &
+		Username $>$ 45 caratteri &
+		Username $>$ 45 caratteri \texttt{[ERROR]}, Nome, Cognome, Password, Email, DataNascita validi &
+		- &
+		{Nome: Mario \\ Cognome: Rossi \\ Username: \dots \\ Password: miapassword \\ Email: mariorossi@gmail.com \\ DataNascita: 22-06-1989} &
+		Username troppo lungo &
+		- \\
+		7 &
+		Username assente &
+		Username assente \texttt{[ERROR]}, Nome, Cognome, Password, Email, DataNascita validi &
+		- &
+		{Nome: Mario \\ Cognome: Rossi \\ Username: \\ Password: miapassword \\ Email: mariorossi@gmail.com \\ DataNascita: 22-06-1989} &
+		Inserire un username &
+		- \\
+		8 &
+		Password $<$ 8 caratteri &
+		Password $<$ 8 caratteri \texttt{[ERROR]}, Nome, Cognome, Username, Email, DataNascita validi &
+		- &
+		{Nome: Mario \\ Cognome: Rossi \\ Username: mariorossi \\ Password: prova \\ Email: mariorossi@gmail.com \\ DataNascita: 22-06-1989} &
+		Password troppo corta &
+		- \\
+		9 &
+		Password $>$ 45 caratteri &
+		Password $>$ 45 caratteri \texttt{[ERROR]}, Nome, Cognome, Username, Email, DataNascita validi &
+		- &
+		{Nome: Mario \\ Cognome: Rossi \\ Username: mariorossi \\ Password: \dots \\ Email: mariorossi@gmail.com \\ DataNascita: 22-06-1989} &
+		Password troppo lunga &
+		- \\
+		10 &
+		Email $>$ 45 caratteri &
+		Email $>$ 45 caratteri \texttt{[ERROR]}, Nome, Cognome, Username, Password, DataNascita validi &
+		- &
+		{Nome: Mario \\ Cognome: Rossi \\ Username: mariorossi \\ Password: miapassword \\ Email: \dots \\ DataNascita: 22-06-1989} &
+		Email troppo lunga &
+		- \\
+		11 &
+		Email assente &
+		Email assente \texttt{[ERROR]}, Nome, Cognome, Username, Password, DataNascita validi &
+		- &
+		{Nome: Mario \\ Cognome: Rossi \\ Username: \\ Password: miapassword \\ Email: \\ DataNascita: 22-06-1989} &
+		Inserire un'email &
+		- \\
+		12 &
+		Formato DataNascita non valida &
+		Formato DataNascita non valida \texttt{[ERROR]}, Nome, Cognome, Username, Password, Email validi &
+		- &
+		{Nome: Mario \\ Cognome: Rossi \\ Username: mariorossi \\ Password: miapassword \\ Email: mariorossi@gmail.com \\ DataNascita: 1989-06-22} &
+		Formato data non valido &
+		- \\
+	\end{tblr}
+\end{table}
+
+\section{LoginUtente}
+
+\subsubsection*{Category Partition Testing}
+% \tiny
+% \scriptsize
+% \footnotesize
+% \small
+% \normalsize
+% \large
+% \Large
+% \LARGE
+% \huge
+% \Huge
+
+\begin{table}[!hbp]
+	\centering
+	\footnotesize
+	\begin{tblr}{
+		colspec = XX,
+		hlines, vlines,
+		row{1} = {font=\bfseries},
+		measure=vbox, stretch=-1
+		}
+		Username & Password \\
+		\begin{itemize}[leftmargin=*]
+			\item Stringa di caratteri di lunghezza $\leq$ 45
+			\item Stringa di caratteri di lunghezza $>$ 45 \texttt{[ERROR]}
+			\item Stringa di caratteri vuota \texttt{[ERROR]}
+		\end{itemize} &
+		\begin{itemize}[leftmargin=*]
+			\item Stringa di caratteri di lunghezza compresa tra 8 e 45
+			\item Stringa di caratteri di lunghezza $<$ 8 \texttt{[ERROR]}
+			\item Stringa di caratteri di lunghezza $>$ 45 \texttt{[ERROR]}
+		\end{itemize}
+	\end{tblr}
+\end{table}
+
+\noindent Il numero di test da effettuarsi senza particolari vincoli è: $3 \cdot 3 = 9$.
+
+\noindent Introduciamo i vincoli \texttt{[ERROR]}. Il numero di test da eseguire per testare singolarmente i vincoli è 4 (2 per Username, 2 per Password).
+
+\noindent Il numero di test risultante è 5: $(1 \cdot 1) + 4 = 5$.
+
+\subsubsection*{Test Suite}
+
+\begin{table}[!hbp]
+	\centering
+	\footnotesize
+	\begin{tblr}{
+			colspec = lXXllXX,
+			hlines, vlines,
+			row{1} = {font=\bfseries},
+			measure=vbox
+		}
+		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-condizioni \\ Attese} \\
+		1 &
+		Tutti gli input validi &
+		Username, Password validi &
+		{L'utente deve essere \\ correttamente \\ registrato nel sistema} &
+		{Username: mariorossi \\ Password: miapassword} &
+		Login effettuato & L'utente è entrato correttamente nel sistema \\
+		2 &
+		Username $>$ 45 caratteri &
+		Username $>$ 45 caratteri \texttt{[ERROR]}, Password valida &
+		- &
+		{Username: \dots \\ Password: miapassword} &
+		Username troppo lungo &
+		- \\
+		3 &
+		Username assente &
+		Username assente \texttt{[ERROR]}, Password valida &
+		- &
+		{Username: \\ Password: miapassword} &
+		Inserire un username &
+		- \\
+		4 &
+		Password $<$ 8 caratteri &
+		Password $<$ 8 caratteri \texttt{[ERROR]}, Username valido &
+		- &
+		{Username: mariorossi \\ Password: prova} &
+		Password troppo corta &
+		- \\
+		5 &
+		Password $>$ 45 caratteri &
+		Password $>$ 45 caratteri \texttt{[ERROR]}, Username valido &
+		- &
+		{Username: mariorossi \\ Password: \dots} &
+		Password troppo lunga &
+		- \\
+	\end{tblr}
 \end{table}
