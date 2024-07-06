@@ -1,25 +1,22 @@
-package farmacia.boundary.CreaOrdinePage;
+package farmacia.boundary.creaordine;
 
 import farmacia.dto.DTO;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class creaOrdinePage extends JFrame{
+public class CreaOrdinePage extends JFrame {
 	private JTable tblFarmaciOrdine;
 
-	public creaOrdinePage() {
+	public CreaOrdinePage() {
 		setTitle("Crea Ordine");
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 		pack();
 		setSize(600, 400);
 
-
 		CustomTableModel model = new CustomTableModel(new Object[][]{}, new String[]{"Nome", "Prezzo", "Prescrizione", "Quantità", "Possiedi la prescrizione?"});
-
 
 		tblFarmaciOrdine = new JTable(model);
 		tblFarmaciOrdine.getColumnModel().getColumn(4).setCellRenderer(new CheckBoxRenderer());
@@ -29,7 +26,6 @@ public class creaOrdinePage extends JFrame{
 		getContentPane().add(scrollPane);
 
 		tblFarmaciOrdine.getColumnModel().getColumn(3).setCellEditor(new QuantitaCellEditor());
-
 
 		//ControllerCatalogo controllerCatalogo = ControllerCatalogo.getInstance();
 		//List<DTO> listDTO = controllerCatalogo.visualizzaCatalogo();
@@ -68,19 +64,11 @@ public class creaOrdinePage extends JFrame{
 		listDTO.add(DTOtest4);
 		listDTO.add(DTOtest1);
 		listDTO.add(DTOtest1);
-
 		listDTO.add(DTOtest1);
-
 		listDTO.add(DTOtest1);
-
 		listDTO.add(DTOtest1);
-
 		listDTO.add(DTOtest1);
-
 		listDTO.add(DTOtest1);
-
-		
-
 
 		for(DTO farmaco : listDTO){
 			String prescrizioneNecessaria;
@@ -104,7 +92,7 @@ public class creaOrdinePage extends JFrame{
 	}
 
 	public static void main(String[] args) {
-		creaOrdinePage frame = new creaOrdinePage();
+		new CreaOrdinePage();
 	}
 
 }

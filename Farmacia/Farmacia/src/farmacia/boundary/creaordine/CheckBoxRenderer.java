@@ -1,4 +1,4 @@
-package farmacia.boundary.CreaOrdinePage;
+package farmacia.boundary.creaordine;
 
 import javax.swing.table.TableCellRenderer;
 import javax.swing.*;
