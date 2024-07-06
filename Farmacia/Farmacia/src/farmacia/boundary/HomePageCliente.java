@@ -1,5 +1,7 @@
 package farmacia.boundary;
 
+import farmacia.boundary.CreaOrdinePage.creaOrdinePage;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,14 +19,22 @@ public class HomePageCliente extends JFrame {
 	public HomePageCliente() {
 		setSize(500, 500);
 		setTitle("Homepage Cliente");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setContentPane(homePanel);
 		setVisible(true);
+
 		btnVisualizzaCatalogo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFrame visualizzaCatalogo = new VisualizzaCatalogoPage();
+			}
+		});
+
+		btnCercaFarmaco.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFrame creaOrdine = new creaOrdinePage();
 			}
 		});
 	}

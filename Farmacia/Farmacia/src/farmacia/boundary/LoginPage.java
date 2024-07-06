@@ -18,7 +18,7 @@ public class LoginPage extends JFrame {
 
 	public LoginPage() {
 		setSize(700, 700);
-		setTitle("Login");
+		setTitle("Schermata di login");
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setContentPane(loginPanel);
