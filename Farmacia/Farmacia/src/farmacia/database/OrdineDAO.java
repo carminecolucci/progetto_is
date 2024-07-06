@@ -35,8 +35,11 @@ public class OrdineDAO {
 		this.ordineFarmaci = new HashMap<>();
 	}
 
+	/**
+	 * Costruttore che crea un nuovo <code>OrdineDAO</code> e lo popola via DB.
+	 * @throws DBException Lanciata se non è possibile accedere al DB o se il farmaco non esiste.
+	 */
 	public OrdineDAO(String id) throws DBException {
-		this.id = id;
 		this.caricaDaDB(id);
 	}
 

@@ -23,7 +23,7 @@ public class CercaFarmacoTest {
 
 	@AfterClass
 	public static void tearDownAfterClass() throws DBException {
-		FarmacoDAO.deleteFarmacoByNome("Clavulin");
+		FarmacoDAO.deleteFarmaco("Clavulin");
 	}
 
 	@Test
@@ -36,7 +36,7 @@ public class CercaFarmacoTest {
 		boolean esito = true;
 		DTO dto;
 		try {
-			dto = controllerCatalogo.cercaFarmacoByNome("Clavulin");
+			dto = controllerCatalogo.cercaFarmaco("Clavulin");
 			assertTrue((float)dto.get("prezzo") == 10 && (boolean)dto.get("prescrizione") == false && ((String)dto.get("nome")).equals("Clavulin") && (int)dto.get("scorte") == 50);
 		} catch (FarmacoNotFoundException e) {
 			System.err.println(e.getMessage());

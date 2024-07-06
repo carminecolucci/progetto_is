@@ -20,7 +20,7 @@ public class AggiungiFarmacoTest {
 
 	@After
 	public void tearDown() throws DBException {
-		FarmacoDAO.deleteFarmacoByNome("OkiTask");
+		FarmacoDAO.deleteFarmaco("OkiTask");
 	}
 
 	@Test

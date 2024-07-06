@@ -71,6 +71,7 @@ public class EntityCliente extends EntityUtente {
 	 * @throws DBException Lanciata quando si cerca di salvare un utente già registrato
 	 */
 	public void salvaInDB() throws DBException {
+		// TODO: Make crud methods take no parameters
 		UtenteDAO utenteDAO = new UtenteDAO();
 		utenteDAO.createUtente(this.getNome(), this.getCognome(), this.getUsername(), this.getPassword(), this.getDataNascita(), this.getEmail());
 	}

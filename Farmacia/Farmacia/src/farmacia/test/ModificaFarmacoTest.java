@@ -23,7 +23,7 @@ public class ModificaFarmacoTest {
 
 	@After
 	public void tearDownAfter() throws DBException {
-		FarmacoDAO.deleteFarmacoByNome("SuperAulin");
+		FarmacoDAO.deleteFarmaco("SuperAulin");
 	}
 
 	@Test
@@ -34,8 +34,12 @@ public class ModificaFarmacoTest {
 		int scorte = 50;
 		controllerCatalogo.aggiungiFarmaco(prezzo, prescrizione, nome, scorte);
 		// TODO: rifare il test con codice più pulito, farsi restituire i farmaci con visualizzaCatalogo come se stessimo usando la GUI
-		controllerCatalogo.modificaFarmaco((int)controllerCatalogo.cercaFarmacoByNome(nome).get("id"), 20, true, "SuperAulin", 50);
-		DTO dto = controllerCatalogo.cercaFarmacoByNome("SuperAulin");
-		assertTrue((float)dto.get("prezzo") == 20 && (boolean)dto.get("prescrizione") == true && ((String)dto.get("nome")).equals("SuperAulin") && (int)dto.get("scorte") == 50);
+		controllerCatalogo.modificaFarmaco((int)controllerCatalogo.cercaFarmaco(nome).get("id"), 20, true, "SuperAulin", 50);
+		DTO dto = controllerCatalogo.cercaFarmaco("SuperAulin");
+		assertTrue((float)dto.get("prezzo") == 20
+			&& (boolean) dto.get("prescrizione")
+			&& "SuperAulin".equals(dto.get("nome"))
+			&& (int)dto.get("scorte") == 50
+		);
 	}
 }

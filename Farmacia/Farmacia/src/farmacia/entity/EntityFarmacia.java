@@ -35,7 +35,7 @@ public class EntityFarmacia {
 	 * @return l'istanza singleton di <code>EntityFarmacia</code>.
 	 */
 	public static EntityFarmacia getInstance() throws DBException {
-		if(uniqueInstance == null) {
+		if (uniqueInstance == null) {
 			uniqueInstance = new EntityFarmacia();
 		}
 		return uniqueInstance;
@@ -50,7 +50,7 @@ public class EntityFarmacia {
 		try {
 			nuovoCliente.salvaInDB();
 		} catch (DBException e) {
-			throw new RegistrationFailedException("Registrazione dell'utente " + username + " fallita. " + e.getMessage());
+			throw new RegistrationFailedException(String.format("Registrazione dell'utente '%s' fallita.%n%s", username, e.getMessage()));
 		}
 	}
 
@@ -69,9 +69,8 @@ public class EntityFarmacia {
 				throw new LoginFailedException("Login fallito, password errata");
 			}
 		} catch (DBException e) {
-			throw new LoginFailedException("Login dell'utente " + username + " fallita. " + e.getMessage());
+			throw new LoginFailedException(String.format("Login dell'utente '%s' fallita.%n%s", username, e.getMessage()));
 		}
-
 	}
 
 	/**

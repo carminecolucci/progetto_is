@@ -21,7 +21,7 @@ public class CercaFarmacoInesistenteTest {
 	public void testCercaFarmacoInesistente() {
 		boolean esito = true;
 		try {
-			controllerCatalogo.cercaFarmacoByNome("Augmentin");
+			controllerCatalogo.cercaFarmaco("Augmentin");
 		} catch (FarmacoNotFoundException e) {
 			System.err.println(e.getMessage());
 			esito = false;

@@ -27,7 +27,7 @@ public class ControllerUtenti {
 	 * @return l'istanza singleton di <code>ControllerUtenti</code>.
 	 */
 	public static ControllerUtenti getInstance() {
-		if(uniqueInstance == null) {
+		if (uniqueInstance == null) {
 			uniqueInstance = new ControllerUtenti();
 		}
 		return uniqueInstance;

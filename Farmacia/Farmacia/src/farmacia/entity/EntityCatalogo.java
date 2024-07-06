@@ -6,11 +6,12 @@ import farmacia.exceptions.FarmacoCreationFailedException;
 import farmacia.exceptions.FarmacoNotFoundException;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class EntityCatalogo {
 
-	ArrayList<EntityFarmaco> farmaci;
+	List<EntityFarmaco> farmaci;
 
 	/**
 	 * L'unica istanza di <code>EntityCatalogo</code> che implementa il pattern Singleton.
@@ -24,11 +25,7 @@ public class EntityCatalogo {
 		farmaci = new ArrayList<>();
 		try {
 			for (FarmacoDAO farmaco : FarmacoDAO.getFarmaci()) {
-				try {
-					farmaci.add(new EntityFarmaco(farmaco));
-				} catch (NullPointerException e) {
-					e.printStackTrace();
-				}
+				farmaci.add(new EntityFarmaco(farmaco));
 			}
 		} catch (DBException e) {
 			throw new RuntimeException(e);
@@ -40,7 +37,7 @@ public class EntityCatalogo {
 	 * @return l'istanza singleton di <code>EntityCatalogo</code>.
 	 */
 	public static EntityCatalogo getInstance() {
-		if(uniqueInstance == null) {
+		if (uniqueInstance == null) {
 			uniqueInstance = new EntityCatalogo();
 		}
 		return uniqueInstance;
@@ -90,7 +87,9 @@ public class EntityCatalogo {
 		throw new FarmacoNotFoundException("Farmaco non trovato");
 	}
 
-	public EntityFarmaco cercaFarmacoByNome(String nome) throws FarmacoNotFoundException {
+	// cercaById è necessario?
+
+	public EntityFarmaco cercaFarmaco(String nome) throws FarmacoNotFoundException {
 		for (EntityFarmaco farmaco : farmaci) {
 			if (farmaco.getNome().equals(nome)) {
 				return farmaco;
@@ -122,25 +121,21 @@ public class EntityCatalogo {
 	}
 
 	/**
-	 * @param farmacoQuantita serie di coppie (idFarmaco,quantita)
+	 * @param farmacoQuantita serie di coppie (idFarmaco, quantita)
 	 * @return true se tutte i farmaci di <code>farmacoQuantita</code> hanno scorte sufficienti, false altrimenti
 	 */
 	public boolean checkScorte(Map<Integer, Integer> farmacoQuantita) {
-		boolean trovato = false;
-		for (Integer id : farmacoQuantita.keySet()) {
+		for (Map.Entry<Integer, Integer>  entry : farmacoQuantita.entrySet()) {
 			for (EntityFarmaco farmaco : farmaci) {
-				if (farmaco.getId() == id) {
-					trovato = true;
-					if (farmaco.getScorte() - farmacoQuantita.get(id) < 0) {
-						return false;
-					}
+				if (farmaco.getId() == entry.getKey() && farmaco.getScorte() - entry.getValue() < 0) {
+					return false;
 				}
 			}
 		}
 		return true;
 	}
 
-	public ArrayList<EntityFarmaco> visualizza() {
+	public List<EntityFarmaco> visualizza() {
 		return farmaci;
 	}
 }

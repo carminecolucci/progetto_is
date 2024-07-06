@@ -27,7 +27,7 @@ public class ControllerCatalogo {
 	 * @return l'istanza singleton di <code>ControllerCatalogo</code>.
 	 */
 	public static ControllerCatalogo getInstance() {
-		if(uniqueInstance == null) {
+		if (uniqueInstance == null) {
 			uniqueInstance = new ControllerCatalogo();
 		}
 		return uniqueInstance;
@@ -43,21 +43,9 @@ public class ControllerCatalogo {
 		catalogo.modificaFarmaco(id, prezzo, prescrizione, nome, scorte);
 	}
 
-	public DTO cercaFarmacoByID(int id) throws FarmacoNotFoundException {
+	public DTO cercaFarmaco(String nome) throws FarmacoNotFoundException {
 		EntityCatalogo catalogo = EntityCatalogo.getInstance();
-		EntityFarmaco farmaco = catalogo.cercaFarmacoById(id);
-		DTO dto = new DTO();
-		dto.set("id", farmaco.getId());
-		dto.set("prezzo", farmaco.getPrezzo());
-		dto.set("prescrizione", farmaco.isPrescrizione());
-		dto.set("nome", farmaco.getNome());
-		dto.set("scorte", farmaco.getScorte());
-		return dto;
-	}
-
-	public DTO cercaFarmacoByNome(String nome) throws FarmacoNotFoundException {
-		EntityCatalogo catalogo = EntityCatalogo.getInstance();
-		EntityFarmaco farmaco = catalogo.cercaFarmacoByNome(nome);
+		EntityFarmaco farmaco = catalogo.cercaFarmaco(nome);
 		DTO dto = new DTO();
 		dto.set("id", farmaco.getId());
 		dto.set("prezzo", farmaco.getPrezzo());
@@ -73,9 +61,9 @@ public class ControllerCatalogo {
 	}
 
 	public List<DTO> visualizzaCatalogo() {
-		ArrayList<DTO> farmaciDTO = new ArrayList<>();
+		List<DTO> farmaciDTO = new ArrayList<>();
 		EntityCatalogo catalogo = EntityCatalogo.getInstance();
-		ArrayList<EntityFarmaco> farmaci = catalogo.visualizza();
+		List<EntityFarmaco> farmaci = catalogo.visualizza();
 		for (EntityFarmaco farmaco : farmaci) {
 			DTO dto = new DTO();
 			dto.set("id", farmaco.getId());

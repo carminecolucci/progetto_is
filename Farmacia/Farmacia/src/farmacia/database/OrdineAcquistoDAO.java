@@ -23,11 +23,10 @@ public class OrdineAcquistoDAO {
 	/**
 	 * Costruttore che popola il DAO a partire dall'id dell'ordine di acquisto.
 	 * @param id L'id (uuid) dell'ordine di acquisto.
-	 * @throws DBException Lanciata se non è possibile accedere al DB o se l'ordine di acquisto non esiste.
+	 * @throws DBException Se non è possibile accedere al DB o se l'ordine di acquisto non esiste.
 	 */
 	public OrdineAcquistoDAO(String id) throws DBException {
-		this.id = id;
-		this.caricaDaDB();
+		this.caricaDaDB(id);
 	}
 
 	/**
@@ -44,7 +43,7 @@ public class OrdineAcquistoDAO {
 
 	/**
 	 * Funzione che popola l'ordine con il farmaco e la rispettiva quantità.
-	 * @param idFarmaco L'id del farmaco.
+	 * @param idFarmaco id del farmaco.
 	 * @param quantita La quantità di farmaco desiderata.
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se il farmaco non esiste.
 	 */
@@ -72,14 +71,15 @@ public class OrdineAcquistoDAO {
 	}
 
 	/**
-	 * Funzione privata che popola l'OrdineAcquistoDAO consultando il DB.
+	 * Funzione privata che popola l'OrdineAcquistoDAO consultando il DB a partire dall'id.
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se l'ordine di acquisto non esiste.
 	 */
-	private void caricaDaDB() throws DBException {
-		String query = String.format("SELECT * from ordini_acquisto WHERE id = '%s';", this.id);
+	private void caricaDaDB(String id) throws DBException {
+		String query = String.format("SELECT * from ordini_acquisto WHERE id = '%s';", id);
 
 		try (ResultSet rs = DBManager.getInstance().selectQuery(query)) {
 			if (rs.next()) {
+				this.id = id;
 				this.dataCreazione = rs.getDate("dataCreazione");
 				this.ricevuto = rs.getBoolean("ricevuto");
 			}
@@ -98,9 +98,10 @@ public class OrdineAcquistoDAO {
 				this.ordineAcquistoFarmaci.put(new FarmacoDAO(idFarmaco), quantita);
 			}
 		} catch (ClassNotFoundException | SQLException e) {
-			logger.warning(String.format("Errore durante il caricamento dell'ordine di acquisto con id " +
-					"'%s'.%n%s", this.id, e.getMessage()));
-			throw new DBException("Errore nel caricamento delle informazioni dell'ordine di acquisto con id '" + this.id + "'.");
+			logger.warning(String.format("Errore durante il caricamento dell'ordine di acquisto con id '%s'.%n%s",
+				this.id, e.getMessage()));
+			throw new DBException(String.format("Errore nel caricamento delle informazioni dell'ordine di acquisto con id '%s.",
+				this.id));
 		}
 	}
 
@@ -110,9 +111,8 @@ public class OrdineAcquistoDAO {
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se l'ordine di acquisto già esiste.
 	 */
 	private int salvaInDB() throws DBException {
-		String query = String.format("INSERT INTO ordini_acquisto (id, dataCreazione, ricevuto) VALUES" +
-						" ('%s', '%s', %d);",
-				this.id, this.dataCreazione, this.ricevuto ? 1 : 0);
+		String query = String.format("INSERT INTO ordini_acquisto (id, dataCreazione, ricevuto) VALUES ('%s', '%s', %d);",
+			this.id, this.dataCreazione, this.ricevuto ? 1 : 0);
 
 		int rs = -1;
 		try {

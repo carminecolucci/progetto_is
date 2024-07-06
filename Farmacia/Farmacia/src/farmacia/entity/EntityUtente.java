@@ -2,7 +2,6 @@ package farmacia.entity;
 
 import farmacia.TipoUtente;
 import farmacia.database.UtenteDAO;
-import farmacia.exceptions.DBException;
 
 import java.util.Date;
 

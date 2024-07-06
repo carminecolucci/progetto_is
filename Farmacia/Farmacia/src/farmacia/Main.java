@@ -12,7 +12,6 @@ public class Main {
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}
-		// Prova prova = new Prova();
-		LoginPage loginPage = new LoginPage();
+		new LoginPage();
 	}
 }
