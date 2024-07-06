@@ -10,7 +10,7 @@ public class EntityFarmaco {
     private String nome;
     private int scorte;
 
-    public EntityFarmaco() {}
+    public EntityFarmaco() { }
 
     public EntityFarmaco(FarmacoDAO farmacoDAO) {
         this.id = farmacoDAO.getId();
@@ -31,6 +31,11 @@ public class EntityFarmaco {
         FarmacoDAO nuovoFarmaco = new FarmacoDAO();
         nuovoFarmaco.createFarmaco(this.prezzo, this.prescrizione, this.nome, this.scorte);
         this.id = nuovoFarmaco.getId();
+    }
+
+    public void eliminaDaDB() throws DBException {
+        FarmacoDAO farmacoDaEliminare = new FarmacoDAO(this.id);
+        farmacoDaEliminare.deleteFarmaco();
     }
 
     public int getId() {
