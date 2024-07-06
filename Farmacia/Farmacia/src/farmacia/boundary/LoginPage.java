@@ -13,8 +13,8 @@ public class LoginPage extends JFrame {
 	private JTextField txtUsername;
 	private JPanel loginPanel;
 	private JPasswordField pswPassword;
-	private JButton loginButton;
-	private JButton registratiButton;
+	private JButton btnLogin;
+	private JButton btnRegistrati;
 
 	public LoginPage() {
 		setSize(500, 500);
@@ -23,7 +23,7 @@ public class LoginPage extends JFrame {
 		setLocationRelativeTo(null);
 		setContentPane(loginPanel);
 
-		loginButton.addActionListener(e -> {
+		btnLogin.addActionListener(e -> {
 			ControllerUtenti controllerUtenti = ControllerUtenti.getInstance();
 			String username = this.txtUsername.getText();
 			String password = String.valueOf(this.pswPassword.getPassword());
@@ -51,7 +51,7 @@ public class LoginPage extends JFrame {
 			}
 		});
 
-		registratiButton.addActionListener(e -> {
+		btnRegistrati.addActionListener(e -> {
 			JFrame registerPage = new RegisterPage();
 			setVisible(false);
 			registerPage.addWindowListener(new WindowAdapter() {
