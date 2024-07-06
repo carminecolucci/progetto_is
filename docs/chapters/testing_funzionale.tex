@@ -1,3 +1,5 @@
+\chapter{Piano di Test Funzionale}
+
 % \tiny
 % \scriptsize
 % \footnotesize
@@ -9,103 +11,5 @@
 % \huge
 % \Huge
 
-\chapter{Piano di Test Funzionale}
-
-\section{RegistraCliente}
-
-\paragraph{Category Partition Testing}
-
-\begin{table}[h]
-	\centering
-	\small
-	\begin{tblr}{
-		colspec = XXXXXX,
-		hlines, vlines,
-		row{1} = {font=\bfseries},
-		measure=vbox, stretch=-1
-		}
-		Nome & Cognome & Username & Password & Email & DataNascita \\
-		\begin{itemize}[leftmargin=*]
-			\item Stringa di caratteri di lunghezza $\leq$ 45
-			\item Stringa di caratteri di lunghezza $>$ 45 \texttt{[ERROR]}
-			\item Stringa di caratteri vuota \texttt{[ERROR]}
-		\end{itemize} &
-		\begin{itemize}[leftmargin=*]
-			\item Stringa di caratteri di lunghezza $\leq$ 45
-			\item Stringa di caratteri di lunghezza $>$ 45 \texttt{[ERROR]}
-			\item Stringa di caratteri vuota \texttt{[ERROR]}
-		\end{itemize} &
-		\begin{itemize}[leftmargin=*]
-			\item Stringa di caratteri di lunghezza $\leq$ 45
-			\item Stringa di caratteri di lunghezza $>$ 45 \texttt{[ERROR]}
-			\item Stringa di caratteri vuota \texttt{[ERROR]}
-		\end{itemize} &
-		\begin{itemize}[leftmargin=*]
-			\item Stringa di caratteri di lunghezza compresa tra 8 e 45
-			\item Stringa di caratteri di lunghezza $<$ 8 \texttt{[ERROR]}
-			\item Stringa di caratteri di lunghezza $>$ 45 \texttt{[ERROR]}
-		\end{itemize} &
-		\begin{itemize}[leftmargin=*]
-			\item Stringa di caratteri di lunghezza $\leq$ 45
-			\item Stringa di caratteri di lunghezza $>$ 45 \texttt{[ERROR]}
-			\item Stringa di caratteri vuota \texttt{[ERROR]}
-		\end{itemize} &
-		\begin{itemize}[leftmargin=*]
-			\item Data con formato valido (gg-mm-aaaa)
-			\item Data con formato non valido \texttt{[ERROR]}
-		\end{itemize}
-	\end{tblr}
-\end{table}
-
-Il numero di test da effettuarsi senza particolari vincoli è: $3 \cdot 3 \cdot 3 \cdot 3 \cdot 3 \cdot 2 = 486$. Introduciamo i vincoli \texttt{[ERROR]}. Il numero di test da eseguire per testare singolarmente i vincoli è 11 (2 per Nome, 2 per Cognome, 2 per Username, 2 per Password, 2 per Email, 1 per DataNascita). Il numero di test risultante è 12: $(1 \cdot 1 \cdot 1 \cdot 1 \cdot 1 \cdot 1) + 11 = 12$.
-
-\paragraph{Test Suite}
-
-\begin{table}[h]
-	\centering
-	\footnotesize
-	\begin{longtblr}[
-			label = none
-		]{
-			colspec = lXXllXX,
-			hlines, vlines,
-			row{1} = {font=\bfseries},
-			rowhead = 1,
-		}
-		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-condizioni \\ Attese} \\
-		1 &
-		Tutti gli input validi &
-		Nome, Cognome, Username, Password, Email, DataNascita validi &
-		- &
-		{Nome: Mario \\ Cognome: Rossi \\ Username: mariorossi \\ Password: miapassword \\ Email: mariorossi@gmail.com \\ DataNascita: 22-06-1989} &
-		Registrazione effettuata & Il cliente è stato correttamente registrato nel sistema \\
-		2 &
-		Nome $>$ 45 caratteri &
-		Nome $>$ 45 caratteri \texttt{[ERROR]}, Cognome, Username, Password, Email, DataNascita validi &
-		- &
-		{Nome: \dots \\ Cognome: Rossi \\ Username: mariorossi \\ Password: miapassword \\ Email: mariorossi@gmail.com \\ DataNascita: 22-06-1989} &
-		Nome troppo lungo &
-		- \\
-		3 &
-		Nome assente &
-		Nome assente \texttt{[ERROR]}, Cognome, Username, Password, Email, DataNascita validi &
-		- &
-		{Nome: \\ Cognome: Rossi \\ Username: mariorossi \\ Password: miapassword \\ Email: mariorossi@gmail.com \\ DataNascita: 22-06-1989} &
-		Inserire un nome &
-		- \\
-		4 &
-		Cognome $>$ 45 caratteri &
-		Cognome $>$ 45 caratteri \texttt{[ERROR]}, Nome, Username, Password, Email, DataNascita validi &
-		- &
-		{Nome: Mario \\ Cognome: \dots \\ Username: mariorossi \\ Password: miapassword \\ Email: mariorossi@gmail.com \\ DataNascita: 22-06-1989} &
-		Cognome troppo lungo &
-		- \\
-		5 &
-		Cognome assente &
-		Cognome assente \texttt{[ERROR]}, Nome, Username, Password, Email, DataNascita validi &
-		- &
-		{Nome: Mario \\ Cognome: \\ Username: mariorossi \\ Password: miapassword \\ Email: mariorossi@gmail.com \\ DataNascita: 22-06-1989} &
-		Inserire un cognome &
-		- \\
-	\end{longtblr}
-\end{table}
+\input{chapters/test_funzionale/RegistraCliente.tex}
+\input{chapters/test_funzionale/LoginUtente.tex}

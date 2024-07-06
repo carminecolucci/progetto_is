@@ -1,0 +1,81 @@
+\section{LoginUtente}
+
+\subsubsection*{Category Partition Testing}
+
+\begin{table}[!hbp]
+	\centering
+	\footnotesize
+	\begin{tblr}{
+		colspec = XX,
+		hlines, vlines,
+		row{1} = {font=\bfseries},
+		measure=vbox, stretch=-1
+		}
+		Username & Password \\
+		\begin{itemize}[leftmargin=*]
+			\item Stringa di caratteri di lunghezza $\leq$ 45
+			\item Stringa di caratteri di lunghezza $>$ 45 \texttt{[ERROR]}
+			\item Stringa di caratteri vuota \texttt{[ERROR]}
+		\end{itemize} &
+		\begin{itemize}[leftmargin=*]
+			\item Stringa di caratteri di lunghezza compresa tra 8 e 45
+			\item Stringa di caratteri di lunghezza $<$ 8 \texttt{[ERROR]}
+			\item Stringa di caratteri di lunghezza $>$ 45 \texttt{[ERROR]}
+		\end{itemize}
+	\end{tblr}
+\end{table}
+
+\noindent Il numero di test da effettuarsi senza particolari vincoli è: $3 \cdot 3 = 9$.
+
+\noindent Introduciamo i vincoli \texttt{[ERROR]}. Il numero di test da eseguire per testare singolarmente i vincoli è 4 (2 per Username, 2 per Password).
+
+\noindent Il numero di test risultante è 5: $(1 \cdot 1) + 4 = 5$.
+
+\subsubsection*{Test Suite}
+
+\begin{table}[!hbp]
+	\centering
+	\footnotesize
+	\begin{tblr}{
+			colspec = lXXllXX,
+			hlines, vlines,
+			row{1} = {font=\bfseries},
+			measure=vbox
+		}
+		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-condizioni \\ Attese} \\
+		1 &
+		Tutti gli input validi &
+		Username, Password validi &
+		{L'utente deve essere \\ correttamente \\ registrato nel sistema} &
+		{Username: mariorossi \\ Password: miapassword} &
+		Login effettuato & L'utente è entrato correttamente nel sistema \\
+		2 &
+		Username $>$ 45 caratteri &
+		Username $>$ 45 caratteri \texttt{[ERROR]}, Password valida &
+		- &
+		{Username: \dots \\ Password: miapassword} &
+		Username troppo lungo &
+		- \\
+		3 &
+		Username assente &
+		Username assente \texttt{[ERROR]}, Password valida &
+		- &
+		{Username: \\ Password: miapassword} &
+		Inserire un username &
+		- \\
+		4 &
+		Password $<$ 8 caratteri &
+		Password $<$ 8 caratteri \texttt{[ERROR]}, Username valido &
+		- &
+		{Username: mariorossi \\ Password: prova} &
+		Password troppo corta &
+		- \\
+		5 &
+		Password $>$ 45 caratteri &
+		Password $>$ 45 caratteri \texttt{[ERROR]}, Username valido &
+		- &
+		{Username: mariorossi \\ Password: \dots} &
+		Password troppo lunga &
+		- \\
+	\end{tblr}
+\end{table}
