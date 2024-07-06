@@ -6,7 +6,6 @@ import farmacia.dto.DTO;
 import farmacia.exceptions.DBException;
 import farmacia.exceptions.FarmacoCreationFailedException;
 import farmacia.exceptions.FarmacoNotFoundException;
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -24,21 +23,21 @@ public class CercaFarmacoTest {
 
 	@AfterClass
 	public static void tearDownAfterClass() throws DBException {
-		FarmacoDAO.deleteFarmacoByNome("Aulin");
+		FarmacoDAO.deleteFarmacoByNome("Clavulin");
 	}
 
 	@Test
 	public void testCercaFarmaco() throws FarmacoCreationFailedException {
 		float prezzo = 10;
 		boolean prescrizione = false;
-		String nome = "Aulin";
+		String nome = "Clavulin";
 		int scorte = 50;
 		controllerCatalogo.aggiungiFarmaco(prezzo, prescrizione, nome, scorte);
 		boolean esito = true;
 		DTO dto;
 		try {
-			dto = controllerCatalogo.cercaFarmacoByNome("Aulin");
-			assertTrue((float)dto.get("prezzo") == 10 && (boolean)dto.get("prescrizione") == false && ((String)dto.get("nome")).equals("Aulin") && (int)dto.get("scorte") == 50);
+			dto = controllerCatalogo.cercaFarmacoByNome("Clavulin");
+			assertTrue((float)dto.get("prezzo") == 10 && (boolean)dto.get("prescrizione") == false && ((String)dto.get("nome")).equals("Clavulin") && (int)dto.get("scorte") == 50);
 		} catch (FarmacoNotFoundException e) {
 			System.err.println(e.getMessage());
 			esito = false;
