@@ -17,7 +17,7 @@ public class LoginPage extends JFrame {
 	private JButton btnRegistrati;
 
 	public LoginPage() {
-		setSize(500, 500);
+		setSize(700, 700);
 		setTitle("Login");
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
