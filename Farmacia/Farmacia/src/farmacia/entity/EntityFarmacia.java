@@ -95,7 +95,7 @@ public class EntityFarmacia {
 		EntityOrdineAcquisto ordineAcquisto = new EntityOrdineAcquisto();
 		try {
 			for (Map.Entry<Integer, Integer> entry : farmaciQuantita.entrySet()) {
-				EntityFarmaco farmaco = catalogo.cercaFarmaco(entry.getKey());
+				EntityFarmaco farmaco = catalogo.cercaFarmacoById(entry.getKey());
 				ordineAcquisto.aggiungiOrdineAcquistoFarmaco(farmaco, entry.getValue());
 			}
 			ordineAcquisto.salvaInDB();

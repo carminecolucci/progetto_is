@@ -126,6 +126,11 @@ public class UtenteDAO {
 		return rs;
 	}
 
+	public void deleteUtente() throws DBException {
+		// uso questo metodo nei test
+		eliminaDaDB();
+	}
+
 	private int eliminaDaDB() {
 		String query = String.format("DELETE FROM utenti WHERE id = %d;", this.id);
 		logger.info(query);
