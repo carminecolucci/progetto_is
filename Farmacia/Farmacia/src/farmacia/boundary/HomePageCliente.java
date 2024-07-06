@@ -1,21 +1,31 @@
 package farmacia.boundary;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class HomePageCliente extends JFrame {
-	private JPanel mainPanel;
-	private JLabel strBenvenuto;
-	private JButton effettuaUnOrdineButton;
-	private JButton visualizzaIlCatalogoButton;
-	private JButton cercaUnFarmacoButton;
-	private JButton visualizzaITuoiOrdiniButton;
+
+	private JPanel homePanel;
+	private JButton btnCercaFarmaco;
+	private JButton btnCreaOrdine;
+	private JButton btnVisualizzaCatalogo;
+	private JButton btnVisualizzaStoricoOrdini;
+	private JLabel lblScelta;
+	private JLabel lblBenvenuto;
 
 	public HomePageCliente() {
-		setTitle("Farmacia");
 		setSize(500, 500);
-		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		setTitle("Homepage Cliente");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
-		setContentPane(mainPanel);
+		setContentPane(homePanel);
 		setVisible(true);
+		btnVisualizzaCatalogo.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFrame visualizzaCatalogo = new VisualizzaCatalogoPage();
+			}
+		});
 	}
 }

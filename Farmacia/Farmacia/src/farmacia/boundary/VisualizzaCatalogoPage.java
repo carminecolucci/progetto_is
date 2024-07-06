@@ -1,7 +1,11 @@
 package farmacia.boundary;
 
+import farmacia.controller.ControllerCatalogo;
+import farmacia.dto.DTO;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.util.List;
 
 public class VisualizzaCatalogoPage extends JFrame {
 	private JPanel mainPanel;
@@ -9,29 +13,23 @@ public class VisualizzaCatalogoPage extends JFrame {
 
 	public VisualizzaCatalogoPage() {
 
-		DefaultTableModel model = new DefaultTableModel(
-				new Object[][]{
-						{"John", "Doe", 29},
-						{"Anna", "Smith", 35},
-						{"Peter", "Jones", 40}
-				},
-				new String[]{
-						"First Name", "Last Name", "Age"
-				}
-		){
+		DefaultTableModel model = new DefaultTableModel(new Object[][]{}, new String[]{"Nome", "Prezzo", "Prescrizione"}) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;
 			}
 		};
 
-
-
 		tblFarmaci.setModel(model);
-
-		setVisible(true);
+		ControllerCatalogo controllerCatalogo = ControllerCatalogo.getInstance();
+		List<DTO> listDTO = controllerCatalogo.visualizzaCatalogo();
+		for(DTO farmaco: listDTO){
+			model.addRow(new Object[]{farmaco.get("nome"), farmaco.get("prezzo"), farmaco.get("prescrizione")});
+		}
 		setSize(500, 500);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setContentPane(mainPanel);
+		setVisible(true);
 	}
 
 	public static void main(String[] args) {
