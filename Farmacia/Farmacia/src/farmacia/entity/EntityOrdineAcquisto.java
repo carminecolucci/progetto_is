@@ -45,7 +45,7 @@ public class EntityOrdineAcquisto {
 		this.id = UUID.randomUUID().toString();
 		this.ritirato = false;
 		this.dataCreazione = Date.from(LocalDateTime.now().toInstant(ZoneOffset.UTC));
-		OrdineAcquistoDAO ordineAcquistoDAO = new OrdineAcquistoDAO(this.id, this.dataCreazione);
+		OrdineAcquistoDAO ordineAcquistoDAO = new OrdineAcquistoDAO(this.id, this.dataCreazione, this.ritirato);
 		for (Map.Entry<EntityFarmaco, Integer> entry : quantitaFarmaci.entrySet()) {
 			ordineAcquistoDAO.aggiungiOrdineAcquistoFarmaco(entry.getKey().getId(), entry.getValue());
 		}
