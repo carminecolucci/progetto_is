@@ -29,7 +29,7 @@ CREATE TABLE `farmaci` (
   `prezzo` float NOT NULL,
   `prescrizione` tinyint NOT NULL,
   `nome` varchar(45) NOT NULL,
-  `scorta` int NOT NULL,
+  `scorte` int NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -51,14 +51,13 @@ DROP TABLE IF EXISTS `ordini`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ordini` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` varchar(45) NOT NULL,
   `dataCreazione` date NOT NULL,
   `ritirato` tinyint NOT NULL,
-  `tipo` int NOT NULL,
-  `utente` int DEFAULT NULL,
+  `cliente` int NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `utente_idx` (`utente`),
-  CONSTRAINT `utente` FOREIGN KEY (`utente`) REFERENCES `utenti` (`id`)
+  KEY `cliente_idx` (`cliente`),
+  CONSTRAINT `cliente` FOREIGN KEY (`cliente`) REFERENCES `utenti` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -72,6 +71,57 @@ LOCK TABLES `ordini` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `ordini_acquisto`
+--
+
+DROP TABLE IF EXISTS `ordini_acquisto`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `ordini_acquisto` (
+  `id` varchar(45) NOT NULL,
+  `dataCreazione` date NOT NULL,
+  `ricevuto` tinyint NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ordini_acquisto`
+--
+
+LOCK TABLES `ordini_acquisto` WRITE;
+/*!40000 ALTER TABLE `ordini_acquisto` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ordini_acquisto` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ordini_acquisto_farmaci`
+--
+
+DROP TABLE IF EXISTS `ordini_acquisto_farmaci`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `ordini_acquisto_farmaci` (
+  `ordineAcquisto` varchar(45) NOT NULL,
+  `farmacoAcquisto` int NOT NULL,
+  `quantita` int NOT NULL,
+  PRIMARY KEY (`ordineAcquisto`,`farmacoAcquisto`),
+  KEY `farmaco_idx` (`farmacoAcquisto`),
+  CONSTRAINT `farmacoAcquisto` FOREIGN KEY (`farmacoAcquisto`) REFERENCES `farmaci` (`id`),
+  CONSTRAINT `ordineAcquisto` FOREIGN KEY (`ordineAcquisto`) REFERENCES `ordini_acquisto` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ordini_acquisto_farmaci`
+--
+
+LOCK TABLES `ordini_acquisto_farmaci` WRITE;
+/*!40000 ALTER TABLE `ordini_acquisto_farmaci` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ordini_acquisto_farmaci` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `ordini_farmaci`
 --
 
@@ -79,7 +129,7 @@ DROP TABLE IF EXISTS `ordini_farmaci`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ordini_farmaci` (
-  `ordine` int NOT NULL,
+  `ordine` varchar(45) NOT NULL,
   `farmaco` int NOT NULL,
   `quantita` int NOT NULL,
   PRIMARY KEY (`ordine`,`farmaco`),
@@ -113,9 +163,10 @@ CREATE TABLE `utenti` (
   `cognome` varchar(45) NOT NULL,
   `dataNascita` date NOT NULL,
   `tipo` int NOT NULL,
+  `email` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username_UNIQUE` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -124,6 +175,7 @@ CREATE TABLE `utenti` (
 
 LOCK TABLES `utenti` WRITE;
 /*!40000 ALTER TABLE `utenti` DISABLE KEYS */;
+INSERT INTO `utenti` VALUES (1,'user','pass','carmine','colucci','2024-01-01',0,'antonio@luigi.carmine');
 /*!40000 ALTER TABLE `utenti` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -136,4 +188,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-03 16:10:33
+-- Dump completed on 2024-07-05 16:13:22
