@@ -58,6 +58,19 @@ public class OrdineAcquistoDAO {
 		}
 	}
 
+	public void aggiorna() throws DBException {
+		String query = String.format("UPDATE ordini_acquisto SET ricevuto = 1 WHERE id = '%s';", this.id);
+		logger.info(query);
+		try {
+			DBManager.getInstance().executeQuery(query);
+		} catch (ClassNotFoundException | SQLException e) {
+			logger.warning(String.format("Errore durante l'aggiornamento dell'ordine d'acquisto '%s'.", this.id));
+			throw new DBException("Errore durante l'aggiornamento dell'ordine d'acquisto. " + e.getMessage());
+		}
+
+		this.ricevuto = true;
+	}
+
 	/**
 	 * Funzione privata che popola l'OrdineAcquistoDAO consultando il DB.
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se l'ordine di acquisto non esiste.

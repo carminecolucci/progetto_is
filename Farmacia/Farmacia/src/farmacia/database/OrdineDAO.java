@@ -46,6 +46,19 @@ public class OrdineDAO {
 		}
 	}
 
+	public void aggiorna() throws DBException {
+		String query = String.format("UPDATE ordini SET ritirato = 1 WHERE id = '%s';", this.id);
+		logger.info(query);
+		try {
+			DBManager.getInstance().executeQuery(query);
+		} catch (ClassNotFoundException | SQLException e) {
+			logger.warning(String.format("Errore durante l'aggiornamento dell'ordine '%s'.", this.id));
+			throw new DBException("Errore durante l'aggiornamento dell'ordine. " + e.getMessage());
+		}
+
+		this.ritirato = true;
+	}
+
 	/**
 	 * Funzione che ritorna tutti gli ordini effettuati dai clienti della farmacia
 	 * @throws DBException se non si può prelevare gli ordini dal DB

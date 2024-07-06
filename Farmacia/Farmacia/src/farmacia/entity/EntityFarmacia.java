@@ -112,4 +112,24 @@ public class EntityFarmacia {
 		return ordiniAcquisto;
 	}
 
+	public void aggiornaOrdine(String idOrdine) throws OrderNotFoundException {
+		try {
+			EntityOrdine ordine = new EntityOrdine(idOrdine);
+			ordine.aggiorna();
+		} catch (DBException e) {
+			throw new OrderNotFoundException(e.getMessage());
+		}
+	}
+
+	public void aggiornaOrdineAcquisto(String idOrdine) throws OrderNotFoundException {
+		for (EntityOrdineAcquisto ordineAcquisto : ordiniAcquisto) {
+			if (ordineAcquisto.getId().equals(idOrdine)) {
+				try {
+					ordineAcquisto.aggiorna();
+				} catch (DBException e) {
+					throw new OrderNotFoundException(e.getMessage());
+				}
+			}
+		}
+	}
 }
