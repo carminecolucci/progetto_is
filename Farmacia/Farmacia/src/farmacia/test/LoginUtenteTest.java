@@ -32,6 +32,7 @@ public class LoginUtenteTest {
 		try {
 			controllerUtenti.registraCliente("user", "MiaPassword", "Utente", "Di Prova", dataNascita, "cliente@gmail.com");
 		} catch (RegistrationFailedException | DBException e) {
+			System.err.println(e.getMessage());
 			esito = false;
 		}
 		assertTrue(esito);
@@ -49,6 +50,7 @@ public class LoginUtenteTest {
 		try {
 			controllerUtenti.loginUtente("user", "MiaPassword");
 		} catch (LoginFailedException e) {
+			System.err.println(e.getMessage());
 			esito = false;
 		}
 		assertTrue(esito);
@@ -60,6 +62,7 @@ public class LoginUtenteTest {
 		try {
 			controllerUtenti.loginUtente("user_sconosciuto", "passwd");
 		} catch (LoginFailedException e) {
+			System.err.println(e.getMessage());
 			esito = false;
 		}
 		assertFalse(esito);
@@ -71,6 +74,7 @@ public class LoginUtenteTest {
 		try {
 			controllerUtenti.loginUtente("user", "passwd");
 		} catch (LoginFailedException e) {
+			System.err.println(e.getMessage());
 			esito = false;
 		}
 		assertFalse(esito);

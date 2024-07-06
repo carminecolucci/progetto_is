@@ -40,6 +40,7 @@ public class RegistraUtenteTest {
 		try {
 			controllerUtenti.registraCliente("user", "MiaPassword", "Utente", "Di Prova", dataNascita, "cliente@gmail.com");
 		} catch (RegistrationFailedException | DBException e) {
+			System.err.println(e.getMessage());
 			esito = false;
 		}
 		assertTrue(esito);
@@ -55,6 +56,7 @@ public class RegistraUtenteTest {
 		try {
 			controllerUtenti.registraCliente("user", "MiaPassword", "Utente", "Di Prova", dataNascita, "cliente@gmail.com");
 		} catch (RegistrationFailedException | DBException e) {
+			System.err.println(e.getMessage());
 			esito = false;
 		}
 		assertTrue(esito);
@@ -63,10 +65,10 @@ public class RegistraUtenteTest {
 		try {
 			controllerUtenti.registraCliente("user", "MiaPassword", "Utente", "Di Prova", dataNascita, "cliente@gmail.com");
 		} catch (RegistrationFailedException | DBException e) {
+			System.err.println(e.getMessage());
 			esito = false;
 		}
 		assertFalse(esito);
 	}
-
 
 }

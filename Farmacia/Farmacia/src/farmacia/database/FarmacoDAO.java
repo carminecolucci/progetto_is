@@ -3,6 +3,7 @@ package farmacia.database;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.logging.Logger;
 
 import farmacia.exceptions.DBException;
@@ -112,7 +113,7 @@ public class FarmacoDAO {
 		int id = -1;
 		try (ResultSet rs = DBManager.getInstance().selectQuery(query)) {
 			if (!rs.next())
-				return id;
+				return 0;
 			id = rs.getInt("id");
 		} catch (ClassNotFoundException | SQLException e) {
 			logger.warning(String.format("Errore nella ricerca del farmaco '%s'.%n%s",
@@ -120,6 +121,21 @@ public class FarmacoDAO {
 			throw new DBException(String.format("Errore nella ricerca del farmaco '%s'", nome));
 		}
 		return id;
+	}
+
+	/**
+	 * Funzione di utilità che è stata aggiunta in fase di testing solo per rendere agevole la cancellazione del farmaco
+	 * creato nel test <code>AggiuntiEliminaFarmacoTest</code>
+	 * @param nome Il nome del farmaco.
+	 * @throws DBException Lanciata se non è possibile accedere al DB o se il farmaco da eliminare non è stato trovato.
+	 */
+	public static void deleteFarmacoByNome(String nome) throws DBException {
+		String query = String.format("DELETE FROM farmaci WHERE nome = '%s';", nome);
+		try {
+			DBManager.getInstance().executeQuery(query);
+		} catch (ClassNotFoundException | SQLException e) {
+			throw new DBException("Errore durante l'eliminazione dal DB del farmaco '%s'." + nome);
+		}
 	}
 
 	/**
@@ -132,8 +148,8 @@ public class FarmacoDAO {
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se non è stato possibile aggiungere il farmaco.
 	 */
 	private int salvaInDB(float prezzo, boolean prescrizione, String nome, int scorte) throws DBException {
-		String query = String.format("INSERT INTO farmaci (prezzo, prescrizione, nome, scorte)" +
-				"VALUES (%f, %d, '%s', %d);",
+		String query = String.format(Locale.US, "INSERT INTO farmaci (prezzo, prescrizione, nome, scorte) " +
+				"VALUES (%.2f, %d, '%s', %d);",
 			prezzo, prescrizione ? 1 : 0, nome, scorte
 		);
 
@@ -247,7 +263,7 @@ public class FarmacoDAO {
 		FarmacoDAO farmacoDaModificare = new FarmacoDAO(id);
 		String nomeFarmacoDaModificare = farmacoDaModificare.getNome();
 
-		String query = String.format("UPDATE farmaci SET prezzo = %f, prescrizione = %d, " +
+		String query = String.format(Locale.US, "UPDATE farmaci SET prezzo = %f, prescrizione = %d, " +
 							"nome = '%s', scorte = %d WHERE id = %d;",
 							nuovoPrezzo, nuovaPrescrizione ? 1 : 0, nuovoNome, nuoveScorte, id);
 		logger.info(query);

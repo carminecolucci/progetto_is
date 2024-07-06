@@ -7,7 +7,6 @@ import farmacia.exceptions.DBException;
 import farmacia.exceptions.FarmacoNotFoundException;
 import farmacia.exceptions.OrderCreationFailedException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
 import java.util.Map;
@@ -48,7 +47,7 @@ public class EntityCliente extends EntityUtente {
 		EntityOrdine ordine = new EntityOrdine();
 		try {
 			for (Integer idFarmaco : farmaciQuantita.keySet()) {
-				EntityFarmaco farmaco = catalogo.cercaFarmaco(idFarmaco);
+				EntityFarmaco farmaco = catalogo.cercaFarmacoById(idFarmaco);
 				ordine.aggiungiOrdineFarmaco(farmaco, farmaciQuantita.get(idFarmaco));
 				int scorteResidue = catalogo.decrementaScorte(idFarmaco, farmaciQuantita.get(idFarmaco));
 				if (scorteResidue == 0) {

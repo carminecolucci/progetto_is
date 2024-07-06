@@ -81,9 +81,18 @@ public class EntityCatalogo {
 		throw new FarmacoNotFoundException("Farmaco non trovato");
 	}
 
-	public EntityFarmaco cercaFarmaco(int id) throws FarmacoNotFoundException {
+	public EntityFarmaco cercaFarmacoById(int id) throws FarmacoNotFoundException {
 		for (EntityFarmaco farmaco : farmaci) {
 			if (farmaco.getId() == id) {
+				return farmaco;
+			}
+		}
+		throw new FarmacoNotFoundException("Farmaco non trovato");
+	}
+
+	public EntityFarmaco cercaFarmacoByNome(String nome) throws FarmacoNotFoundException {
+		for (EntityFarmaco farmaco : farmaci) {
+			if (farmaco.getNome().equals(nome)) {
 				return farmaco;
 			}
 		}

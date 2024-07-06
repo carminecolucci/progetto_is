@@ -45,7 +45,19 @@ public class ControllerCatalogo {
 
 	public DTO cercaFarmacoByID(int id) throws FarmacoNotFoundException {
 		EntityCatalogo catalogo = EntityCatalogo.getInstance();
-		EntityFarmaco farmaco = catalogo.cercaFarmaco(id);
+		EntityFarmaco farmaco = catalogo.cercaFarmacoById(id);
+		DTO dto = new DTO();
+		dto.set("id", farmaco.getId());
+		dto.set("prezzo", farmaco.getPrezzo());
+		dto.set("prescrizione", farmaco.isPrescrizione());
+		dto.set("nome", farmaco.getNome());
+		dto.set("scorte", farmaco.getScorte());
+		return dto;
+	}
+
+	public DTO cercaFarmacoByNome(String nome) throws FarmacoNotFoundException {
+		EntityCatalogo catalogo = EntityCatalogo.getInstance();
+		EntityFarmaco farmaco = catalogo.cercaFarmacoByNome(nome);
 		DTO dto = new DTO();
 		dto.set("id", farmaco.getId());
 		dto.set("prezzo", farmaco.getPrezzo());
