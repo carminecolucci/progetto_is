@@ -2,7 +2,6 @@ package farmacia.entity;
 
 import farmacia.database.FarmacoDAO;
 import farmacia.database.OrdineAcquistoDAO;
-import farmacia.database.OrdineDAO;
 import farmacia.exceptions.DBException;
 
 import java.time.LocalDateTime;
@@ -15,7 +14,7 @@ import java.util.UUID;
 public class EntityOrdineAcquisto {
 	private String id;
 	private Date dataCreazione;
-	private boolean ritirato;
+	private boolean ricevuto;
 	private Map<EntityFarmaco, Integer> quantitaFarmaci;
 
 	public EntityOrdineAcquisto() {
@@ -25,7 +24,7 @@ public class EntityOrdineAcquisto {
 	public EntityOrdineAcquisto(OrdineAcquistoDAO ordineAcquistoDAO) {
 		this.id = ordineAcquistoDAO.getId();
 		this.dataCreazione = ordineAcquistoDAO.getDataCreazione();
-		this.ritirato = ordineAcquistoDAO.isRicevuto();
+		this.ricevuto = ordineAcquistoDAO.isRicevuto();
 		quantitaFarmaci = new HashMap<>();
 		for (Map.Entry<FarmacoDAO, Integer> entry : ordineAcquistoDAO.getOrdineAcquistoFarmaci().entrySet()) {
 			quantitaFarmaci.put(new EntityFarmaco(entry.getKey()), entry.getValue());
@@ -43,9 +42,9 @@ public class EntityOrdineAcquisto {
 	 */
 	public void salvaInDB() throws DBException {
 		this.id = UUID.randomUUID().toString();
-		this.ritirato = false;
+		this.ricevuto = false;
 		this.dataCreazione = Date.from(LocalDateTime.now().toInstant(ZoneOffset.UTC));
-		OrdineAcquistoDAO ordineAcquistoDAO = new OrdineAcquistoDAO(this.id, this.dataCreazione, this.ritirato);
+		OrdineAcquistoDAO ordineAcquistoDAO = new OrdineAcquistoDAO(this.id, this.dataCreazione, this.ricevuto);
 		for (Map.Entry<EntityFarmaco, Integer> entry : quantitaFarmaci.entrySet()) {
 			ordineAcquistoDAO.aggiungiOrdineAcquistoFarmaco(entry.getKey().getId(), entry.getValue());
 		}
@@ -64,12 +63,22 @@ public class EntityOrdineAcquisto {
 		this.dataCreazione = dataCreazione;
 	}
 
-	public boolean isRitirato() {
-		return ritirato;
+	public boolean isRicevuto() {
+		return ricevuto;
 	}
 
-	public void setRitirato(boolean ritirato) {
-		this.ritirato = ritirato;
+	public void setRicevuto(boolean ricevuto) {
+		this.ricevuto = ricevuto;
+	}
+
+	public Map<EntityFarmaco, Integer> getQuantitaFarmaci() {
+		return quantitaFarmaci;
+	}
+
+	public void aggiorna() throws DBException {
+		OrdineAcquistoDAO dao = new OrdineAcquistoDAO(this.id);
+		dao.aggiorna();
+		this.ricevuto = true;
 	}
 }
 

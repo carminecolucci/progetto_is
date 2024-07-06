@@ -1,6 +1,7 @@
 package farmacia.entity;
 
 import farmacia.database.FarmacoDAO;
+import farmacia.database.OrdineAcquistoDAO;
 import farmacia.database.OrdineDAO;
 import farmacia.exceptions.DBException;
 
@@ -20,6 +21,10 @@ public class EntityOrdine {
 
 	public EntityOrdine() {
 		quantitaFarmaci = new HashMap<>();
+	}
+
+	public EntityOrdine(String id) throws DBException {
+		this(new OrdineDAO(id));
 	}
 
 	public EntityOrdine(OrdineDAO ordineDAO) throws DBException {
@@ -50,6 +55,12 @@ public class EntityOrdine {
 		ordineDAO.createOrdine();
 	}
 
+	public void aggiorna() throws DBException {
+		OrdineDAO dao = new OrdineDAO(this.id);
+		dao.aggiorna();
+		this.ritirato = true;
+	}
+
 	public void aggiungiOrdineFarmaco(EntityFarmaco farmaco, int quantita) {
 		quantitaFarmaci.put(farmaco, quantita);
 	}
@@ -72,5 +83,13 @@ public class EntityOrdine {
 
 	public void setRitirato(boolean ritirato) {
 		this.ritirato = ritirato;
+	}
+
+	public Map<EntityFarmaco, Integer> getQuantitaFarmaci() {
+		return quantitaFarmaci;
+	}
+
+	public EntityCliente getCliente() {
+		return cliente;
 	}
 }

@@ -69,6 +69,16 @@ public class FarmacoDAO {
 		this.nome = nome;
 		this.scorte = scorte;
 	}
+
+	public void deleteFarmaco() throws DBException {
+		if (cercaInDB(nome) != 0) {
+			throw new DBException(String.format("Farmaco '%s' esistente", nome));
+		}
+
+		if (eliminaDaDB() == -1)
+			throw new DBException(String.format("Errore durante l'eliminazione del farmaco '%s'.", nome));
+	}
+
 	/**
 	 * Funzione privata che popola il FarmacoDAO consultando il DB.
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se il farmaco non esiste.
@@ -144,7 +154,7 @@ public class FarmacoDAO {
 	 * Elimina il farmaco dal DB.
 	 * @return '1' se il farmaco è stato cancellato, '-1' altrimenti.
 	 */
-	private int eliminaDaDB() {
+	private int eliminaDaDB() throws DBException {
 		String query = String.format("DELETE FROM farmaci WHERE id = %d;", this.id);
 		logger.info(query);
 		int rs = -1;
@@ -152,6 +162,7 @@ public class FarmacoDAO {
 			rs = DBManager.getInstance().executeQuery(query);
 		} catch (ClassNotFoundException | SQLException e) {
 			logger.warning("Errore durante l'eliminazione dal DB del farmaco '%s'." + this.nome);
+			throw new DBException("Errore durante l'eliminazione dal DB del farmaco '%s'." + this.nome);
 		}
 		return rs;
 	}
