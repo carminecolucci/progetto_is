@@ -4,10 +4,7 @@ import farmacia.exceptions.DBException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 
 public class OrdineAcquistoDAO {
@@ -38,10 +35,10 @@ public class OrdineAcquistoDAO {
 	 * @param id L'id (uuid) dell'ordine di acquisto.
 	 * @param dataCreazione La data di creazione dell'ordine di acquisto.
 	 */
-	public OrdineAcquistoDAO(String id, Date dataCreazione) {
+	public OrdineAcquistoDAO(String id, Date dataCreazione, boolean ricevuto) {
 		this.id = id;
 		this.dataCreazione = dataCreazione;
-		this.ricevuto = false;
+		this.ricevuto = ricevuto;
 		this.ordineAcquistoFarmaci = new HashMap<>();
 	}
 
@@ -131,19 +128,23 @@ public class OrdineAcquistoDAO {
 	 * @return La lista contenente gli ordini di acquisto registrati presso la farmacia.
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se non ci sono ordini di acquisto.
 	 */
-	public static ArrayList<OrdineAcquistoDAO> getOrdiniAcquisto() throws DBException {
-		// TODO: SELECT *, List<>
-		String query = "SELECT id FROM ordini_acquisto;";
-		ArrayList<OrdineAcquistoDAO> listaOrdiniAcquistoDAO = new ArrayList<>();
+	public static List<OrdineAcquistoDAO> getOrdiniAcquisto() throws DBException {
+		String query = "SELECT * FROM ordini_acquisto;";
+		List<OrdineAcquistoDAO> listaOrdiniAcquistoDAO = new ArrayList<>();
 		try (ResultSet rs = DBManager.getInstance().selectQuery(query)) {
+			String idOrdine;
+			Date dataCreazione;
+			boolean ricevuto;
 			while (rs.next()) {
-				String idOrdine = rs.getString("id");
-				listaOrdiniAcquistoDAO.add(new OrdineAcquistoDAO(idOrdine));
+				idOrdine = rs.getString("id");
+				dataCreazione = rs.getDate("dataCreazione");
+				ricevuto = rs.getBoolean("ricevuto");
+				listaOrdiniAcquistoDAO.add(new OrdineAcquistoDAO(idOrdine, dataCreazione, ricevuto));
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			logger.warning(String.format("Errore durante il caricamento degli ordini di acquisto" +
 					".%n%s", e.getMessage()));
-			throw new DBException("Errore durante il caricamento iniziale degli ordini di acquisto: " + e.getMessage());
+			throw new DBException("Errore durante il caricamento degli ordini di acquisto: " + e.getMessage());
 		}
 		return listaOrdiniAcquistoDAO;
 	}
