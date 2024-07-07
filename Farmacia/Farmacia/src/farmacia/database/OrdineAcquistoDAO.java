@@ -107,8 +107,9 @@ public class OrdineAcquistoDAO {
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se l'ordine di acquisto già esiste.
 	 */
 	private int salvaInDB() throws DBException {
+		java.sql.Date data = new java.sql.Date(this.dataCreazione.getTime());
 		String query = String.format("INSERT INTO ordini_acquisto (id, dataCreazione, ricevuto) VALUES ('%s', '%s', %d);",
-			this.id, this.dataCreazione, this.ricevuto ? 1 : 0);
+			this.id, data, this.ricevuto ? 1 : 0);
 
 		int rs = -1;
 		try {

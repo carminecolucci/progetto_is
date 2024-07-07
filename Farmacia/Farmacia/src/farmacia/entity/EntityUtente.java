@@ -2,6 +2,7 @@ package farmacia.entity;
 
 import farmacia.TipoUtente;
 import farmacia.database.UtenteDAO;
+import farmacia.exceptions.DBException;
 
 import java.util.Date;
 
@@ -41,7 +42,7 @@ public class EntityUtente {
 	}
 
 	/**
-	 * Costruttore che permette di popolare una EntityUtente a partire
+	 * Costruttore che permette di popolare una <code>EntityUtente</code> a partire
 	 * da un <code>UtenteDA0</code>. Lo usiamo per la registrazione.
 	 * @param utenteDAO istanza di <code>UtenteDA0</code> già popolata
 	 */
@@ -54,6 +55,16 @@ public class EntityUtente {
 		this.dataNascita = utenteDAO.getDataNascita();
 		this.tipoUtente = utenteDAO.getTipoUtente();
 		this.email = utenteDAO.getEmail();
+	}
+
+	/**
+	 * Funzione che ritorna l'username dell'utente a partire dal suo id.
+	 * @param id id dell'utente.
+	 * @return username dell'utente.
+	 * @throws DBException se l'utente con quell'<code>id</code> non esiste.
+	 */
+	public static String getUsername(int id) throws DBException {
+		return UtenteDAO.getUsername(id);
 	}
 
 	public int getId() {

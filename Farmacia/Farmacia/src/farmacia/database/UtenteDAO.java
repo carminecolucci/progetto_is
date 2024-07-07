@@ -49,12 +49,33 @@ public class UtenteDAO {
 
 	public UtenteDAO(String username) throws DBException {
 		int id = cercaInDB(username);
-		if (id == 0) {
+		if (id == -1) {
 			throw new DBException(String.format("Utente '%s' non esistente", username));
 		}
 
 		this.id = id;
 		this.caricaDaDB(id);
+	}
+
+	/**
+	 * Funzione che ritorna l'username dell'utente a partire dal suo id.
+	 * @param id id dell'utente.
+	 * @return username dell'utente.
+	 * @throws DBException se l'utente con quell'<code>id</code> non esiste.
+	 */
+	public static String getUsername(int id) throws DBException {
+		String query = String.format("SELECT * FROM utenti WHERE id = %d;", id);
+		logger.info(query);
+		try (ResultSet rs = DBManager.getInstance().selectQuery(query)) {
+			if (rs.next()) {
+				return rs.getString("username");
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			logger.warning(String.format("Errore nella ricerca dell'utente con id %d.%n%s",
+				id, e.getMessage()));
+			throw new DBException(String.format("Errore nella ricerca dell'utente con id %d", id));
+		}
+		return "";
 	}
 
 	/**
@@ -102,7 +123,7 @@ public class UtenteDAO {
 	}
 
 	/**
-	 * Funzione privata che cerca l'utente nel DB.
+	 * Funzione che cerca l'utente nel DB.
 	 * @param username L'username dell'utente.
 	 * @return -1 se l'utente non esiste, o l'id dell'utente cercato.
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se l'utente non esiste.

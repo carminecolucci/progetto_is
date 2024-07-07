@@ -35,7 +35,7 @@ public class ControllerOrdini {
 		cliente.creaOrdine(farmaciQuantita);
 	}
 
-	public List<DTO> visualizzaStoricoOrdini() {
+	public List<DTO> visualizzaStoricoOrdini() throws DBException {
 		EntityCliente cliente = (EntityCliente) Sessione.getInstance().getUtenteCorrente();
 		List<EntityOrdine> ordini = cliente.visualizzaStoricoOrdini();
 		return getDtoOrdini(ordini);
@@ -85,14 +85,14 @@ public class ControllerOrdini {
 		return getDtoOrdini(ordini);
 	}
 
-	private List<DTO> getDtoOrdini(List<EntityOrdine> ordini) {
+	private List<DTO> getDtoOrdini(List<EntityOrdine> ordini) throws DBException {
 		List<DTO> dtoOrdini = new ArrayList<>();
 		for (EntityOrdine ordine : ordini) {
 			DTO dtoOrdine = new DTO();
 			dtoOrdine.set("id", ordine.getId());
 			dtoOrdine.set("dataCreazione", ordine.getDataCreazione());
 			dtoOrdine.set("ritirato", ordine.isRitirato());
-			dtoOrdine.set("cliente", ordine.getCliente().getUsername());
+			dtoOrdine.set("cliente", EntityUtente.getUsername(ordine.getIdCliente()));
 			Map<DTO, Integer> dtoQuantitaFarmaci = getDtoQuantitaFarmaci(ordine.getQuantitaFarmaci());
 			dtoOrdine.set("quantitaFarmaci", dtoQuantitaFarmaci);
 			dtoOrdini.add(dtoOrdine);

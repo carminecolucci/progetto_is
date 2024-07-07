@@ -4,8 +4,6 @@ import farmacia.database.FarmacoDAO;
 import farmacia.database.OrdineDAO;
 import farmacia.exceptions.DBException;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,31 +13,40 @@ public class EntityOrdine {
 	private final String id;
 	private Date dataCreazione;
 	private boolean ritirato;
-	private final EntityCliente cliente;
+	private final int idCliente;
 	private final Map<EntityFarmaco, Integer> quantitaFarmaci;
 
 	/**
-	 * Costruttore di <code>EntityOrdine</code>
-	 * @param cliente Cliente che ha creato l'ordine.
+	 * Costruttore di <code>EntityOrdine</code> a partire dall'id del cliente.
+	 * @param idCliente id del cliente che ha creato l'ordine.
 	 */
-	public EntityOrdine(EntityCliente cliente) {
+	public EntityOrdine(int idCliente) {
 		this.id = UUID.randomUUID().toString();
 		this.dataCreazione = new Date();
 		this.ritirato = false;
-		this.cliente = cliente;
+		this.idCliente = idCliente;
 		this.quantitaFarmaci = new HashMap<>();
 	}
 
+	/**
+	 * Costruttore di <code>EntityOrdine</code> a partire dall'id dell'ordine.
+	 * @param id id dell'ordine.
+	 * @throws DBException se non è possibile accedere al DB.
+	 */
 	public EntityOrdine(String id) throws DBException {
 		this(new OrdineDAO(id));
 	}
 
-	public EntityOrdine(OrdineDAO ordineDAO) throws DBException {
+	/**
+	 * Costruttore che permette di popolare un <code>EntityOrdine</code> a partire da un <code>OrdineDAO</code>
+	 * @param ordineDAO dao dell'ordine.
+	 */
+	public EntityOrdine(OrdineDAO ordineDAO) {
 		this.id = ordineDAO.getId();
 		this.dataCreazione = ordineDAO.getDataCreazione();
 		this.ritirato = ordineDAO.isRitirato();
 		this.dataCreazione = ordineDAO.getDataCreazione();
-		this.cliente = new EntityCliente(ordineDAO.getCliente());
+		this.idCliente = ordineDAO.getCliente();
 		quantitaFarmaci = new HashMap<>();
 		for (Map.Entry<FarmacoDAO, Integer> entry : ordineDAO.getOrdineFarmaci().entrySet()) {
 			quantitaFarmaci.put(new EntityFarmaco(entry.getKey()), entry.getValue());
@@ -52,7 +59,7 @@ public class EntityOrdine {
 	 * @throws DBException Errore generico del DB
 	 */
 	public void salvaInDB() throws DBException {
-		OrdineDAO ordineDAO = new OrdineDAO(this.id, this.dataCreazione, this.cliente.getId());
+		OrdineDAO ordineDAO = new OrdineDAO(this.id, this.dataCreazione, this.idCliente);
 		for (Map.Entry<EntityFarmaco, Integer> entry : quantitaFarmaci.entrySet()) {
 			ordineDAO.aggiungiOrdineFarmaco(entry.getKey().getId(), entry.getValue());
 		}
@@ -93,7 +100,7 @@ public class EntityOrdine {
 		return quantitaFarmaci;
 	}
 
-	public EntityCliente getCliente() {
-		return cliente;
+	public int getIdCliente() {
+		return idCliente;
 	}
 }

@@ -7,10 +7,7 @@ import farmacia.exceptions.DBException;
 import farmacia.exceptions.FarmacoNotFoundException;
 import farmacia.exceptions.OrderCreationFailedException;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Date;
-import java.util.Map;
+import java.util.*;
 
 public class EntityCliente extends EntityUtente {
 	List<EntityOrdine> storicoOrdini;
@@ -69,7 +66,7 @@ public class EntityCliente extends EntityUtente {
 		if (!catalogo.checkScorte(farmaciQuantita)) {
 			throw new OrderCreationFailedException("Ordine non creato per mancanza scorte");
 		}
-		EntityOrdine ordine = new EntityOrdine(this);
+		EntityOrdine ordine = new EntityOrdine(this.getId());
 		try {
 			for (Map.Entry<Integer, Integer> entry : farmaciQuantita.entrySet()) {
 				int id = entry.getKey();
