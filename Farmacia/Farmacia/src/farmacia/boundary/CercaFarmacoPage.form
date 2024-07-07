@@ -41,10 +41,17 @@
           </component>
         </children>
       </grid>
-      <component id="6feb6" class="javax.swing.JTable" binding="tblRicerca">
+      <scrollpane id="c14cb" binding="scrollPane">
         <constraints border-constraint="Center"/>
         <properties/>
-      </component>
+        <border type="none"/>
+        <children>
+          <component id="6e1a6" class="javax.swing.JTable" binding="tblRicerca">
+            <constraints/>
+            <properties/>
+          </component>
+        </children>
+      </scrollpane>
     </children>
   </grid>
 </form>

@@ -10,7 +10,7 @@ import java.awt.BorderLayout;
 import java.util.*;
 
 public class CreaOrdinePage extends JFrame {
-	private JTable tblFarmaciOrdine;
+	private final JTable tblFarmaciOrdine;
 
 	public CreaOrdinePage() {
 		setTitle("Crea Ordine");
@@ -70,9 +70,9 @@ public class CreaOrdinePage extends JFrame {
 				Integer quantita = (Integer)tblFarmaciOrdine.getValueAt(row, 4);
 				if (quantita > 0) {
 					if (necessitaPrescrizione.equals("Necessaria")) {
-						if(possiediPrescrizione)
+						if (possiediPrescrizione)
 							farmaciOrdine.put(listId.get(row), quantita);
-						else{
+						else {
 							dispose();
 							return;
 						}

@@ -4,7 +4,6 @@ import farmacia.dto.DTO;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
 import java.util.Map;
 
 public class VisualizzaOrdinePage extends JFrame {
@@ -15,13 +14,12 @@ public class VisualizzaOrdinePage extends JFrame {
 	private Map<DTO, Integer> quantitaFarmaci;
 
 	public VisualizzaOrdinePage(DTO ordine) {
-		this.quantitaFarmaci = (Map<DTO, Integer>) ordine.get("quantitaFarmaci");
+		this.quantitaFarmaci = (Map<DTO, Integer>)ordine.get("quantitaFarmaci");
 		this.idOrdine = (String)ordine.get("id");
 		setTitle(String.format("Visualizza ordine '%s'", idOrdine));
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setContentPane(mainPanel);
 		setLocationRelativeTo(null);
-		pack();
 		setSize(600, 400);
 
 		DefaultTableModel model = new DefaultTableModel(new Object[][]{}, new String[]{"Nome", "Prezzo", "Quantità"}) {
@@ -37,8 +35,5 @@ public class VisualizzaOrdinePage extends JFrame {
 			model.addRow(new Object[] {farmaco.get("nome"), farmaco.get("prezzo"), farmacoQuantita.getValue()});
 		}
 		setVisible(true);
-	}
-
-	public static void main(String[] args) {
 	}
 }
