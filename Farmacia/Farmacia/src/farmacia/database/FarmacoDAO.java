@@ -19,9 +19,9 @@ public class FarmacoDAO {
 	private static final Logger logger = Logger.getLogger("FarmacoDAO");
 
 	/**
-	 * Costruttore di default.
+	 * Costruttore privato che crea un nuovo <code>FarmacoDAO</code>
 	 */
-	public FarmacoDAO() { }
+	private FarmacoDAO() { }
 
 	/**
 	 * Costruttore che crea un nuovo <code>FarmacoDAO</code> e lo popola via DB.
@@ -40,13 +40,14 @@ public class FarmacoDAO {
 	}
 
 	/**
-	 * Costruttore privato che crea un nuovo <code>FarmacoDAO</code> e lo popola interamente.
+	 * Costruttore che crea un nuovo <code>FarmacoDAO</code>. Per assegnare un'id al farmaco è necessario salvarlo nel
+	 * DB utilizzando <code>createFarmaco()</code>
 	 * @param prezzo Il prezzo del farmaco.
 	 * @param prescrizione Se il farmaco richiede una prescrizione per la vendita.
 	 * @param nome Il nome del farmaco.
 	 * @param scorte Le scorte del farmaco.
 	 */
-	private FarmacoDAO(float prezzo, boolean prescrizione, String nome, int scorte) {
+	public FarmacoDAO(float prezzo, boolean prescrizione, String nome, int scorte) {
 		this.prezzo = prezzo;
 		this.prescrizione = prescrizione;
 		this.nome = nome;
@@ -54,34 +55,24 @@ public class FarmacoDAO {
 	}
 
 	/**
-	 * Funzione che popola un <code>FarmacoDAO</code> e gli assegna l'ID scelto dal DB.
-	 * @param prezzo Il prezzo del farmaco.
-	 * @param prescrizione Se il farmaco richiede o meno una prescrizione per la vendita.
-	 * @param nome Il nome del farmaco.
-	 * @param scorte Le scorte del farmaco.
-	 * @throws DBException Lanciata se non è possibile accedere al DB o se il farmaco non esiste.
+	 * Funzione che crea un farmaco nel DB e assegna al <code>FarmacoDAO</code> l'ID scelto dal DB.
+	 * @throws DBException Lanciata se non è possibile accedere al DB o se il farmaco è gia presente.
 	 */
-	public void createFarmaco(float prezzo, boolean prescrizione, String nome, int scorte) throws DBException {
-		if (cercaInDB(nome)) {
+	public void createFarmaco() throws DBException {
+		if (cercaInDB(this.nome) != -1) {
 			throw new DBException(String.format("Farmaco '%s' già esistente", nome));
 		}
 
-		if (salvaInDB(prezzo, prescrizione, nome, scorte) == 0)
-			throw new DBException(String.format("Errore durante la registrazione del farmaco '%s'.", nome));
-
-		this.prezzo = prezzo;
-		this.prescrizione = prescrizione;
-		this.nome = nome;
-		this.scorte = scorte;
+		salvaInDB(this.prezzo, this.prescrizione, this.nome, this.scorte);
+		this.id = cercaInDB(this.nome);
 	}
 
 	public void deleteFarmaco() throws DBException {
-		if (!cercaInDB(nome)) {
-			throw new DBException(String.format("Farmaco '%s' non esistente", nome));
+		if (cercaInDB(this.nome) == -1) {
+			throw new DBException(String.format("Farmaco '%s' non esistente", this.nome));
 		}
 
-		if (eliminaDaDB() == -1)
-			throw new DBException(String.format("Errore durante l'eliminazione del farmaco '%s'.", nome));
+		eliminaDaDB();
 	}
 
 	/**
@@ -93,15 +84,16 @@ public class FarmacoDAO {
 
 		try (ResultSet rs = DBManager.getInstance().selectQuery(query)) {
 			if (rs.next()) {
-				this.id = id;
 				this.nome = rs.getString("nome");
 				this.prezzo = rs.getFloat("prezzo");
 				this.prescrizione = rs.getBoolean("prescrizione");
 				this.scorte = rs.getInt("scorte");
+				this.id = id;
 			}
 		} catch (ClassNotFoundException | SQLException e) {
-			logger.warning(String.format("Errore durante il caricamento dal database del farmaco con id %d.%n%s", id, e.getMessage()));
-			throw new DBException("Errore nel caricamento di un farmaco." + e.getMessage());
+			logger.warning(String.format("Errore durante il caricamento dal database del farmaco con id %d.%n%s",
+				id, e.getMessage()));
+			throw new DBException("Errore nel caricamento di un farmaco. " + e.getMessage());
 		}
 	}
 
@@ -121,7 +113,8 @@ public class FarmacoDAO {
 				this.scorte = rs.getInt("scorte");
 			}
 		} catch (ClassNotFoundException | SQLException e) {
-			logger.warning(String.format("Errore durante il caricamento dal database del farmaco '%s'.%n%s", nome, e.getMessage()));
+			logger.warning(String.format("Errore durante il caricamento dal database del farmaco '%s'.%n%s",
+				nome, e.getMessage()));
 			throw new DBException("Errore nel caricamento di un farmaco." + e.getMessage());
 		}
 	}
@@ -129,14 +122,16 @@ public class FarmacoDAO {
 	/**
 	 * Funzione privata che cerca il farmaco nel DB.
 	 * @param nome Il nome del farmaco.
-	 * @return true se il farmaco esiste.
+	 * @return -1 se il farmaco non esiste, o l'id del farmaco cercato.
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se il farmaco non esiste.
 	 */
-	private boolean cercaInDB(String nome) throws DBException {
-		String query = String.format("SELECT * FROM farmaci WHERE nome = '%s';", nome);
+	private int cercaInDB(String nome) throws DBException {
+		String query = String.format("SELECT id FROM farmaci WHERE nome = '%s';", nome);
 		logger.info(query);
 		try (ResultSet rs = DBManager.getInstance().selectQuery(query)) {
-			return rs.next();
+			if (!rs.next())
+				return -1;
+			return rs.getInt("id");
 		} catch (ClassNotFoundException | SQLException e) {
 			logger.warning(String.format("Errore nella ricerca del farmaco '%s'.%n%s",
 				nome, e.getMessage()));
@@ -155,7 +150,7 @@ public class FarmacoDAO {
 		try {
 			DBManager.getInstance().executeQuery(query);
 		} catch (ClassNotFoundException | SQLException e) {
-			throw new DBException("Errore durante l'eliminazione dal DB del farmaco '%s'." + nome);
+			throw new DBException(String.format("Errore durante l'eliminazione dal DB del farmaco '%s'.", nome));
 		}
 	}
 
@@ -165,41 +160,36 @@ public class FarmacoDAO {
 	 * @param prescrizione Se il farmaco richiede o meno una prescrizione per la vendita.
 	 * @param nome Il nome del farmaco.
 	 * @param scorte Le scorte del farmaco.
-	 * @return '1' se il farmaco è stato inserito, '-1' altrimenti.
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se non è stato possibile aggiungere il farmaco.
 	 */
-	private int salvaInDB(float prezzo, boolean prescrizione, String nome, int scorte) throws DBException {
+	private void salvaInDB(float prezzo, boolean prescrizione, String nome, int scorte) throws DBException {
 		String query = String.format(Locale.US, "INSERT INTO farmaci (prezzo, prescrizione, nome, scorte) " +
 				"VALUES (%.2f, %d, '%s', %d);",
 			prezzo, prescrizione ? 1 : 0, nome, scorte
 		);
 
-		int rs = -1;
 		try {
-			rs = DBManager.getInstance().executeQuery(query);
+			DBManager.getInstance().executeQuery(query);
 		} catch (ClassNotFoundException | SQLException e) {
 			logger.warning(String.format("Errore durante l'inserimento del farmaco '%s' nel database.%n%s",
 				nome, e.getMessage()));
 			throw new DBException(String.format("Errore nel salvataggio del farmaco '%s'", nome));
 		}
-		return rs;
 	}
 
 	/**
 	 * Elimina il farmaco dal DB.
-	 * @return '1' se il farmaco è stato cancellato, '-1' altrimenti.
+	 * @throws DBException Lanciata se non è possibile accedere al DB o se non è stato possibile eliminare il farmaco.
 	 */
-	private int eliminaDaDB() throws DBException {
+	private void eliminaDaDB() throws DBException {
 		String query = String.format("DELETE FROM farmaci WHERE id = %d;", this.id);
 		logger.info(query);
-		int rs = -1;
 		try {
-			rs = DBManager.getInstance().executeQuery(query);
+			DBManager.getInstance().executeQuery(query);
 		} catch (ClassNotFoundException | SQLException e) {
-			logger.warning("Errore durante l'eliminazione dal DB del farmaco '%s'." + this.nome);
-			throw new DBException("Errore durante l'eliminazione dal DB del farmaco '%s'." + this.nome);
+			logger.warning(String.format("Errore durante l'eliminazione dal DB del farmaco '%s'.", this.nome));
+			throw new DBException(String.format("Errore durante l'eliminazione dal DB del farmaco '%s'.", this.nome));
 		}
-		return rs;
 	}
 
 	/**
@@ -210,24 +200,25 @@ public class FarmacoDAO {
 	public static List<FarmacoDAO> getFarmaci() throws DBException {
 
 		String query = "SELECT * FROM farmaci;";
-		List<FarmacoDAO> arrayListFarmacoDAO = new ArrayList<>();
+		List<FarmacoDAO> farmaci = new ArrayList<>();
 		logger.info(query);
 
 		try (ResultSet rs = DBManager.getInstance().selectQuery(query)) {
 			while (rs.next()) {
-				float prezzo = rs.getFloat("prezzo");
-				boolean prescrizione = rs.getBoolean("prescrizione");
-				String nome = rs.getString("nome");
-				int scorte = rs.getInt("scorte");
-				FarmacoDAO queryFarmacoDAO = new FarmacoDAO(prezzo, prescrizione, nome, scorte);
-				arrayListFarmacoDAO.add(queryFarmacoDAO);
+				FarmacoDAO farmaco = new FarmacoDAO();
+				farmaco.id = rs.getInt("id");
+				farmaco.prezzo = rs.getFloat("prezzo");
+				farmaco.prescrizione = rs.getBoolean("prescrizione");
+				farmaco.nome = rs.getString("nome");
+				farmaco.scorte = rs.getInt("scorte");
+				farmaci.add(farmaco);
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			logger.warning("Errore durante il caricamento dal database.");
 			throw new DBException("Errore nel caricamento di un farmaco.");
 		}
 
-		return arrayListFarmacoDAO;
+		return farmaci;
 	}
 
 	/**
@@ -278,9 +269,7 @@ public class FarmacoDAO {
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se il farmaco non esiste.
 	 */
 	public static void aggiornaFarmacoDB(int idFarmaco, float prezzo, boolean prescrizione, String nuovoNome, int scorte) throws DBException {
-		FarmacoDAO farmacoDaModificare = new FarmacoDAO(idFarmaco);
-		String nomeFarmacoDaModificare = farmacoDaModificare.getNome();
-
+		FarmacoDAO farmaco = new FarmacoDAO(idFarmaco);
 		String query = String.format(Locale.US, "UPDATE farmaci SET prezzo = %f, prescrizione = %d, " +
 							"nome = '%s', scorte = %d WHERE id = %d;",
 							prezzo, prescrizione ? 1 : 0, nuovoNome, scorte, idFarmaco);
@@ -289,7 +278,7 @@ public class FarmacoDAO {
 		try {
 			rs = DBManager.getInstance().executeQuery(query);
 		} catch (ClassNotFoundException | SQLException e) {
-			logger.warning(String.format("Errore durante l'aggiornamento del farmaco '%s'.", nomeFarmacoDaModificare));
+			logger.warning(String.format("Errore durante l'aggiornamento del farmaco '%s'.", farmaco.getNome()));
 			throw new DBException("Errore durante l'aggiornamento del farmaco");
 		}
 

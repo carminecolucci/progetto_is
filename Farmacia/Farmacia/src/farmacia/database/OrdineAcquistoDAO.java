@@ -16,11 +16,6 @@ public class OrdineAcquistoDAO {
 	private static final Logger logger = Logger.getLogger("OrdineAcquistoDAO");
 
 	/**
-	 * Costruttore di default.
-	 */
-	public OrdineAcquistoDAO() {}
-
-	/**
 	 * Costruttore che popola il DAO a partire dall'id dell'ordine di acquisto.
 	 * @param id L'id (uuid) dell'ordine di acquisto.
 	 * @throws DBException Se non è possibile accedere al DB o se l'ordine di acquisto non esiste.
@@ -30,7 +25,8 @@ public class OrdineAcquistoDAO {
 	}
 
 	/**
-	 * Costruttore che crea un nuovo OrdineAcquistoDAO. La lista dei farmaci verrà popolato via <code>aggiungiOrdineAcquistoFarmaco</code>.
+	 * Costruttore che crea un nuovo OrdineAcquistoDAO. La lista dei farmaci verrà
+	 * popolato via <code>aggiungiOrdineAcquistoFarmaco</code>.
 	 * @param id L'id (uuid) dell'ordine di acquisto.
 	 * @param dataCreazione La data di creazione dell'ordine di acquisto.
 	 */

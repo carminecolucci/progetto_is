@@ -29,7 +29,6 @@ public class DBManager {
 
 	/**
 	 * Password di accesso al database.
-	 * TODO: Use env vars
 	 */
 	public static final String PASSWORD = "carmine";
 
@@ -62,8 +61,7 @@ public class DBManager {
 	 */
 	public Connection getConnection() throws ClassNotFoundException, SQLException {
 		Class.forName(DRIVER);
-		Connection conn = DriverManager.getConnection(URL+DBNAME,USERNAME,PASSWORD);
-		return conn;
+		return DriverManager.getConnection(URL + DBNAME, USERNAME, PASSWORD);
 	}
 
 	/**
@@ -103,8 +101,6 @@ public class DBManager {
 	public ResultSet selectQuery(String query) throws ClassNotFoundException, SQLException {
 		Connection conn = getConnection();
 		Statement statement = conn.createStatement();
-		ResultSet result = statement.executeQuery(query);
-
-		return result;
+		return statement.executeQuery(query);
 	}
 }
