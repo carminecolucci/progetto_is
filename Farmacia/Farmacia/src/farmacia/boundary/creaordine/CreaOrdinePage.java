@@ -36,9 +36,9 @@ public class CreaOrdinePage extends JFrame {
 
 		for(DTO farmaco : listDTO){
 			String prescrizioneNecessaria;
+			listId.add((int)farmaco.get("id"));
 			if (!((boolean) farmaco.get("prescrizione"))){
 				prescrizioneNecessaria = "-";
-				listId.add((int)farmaco.get("id"));
 				model.addRow(new Object[]{farmaco.get("nome"), farmaco.get("prezzo"),
 					prescrizioneNecessaria, farmaco.get("possiediPrescrizione"), 0});
 				model.toggleCellEditability(model.getRowCount() - 1, 3);

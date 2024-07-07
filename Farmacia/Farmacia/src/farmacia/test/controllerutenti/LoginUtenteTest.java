@@ -1,11 +1,10 @@
-package farmacia.test;
+package farmacia.test.controllerutenti;
 
 import farmacia.controller.ControllerUtenti;
 import farmacia.database.UtenteDAO;
 import farmacia.exceptions.DBException;
 import farmacia.exceptions.LoginFailedException;
 import farmacia.exceptions.RegistrationFailedException;
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;

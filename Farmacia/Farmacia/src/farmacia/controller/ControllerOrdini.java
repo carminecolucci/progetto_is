@@ -92,7 +92,7 @@ public class ControllerOrdini {
 			dtoOrdine.set("id", ordine.getId());
 			dtoOrdine.set("dataCreazione", ordine.getDataCreazione());
 			dtoOrdine.set("ritirato", ordine.isRitirato());
-			dtoOrdine.set("cliente", ordine.getCliente());
+			dtoOrdine.set("cliente", ordine.getCliente().getUsername());
 			Map<DTO, Integer> dtoQuantitaFarmaci = getDtoQuantitaFarmaci(ordine.getQuantitaFarmaci());
 			dtoOrdine.set("quantitaFarmaci", dtoQuantitaFarmaci);
 			dtoOrdini.add(dtoOrdine);

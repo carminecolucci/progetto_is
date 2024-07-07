@@ -62,7 +62,7 @@ public class UtenteDAO {
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se l'utente è già presente.
 	 */
 	public void createUtente() throws DBException {
-		if (cercaInDB(this.username) != 0) {
+		if (cercaInDB(this.username) != -1) {
 			throw new DBException(String.format("Utente '%s' già esistente", this.username));
 		}
 

@@ -7,6 +7,7 @@ import farmacia.exceptions.DBException;
 import farmacia.exceptions.FarmacoNotFoundException;
 import farmacia.exceptions.OrderCreationFailedException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
 import java.util.Map;
@@ -25,6 +26,7 @@ public class EntityCliente extends EntityUtente {
 	 */
 	public EntityCliente(String username, String password, String nome, String cognome, Date dataNascita, String email) {
 		super(username, password, nome, cognome, dataNascita, TipoUtente.CLIENTE, email);
+		storicoOrdini = new ArrayList<>();
 	}
 
 	/**
@@ -34,6 +36,7 @@ public class EntityCliente extends EntityUtente {
 	 */
 	public EntityCliente(UtenteDAO utenteDAO) throws DBException {
 		super(utenteDAO);
+		storicoOrdini = new ArrayList<>();
 		for (OrdineDAO ordineDAO : OrdineDAO.getOrdiniByCliente(utenteDAO.getId())) {
 			storicoOrdini.add(new EntityOrdine(ordineDAO));
 		}
@@ -66,7 +69,7 @@ public class EntityCliente extends EntityUtente {
 		if (!catalogo.checkScorte(farmaciQuantita)) {
 			throw new OrderCreationFailedException("Ordine non creato per mancanza scorte");
 		}
-		EntityOrdine ordine = new EntityOrdine();
+		EntityOrdine ordine = new EntityOrdine(this);
 		try {
 			for (Map.Entry<Integer, Integer> entry : farmaciQuantita.entrySet()) {
 				int id = entry.getKey();
@@ -82,6 +85,7 @@ public class EntityCliente extends EntityUtente {
 				}
 			}
 			ordine.salvaInDB();
+			storicoOrdini.add(ordine);
 		} catch (FarmacoNotFoundException e) {
 			throw new OrderCreationFailedException("Errore creazione ordine, farmaco non trovato");
 		} catch (DBException e) {

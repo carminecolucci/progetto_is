@@ -1,4 +1,4 @@
-package farmacia.test;
+package farmacia.test.controllercatalogo;
 
 import farmacia.controller.ControllerCatalogo;
 import farmacia.database.FarmacoDAO;

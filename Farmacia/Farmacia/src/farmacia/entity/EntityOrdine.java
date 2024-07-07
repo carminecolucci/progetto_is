@@ -12,14 +12,22 @@ import java.util.Map;
 import java.util.UUID;
 
 public class EntityOrdine {
-	private String id;
+	private final String id;
 	private Date dataCreazione;
 	private boolean ritirato;
-	private Map<EntityFarmaco, Integer> quantitaFarmaci;
-	private EntityCliente cliente;
+	private final EntityCliente cliente;
+	private final Map<EntityFarmaco, Integer> quantitaFarmaci;
 
-	public EntityOrdine() {
-		quantitaFarmaci = new HashMap<>();
+	/**
+	 * Costruttore di <code>EntityOrdine</code>
+	 * @param cliente Cliente che ha creato l'ordine.
+	 */
+	public EntityOrdine(EntityCliente cliente) {
+		this.id = UUID.randomUUID().toString();
+		this.dataCreazione = new Date();
+		this.ritirato = false;
+		this.cliente = cliente;
+		this.quantitaFarmaci = new HashMap<>();
 	}
 
 	public EntityOrdine(String id) throws DBException {
@@ -44,9 +52,6 @@ public class EntityOrdine {
 	 * @throws DBException Errore generico del DB
 	 */
 	public void salvaInDB() throws DBException {
-		this.id = UUID.randomUUID().toString();
-		this.ritirato = false;
-		this.dataCreazione = Date.from(LocalDateTime.now().toInstant(ZoneOffset.UTC));
 		OrdineDAO ordineDAO = new OrdineDAO(this.id, this.dataCreazione, this.cliente.getId());
 		for (Map.Entry<EntityFarmaco, Integer> entry : quantitaFarmaci.entrySet()) {
 			ordineDAO.aggiungiOrdineFarmaco(entry.getKey().getId(), entry.getValue());
