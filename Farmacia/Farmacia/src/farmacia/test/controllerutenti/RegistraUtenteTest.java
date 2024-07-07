@@ -38,7 +38,7 @@ public class RegistraUtenteTest {
 		Date dataNascita = new Date(date.getTime());
 		boolean esito = true;
 		try {
-			controllerUtenti.registraCliente("user", "MiaPassword", "Utente", "Di Prova", dataNascita, "cliente@gmail.com");
+			controllerUtenti.registraCliente("user", "MiaPassword", "Utente", "Di Prova", dataNascita, "clienteeee@gmail.com");
 		} catch (RegistrationFailedException | DBException e) {
 			System.err.println(e.getMessage());
 			esito = false;
@@ -54,7 +54,7 @@ public class RegistraUtenteTest {
 		Date dataNascita = new Date(date.getTime());
 		boolean esito = true;
 		try {
-			controllerUtenti.registraCliente("user", "MiaPassword", "Utente", "Di Prova", dataNascita, "cliente@gmail.com");
+			controllerUtenti.registraCliente("user", "MiaPassword", "Utente", "Di Prova", dataNascita, "clienteeee@gmail.com");
 		} catch (RegistrationFailedException | DBException e) {
 			System.err.println(e.getMessage());
 			esito = false;
@@ -63,7 +63,7 @@ public class RegistraUtenteTest {
 
 		// provo a registrare l'utente per la seconda volta
 		try {
-			controllerUtenti.registraCliente("user", "MiaPassword", "Utente", "Di Prova", dataNascita, "cliente@gmail.com");
+			controllerUtenti.registraCliente("user", "MiaPassword", "Utente", "Di Prova", dataNascita, "clienteeee@gmail.com");
 		} catch (RegistrationFailedException | DBException e) {
 			System.err.println(e.getMessage());
 			esito = false;
