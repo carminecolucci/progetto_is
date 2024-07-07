@@ -30,11 +30,9 @@ public class LoginPage extends JFrame {
 			try {
 				controllerUtenti.loginUtente(username, password);
 				DTO dto = controllerUtenti.getUtenteCorrente();
-				String msg = String.format("Login Effettuato. Benvenuto %s %s %s.", dto.get("nome"), dto.get("cognome"), dto.get("tipoUtente"));
-				JOptionPane.showMessageDialog(loginPanel, msg, "Login Effettuato", JOptionPane.PLAIN_MESSAGE);
 				switch (dto.get("tipoUtente").toString()) {
 					case "CLIENTE":
-						JFrame homePageCliente = new HomePageCliente();
+						JFrame homePageCliente = new HomePageCliente(dto);
 						break;
 
 					case "FARMACISTA":

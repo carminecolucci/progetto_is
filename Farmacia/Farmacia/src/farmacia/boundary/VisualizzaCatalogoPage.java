@@ -32,8 +32,14 @@ public class VisualizzaCatalogoPage extends JFrame {
 
 		ControllerCatalogo controllerCatalogo = ControllerCatalogo.getInstance();
 		List<DTO> listDTO = controllerCatalogo.visualizzaCatalogo();
+		String prescrizioneRichiesta;
 		for(DTO farmaco: listDTO){
-			model.addRow(new Object[]{farmaco.get("nome"), farmaco.get("prezzo"), farmaco.get("prescrizione")});
+			if((boolean)farmaco.get("prescrizione")){
+				prescrizioneRichiesta = "Necessaria";
+			} else{
+				prescrizioneRichiesta = "-";
+			}
+			model.addRow(new Object[]{farmaco.get("nome"), farmaco.get("prezzo"), prescrizioneRichiesta});
 		}
 		setVisible(true);
 
