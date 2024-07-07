@@ -76,8 +76,8 @@ public class EntityOrdineAcquisto {
 	}
 
 	public void aggiorna() throws DBException {
-		OrdineAcquistoDAO dao = new OrdineAcquistoDAO(this.id);
-		dao.aggiorna();
+		OrdineAcquistoDAO ordine = new OrdineAcquistoDAO(this.id);
+		ordine.aggiorna();
 		this.ricevuto = true;
 	}
 }

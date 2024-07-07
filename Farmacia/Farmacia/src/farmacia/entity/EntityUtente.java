@@ -20,6 +20,16 @@ public class EntityUtente {
 	 */
 	public EntityUtente() { }
 
+	/**
+	 * Costruttore che crea un nuovo <code>EntityUtente</code>
+	 * @param username Username dell'utente.
+	 * @param password Password dell'utente.
+	 * @param nome Nome dell'utente.
+	 * @param cognome Cognome dell'utente.
+	 * @param dataNascita DataNascita dell'utente.
+	 * @param tipoUtente TipoUtente dell'utente.
+	 * @param email Email dell'utente.
+	 */
 	public EntityUtente(String username, String password, String nome, String cognome, Date dataNascita, TipoUtente tipoUtente, String email) {
 		this.username = username;
 		this.password = password;
@@ -32,7 +42,7 @@ public class EntityUtente {
 
 	/**
 	 * Costruttore che permette di popolare una EntityUtente a partire
-	 * da una <code>UtenteDA0</code>. Lo usiamo per la registrazione.
+	 * da un <code>UtenteDA0</code>. Lo usiamo per la registrazione.
 	 * @param utenteDAO istanza di <code>UtenteDA0</code> già popolata
 	 */
 	public EntityUtente(UtenteDAO utenteDAO) {

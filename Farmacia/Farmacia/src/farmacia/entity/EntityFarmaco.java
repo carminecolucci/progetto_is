@@ -28,14 +28,14 @@ public class EntityFarmaco {
     }
 
     public void salvaInDB() throws DBException {
-        FarmacoDAO nuovoFarmaco = new FarmacoDAO();
-        nuovoFarmaco.createFarmaco(this.prezzo, this.prescrizione, this.nome, this.scorte);
-        this.id = nuovoFarmaco.getId();
+        FarmacoDAO farmaco = new FarmacoDAO(this.prezzo, this.prescrizione, this.nome, this.scorte);
+        farmaco.createFarmaco();
+        this.id = farmaco.getId();
     }
 
     public void eliminaDaDB() throws DBException {
-        FarmacoDAO farmacoDaEliminare = new FarmacoDAO(this.id);
-        farmacoDaEliminare.deleteFarmaco();
+        FarmacoDAO farmaco = new FarmacoDAO(this.id);
+        farmaco.deleteFarmaco();
     }
 
     public int getId() {

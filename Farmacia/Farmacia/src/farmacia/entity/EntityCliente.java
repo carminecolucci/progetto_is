@@ -14,28 +14,50 @@ import java.util.Map;
 public class EntityCliente extends EntityUtente {
 	List<EntityOrdine> storicoOrdini;
 
+	/**
+	 * Costruttore di <code>EntityCliente</code>
+	 * @param username Username dell'utente.
+	 * @param password Password dell'utente.
+	 * @param nome Nome dell'utente.
+	 * @param cognome Cognome dell'utente.
+	 * @param dataNascita DataNascita dell'utente.
+	 * @param email Email dell'utente.
+	 */
 	public EntityCliente(String username, String password, String nome, String cognome, Date dataNascita, String email) {
 		super(username, password, nome, cognome, dataNascita, TipoUtente.CLIENTE, email);
 	}
 
+	/**
+	 * Costruttore che permette di popolare una EntityCliente a partire
+	 * da un <code>UtenteDA0</code>. Lo usiamo per la registrazione.
+	 * @param utenteDAO istanza di <code>UtenteDA0</code> già popolata
+	 */
 	public EntityCliente(UtenteDAO utenteDAO) throws DBException {
-		// se chiamo questo costruttore, significa che sono già registrato
 		super(utenteDAO);
 		for (OrdineDAO ordineDAO : OrdineDAO.getOrdiniByCliente(utenteDAO.getId())) {
 			storicoOrdini.add(new EntityOrdine(ordineDAO));
 		}
 	}
 
+	/**
+	 * Costruttore che crea un <code>EntityCliente</code> a partire dal suo id.
+	 * @param id id del cliente.
+	 * @throws DBException se non è possibile accedere al DB.
+	 */
 	public EntityCliente(int id) throws DBException {
 		this(new UtenteDAO(id));
 	}
 
+	/**
+	 * Visualizza lo storico degli ordini del cliente.
+	 * @return la lista di ordini effettuati dal cliente.
+	 */
 	public List<EntityOrdine> visualizzaStoricoOrdini() {
 		return storicoOrdini;
 	}
 
 	/**
-	 * Funzione che permette di creare un nuovo Ordine di un cliente già loggato.
+	 * Funzione che permette di creare un nuovo Ordine.
 	 * @param farmaciQuantita una serie di coppie (idFarmaco, quantita).
 	 * @throws OrderCreationFailedException lanciata quando un farmaco non viene trovato o quando le scorte sono insufficienti
 	 */
@@ -46,10 +68,12 @@ public class EntityCliente extends EntityUtente {
 		}
 		EntityOrdine ordine = new EntityOrdine();
 		try {
-			for (Integer idFarmaco : farmaciQuantita.keySet()) {
-				EntityFarmaco farmaco = catalogo.cercaFarmacoById(idFarmaco);
-				ordine.aggiungiOrdineFarmaco(farmaco, farmaciQuantita.get(idFarmaco));
-				int scorteResidue = catalogo.decrementaScorte(idFarmaco, farmaciQuantita.get(idFarmaco));
+			for (Map.Entry<Integer, Integer> entry : farmaciQuantita.entrySet()) {
+				int id = entry.getKey();
+				int quantita = entry.getValue();
+				EntityFarmaco farmaco = catalogo.cercaFarmacoById(id);
+				ordine.aggiungiOrdineFarmaco(farmaco, quantita);
+				int scorteResidue = catalogo.decrementaScorte(id, quantita);
 				if (scorteResidue == 0) {
 					// TODO: OrdineAcquisto fuori dal for, per contenere più coppie
 					EntityOrdineAcquisto ordineAcquisto = new EntityOrdineAcquisto();
@@ -71,8 +95,7 @@ public class EntityCliente extends EntityUtente {
 	 * @throws DBException Lanciata quando si cerca di salvare un utente già registrato
 	 */
 	public void salvaInDB() throws DBException {
-		// TODO: Make crud methods take no parameters
-		UtenteDAO utenteDAO = new UtenteDAO();
-		utenteDAO.createUtente(this.getNome(), this.getCognome(), this.getUsername(), this.getPassword(), this.getDataNascita(), this.getEmail());
+		UtenteDAO utenteDAO = new UtenteDAO(this.getNome(), this.getCognome(), this.getUsername(), this.getPassword(), this.getDataNascita(), this.getEmail());
+		utenteDAO.createUtente();
 	}
 }

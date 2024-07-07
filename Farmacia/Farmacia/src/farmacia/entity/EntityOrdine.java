@@ -55,8 +55,8 @@ public class EntityOrdine {
 	}
 
 	public void aggiorna() throws DBException {
-		OrdineDAO dao = new OrdineDAO(this.id);
-		dao.aggiorna();
+		OrdineDAO ordine = new OrdineDAO(this.id);
+		ordine.aggiorna();
 		this.ritirato = true;
 	}
 
