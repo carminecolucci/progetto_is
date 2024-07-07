@@ -72,7 +72,7 @@ public class OrdineAcquistoDAO {
 	 */
 	private void caricaDaDB(String id) throws DBException {
 		String query = String.format("SELECT * from ordini_acquisto WHERE id = '%s';", id);
-
+		logger.info(query);
 		try (ResultSet rs = DBManager.getInstance().selectQuery(query)) {
 			if (rs.next()) {
 				this.id = id;
@@ -81,12 +81,12 @@ public class OrdineAcquistoDAO {
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			logger.warning(String.format("Errore durante il caricamento dell'ordine di acquisto con id '%s'.%n%s",
-					this.id, e.getMessage())
-			);
+					this.id, e.getMessage()));
 			throw new DBException("Errore nel caricamento dell'ordine di acquisto con id '" + this.id + "'.");
 		}
 
 		query = String.format("SELECT * from ordini_acquisto_farmaci WHERE id = '%s';", this.id);
+		logger.info(query);
 		try (ResultSet rs = DBManager.getInstance().selectQuery(query)) {
 			while (rs.next()) {
 				int idFarmaco = rs.getInt("farmacoAcquisto");
@@ -110,6 +110,7 @@ public class OrdineAcquistoDAO {
 		java.sql.Date data = new java.sql.Date(this.dataCreazione.getTime());
 		String query = String.format("INSERT INTO ordini_acquisto (id, dataCreazione, ricevuto) VALUES ('%s', '%s', %d);",
 			this.id, data, this.ricevuto ? 1 : 0);
+		logger.info(query);
 
 		int rs = -1;
 		try {
@@ -123,6 +124,7 @@ public class OrdineAcquistoDAO {
 
 		query = "INSERT INTO ordini_acquisto_farmaci (ordineAcquisto, farmacoAcquisto, quantita) " +
 				"VALUES ('%s', %d, %d);";
+		logger.info(query);
 		for (Map.Entry<FarmacoDAO, Integer> item: this.ordineAcquistoFarmaci.entrySet()) {
 			try {
 				rs = DBManager.getInstance().executeQuery(String.format(query, this.id, item.getKey().getId(), item.getValue()));
@@ -140,6 +142,8 @@ public class OrdineAcquistoDAO {
 	 */
 	public static List<OrdineAcquistoDAO> getOrdiniAcquisto() throws DBException {
 		String query = "SELECT * FROM ordini_acquisto;";
+		logger.info(query);
+
 		List<OrdineAcquistoDAO> listaOrdiniAcquistoDAO = new ArrayList<>();
 		try (ResultSet rs = DBManager.getInstance().selectQuery(query)) {
 			String idOrdine;

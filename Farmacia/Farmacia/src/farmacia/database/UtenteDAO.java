@@ -103,7 +103,7 @@ public class UtenteDAO {
 	 */
 	private void caricaDaDB(int id) throws DBException {
 		String query = String.format("SELECT * FROM utenti WHERE id = %d;", id);
-
+		logger.info(query);
 		try (ResultSet rs = DBManager.getInstance().selectQuery(query)) {
 			if (rs.next()) {
 				this.nome = rs.getString("nome");
@@ -174,8 +174,8 @@ public class UtenteDAO {
 	private int salvaInDB(String nome, String cognome, String username, String password, Date dataNascita, String email) throws DBException {
 		String query = String.format("INSERT INTO utenti (nome, cognome, username, password, dataNascita, tipo, email) " +
 				"VALUES ('%s', '%s', '%s', '%s', '%s', %d, '%s');",
-			nome, cognome, username, password, dataNascita, TipoUtente.CLIENTE.ordinal(), email
-		);
+			nome, cognome, username, password, dataNascita, TipoUtente.CLIENTE.ordinal(), email);
+		logger.info(query);
 
 		try {
 			return DBManager.getInstance().executeQuery(query);

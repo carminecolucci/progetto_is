@@ -81,6 +81,7 @@ public class FarmacoDAO {
 	 */
 	private void caricaDaDB(int id) throws DBException {
 		String query = String.format("SELECT * FROM farmaci WHERE id = %d;", id);
+		logger.info(query);
 
 		try (ResultSet rs = DBManager.getInstance().selectQuery(query)) {
 			if (rs.next()) {
@@ -103,6 +104,7 @@ public class FarmacoDAO {
 	 */
 	private void caricaDaDB(String nome) throws DBException {
 		String query = String.format("SELECT * FROM farmaci WHERE nome = '%s';", nome);
+		logger.info(query);
 
 		try (ResultSet rs = DBManager.getInstance().selectQuery(query)) {
 			if (rs.next()) {
@@ -147,9 +149,11 @@ public class FarmacoDAO {
 	 */
 	public static void deleteFarmaco(String nome) throws DBException {
 		String query = String.format("DELETE FROM farmaci WHERE nome = '%s';", nome);
+		logger.info(query);
 		try {
 			DBManager.getInstance().executeQuery(query);
 		} catch (ClassNotFoundException | SQLException e) {
+			logger.warning(String.format("Errore durante l'eliminazione dal DB del farmaco '%s'.", nome));
 			throw new DBException(String.format("Errore durante l'eliminazione dal DB del farmaco '%s'.", nome));
 		}
 	}
@@ -232,9 +236,8 @@ public class FarmacoDAO {
 		String nomeFarmacoDaModificare = farmacoDaModificare.getNome();
 		String query = String.format("UPDATE farmaci SET prezzo = %f WHERE nome = '%s';", nuovoPrezzo, nome);
 		logger.info(query);
-		int rs = -1;
 		try {
-			rs = DBManager.getInstance().executeQuery(query);
+			DBManager.getInstance().executeQuery(query);
 		} catch (ClassNotFoundException | SQLException e) {
 			logger.warning("Errore durante l'aggiornamento del prezzo del farmaco '" + nomeFarmacoDaModificare + "'.");
 		}
@@ -251,9 +254,8 @@ public class FarmacoDAO {
 		String nomeFarmacoDaModificare = farmacoDaModificare.getNome();
 		String query = String.format("UPDATE farmaci SET scorte = %d WHERE id = %d;", nuoveScorte, idFarmaco);
 		logger.info(query);
-		int rs = -1;
 		try {
-			rs = DBManager.getInstance().executeQuery(query);
+			DBManager.getInstance().executeQuery(query);
 		} catch (ClassNotFoundException | SQLException e) {
 			logger.warning("Errore durante l'aggiornamento delle scorte del farmaco '" + nomeFarmacoDaModificare + "'.");
 		}
@@ -274,9 +276,8 @@ public class FarmacoDAO {
 							"nome = '%s', scorte = %d WHERE id = %d;",
 							prezzo, prescrizione ? 1 : 0, nuovoNome, scorte, idFarmaco);
 		logger.info(query);
-		int rs = -1;
 		try {
-			rs = DBManager.getInstance().executeQuery(query);
+			DBManager.getInstance().executeQuery(query);
 		} catch (ClassNotFoundException | SQLException e) {
 			logger.warning(String.format("Errore durante l'aggiornamento del farmaco '%s'.", farmaco.getNome()));
 			throw new DBException("Errore durante l'aggiornamento del farmaco");

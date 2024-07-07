@@ -101,8 +101,9 @@ public class OrdineDAO {
 	 * @throws DBException se non si può caricare gli ordini dal DB
 	 */
 	private static List<OrdineDAO> caricaOrdiniDaDB(String query) throws DBException {
-		List<OrdineDAO> ordini = new ArrayList<>();
+		logger.info(query);
 
+		List<OrdineDAO> ordini = new ArrayList<>();
 		try (ResultSet rs = DBManager.getInstance().selectQuery(query)) {
 			while (rs.next()) {
 				OrdineDAO ordine = new OrdineDAO();
@@ -128,7 +129,7 @@ public class OrdineDAO {
 	 */
 	private void caricaDaDB(String id) throws DBException {
 		String query = String.format("SELECT * FROM ordini WHERE id = '%s';", id);
-
+		logger.info(query);
 		try (ResultSet rs = DBManager.getInstance().selectQuery(query)) {
 			if (rs.next()) {
 				this.dataCreazione = rs.getDate("dataCreazione");
@@ -138,8 +139,7 @@ public class OrdineDAO {
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			logger.warning(String.format("Errore durante il caricamento di un ordine con id '%s'.%n%s",
-				id, e.getMessage())
-			);
+				id, e.getMessage()));
 			throw new DBException("Errore nel caricamento di un ordine");
 		}
 
@@ -152,6 +152,7 @@ public class OrdineDAO {
 	 */
 	private void caricaOrdiniFarmaciDaDB() throws DBException {
 		String query = String.format("SELECT * FROM ordini_farmaci WHERE ordine = '%s'", this.id);
+		logger.info(query);
 		try (ResultSet rs = DBManager.getInstance().selectQuery(query)) {
 			while (rs.next()) {
 				int idFarmaco = rs.getInt("farmaco");
@@ -172,23 +173,21 @@ public class OrdineDAO {
 	 */
 	private int salvaInDB() throws DBException {
 		java.sql.Date data = new java.sql.Date(this.dataCreazione.getTime());
-		String query = String.format("INSERT INTO ordini (id, dataCreazione, ritirato, cliente) " +
-						"VALUES ('%s', '%s', %d, %d);",
-			this.id, data, this.ritirato ? 1 : 0, this.cliente
-		);
-
+		String query = String.format("INSERT INTO ordini (id, dataCreazione, ritirato, cliente) VALUES ('%s', '%s', %d, %d);",
+			this.id, data, this.ritirato ? 1 : 0, this.cliente);
+		logger.info(query);
 		int rs = -1;
 		try {
 			rs = DBManager.getInstance().executeQuery(query);
 		} catch (ClassNotFoundException | SQLException e) {
 			logger.warning(String.format("Errore durante l'inserimento dell'ordine '%s' nel database.%n%s",
-				this.id, e.getMessage())
-			);
+				this.id, e.getMessage()));
 			throw new DBException(String.format("Errore nel salvataggio dell'ordine '%s'", this.id));
 		}
 
 		query = "INSERT INTO ordini_farmaci (ordine, farmaco, quantita) " +
 				"VALUES ('%s', %d, %d);";
+		logger.info(query);
 		for (Map.Entry<FarmacoDAO, Integer> item: ordineFarmaci.entrySet()) {
 			try {
 				rs = DBManager.getInstance().executeQuery(String.format(query,
