@@ -46,6 +46,7 @@ public class OrdineDAO {
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se l'ordine non esiste.
 	 */
 	public OrdineDAO(String id) throws DBException {
+		ordineFarmaci = new HashMap<>();
 		this.caricaDaDB(id);
 	}
 
