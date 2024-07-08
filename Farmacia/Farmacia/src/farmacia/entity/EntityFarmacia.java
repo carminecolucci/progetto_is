@@ -23,11 +23,8 @@ public class EntityFarmacia {
 	/**
 	 * Costruttore privato per impedire la creazione di istanze multiple.
 	 */
-	private EntityFarmacia() throws DBException {
+	private EntityFarmacia() {
 		ordiniAcquisto = new ArrayList<>();
-		for (OrdineAcquistoDAO ordineAcquistoDAO : OrdineAcquistoDAO.getOrdiniAcquisto()) {
-			ordiniAcquisto.add(new EntityOrdineAcquisto(ordineAcquistoDAO));
-		}
 	}
 
 	/**
@@ -62,6 +59,11 @@ public class EntityFarmacia {
 				if (utenteDAO.getTipoUtente() == TipoUtente.CLIENTE) {
 					utenteLoggato = new EntityCliente(utenteDAO);
 				} else {
+					if (utenteDAO.getTipoUtente() == TipoUtente.FARMACISTA) {
+						for (OrdineAcquistoDAO ordineAcquistoDAO : OrdineAcquistoDAO.getOrdiniAcquisto()) {
+							ordiniAcquisto.add(new EntityOrdineAcquisto(ordineAcquistoDAO));
+						}
+					}
 					utenteLoggato = new EntityUtente(utenteDAO);
 				}
 				Sessione.getInstance().setUtenteCorrente(utenteLoggato);
