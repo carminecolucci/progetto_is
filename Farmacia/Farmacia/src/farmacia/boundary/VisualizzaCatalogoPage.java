@@ -17,6 +17,7 @@ public class VisualizzaCatalogoPage extends JFrame {
 	public VisualizzaCatalogoPage() {
 
 		setTitle("Visualizza Catalogo");
+		System.out.println("Costruttore di visualizza catalogo");
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setSize(600, 400);
 		setLocationRelativeTo(null);

@@ -48,6 +48,8 @@ public class EliminaFarmacoPage extends JFrame {
 			try {
 				controllerCatalogo.eliminaFarmaco(idFarmaco);
 				JOptionPane.showMessageDialog(this, String.format("Farmaco '%s' eliminato.", nomeFarmaco));
+				farmaci.remove(rowIndex);
+				model.removeRow(rowIndex);
 			} catch (FarmacoNotFoundException | DBException ex ) {
 				JOptionPane.showMessageDialog(this, String.format("Farmaco '%s' non esistente. %s", nomeFarmaco, ex.getMessage()));
 			}

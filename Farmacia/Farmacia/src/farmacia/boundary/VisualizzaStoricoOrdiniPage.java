@@ -11,9 +11,8 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class VisualizzaStoricoOrdiniPage extends JFrame {
-	private DefaultTableModel tableModel;
-	private JTable table;
-	private List<DTO> ordini;
+	private final JTable table;
+	private final List<DTO> ordini;
 
 	public VisualizzaStoricoOrdiniPage() throws DBException {
 		setTitle("Visualizza storico ordini");
@@ -22,7 +21,7 @@ public class VisualizzaStoricoOrdiniPage extends JFrame {
 		setLocationRelativeTo(null);
 
 		// Creazione della tabella con un DefaultTableModel vuoto
-		tableModel = new DefaultTableModel(new Object[][]{}, new String[]{"ID", "Data di creazione", "Stato ordine", "Totale da pagare"}) {
+		DefaultTableModel tableModel = new DefaultTableModel(new Object[][]{}, new String[]{"ID", "Data di creazione", "Stato ordine", "Totale da pagare"}) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;
