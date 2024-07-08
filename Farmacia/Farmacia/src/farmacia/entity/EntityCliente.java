@@ -77,7 +77,7 @@ public class EntityCliente extends EntityUtente {
 				if (scorteResidue == 0) {
 					// TODO: OrdineAcquisto fuori dal for, per contenere più coppie
 					EntityOrdineAcquisto ordineAcquisto = new EntityOrdineAcquisto();
-					ordineAcquisto.aggiungiOrdineAcquistoFarmaco(farmaco, 50); // TODO esportare questa costante
+					ordineAcquisto.aggiungiOrdineAcquistoFarmaco(farmaco, EntityOrdineAcquisto.QUANTITA_ORDINE_DEFAULT);
 					ordineAcquisto.salvaInDB();
 				}
 			}

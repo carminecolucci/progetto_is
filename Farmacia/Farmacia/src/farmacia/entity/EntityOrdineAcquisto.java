@@ -17,6 +17,8 @@ public class EntityOrdineAcquisto {
 	private boolean ricevuto;
 	private Map<EntityFarmaco, Integer> quantitaFarmaci;
 
+	public static final int QUANTITA_ORDINE_DEFAULT = 50;
+
 	public EntityOrdineAcquisto() {
 		quantitaFarmaci = new HashMap<>();
 	}
