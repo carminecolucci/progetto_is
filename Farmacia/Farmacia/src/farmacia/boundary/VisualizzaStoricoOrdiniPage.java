@@ -7,6 +7,7 @@ import farmacia.exceptions.DBException;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.BorderLayout;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class VisualizzaStoricoOrdiniPage extends JFrame {
@@ -62,7 +63,9 @@ public class VisualizzaStoricoOrdiniPage extends JFrame {
 			} else {
 				statoOrdine = "Da ritirare";
 			}
-			tableModel.addRow(new Object[] {ordine.get("id"), ordine.get("dataCreazione"), statoOrdine, ordine.get("totale")});
+
+			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+			tableModel.addRow(new Object[] {ordine.get("id"), formatter.format(ordine.get("dataCreazione")), statoOrdine, ordine.get("totale")});
 		}
 
 		actionButton.addActionListener(e -> {

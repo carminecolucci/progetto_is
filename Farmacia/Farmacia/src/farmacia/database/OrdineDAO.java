@@ -113,6 +113,7 @@ public class OrdineDAO {
 				ordine.dataCreazione = rs.getDate("dataCreazione");
 				ordine.ritirato = rs.getBoolean("ritirato");
 				ordine.cliente = rs.getInt("cliente");
+				ordine.totale = rs.getFloat("totale");
 				ordine.caricaOrdiniFarmaciDaDB();
 				ordini.add(ordine);
 			}
@@ -137,6 +138,7 @@ public class OrdineDAO {
 				this.dataCreazione = rs.getDate("dataCreazione");
 				this.ritirato = rs.getBoolean("ritirato");
 				this.cliente = rs.getInt("cliente");
+				this.totale = rs.getFloat("totale");
 				this.id = id;
 			}
 		} catch (ClassNotFoundException | SQLException e) {
