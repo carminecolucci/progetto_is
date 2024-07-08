@@ -128,8 +128,14 @@ public class EntityFarmacia {
 			if (ordineAcquisto.getId().equals(idOrdine)) {
 				try {
 					ordineAcquisto.aggiorna();
+					// TODO: il bug sta nel fatto che che non si entra in questo for, ora vado a dormire
+					for (Map.Entry<EntityFarmaco, Integer> entry : ordineAcquisto.getQuantitaFarmaci().entrySet()) {
+						EntityCatalogo.getInstance().decrementaScorte(entry.getKey().getId(), -entry.getValue());
+					}
 				} catch (DBException e) {
 					throw new OrderNotFoundException(e.getMessage());
+				} catch (FarmacoNotFoundException e) {
+					throw new RuntimeException(e);
 				}
 			}
 		}
