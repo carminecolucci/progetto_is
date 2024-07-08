@@ -47,7 +47,8 @@ public class CercaFarmacoPage extends JFrame {
 					}
 					model.addRow(new Object[]{farmaco.get("nome"), farmaco.get("prezzo"), prescrizioneRichiesta});
 				} catch (FarmacoNotFoundException ex) {
-					// Non mostrare nulla
+					JOptionPane.showMessageDialog(this, String.format("Farmaco '%s' non presente in farmacia.", nomeFarmaco));
+					txtFarmaco.setText("");
 				}
 			}
 		});

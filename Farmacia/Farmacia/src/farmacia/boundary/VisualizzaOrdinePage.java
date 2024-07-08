@@ -19,8 +19,8 @@ public class VisualizzaOrdinePage extends JFrame {
 		setTitle(String.format("Visualizza ordine '%s'", idOrdine));
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setContentPane(mainPanel);
-		setLocationRelativeTo(null);
 		setSize(600, 400);
+		setLocationRelativeTo(null);
 
 		DefaultTableModel model = new DefaultTableModel(new Object[][]{}, new String[]{"Nome", "Prezzo", "Quantità"}) {
 			@Override

@@ -9,7 +9,10 @@
     <children>
       <scrollpane id="91210" binding="spnFarmaci">
         <constraints border-constraint="Center"/>
-        <properties/>
+        <properties>
+          <alignmentX value="0.0"/>
+          <alignmentY value="0.0"/>
+        </properties>
         <border type="none"/>
         <children>
           <component id="94c0d" class="javax.swing.JTable" binding="tblFarmaci">

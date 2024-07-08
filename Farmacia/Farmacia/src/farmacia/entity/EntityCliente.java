@@ -61,7 +61,7 @@ public class EntityCliente extends EntityUtente {
 	 * @param farmaciQuantita una serie di coppie (idFarmaco, quantita).
 	 * @throws OrderCreationFailedException lanciata quando un farmaco non viene trovato o quando le scorte sono insufficienti
 	 */
-	public void creaOrdine(Map<Integer, Integer> farmaciQuantita) throws OrderCreationFailedException {
+	public String creaOrdine(Map<Integer, Integer> farmaciQuantita) throws OrderCreationFailedException {
 		EntityCatalogo catalogo = EntityCatalogo.getInstance();
 		if (!catalogo.checkScorte(farmaciQuantita)) {
 			throw new OrderCreationFailedException("Ordine non creato per mancanza scorte");
@@ -83,6 +83,7 @@ public class EntityCliente extends EntityUtente {
 			}
 			ordine.salvaInDB();
 			storicoOrdini.add(ordine);
+			return ordine.getId();
 		} catch (FarmacoNotFoundException e) {
 			throw new OrderCreationFailedException("Errore creazione ordine, farmaco non trovato");
 		} catch (DBException e) {

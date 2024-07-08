@@ -18,6 +18,7 @@ public class VisualizzaStoricoOrdiniPage extends JFrame {
 		setTitle("Visualizza storico ordini");
 		setSize(600, 400);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		setLocationRelativeTo(null);
 
 		// Creazione della tabella con un DefaultTableModel vuoto
 		tableModel = new DefaultTableModel(new Object[][]{}, new String[]{"ID", "Data di creazione", "Stato ordine", "Totale da pagare"}) {
@@ -54,14 +55,20 @@ public class VisualizzaStoricoOrdiniPage extends JFrame {
 			throw new RuntimeException(ex);
 		}
 
+		//TODO: Memorizzare prezzo ordine senza farlo cambiare
 		for (DTO ordine: ordini) {
 			String statoOrdine;
+			float totaleOrdine = 0;
+			Map <DTO, Integer> quantitaFarmaci = (Map<DTO, Integer>) ordine.get("quantitaFarmaci");
+			for (Map.Entry<DTO, Integer> entry: quantitaFarmaci.entrySet()) {
+				totaleOrdine += entry.getValue() * (float)entry.getKey().get("prezzo");
+			}
 			if ((boolean)ordine.get("ritirato")) {
 				statoOrdine = "Ritirato";
 			} else {
 				statoOrdine = "Da ritirare";
 			}
-			tableModel.addRow(new Object[] {ordine.get("id"), ordine.get("dataCreazione"), statoOrdine, 121212});
+			tableModel.addRow(new Object[] {ordine.get("id"), ordine.get("dataCreazione"), statoOrdine, totaleOrdine});
 		}
 
 		actionButton.addActionListener(e -> {

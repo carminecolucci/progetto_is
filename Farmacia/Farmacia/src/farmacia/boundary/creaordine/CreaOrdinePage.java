@@ -59,8 +59,10 @@ public class CreaOrdinePage extends JFrame {
 		//TODO: Risolvere problema per cui la checkbox non viene correttamente letta se il suo stato viene cambiato più volte
 		buttonPanel.add(btnConferma, BorderLayout.EAST);
 		buttonPanel.add(btnAnnulla, BorderLayout.WEST);
+		add(buttonPanel, BorderLayout.SOUTH);
 		btnConferma.addActionListener(e -> {
 			ControllerOrdini controllerOrdini = ControllerOrdini.getInstance();
+			int numeroFarmaci = 0;
 			Map<Integer, Integer> farmaciOrdine = new HashMap<>();
 			for (int row = 0; row < tblFarmaciOrdine.getRowCount(); row++) {
 				String nome = (String)tblFarmaciOrdine.getValueAt(row, 0);
@@ -69,10 +71,12 @@ public class CreaOrdinePage extends JFrame {
 				Boolean possiediPrescrizione = tblFarmaciOrdine.getValueAt(row, 3) != null;
 				Integer quantita = (Integer)tblFarmaciOrdine.getValueAt(row, 4);
 				if (quantita > 0) {
+					numeroFarmaci += 1;
 					if (necessitaPrescrizione.equals("Necessaria")) {
 						if (possiediPrescrizione)
 							farmaciOrdine.put(listId.get(row), quantita);
 						else {
+							JOptionPane.showMessageDialog(this, String.format("Ordine annullato: non hai la prescrizione per il farmaco '%s'.", nome));
 							dispose();
 							return;
 						}
@@ -83,14 +87,24 @@ public class CreaOrdinePage extends JFrame {
 			}
 			System.out.println(farmaciOrdine);
 			try {
-				controllerOrdini.creaOrdine(farmaciOrdine);
+				if (numeroFarmaci >= 1){
+					String idOrdine = controllerOrdini.creaOrdine(farmaciOrdine);
+					JOptionPane.showMessageDialog(this, String.format("Ordine confermato! Numero ricevuta: '%s'.", idOrdine));
+					dispose();
+				} else {
+					JOptionPane.showMessageDialog(this, "Ordine nullo!");
+				}
 			} catch (OrderCreationFailedException ex) {
 				farmaciOrdine.clear();
 				JOptionPane.showMessageDialog(this, ex.getMessage());
 			}
 		});
 
-		add(buttonPanel, BorderLayout.SOUTH);
+		btnAnnulla.addActionListener(e -> {
+			JOptionPane.showMessageDialog(this, "Ordine annullato!");
+			dispose();
+		});
+
 
 
 		setVisible(true);

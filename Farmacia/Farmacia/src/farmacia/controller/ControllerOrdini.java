@@ -30,9 +30,9 @@ public class ControllerOrdini {
 		return uniqueInstance;
 	}
 
-	public void creaOrdine(Map<Integer, Integer> farmaciQuantita) throws OrderCreationFailedException {
+	public String creaOrdine(Map<Integer, Integer> farmaciQuantita) throws OrderCreationFailedException {
 		EntityCliente cliente = (EntityCliente) Sessione.getInstance().getUtenteCorrente();
-		cliente.creaOrdine(farmaciQuantita);
+		return cliente.creaOrdine(farmaciQuantita);
 	}
 
 	public List<DTO> visualizzaStoricoOrdini() throws DBException {
