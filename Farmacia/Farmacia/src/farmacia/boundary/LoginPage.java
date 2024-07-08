@@ -32,16 +32,16 @@ public class LoginPage extends JFrame {
 			} else {
 				try {
 					controllerUtenti.loginUtente(username, password);
-					DTO dto = controllerUtenti.getUtenteCorrente();
-					switch (dto.get("tipoUtente").toString()) {
+					DTO utente = controllerUtenti.getUtenteCorrente();
+					switch (utente.get("tipoUtente").toString()) {
 						case "CLIENTE":
-							new HomePageCliente(dto);
+							new HomePageCliente(utente);
 							break;
 						case "FARMACISTA":
-							new HomePageFarmacista(dto);
+							new HomePageFarmacista(utente);
 							break;
 						case "DIRETTORE":
-							new HomePageDirettore();
+							new HomePageDirettore(utente);
 							break;
 					}
 					setVisible(false);
