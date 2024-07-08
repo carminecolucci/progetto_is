@@ -24,6 +24,7 @@ public class RegisterPage extends JFrame {
 	private JPasswordField pswRipetiPassword;
 	private JButton btnRegistrati;
 	private JTextField txtEmail;
+	private JButton btnAnnulla;
 
 	public RegisterPage() {
 		setSize(500, 300);
@@ -60,6 +61,8 @@ public class RegisterPage extends JFrame {
 				JOptionPane.showMessageDialog(mainPanel, ex.getMessage(), "Errore Registrazione", JOptionPane.ERROR_MESSAGE);
 			}
 		});
+
+		btnAnnulla.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
 
 		boxMese.addActionListener(e -> {
 			String[] mesi31 = {"1", "3", "7", "8", "10", "12"};

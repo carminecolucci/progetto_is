@@ -27,28 +27,27 @@ public class LoginPage extends JFrame {
 			ControllerUtenti controllerUtenti = ControllerUtenti.getInstance();
 			String username = this.txtUsername.getText();
 			String password = String.valueOf(this.pswPassword.getPassword());
-			try {
-				controllerUtenti.loginUtente(username, password);
-				DTO dto = controllerUtenti.getUtenteCorrente();
-				switch (dto.get("tipoUtente").toString()) {
-					case "CLIENTE":
-						new HomePageCliente(dto);
-						setVisible(false);
-						break;
-
-					case "FARMACISTA":
-						new HomePageFarmacista(dto);
-						setVisible(false);
-						break;
-
-					case "DIRETTORE":
-						new HomePageDirettore();
-						setVisible(false);
-						break;
+			if (username.isEmpty() || password.isEmpty()) {
+				JOptionPane.showMessageDialog(loginPanel, "Inserire username e password", "Errore Login", JOptionPane.ERROR_MESSAGE);
+			} else {
+				try {
+					controllerUtenti.loginUtente(username, password);
+					DTO dto = controllerUtenti.getUtenteCorrente();
+					switch (dto.get("tipoUtente").toString()) {
+						case "CLIENTE":
+							new HomePageCliente(dto);
+							break;
+						case "FARMACISTA":
+							new HomePageFarmacista(dto);
+							break;
+						case "DIRETTORE":
+							new HomePageDirettore();
+							break;
+					}
+					setVisible(false);
+				} catch (LoginFailedException | DBException ex) {
+					JOptionPane.showMessageDialog(loginPanel, ex.getMessage(), "Errore Login", JOptionPane.ERROR_MESSAGE);
 				}
-				// dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)); // chiudo la finestra di login
-			} catch (LoginFailedException | DBException ex) {
-				JOptionPane.showMessageDialog(loginPanel, ex.getMessage(), "Errore Login", JOptionPane.ERROR_MESSAGE);
 			}
 		});
 

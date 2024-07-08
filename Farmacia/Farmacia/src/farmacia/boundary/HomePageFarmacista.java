@@ -23,7 +23,7 @@ public class HomePageFarmacista extends JFrame {
 
 	public HomePageFarmacista(DTO farmacista) {
 		setTitle("Homepage Farmacista");
-		setSize(400, 400);
+		setSize(600, 400);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setContentPane(mainPanel);

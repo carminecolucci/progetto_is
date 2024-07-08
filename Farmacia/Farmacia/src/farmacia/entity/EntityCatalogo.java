@@ -96,6 +96,7 @@ public class EntityCatalogo {
 		for (EntityFarmaco farmaco : farmaci) {
 			if (farmaco.getId() == id) {
 				farmaco.eliminaDaDB();
+				farmaci.remove(farmaco);
 				return;
 			}
 		}
@@ -144,12 +145,12 @@ public class EntityCatalogo {
 		for (EntityFarmaco farmaco : farmaci) {
 			if (farmaco.getId() == idFarmaco) {
 				int differenza = farmaco.getScorte() - quantita;
-				farmaco.setScorte(differenza);
 				try {
 					FarmacoDAO.aggiornaScorteDB(farmaco.getId(), farmaco.getScorte());
 				} catch (DBException e) {
 					throw new FarmacoNotFoundException("Farmaco non trovato");
 				}
+				farmaco.setScorte(differenza);
 				return differenza;
 			}
 		}
