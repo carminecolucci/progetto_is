@@ -7,9 +7,11 @@ import farmacia.exceptions.DBException;
 import farmacia.exceptions.FarmacoCreationFailedException;
 import farmacia.exceptions.FarmacoNotFoundException;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class ModificaFarmacoTest {
@@ -21,8 +23,8 @@ public class ModificaFarmacoTest {
 		controllerCatalogo = ControllerCatalogo.getInstance();
 	}
 
-	@After
-	public void tearDownAfter() throws DBException {
+	@AfterClass
+	public static void tearDownAfter() throws DBException {
 		FarmacoDAO.deleteFarmaco("SuperAulin");
 	}
 
@@ -41,5 +43,16 @@ public class ModificaFarmacoTest {
 			&& "SuperAulin".equals(dto.get("nome"))
 			&& (int)dto.get("scorte") == 50
 		);
+	}
+
+	@Test
+	public void testModificaFarmacoCheNonEsiste() {
+		boolean esito = true;
+		try {
+			controllerCatalogo.modificaFarmaco((int)controllerCatalogo.cercaFarmaco("FarmacoNonEsistente").get("id"), 20, true, "SuperAulin", 50);
+		} catch (FarmacoNotFoundException e) {
+			esito = false;
+		}
+		assertFalse(esito);
 	}
 }
