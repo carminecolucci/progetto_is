@@ -21,6 +21,9 @@ public class EntityOrdineAcquisto {
 
 	public EntityOrdineAcquisto() {
 		quantitaFarmaci = new HashMap<>();
+		this.id = UUID.randomUUID().toString();
+		this.ricevuto = false;
+		this.dataCreazione = Date.from(LocalDateTime.now().toInstant(ZoneOffset.UTC));
 	}
 
 	public EntityOrdineAcquisto(OrdineAcquistoDAO ordineAcquistoDAO) {
@@ -43,9 +46,6 @@ public class EntityOrdineAcquisto {
 	 * @throws DBException Errore generico del DB
 	 */
 	public void salvaInDB() throws DBException {
-		this.id = UUID.randomUUID().toString();
-		this.ricevuto = false;
-		this.dataCreazione = Date.from(LocalDateTime.now().toInstant(ZoneOffset.UTC));
 		OrdineAcquistoDAO ordineAcquistoDAO = new OrdineAcquistoDAO(this.id, this.dataCreazione, this.ricevuto);
 		for (Map.Entry<EntityFarmaco, Integer> entry : quantitaFarmaci.entrySet()) {
 			ordineAcquistoDAO.aggiungiOrdineAcquistoFarmaco(entry.getKey().getId(), entry.getValue());
