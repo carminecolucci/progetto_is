@@ -146,7 +146,7 @@ public class EntityCatalogo {
 			if (farmaco.getId() == idFarmaco) {
 				int differenza = farmaco.getScorte() - quantita;
 				try {
-					FarmacoDAO.aggiornaScorteDB(farmaco.getId(), farmaco.getScorte());
+					FarmacoDAO.aggiornaScorteDB(farmaco.getId(), differenza);
 				} catch (DBException e) {
 					throw new FarmacoNotFoundException("Farmaco non trovato");
 				}

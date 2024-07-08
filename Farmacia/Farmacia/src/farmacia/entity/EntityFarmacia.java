@@ -123,6 +123,7 @@ public class EntityFarmacia {
 	}
 
 	public void aggiornaOrdineAcquisto(String idOrdine) throws OrderNotFoundException {
+		// TODO: aggiornare le scorte
 		for (EntityOrdineAcquisto ordineAcquisto : ordiniAcquisto) {
 			if (ordineAcquisto.getId().equals(idOrdine)) {
 				try {
