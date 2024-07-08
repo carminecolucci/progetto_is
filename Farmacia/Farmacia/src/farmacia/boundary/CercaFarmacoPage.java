@@ -5,7 +5,6 @@ import farmacia.dto.DTO;
 import farmacia.exceptions.FarmacoNotFoundException;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 
 public class CercaFarmacoPage extends JFrame {
 	private JPanel mainPanel;
@@ -22,13 +21,7 @@ public class CercaFarmacoPage extends JFrame {
 		setResizable(false);
 		setContentPane(mainPanel);
 
-		DefaultTableModel model = new DefaultTableModel(new Object[][]{}, new String[]{"Nome", "Prezzo", "Prescrizione"}) {
-			@Override
-			public boolean isCellEditable(int row, int column) {
-				return false;
-			}
-		};
-
+		FarmaciTableModel model = new FarmaciTableModel();
 		tblRicerca.setModel(model);
 
 		btnRicerca.addActionListener(e -> {
@@ -39,13 +32,7 @@ public class CercaFarmacoPage extends JFrame {
 				ControllerCatalogo controllerCatalogo = ControllerCatalogo.getInstance();
 				try {
 					DTO farmaco = controllerCatalogo.cercaFarmaco(nomeFarmaco);
-					String prescrizioneRichiesta;
-					if ((boolean)farmaco.get("prescrizione")){
-						prescrizioneRichiesta = "Necessaria";
-					} else {
-						prescrizioneRichiesta = "-";
-					}
-					model.addRow(new Object[]{farmaco.get("nome"), farmaco.get("prezzo"), prescrizioneRichiesta});
+					model.addFarmaco(farmaco);
 				} catch (FarmacoNotFoundException ex) {
 					JOptionPane.showMessageDialog(this, String.format("Farmaco '%s' non presente in farmacia.", nomeFarmaco));
 					txtFarmaco.setText("");

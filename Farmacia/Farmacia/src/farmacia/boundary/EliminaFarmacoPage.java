@@ -6,15 +6,14 @@ import farmacia.exceptions.DBException;
 import farmacia.exceptions.FarmacoNotFoundException;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.util.List;
 
 public class EliminaFarmacoPage extends JFrame {
 	private JPanel mainPanel;
 	private JButton btnRimuovi;
-	private JLabel lblRichiesta;
 	private JTable tblFarmaci;
 	private JScrollPane spnTable;
+	private JLabel lblRichiesta;
 
 	public EliminaFarmacoPage() {
 		setTitle("Elimina Farmaco");
@@ -23,13 +22,7 @@ public class EliminaFarmacoPage extends JFrame {
 		setLocationRelativeTo(null);
 		setContentPane(mainPanel);
 
-		DefaultTableModel model = new DefaultTableModel(new Object[][]{}, new String[]{"Nome", "Prezzo", "Prescrizione"}) {
-			@Override
-			public boolean isCellEditable(int row, int column) {
-				return false;
-			}
-		};
-
+		FarmaciTableModel model = new FarmaciTableModel();
 		tblFarmaci.setModel(model);
 		ListSelectionModel selectionModel = tblFarmaci.getSelectionModel();
 
@@ -42,22 +35,16 @@ public class EliminaFarmacoPage extends JFrame {
 		});
 
 		ControllerCatalogo controllerCatalogo = ControllerCatalogo.getInstance();
-		List<DTO> listDTO = controllerCatalogo.visualizzaCatalogo();
-		String prescrizioneRichiesta;
-		for (DTO farmaco: listDTO){
-			if ((boolean)farmaco.get("prescrizione")){
-				prescrizioneRichiesta = "Necessaria";
-			} else {
-				prescrizioneRichiesta = "-";
-			}
-			model.addRow(new Object[]{farmaco.get("nome"), farmaco.get("prezzo"), prescrizioneRichiesta});
+		List<DTO> farmaci = controllerCatalogo.visualizzaCatalogo();
+		for (DTO farmaco: farmaci){
+			model.addFarmaco(farmaco);
 		}
 
 		btnRimuovi.addActionListener(e -> {
-
 			int rowIndex = tblFarmaci.getSelectedRow();
-			int idFarmaco = (int)listDTO.get(rowIndex).get("id");
-			String nomeFarmaco = (String)listDTO.get(rowIndex).get("nome");
+			DTO farmaco = farmaci.get(rowIndex);
+			int idFarmaco = (int)farmaco.get("id");
+			String nomeFarmaco = (String)farmaco.get("nome");
 			try {
 				controllerCatalogo.eliminaFarmaco(idFarmaco);
 				JOptionPane.showMessageDialog(this, String.format("Farmaco '%s' eliminato.", nomeFarmaco));
@@ -67,6 +54,5 @@ public class EliminaFarmacoPage extends JFrame {
 		});
 
 		setVisible(true);
-
 	}
 }

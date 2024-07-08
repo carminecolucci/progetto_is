@@ -33,16 +33,39 @@ public class ControllerCatalogo {
 		return uniqueInstance;
 	}
 
+	/**
+	 * Funzione che aggiunge un nuovo farmaco al catalogo.
+	 * @param prezzo prezzo del farmaco.
+	 * @param prescrizione se il farmaco richiede una prescrizione.
+	 * @param nome nome del farmaco.
+	 * @param scorteIniziali scorte del farmaco.
+	 * @throws FarmacoCreationFailedException se non è possibile creare il farmaco.
+	 */
 	public void aggiungiFarmaco(float prezzo, boolean prescrizione, String nome, int scorteIniziali) throws FarmacoCreationFailedException {
 		EntityCatalogo catalogo = EntityCatalogo.getInstance();
 		catalogo.aggiungiFarmaco(prezzo, prescrizione, nome, scorteIniziali);
 	}
 
+	/**
+	 * Funzione utilizzata per modificare un farmaco a partire dal suo id.
+	 * @param id id del farmaco da modificare.
+	 * @param prezzo nuovo prezzo del farmaco.
+	 * @param prescrizione nuova prescrizione del farmaco.
+	 * @param nome nuovo nome del farmaco.
+	 * @param scorte nuove scorte del farmaco.
+	 * @throws FarmacoNotFoundException se il farmaco non è presente nel catalogo.
+	 */
 	public void modificaFarmaco(int id, float prezzo, boolean prescrizione, String nome, int scorte) throws FarmacoNotFoundException {
 		EntityCatalogo catalogo = EntityCatalogo.getInstance();
 		catalogo.modificaFarmaco(id, prezzo, prescrizione, nome, scorte);
 	}
 
+	/**
+	 * Funzione utilizzata per cercare un farmaco nel catalogo a partire dal nome.
+	 * @param nome nome del farmaco da cercare.
+	 * @return Farmaco DTO
+	 * @throws FarmacoNotFoundException se il farmaco non è presente nel catalogo
+	 */
 	public DTO cercaFarmaco(String nome) throws FarmacoNotFoundException {
 		EntityCatalogo catalogo = EntityCatalogo.getInstance();
 		EntityFarmaco farmaco = catalogo.cercaFarmaco(nome);
@@ -55,11 +78,21 @@ public class ControllerCatalogo {
 		return dto;
 	}
 
+	/**
+	 * Funzione utilizzata per eliminare un farmaco a partire dal suo id.
+	 * @param id id del farmaco da eliminare.
+	 * @throws FarmacoNotFoundException se il farmaco non è presente nel catalogo.
+	 * @throws DBException se non è possibile accedere al DB.
+	 */
 	public void eliminaFarmaco(int id) throws FarmacoNotFoundException, DBException {
 		EntityCatalogo catalogo = EntityCatalogo.getInstance();
 		catalogo.eliminaFarmaco(id);
 	}
 
+	/**
+	 * Funzione utilizzata per visualizzare il catalogo.
+	 * @return Lista di Farmaci DTO.
+	 */
 	public List<DTO> visualizzaCatalogo() {
 		List<DTO> farmaciDTO = new ArrayList<>();
 		EntityCatalogo catalogo = EntityCatalogo.getInstance();

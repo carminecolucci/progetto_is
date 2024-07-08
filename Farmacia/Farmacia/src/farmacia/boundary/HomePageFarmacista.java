@@ -31,65 +31,15 @@ public class HomePageFarmacista extends JFrame {
 		setVisible(true);
 		lblBenvenuto.setText(String.format("Benvenuto, farmacista %s %s.", farmacista.get("nome"), farmacista.get("cognome")));
 
-		btnGeneraOrdineAcquisto.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new GeneraOrdineAcquistoFarmacistaPage();
-			}
-		});
-		btnVisualizzaOrdiniClienti.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new VisualizzaOrdiniClientiFarmacistaPage();
-			}
-		});
-		btnVisualizzaOrdiniAcquisto.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new VisualizzaOrdiniAcquistoPage();
-			}
-		});
-		btnModificaFarmaco.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new ModificaFarmacoPage();
-			}
-		});
-		btnRegistraRitiro.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new RegistraRitiroOrdineClientePage();
-			}
-		});
-		btnRegistraConsegnaOrdineAcquisto.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-			}
-		});
-		btnCercaFarmaco.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new CercaFarmacoPage();
-			}
-		});
-		btnVisualizzaCatalogo.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new VisualizzaCatalogoPage();
-			}
-		});
-		btnAggiungiFarmaco.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new AggiungiFarmacoPage();
-			}
-		});
-		btnEliminaFarmaco.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new EliminaFarmacoPage();
-			}
-		});
+		btnGeneraOrdineAcquisto.addActionListener(e -> new GeneraOrdineAcquistoFarmacistaPage());
+		btnVisualizzaOrdiniClienti.addActionListener(e -> new VisualizzaOrdiniClientiFarmacistaPage());
+		btnVisualizzaOrdiniAcquisto.addActionListener(e -> new VisualizzaOrdiniAcquistoPage());
+		btnModificaFarmaco.addActionListener(e -> new ModificaFarmacoPage());
+		btnRegistraRitiro.addActionListener(e -> new RegistraRitiroOrdineClientePage());
+		btnRegistraConsegnaOrdineAcquisto.addActionListener(e -> new RegistraConsegnaOrdineAcquistoPage());
+		btnCercaFarmaco.addActionListener(e -> new CercaFarmacoPage());
+		btnVisualizzaCatalogo.addActionListener(e -> new VisualizzaCatalogoPage());
+		btnAggiungiFarmaco.addActionListener(e -> new AggiungiFarmacoPage());
+		btnEliminaFarmaco.addActionListener(e -> new EliminaFarmacoPage());
 	}
 }

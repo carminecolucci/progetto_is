@@ -18,17 +18,12 @@ public class VisualizzaCatalogoPage extends JFrame {
 
 		setTitle("Visualizza Catalogo");
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		setContentPane(mainPanel);
-		pack();
 		setSize(600, 400);
 		setLocationRelativeTo(null);
+		setContentPane(mainPanel);
 
-		DefaultTableModel model = new DefaultTableModel(new Object[][]{}, new String[]{"Nome", "Prezzo", "Prescrizione"}) {
-			@Override
-			public boolean isCellEditable(int row, int column) {
-				return false;
-			}
-		};
+		FarmaciTableModel model = new FarmaciTableModel();
+		tblFarmaci.setModel(model);
 
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -37,18 +32,10 @@ public class VisualizzaCatalogoPage extends JFrame {
 			}
 		});
 
-		tblFarmaci.setModel(model);
-
 		ControllerCatalogo controllerCatalogo = ControllerCatalogo.getInstance();
-		List<DTO> listDTO = controllerCatalogo.visualizzaCatalogo();
-		String prescrizioneRichiesta;
-		for (DTO farmaco: listDTO){
-			if ((boolean)farmaco.get("prescrizione")){
-				prescrizioneRichiesta = "Necessaria";
-			} else {
-				prescrizioneRichiesta = "-";
-			}
-			model.addRow(new Object[]{farmaco.get("nome"), farmaco.get("prezzo"), prescrizioneRichiesta});
+		List<DTO> farmaci = controllerCatalogo.visualizzaCatalogo();
+		for (DTO farmaco: farmaci){
+			model.addFarmaco(farmaco);
 		}
 
 		setVisible(true);

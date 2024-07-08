@@ -66,7 +66,6 @@ public class CreaOrdinePage extends JFrame {
 			Map<Integer, Integer> farmaciOrdine = new HashMap<>();
 			for (int row = 0; row < tblFarmaciOrdine.getRowCount(); row++) {
 				String nome = (String)tblFarmaciOrdine.getValueAt(row, 0);
-				Float prezzo = (float)tblFarmaciOrdine.getValueAt(row, 1);
 				String necessitaPrescrizione = (String)tblFarmaciOrdine.getValueAt(row, 2);
 				Boolean possiediPrescrizione = tblFarmaciOrdine.getValueAt(row, 3) != null;
 				Integer quantita = (Integer)tblFarmaciOrdine.getValueAt(row, 4);
