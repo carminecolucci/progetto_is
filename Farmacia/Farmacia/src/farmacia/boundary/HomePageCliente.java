@@ -19,7 +19,7 @@ public class HomePageCliente extends JFrame {
 	public HomePageCliente(DTO cliente) {
 		setSize(500, 500);
 		setTitle("Homepage Cliente");
-		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setContentPane(homePanel);
 		setVisible(true);
