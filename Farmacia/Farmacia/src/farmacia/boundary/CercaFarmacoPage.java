@@ -53,6 +53,7 @@ public class CercaFarmacoPage extends JFrame {
 			}
 		});
 
+		getRootPane().setDefaultButton(btnRicerca);
 		setVisible(true);
 	}
 }

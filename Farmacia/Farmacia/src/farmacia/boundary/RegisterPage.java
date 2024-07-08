@@ -6,15 +6,11 @@ import farmacia.exceptions.RegistrationFailedException;
 
 import javax.swing.*;
 import java.awt.event.WindowEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.sql.Date;
-// import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class RegisterPage extends JFrame {
 	private JPanel mainPanel;
@@ -40,7 +36,7 @@ public class RegisterPage extends JFrame {
 		setContentPane(mainPanel);
 		setTitle("Registrazione");
 		setResizable(false);
-		setVisible(true);
+
 		btnRegistrati.addActionListener(e -> {
 			ControllerUtenti controllerUtenti = ControllerUtenti.getInstance();
 			String username = txtUsername.getText();
@@ -88,5 +84,8 @@ public class RegisterPage extends JFrame {
 				}
 			}
 		});
+
+		getRootPane().setDefaultButton(btnRegistrati);
+		setVisible(true);
 	}
 }

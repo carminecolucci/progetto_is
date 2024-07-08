@@ -32,18 +32,18 @@ public class LoginPage extends JFrame {
 				DTO dto = controllerUtenti.getUtenteCorrente();
 				switch (dto.get("tipoUtente").toString()) {
 					case "CLIENTE":
+						new HomePageCliente(dto);
 						setVisible(false);
-						JFrame homePageCliente = new HomePageCliente(dto);
 						break;
 
 					case "FARMACISTA":
+						new HomePageFarmacista(dto);
 						setVisible(false);
-						JFrame homePageFarmacista = new HomePageFarmacista(dto);
 						break;
 
 					case "DIRETTORE":
+						new HomePageDirettore();
 						setVisible(false);
-						JFrame homePageDirettore = new HomePageDirettore();
 						break;
 				}
 				// dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)); // chiudo la finestra di login
@@ -62,6 +62,8 @@ public class LoginPage extends JFrame {
 				}
 			});
 		});
+
+		getRootPane().setDefaultButton(btnLogin);
 		setVisible(true);
 	}
 }

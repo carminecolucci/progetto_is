@@ -11,7 +11,6 @@ import java.util.List;
 
 public class EliminaFarmacoPage extends JFrame {
 	private JPanel mainPanel;
-	private JTextField txtFarmaco;
 	private JButton btnRimuovi;
 	private JLabel lblRichiesta;
 	private JTable tblFarmaci;

@@ -75,6 +75,7 @@ public class VisualizzaStoricoOrdiniPage extends JFrame {
 			}
 		});
 
+		getRootPane().setDefaultButton(actionButton);
 		setVisible(true);
 	}
 }
