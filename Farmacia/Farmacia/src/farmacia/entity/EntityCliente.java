@@ -60,6 +60,7 @@ public class EntityCliente extends EntityUtente {
 	 * Funzione che permette di creare un nuovo Ordine.
 	 * @param farmaciQuantita una serie di coppie (idFarmaco, quantita).
 	 * @throws OrderCreationFailedException lanciata quando un farmaco non viene trovato o quando le scorte sono insufficienti
+	 * @return l'<code>id</code> dell'ordine appena creato.
 	 */
 	public String creaOrdine(Map<Integer, Integer> farmaciQuantita) throws OrderCreationFailedException {
 		EntityCatalogo catalogo = EntityCatalogo.getInstance();

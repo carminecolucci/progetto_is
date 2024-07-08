@@ -9,6 +9,7 @@ import farmacia.exceptions.OrderNotFoundException;
 import java.util.*;
 
 public class ControllerOrdini {
+
 	/**
 	 * L'unica istanza di <code>ControllerOrdini</code> che implementa il pattern Singleton.
 	 */
@@ -30,17 +31,41 @@ public class ControllerOrdini {
 		return uniqueInstance;
 	}
 
+	/**
+	 * Funzione che permette di creare un ordine. È necessario che un cliente sia loggato nel sistema.
+	 * @param farmaciQuantita mappa che contiene una serie di coppie (<code>idFarmaco</code>, <code>quantità</code>).
+	 * @return l'<code>id</code> dell'ordine appena creato.
+	 * @throws OrderCreationFailedException quando la creazione dell'ordine fallisce
+	 */
 	public String creaOrdine(Map<Integer, Integer> farmaciQuantita) throws OrderCreationFailedException {
 		EntityCliente cliente = (EntityCliente) Sessione.getInstance().getUtenteCorrente();
 		return cliente.creaOrdine(farmaciQuantita);
 	}
 
+	/**
+	 * Funzione che permette di ottenere lo storico degli ordini di un dato cliente. È necessario che un cliente sia
+	 * loggato nel sistema.
+	 * @return una <code>List&lt;DTO&gt;</code>, in cui ogni istanza di <code>DTO</code> contiene un singolo ordine di un cliente.
+	 * In particolare il <code>DTO</code> contiene i seguenti campi:
+	 * <ul>
+	 *     <li>"id": <code>id</code> dell'ordine (<code>String</code>)</li>
+	 *     <li>"dataCreazione": <code>dataCreazione</code> dell'ordine (<code>Date</code>)</li>
+	 *     <li>"ritirato": <code>ritirato</code> dell'ordine (<code>boolean</code>)</li>
+	 *     <li>"quantitaFarmaci": <code>quantitaFarmaci</code> dell'ordine (<code>DTO</code>)</li>
+	 *     <li>"totale": <code>totale</code> dell'ordine (<code>float</code>)</li>
+	 * </ul>
+	 * @throws DBException
+	 */
 	public List<DTO> visualizzaStoricoOrdini() throws DBException {
 		EntityCliente cliente = (EntityCliente) Sessione.getInstance().getUtenteCorrente();
 		List<EntityOrdine> ordini = cliente.visualizzaStoricoOrdini();
 		return getDtoOrdini(ordini);
 	}
 
+	/**
+	 * Metodo privato che converte un <code>Map&lt;EntityFarmaco, Integer&gt;</code> in un <code>Map&lt;DTO, Integer&gt;</code>.
+	 * @param quantitaFarmaci
+	 */
 	private static Map<DTO, Integer> getDtoQuantitaFarmaci(Map<EntityFarmaco, Integer> quantitaFarmaci) {
 		Map<DTO, Integer> dtoQuantitaFarmaci = new HashMap<>();
 		for (Map.Entry<EntityFarmaco, Integer> entry: quantitaFarmaci.entrySet()) {
