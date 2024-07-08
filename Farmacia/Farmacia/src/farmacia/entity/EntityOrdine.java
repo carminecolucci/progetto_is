@@ -15,6 +15,7 @@ public class EntityOrdine {
 	private boolean ritirato;
 	private final int idCliente;
 	private final Map<EntityFarmaco, Integer> quantitaFarmaci;
+	private float totale;
 
 	/**
 	 * Costruttore di <code>EntityOrdine</code> a partire dall'id del cliente.
@@ -26,6 +27,7 @@ public class EntityOrdine {
 		this.ritirato = false;
 		this.idCliente = idCliente;
 		this.quantitaFarmaci = new HashMap<>();
+		this.totale = 0;
 	}
 
 	/**
@@ -47,6 +49,7 @@ public class EntityOrdine {
 		this.ritirato = ordineDAO.isRitirato();
 		this.dataCreazione = ordineDAO.getDataCreazione();
 		this.idCliente = ordineDAO.getCliente();
+		this.totale = ordineDAO.getTotale();
 		quantitaFarmaci = new HashMap<>();
 		for (Map.Entry<FarmacoDAO, Integer> entry : ordineDAO.getOrdineFarmaci().entrySet()) {
 			quantitaFarmaci.put(new EntityFarmaco(entry.getKey()), entry.getValue());
@@ -59,7 +62,7 @@ public class EntityOrdine {
 	 * @throws DBException Errore generico del DB
 	 */
 	public void salvaInDB() throws DBException {
-		OrdineDAO ordineDAO = new OrdineDAO(this.id, this.dataCreazione, this.idCliente);
+		OrdineDAO ordineDAO = new OrdineDAO(this.id, this.dataCreazione, this.idCliente, this.totale);
 		for (Map.Entry<EntityFarmaco, Integer> entry : quantitaFarmaci.entrySet()) {
 			ordineDAO.aggiungiOrdineFarmaco(entry.getKey().getId(), entry.getValue());
 		}
@@ -74,6 +77,7 @@ public class EntityOrdine {
 
 	public void aggiungiOrdineFarmaco(EntityFarmaco farmaco, int quantita) {
 		quantitaFarmaci.put(farmaco, quantita);
+		this.totale += quantita * farmaco.getPrezzo();
 	}
 
 	public String getId() {
@@ -102,5 +106,13 @@ public class EntityOrdine {
 
 	public int getIdCliente() {
 		return idCliente;
+	}
+
+	public float getTotale() {
+		return totale;
+	}
+
+	public void setTotale(float totale) {
+		this.totale = totale;
 	}
 }

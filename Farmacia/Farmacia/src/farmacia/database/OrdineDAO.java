@@ -13,6 +13,7 @@ public class OrdineDAO {
 	private boolean ritirato;
 	private Map<FarmacoDAO, Integer> ordineFarmaci;
 	private int cliente;
+	private float totale;
 
 	private static final Logger logger = Logger.getLogger("OrdineDAO");
 
@@ -29,12 +30,13 @@ public class OrdineDAO {
 	 * @param dataCreazione data di creazione dell'ordine
 	 * @param cliente id del cliente che ha generato l'ordine
 	 */
-	public OrdineDAO(String id, Date dataCreazione, int cliente) {
+	public OrdineDAO(String id, Date dataCreazione, int cliente, float totale) {
 		this.id = id;
 		this.dataCreazione = dataCreazione;
 		this.ritirato = false;
 		this.cliente = cliente;
 		this.ordineFarmaci = new HashMap<>();
+		this.totale = totale;
 	}
 
 	/**
@@ -173,8 +175,8 @@ public class OrdineDAO {
 	 */
 	private int salvaInDB() throws DBException {
 		java.sql.Date data = new java.sql.Date(this.dataCreazione.getTime());
-		String query = String.format("INSERT INTO ordini (id, dataCreazione, ritirato, cliente) VALUES ('%s', '%s', %d, %d);",
-			this.id, data, this.ritirato ? 1 : 0, this.cliente);
+		String query = String.format(Locale.US, "INSERT INTO ordini (id, dataCreazione, ritirato, cliente, totale) VALUES ('%s', '%s', %d, %d, %f);",
+			this.id, data, this.ritirato ? 1 : 0, this.cliente, this.totale);
 		logger.info(query);
 		int rs = -1;
 		try {
@@ -235,5 +237,13 @@ public class OrdineDAO {
 
 	public void setCliente(int cliente) {
 		this.cliente = cliente;
+	}
+
+	public float getTotale() {
+		return totale;
+	}
+
+	public void setTotale(float totale) {
+		this.totale = totale;
 	}
 }

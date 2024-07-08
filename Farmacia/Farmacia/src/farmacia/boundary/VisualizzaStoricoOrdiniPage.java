@@ -55,20 +55,14 @@ public class VisualizzaStoricoOrdiniPage extends JFrame {
 			throw new RuntimeException(ex);
 		}
 
-		//TODO: Memorizzare prezzo ordine senza farlo cambiare
 		for (DTO ordine: ordini) {
 			String statoOrdine;
-			float totaleOrdine = 0;
-			Map <DTO, Integer> quantitaFarmaci = (Map<DTO, Integer>) ordine.get("quantitaFarmaci");
-			for (Map.Entry<DTO, Integer> entry: quantitaFarmaci.entrySet()) {
-				totaleOrdine += entry.getValue() * (float)entry.getKey().get("prezzo");
-			}
 			if ((boolean)ordine.get("ritirato")) {
 				statoOrdine = "Ritirato";
 			} else {
 				statoOrdine = "Da ritirare";
 			}
-			tableModel.addRow(new Object[] {ordine.get("id"), ordine.get("dataCreazione"), statoOrdine, totaleOrdine});
+			tableModel.addRow(new Object[] {ordine.get("id"), ordine.get("dataCreazione"), statoOrdine, ordine.get("totale")});
 		}
 
 		actionButton.addActionListener(e -> {

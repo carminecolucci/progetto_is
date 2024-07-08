@@ -95,6 +95,7 @@ public class ControllerOrdini {
 			dtoOrdine.set("cliente", EntityUtente.getUsername(ordine.getIdCliente()));
 			Map<DTO, Integer> dtoQuantitaFarmaci = getDtoQuantitaFarmaci(ordine.getQuantitaFarmaci());
 			dtoOrdine.set("quantitaFarmaci", dtoQuantitaFarmaci);
+			dtoOrdine.set("totale", ordine.getTotale());
 			dtoOrdini.add(dtoOrdine);
 		}
 		return dtoOrdini;
