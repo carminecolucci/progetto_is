@@ -75,7 +75,7 @@ public class CreaOrdinePage extends JFrame {
 						if (possiediPrescrizione)
 							farmaciOrdine.put(listId.get(row), quantita);
 						else {
-							JOptionPane.showMessageDialog(this, String.format("Ordine annullato: non hai la prescrizione per il farmaco '%s'.", nome));
+							JOptionPane.showMessageDialog(this, String.format("Ordine annullato: non hai la prescrizione per il farmaco '%s'.", nome), "Errore", JOptionPane.ERROR_MESSAGE);
 							dispose();
 							return;
 						}

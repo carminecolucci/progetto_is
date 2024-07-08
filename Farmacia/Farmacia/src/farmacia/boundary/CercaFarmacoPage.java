@@ -34,7 +34,7 @@ public class CercaFarmacoPage extends JFrame {
 					DTO farmaco = controllerCatalogo.cercaFarmaco(nomeFarmaco);
 					model.addFarmaco(farmaco);
 				} catch (FarmacoNotFoundException ex) {
-					JOptionPane.showMessageDialog(this, String.format("Farmaco '%s' non presente in farmacia.", nomeFarmaco));
+					JOptionPane.showMessageDialog(this, String.format("Farmaco '%s' non presente in farmacia.", nomeFarmaco), "Errore", JOptionPane.ERROR_MESSAGE);
 					txtFarmaco.setText("");
 				}
 			}
