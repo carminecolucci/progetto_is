@@ -38,7 +38,7 @@ public class DBManager {
 	private static DBManager uniqueInstance;
 
 	/**
-	 * Costruttore privato per non permettere la creazione erronea di un'istanza dall'esterno.
+	 * Costruttore privato per l'implementazione del pattern Singleton
 	 */
 	private DBManager() {}
 

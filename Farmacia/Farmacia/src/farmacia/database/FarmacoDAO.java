@@ -24,7 +24,8 @@ public class FarmacoDAO {
 	private FarmacoDAO() { }
 
 	/**
-	 * Costruttore che crea un nuovo <code>FarmacoDAO</code> e lo popola via DB.
+	 * Costruttore che crea un nuovo <code>FarmacoDAO</code> e lo popola via DB a partire dal suo <code>id</code>.
+	 * @param id l'id del farmaco da caricare dal DB.
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se il farmaco non esiste.
 	 */
 	public FarmacoDAO(int id) throws DBException {
@@ -32,7 +33,8 @@ public class FarmacoDAO {
 	}
 
 	/**
-	 * Costruttore che crea un nuovo <code>FarmacoDAO</code> e lo popola via DB.
+	 * Costruttore che crea un nuovo <code>FarmacoDAO</code> e lo popola via DB a partire dal suo <code>nome</code>.
+	 * @param nome il nome del farmaco da caricare dal DB.
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se il farmaco non esiste.
 	 */
 	public FarmacoDAO(String nome) throws DBException {
@@ -55,7 +57,8 @@ public class FarmacoDAO {
 	}
 
 	/**
-	 * Funzione che crea un farmaco nel DB e assegna al <code>FarmacoDAO</code> l'ID scelto dal DB.
+	 * Funzione che crea un farmaco nel DB e assegna al <code>FarmacoDAO</code> l'ID scelto dal DB. Il metodo presuppone
+	 * che l'istanza di <code>FarmacoDAO</code> sulla quale viene richiamato abbia il resto degli attributi già popolati.
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se il farmaco è gia presente.
 	 */
 	public void createFarmaco() throws DBException {
@@ -67,6 +70,11 @@ public class FarmacoDAO {
 		this.id = cercaInDB(this.nome);
 	}
 
+	/**
+	 * Funzione che elimina un farmaco nel DB. Il metodo presuppone che l'istanza di <code>FarmacoDAO</code> sulla quale
+	 * viene richiamato abbia popolato sia l'attributo <code>nome</code> che l'attributo <code>id</code>.
+	 * @throws DBException se non è possibile accedere al DB o se il farmaco non esiste.
+	 */
 	public void deleteFarmaco() throws DBException {
 		if (cercaInDB(this.nome) == -1) {
 			throw new DBException(String.format("Farmaco '%s' non esistente", this.nome));
@@ -77,6 +85,7 @@ public class FarmacoDAO {
 
 	/**
 	 * Funzione privata che popola il <code>FarmacoDAO</code> consultando il DB a partire dall'id.
+	 * @param id l'<code>id</code> del farmaco da caricare.
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se il farmaco non esiste.
 	 */
 	private void caricaDaDB(int id) throws DBException {
@@ -100,6 +109,7 @@ public class FarmacoDAO {
 
 	/**
 	 * Funzione privata che popola il FarmacoDAO consultando il DB a partire dal nome.
+	 * @param nome il <code>nome</code> del farmaco da caricare.
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se il farmaco non esiste.
 	 */
 	private void caricaDaDB(String nome) throws DBException {
@@ -123,7 +133,7 @@ public class FarmacoDAO {
 
 	/**
 	 * Funzione privata che cerca il farmaco nel DB.
-	 * @param nome Il nome del farmaco.
+	 * @param nome il nome del farmaco.
 	 * @return -1 se il farmaco non esiste, o l'id del farmaco cercato.
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se il farmaco non esiste.
 	 */
@@ -143,7 +153,7 @@ public class FarmacoDAO {
 
 	/**
 	 * Funzione di utilità che è stata aggiunta in fase di testing solo per rendere agevole la cancellazione del farmaco
-	 * creato nel test <code>AggiuntiEliminaFarmacoTest</code>
+	 * creato nel test <code>AggiuntiEliminaFarmacoTest</code>.
 	 * @param nome Il nome del farmaco.
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se il farmaco da eliminare non è stato trovato.
 	 */
@@ -182,7 +192,8 @@ public class FarmacoDAO {
 	}
 
 	/**
-	 * Elimina il farmaco dal DB.
+	 * Elimina il farmaco dal DB. Il metodo presuppone che l'istanza di <code>FarmacoDAO</code> sulla quale viene
+	 * richiamato abbia abbia popolato l'attributo <code>id</code>.
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se non è stato possibile eliminare il farmaco.
 	 */
 	private void eliminaDaDB() throws DBException {
@@ -218,8 +229,8 @@ public class FarmacoDAO {
 				farmaci.add(farmaco);
 			}
 		} catch (ClassNotFoundException | SQLException e) {
-			logger.warning("Errore durante il caricamento dal database.");
-			throw new DBException("Errore nel caricamento di un farmaco.");
+			logger.warning("Errore durante il caricamento di farmaci dal database.");
+			throw new DBException("Errore nel caricamento dei farmaci.");
 		}
 
 		return farmaci;
@@ -262,7 +273,8 @@ public class FarmacoDAO {
 	}
 
 	/**
-	 * Funzione che aggiorna le informazioni di un farmaco.
+	 * Funzione che aggiorna le informazioni di un farmaco. L'<code>id</code> passato viene utilizzato per la ricerca
+	 * del farmaco da modificare.
 	 * @param idFarmaco Id del farmaco da aggiornare.
 	 * @param prezzo Nuovo prezzo da impostare per il farmaco.
 	 * @param prescrizione Se il farmaco, diversamente da prima, ha bisogno o meno della prescrizione.

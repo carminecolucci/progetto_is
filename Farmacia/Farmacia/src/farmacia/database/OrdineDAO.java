@@ -25,7 +25,8 @@ public class OrdineDAO {
 	}
 
 	/**
-	 * Costruttore che crea un nuovo <code>OrdineDAO</code>, che dovrà essere popolato con <code>aggiungiOrdineFarmaco</code>
+	 * Costruttore che crea un nuovo <code>OrdineDAO</code>. Il campo <code>ordineFarmaci</code> deve essere popolato
+	 * attraverso il metodo {@link #aggiungiOrdineFarmaco(int, int)}.
 	 * @param id id dell'ordine
 	 * @param dataCreazione data di creazione dell'ordine
 	 * @param cliente id del cliente che ha generato l'ordine
@@ -40,19 +41,30 @@ public class OrdineDAO {
 	}
 
 	/**
-	 * Costruttore che crea un nuovo <code>OrdineDAO</code> e lo popola via DB.
-	 * @throws DBException Lanciata se non è possibile accedere al DB o se il farmaco non esiste.
+	 * Costruttore che crea un nuovo <code>OrdineDAO</code> e lo popola via DB attraverso il suo <code>id</code>.
+	 * @param id l'<code>id</code> dell'ordine da caricare dal DB.
+	 * @throws DBException Lanciata se non è possibile accedere al DB o se l'ordine non esiste.
 	 */
 	public OrdineDAO(String id) throws DBException {
 		this.caricaDaDB(id);
 	}
 
+	/**
+	 * Funzione che crea un ordine nel DB. Il metodo presuppone che l'istanza di <code>OrdineDAO</code> sulla quale viene
+	 * richiamato abbia tutti attributi già popolati.
+	 * @throws DBException Lanciata se non è possibile accedere al DB o se l'ordine è gia presente.
+	 */
 	public void createOrdine() throws DBException {
 		if (salvaInDB() == 0) {
 			throw new DBException(String.format("Errore nella creazione della ordine '%s'", id));
 		}
 	}
 
+	/**
+	 * Funzione che cambia lo stato dell'ordine di acquisto da 'Non ritirato' a 'Ritirato'. Il metodo presuppone che
+	 * l'istanza di <code>OrdineDAO</code> sulla quale viene richiamato abbia popolato il campo <code>id</code>.
+	 * @throws DBException Lanciata se non è possibile accedere al DB o se l'ordine non esiste.
+	 */
 	public void aggiorna() throws DBException {
 		String query = String.format("UPDATE ordini SET ritirato = 1 WHERE id = '%s';", this.id);
 		logger.info(query);
@@ -68,7 +80,7 @@ public class OrdineDAO {
 
 	/**
 	 * Funzione che ritorna tutti gli ordini effettuati dai clienti della farmacia
-	 * @throws DBException se non si può prelevare gli ordini dal DB
+	 * @throws DBException se non si possono prelevare gli ordini dal DB.
 	 */
 	public static List<OrdineDAO> visualizzaOrdini() throws DBException {
 		String query = "SELECT * FROM ordini;";
@@ -76,10 +88,10 @@ public class OrdineDAO {
 	}
 
 	/**
-	 * Funzione che ritorna tutti gli ordini effettuati dal cliente
-	 * @param cliente id del cliente
-	 * @return lista di ordini
-	 * @throws DBException se non si può prelevare gli ordini dal DB
+	 * Funzione che ritorna tutti gli ordini effettuati da un determinato cliente.
+	 * @param cliente id del cliente utilizzato per la ricerca
+	 * @return lista di <code>OrdineDAO</code> effettuati dal cliente specificato.
+	 * @throws DBException se non si possono prelevare gli ordini dal DB
 	 */
 	public static List<OrdineDAO> getOrdiniByCliente(int cliente) throws DBException {
 		String query = String.format("SELECT * FROM ordini WHERE cliente = %d;", cliente);
@@ -87,10 +99,10 @@ public class OrdineDAO {
 	}
 
 	/**
-	 * Aggiunge la coppia <<code>FarmacoDAO</code>, quantità> alla lista di farmaci contenuti nell'ordine
-	 * @param idFarmaco id del farmaco da ordinare
-	 * @param quantita la quantità del farmaco
-	 * @throws DBException se non si può caricare il <code>FarmacoDAO</code> dal DB.
+	 * Funzione che aggiunge all'ordine un farmaco con la sua rispettiva quantità.
+	 * @param idFarmaco id del farmaco.
+	 * @param quantita La quantità di farmaco desiderata.
+	 * @throws DBException Lanciata se non è possibile accedere al DB o se il farmaco non esiste.
 	 */
 	public void aggiungiOrdineFarmaco(int idFarmaco, int quantita) throws DBException {
 		this.ordineFarmaci.put(new FarmacoDAO(idFarmaco), quantita);
@@ -126,9 +138,9 @@ public class OrdineDAO {
 	}
 
 	/**
-	 * Funzione di utilità che carica un ordine dal DB a partire dal suo id
-	 * @param id id dell'ordine dal caricare
-	 * @throws DBException se non si può caricare un ordine dal DB
+	 * Funzione di utilità che carica un ordine dal DB a partire dal suo <code>id</code>.
+	 * @param id l'<code>id</code> dell'ordine da caricare.
+	 * @throws DBException se non si può caricare un ordine dal DB.
 	 */
 	private void caricaDaDB(String id) throws DBException {
 		String query = String.format("SELECT * FROM ordini WHERE id = '%s';", id);
@@ -171,7 +183,8 @@ public class OrdineDAO {
 	}
 
 	/**
-	 * Funzione di utilità per inserire l'ordine nel DB
+	 * Funzione di utilità per inserire l'ordine nel DB. Il metodo presuppone che l'istanza di <code>OrdineDAO</code> sulla
+	 * quale viene richiamato abbia tutti gli attributi popolati.
 	 * @return il numero di righe inserite
 	 * @throws DBException se non si può inserire l'ordine nel DB
 	 */

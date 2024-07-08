@@ -22,7 +22,7 @@ public class UtenteDAO {
 
 	/**
 	 * Costruttore che crea un nuovo <code>UtenteDAO</code>. Per assegnare un'id all'utente è necessario salvarlo nel
-	 * DB utilizzando <code>createUtente()</code>
+	 * DB utilizzando {@link #createUtente()}.
 	 * @param nome Il nome dell'utente.
 	 * @param cognome Il cognome dell'utente.
 	 * @param username L'username dell'utente.
@@ -40,13 +40,19 @@ public class UtenteDAO {
 	}
 
 	/**
-	 * Costruttore che crea un nuovo <code>UtenteDAO</code> e lo popola via DB.
+	 * Costruttore che crea un nuovo <code>UtenteDAO</code> e popola i suoi attributi cercando attraverso il suo <code>id</code>.
+	 * @param id l'<code>id</code> dell'utente utilizzato per la ricerca.
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se l'utente non esiste.
 	 */
 	public UtenteDAO(int id) throws DBException {
 		this.caricaDaDB(id);
 	}
 
+	/**
+	 * Costruttore che crea un nuovo <code>UtenteDAO</code> e popola i suoi attributi cercando attraverso il suo <code>username</code>.
+	 * @param username l'<code>username</code> dell'utente utilizzato per la ricerca.
+	 * @throws DBException Lanciata se non è possibile accedere al DB o se l'utente non esiste.
+	 */
 	public UtenteDAO(String username) throws DBException {
 		int id = cercaInDB(username);
 		if (id == -1) {
@@ -58,9 +64,9 @@ public class UtenteDAO {
 	}
 
 	/**
-	 * Funzione che ritorna l'username dell'utente a partire dal suo id.
-	 * @param id id dell'utente.
-	 * @return username dell'utente.
+	 * Funzione che ritorna l'<code>username</code> dell'utente a partire dal suo <code>id</code>.
+	 * @param id l'<code>id</code> dell'utente.
+	 * @return l'<code>username</code> dell'utente.
 	 * @throws DBException se l'utente con quell'<code>id</code> non esiste.
 	 */
 	public static String getUsername(int id) throws DBException {
@@ -98,7 +104,8 @@ public class UtenteDAO {
 	}
 
 	/**
-	 * Funzione privata che popola l'<code>UtenteDAO</code> consultando il DB a partire dall'id.
+	 * Funzione privata che popola l'<code>UtenteDAO</code> consultando il DB a partire dall'<code>id</code>.
+	 * @param id l'<code>id</code> dell'utente utilizzato per la ricerca.
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se l'utente non esiste.
 	 */
 	private void caricaDaDB(int id) throws DBException {
@@ -114,6 +121,8 @@ public class UtenteDAO {
 				this.dataNascita = rs.getDate("dataNascita");
 				this.tipoUtente = TipoUtente.fromInt(rs.getInt("tipo"));
 				this.id = id;
+			} else {
+				throw new DBException(String.format("Utente '%s' non esistente", id));
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			logger.warning(String.format("Errore durante il caricamento dal database di un utente con id %d.%n%s",
@@ -123,10 +132,10 @@ public class UtenteDAO {
 	}
 
 	/**
-	 * Funzione che cerca l'utente nel DB.
-	 * @param username L'username dell'utente.
+	 * Funzione che cerca l'utente nel DB attraverso il suo <code>username</code>.
+	 * @param username l'<code>username</code> dell'utente.
 	 * @return -1 se l'utente non esiste, o l'id dell'utente cercato.
-	 * @throws DBException Lanciata se non è possibile accedere al DB o se l'utente non esiste.
+	 * @throws DBException Lanciata se non è possibile accedere al DB.
 	 */
 	public int cercaInDB(String username) throws DBException {
 		String query = String.format("SELECT * FROM utenti WHERE username = '%s';", username);
@@ -143,8 +152,8 @@ public class UtenteDAO {
 	}
 
 	/**
-	 * Funzione privata che cerca l'utente nel DB a partire dalla sua email.
-	 * @param email L'email dell'utente.
+	 * Funzione privata che cerca l'utente nel DB a partire dalla sua <code>email</code>.
+	 * @param email l'<code>email</code> dell'utente utilizzata per la ricerca.
 	 * @return true se l'email esiste nel DB.
 	 * @throws DBException Lanciata se non è possibile accedere al DB.
 	 */
@@ -193,7 +202,8 @@ public class UtenteDAO {
 	}
 
 	/**
-	 * Elimina l'utente dal DB.
+	 * Elimina l'utente dal DB. Il metodo presuppone che l'istanza di <code>UtenteDAO</code> sulla quale viene richiamato
+	 * abbia il campo <code>id</code> popolato.
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se non è stato possibile eliminare l'utente.
 	 */
 	private void eliminaDaDB() throws DBException {

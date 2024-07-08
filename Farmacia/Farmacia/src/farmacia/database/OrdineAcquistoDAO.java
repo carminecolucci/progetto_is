@@ -29,6 +29,7 @@ public class OrdineAcquistoDAO {
 	 * popolato via <code>aggiungiOrdineAcquistoFarmaco</code>.
 	 * @param id L'id (uuid) dell'ordine di acquisto.
 	 * @param dataCreazione La data di creazione dell'ordine di acquisto.
+	 * @param ricevuto lo stato iniziale dell'ordine di acquisto.
 	 */
 	public OrdineAcquistoDAO(String id, Date dataCreazione, boolean ricevuto) {
 		this.id = id;
@@ -38,7 +39,7 @@ public class OrdineAcquistoDAO {
 	}
 
 	/**
-	 * Funzione che popola l'ordine con il farmaco e la rispettiva quantità.
+	 * Funzione che aggiunge all'ordine di acquisto un farmaco con la sua rispettiva quantità.
 	 * @param idFarmaco id del farmaco.
 	 * @param quantita La quantità di farmaco desiderata.
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se il farmaco non esiste.
@@ -47,12 +48,22 @@ public class OrdineAcquistoDAO {
 		this.ordineAcquistoFarmaci.put(new FarmacoDAO(idFarmaco), quantita);
 	}
 
+	/**
+	 * Funzione che crea un ordine di acquisto nel DB. Il metodo presuppone che l'istanza di <code>OrdineAcquistoDAO</code>
+	 * sulla quale viene richiamato abbia già tutti gli attributi popolati (compreso l'<code>id</code>).
+	 * @throws DBException Lanciata se non è possibile accedere al DB.
+	 */
 	public void createOrdineAcquisto() throws DBException {
 		if (salvaInDB() == 0) {
 			throw new DBException(String.format("Errore nella creazione della ordine '%s'", id));
 		}
 	}
 
+	/**
+	 * Funzione che cambia lo stato dell'ordine di acquisto da 'Non ricevuto' a 'Ricevuto'. Il metodo presuppone che
+	 * l'istanza di <code>OrdineAcquistoDAO</code> sulla quale viene richiamato abbia popolato il campo <code>id</code>.
+	 * @throws DBException Lanciata se non è possibile accedere al DB o se l'ordine di acquisto non esiste.
+	 */
 	public void aggiorna() throws DBException {
 		String query = String.format("UPDATE ordini_acquisto SET ricevuto = 1 WHERE id = '%s';", this.id);
 		logger.info(query);
@@ -68,6 +79,7 @@ public class OrdineAcquistoDAO {
 
 	/**
 	 * Funzione privata che popola l'OrdineAcquistoDAO consultando il DB a partire dall'id.
+	 * @param id l'<code>id</code> dell'ordine di acquisto da cariacare.
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se l'ordine di acquisto non esiste.
 	 */
 	private void caricaDaDB(String id) throws DBException {
@@ -102,7 +114,8 @@ public class OrdineAcquistoDAO {
 	}
 
 	/**
-	 * Funzione privata che salva l'ordine di acquisto nel DB.
+	 * Funzione privata che salva l'ordine di acquisto nel DB. Il metodo presuppone che l'istanza di <code>OrdineAcquistoDAO</code>
+	 * sulla quale viene richiamato abbia popolati gli attributi <code>id</code>, <code>dataCreazione</code> e <code>ricevuto</code>.
 	 * @return '-1' se non è stato possibile inserire l'ordine di acquisto, altrimenti ritorna il numero di farmaci nell'ordine di acquisto.
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se l'ordine di acquisto già esiste.
 	 */
@@ -137,8 +150,8 @@ public class OrdineAcquistoDAO {
 
 	/**
 	 * Funzione che ritorna una lista contenente tutti gli ordini di acquisto registrati presso la farmacia.
-	 * @return La lista contenente gli ordini di acquisto registrati presso la farmacia.
-	 * @throws DBException Lanciata se non è possibile accedere al DB o se non ci sono ordini di acquisto.
+	 * @return La lista di <code>OrdineAcquistoDAO</code> contenente tutti gli ordini di acquisto registrati presso la farmacia.
+	 * @throws DBException Lanciata se non è possibile accedere al DB.
 	 */
 	public static List<OrdineAcquistoDAO> getOrdiniAcquisto() throws DBException {
 		String query = "SELECT * FROM ordini_acquisto;";
@@ -195,4 +208,5 @@ public class OrdineAcquistoDAO {
 	public void setOrdineAcquistoFarmaci(Map<FarmacoDAO, Integer> ordineAcquistoFarmaci) {
 		this.ordineAcquistoFarmaci = ordineAcquistoFarmaci;
 	}
+
 }
