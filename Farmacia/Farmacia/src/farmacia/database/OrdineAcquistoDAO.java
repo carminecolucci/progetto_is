@@ -21,6 +21,7 @@ public class OrdineAcquistoDAO {
 	 * @throws DBException Se non è possibile accedere al DB o se l'ordine di acquisto non esiste.
 	 */
 	public OrdineAcquistoDAO(String id) throws DBException {
+		ordineAcquistoFarmaci = new HashMap<>();
 		this.caricaDaDB(id);
 	}
 
@@ -97,7 +98,7 @@ public class OrdineAcquistoDAO {
 			throw new DBException("Errore nel caricamento dell'ordine di acquisto con id '" + this.id + "'.");
 		}
 
-		query = String.format("SELECT * from ordini_acquisto_farmaci WHERE id = '%s';", this.id);
+		query = String.format("SELECT * from ordini_acquisto_farmaci WHERE ordineAcquisto = '%s';", this.id);
 		logger.info(query);
 		try (ResultSet rs = DBManager.getInstance().selectQuery(query)) {
 			while (rs.next()) {
