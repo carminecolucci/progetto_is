@@ -5,6 +5,8 @@ import farmacia.dto.DTO;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.List;
 
 public class VisualizzaCatalogoPage extends JFrame {
@@ -27,6 +29,13 @@ public class VisualizzaCatalogoPage extends JFrame {
 				return false;
 			}
 		};
+
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				dispose();
+			}
+		});
 
 		tblFarmaci.setModel(model);
 

@@ -96,6 +96,7 @@ public class EntityCatalogo {
 		for (EntityFarmaco farmaco : farmaci) {
 			if (farmaco.getId() == id) {
 				farmaco.eliminaDaDB();
+				return;
 			}
 		}
 		throw new FarmacoNotFoundException("Farmaco non trovato");

@@ -38,7 +38,7 @@ public class LoginPage extends JFrame {
 
 					case "FARMACISTA":
 						setVisible(false);
-						JFrame homePageFarmacista = new HomePageFarmacista();
+						JFrame homePageFarmacista = new HomePageFarmacista(dto);
 						break;
 
 					case "DIRETTORE":
