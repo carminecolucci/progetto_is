@@ -17,13 +17,9 @@ public class RegistraConsegnaOrdineAcquistoPage extends JFrame {
 	private JPanel mainPanel;
 	private JTable tblOrdiniAcquisto;
 	private JButton btnConfermaConsegna;
-	private JPanel pnlInserimento;
 	private JPanel pnlTable;
 	private JScrollPane srlTable;
 	private JPanel pnlConfermaConsegna;
-	private JTextField txtId;
-	private JLabel lblInserimento;
-	private JButton btnCerca;
 
 	public RegistraConsegnaOrdineAcquistoPage() {
 
@@ -45,16 +41,21 @@ public class RegistraConsegnaOrdineAcquistoPage extends JFrame {
 		ListSelectionModel selectionModel = tblOrdiniAcquisto.getSelectionModel();
 		ControllerOrdini controllerOrdini = ControllerOrdini.getInstance();
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+
 		List<DTO> ordiniAcquisto;
+		List<DTO> ordiniAcquistoNonRicevuti = new ArrayList<>();
+
 		List<String> idOrdiniAcquisto = new ArrayList<>();
 		try {
 			ordiniAcquisto = controllerOrdini.visualizzaOrdiniAcquistoFarmacia();
-			for(DTO ordineAcquisto : ordiniAcquisto) {
-				String idOrdineAcquisto = (String)ordineAcquisto.get("id");
-				idOrdiniAcquisto.add(idOrdineAcquisto);
-				tableModel.addRow(new Object[] {idOrdineAcquisto, formatter.format(ordineAcquisto.get("dataCreazione"))});
+			for (DTO ordineAcquisto : ordiniAcquisto) {
+				if (!(boolean)ordineAcquisto.get("ricevuto")){
+					ordiniAcquistoNonRicevuti.add(ordineAcquisto);
+					String idOrdineAcquisto = (String)ordineAcquisto.get("id");
+					idOrdiniAcquisto.add(idOrdineAcquisto);
+					tableModel.addRow(new Object[] {idOrdineAcquisto, formatter.format(ordineAcquisto.get("dataCreazione"))});
+				}
 			}
-
 		} catch (DBException e) {
 			throw new RuntimeException(e);
 		}
@@ -69,36 +70,14 @@ public class RegistraConsegnaOrdineAcquistoPage extends JFrame {
 		setVisible(true);
 		btnConfermaConsegna.addActionListener(e -> {
 			int selectedRow = tblOrdiniAcquisto.getSelectedRow();
-			String idOrdine = (String)ordiniAcquisto.get(selectedRow).get("id");
+			String idOrdine = (String)ordiniAcquistoNonRicevuti.get(selectedRow).get("id");
 			try {
 				controllerOrdini.aggiornaOrdineAcquisto(idOrdine);
+				ordiniAcquistoNonRicevuti.remove(selectedRow);
 				JOptionPane.showMessageDialog(this, String.format("Ordine d'acquisto '%s' ricevuto.", idOrdine));
 				tableModel.removeRow(selectedRow);
 			} catch (OrderNotFoundException | DBException ex) {
 				JOptionPane.showMessageDialog(this, ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
-			}
-		});
-
-		DefaultTableModel tableModelOrdineAcquisto = new DefaultTableModel(new Object[][]{}, new String[]{"ID", "Data di creazione"}) {
-			@Override
-			public boolean isCellEditable(int row, int column) {
-				return false;
-			}
-		};
-
-		btnCerca.addActionListener(e -> {
-			tblOrdiniAcquisto.setModel(tableModel);
-			String idOrdineAcquisto = txtId.getText();
-			txtId.setText("");
-			if (idOrdineAcquisto.isEmpty() | !idOrdiniAcquisto.contains(idOrdineAcquisto)) {
-				JOptionPane.showMessageDialog(this, "Ordine di acquisto non trovato.", "Errore", JOptionPane.ERROR_MESSAGE);
-			} else {
-				for(DTO ordineAcquisto : ordiniAcquisto) {
-					if (ordineAcquisto.get("id").equals(idOrdineAcquisto)) {
-						tableModelOrdineAcquisto.addRow(new Object[]{idOrdineAcquisto, formatter.format(ordineAcquisto.get("dataCreazione"))});
-						tblOrdiniAcquisto.setModel(tableModelOrdineAcquisto);
-					}
-				}
 			}
 		});
 	}

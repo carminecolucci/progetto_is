@@ -13,15 +13,11 @@ import java.util.List;
 
 public class RegistraRitiroOrdineClientePage extends JFrame {
 	private JPanel mainPanel;
-	private JTextField txtUsername;
 	private JTable tblOrdini;
-	private JPanel pnlInserimento;
-	private JLabel lblInserimento;
 	private JPanel pnlTable;
 	private JScrollPane srlTable;
 	private JButton btnConfermaRitiro;
 	private JPanel pnlConfermaRitiro;
-	private JButton btnCerca;
 
 	public RegistraRitiroOrdineClientePage() {
 		setTitle("Registra ritiro ordine cliente");
@@ -42,14 +38,16 @@ public class RegistraRitiroOrdineClientePage extends JFrame {
 		ListSelectionModel selectionModel = tblOrdini.getSelectionModel();
 		ControllerOrdini controllerOrdini = ControllerOrdini.getInstance();
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+
 		List<DTO> ordiniClienti;
-		List<String> usernameClienti = new ArrayList<>();
+		List<DTO> ordiniClientiDaRitirare = new ArrayList<>();
 		try {
 			ordiniClienti = controllerOrdini.visualizzaOrdiniFarmacia();
-			for(DTO ordine : ordiniClienti) {
-				String cliente = (String) ordine.get("cliente");
-				tableModel.addRow(new Object[] {ordine.get("id"), ordine.get("cliente"), formatter.format(ordine.get("dataCreazione")), ordine.get("totale")});
-				usernameClienti.add(cliente);
+			for (DTO ordine : ordiniClienti) {
+				if(!(boolean)ordine.get("ritirato")){
+					ordiniClientiDaRitirare.add(ordine);
+					tableModel.addRow(new Object[] {ordine.get("id"), ordine.get("cliente"), formatter.format(ordine.get("dataCreazione")), ordine.get("totale")});
+				}
 			}
 
 		} catch (DBException e) {
@@ -66,39 +64,14 @@ public class RegistraRitiroOrdineClientePage extends JFrame {
 		setVisible(true);
 		btnConfermaRitiro.addActionListener(e -> {
 			int selectedRow = tblOrdini.getSelectedRow();
-			String idOrdine = (String)ordiniClienti.get(selectedRow).get("id");
+			String idOrdine = (String)ordiniClientiDaRitirare.get(selectedRow).get("id");
+			System.out.println(idOrdine);
 			try {
 				controllerOrdini.aggiornaOrdine(idOrdine);
 				JOptionPane.showMessageDialog(this, String.format("Ordine '%s' ritirato.", idOrdine));
+				tableModel.removeRow(selectedRow);
 			} catch (OrderNotFoundException | DBException ex) {
 				JOptionPane.showMessageDialog(this, ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
-			}
-		});
-
-		DefaultTableModel tableModelCliente = new DefaultTableModel(new Object[][]{}, new String[]{"ID", "Data di creazione", "Totale da pagare"}) {
-			@Override
-			public boolean isCellEditable(int row, int column) {
-				return false;
-			}
-		};
-
-		btnCerca.addActionListener(e -> {
-			String usernameCliente = txtUsername.getText();
-			txtUsername.setText("");
-			if(usernameCliente.isEmpty()) {
-				JOptionPane.showMessageDialog(this, "Username non specificato", "Errore", JOptionPane.ERROR_MESSAGE);
-				tblOrdini.setModel(tableModel);
-			} else if (!usernameClienti.contains(usernameCliente)){
-				tblOrdini.setModel(tableModel);
-				JOptionPane.showMessageDialog(this, String.format("Cliente '%s' non trovato.", usernameCliente), "Errore", JOptionPane.ERROR_MESSAGE);
-			}
-			else {
-				for(DTO ordine : ordiniClienti) {
-					if(ordine.get("cliente").equals(usernameCliente)) {
-						tableModelCliente.addRow(new Object[] {ordine.get("id"), formatter.format(ordine.get("dataCreazione")), ordine.get("totale")});
-					}
-				}
-				tblOrdini.setModel(tableModelCliente);
 			}
 		});
 	}
