@@ -30,8 +30,9 @@ CREATE TABLE `farmaci` (
   `prescrizione` tinyint NOT NULL,
   `nome` varchar(45) NOT NULL,
   `scorte` int NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `nome_UNIQUE` (`nome`)
+) ENGINE=InnoDB AUTO_INCREMENT=131 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,6 +41,7 @@ CREATE TABLE `farmaci` (
 
 LOCK TABLES `farmaci` WRITE;
 /*!40000 ALTER TABLE `farmaci` DISABLE KEYS */;
+INSERT INTO `farmaci` VALUES (110,20,1,'Vicodin',7),(111,5,0,'Tachipirina',50),(113,20,1,'Xanax',10),(114,20,1,'Voltaren',10),(115,20,1,'Clavulin',10),(116,20,1,'Augmentin',10),(117,20,1,'Cortisone',10),(118,20,1,'Bentelan',10),(119,20,1,'PizzaMargherita',10),(120,20,1,'Rinazina',10),(121,20,1,'Viks',10),(122,20,1,'Neoduplamox',10),(123,20,1,'Ayrinal',10),(124,20,1,'Fluifort',10),(125,20,1,'Levotuss',10),(126,20,1,'MedicinaMagica',10),(127,20,1,'PizzaFritta',10),(128,20,1,'Unguento',10),(129,20,1,'FagioliBalzar',10),(130,20,1,'PastaSugo',10);
 /*!40000 ALTER TABLE `farmaci` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -55,9 +57,10 @@ CREATE TABLE `ordini` (
   `dataCreazione` date NOT NULL,
   `ritirato` tinyint NOT NULL,
   `cliente` int NOT NULL,
+  `totale` float NOT NULL,
   PRIMARY KEY (`id`),
   KEY `cliente_idx` (`cliente`),
-  CONSTRAINT `cliente` FOREIGN KEY (`cliente`) REFERENCES `utenti` (`id`)
+  CONSTRAINT `cliente` FOREIGN KEY (`cliente`) REFERENCES `utenti` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -108,7 +111,7 @@ CREATE TABLE `ordini_acquisto_farmaci` (
   PRIMARY KEY (`ordineAcquisto`,`farmacoAcquisto`),
   KEY `farmaco_idx` (`farmacoAcquisto`),
   CONSTRAINT `farmacoAcquisto` FOREIGN KEY (`farmacoAcquisto`) REFERENCES `farmaci` (`id`),
-  CONSTRAINT `ordineAcquisto` FOREIGN KEY (`ordineAcquisto`) REFERENCES `ordini_acquisto` (`id`)
+  CONSTRAINT `ordineAcquisto` FOREIGN KEY (`ordineAcquisto`) REFERENCES `ordini_acquisto` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -135,7 +138,7 @@ CREATE TABLE `ordini_farmaci` (
   PRIMARY KEY (`ordine`,`farmaco`),
   KEY `farmaco_idx` (`farmaco`),
   CONSTRAINT `farmaco` FOREIGN KEY (`farmaco`) REFERENCES `farmaci` (`id`),
-  CONSTRAINT `ordine` FOREIGN KEY (`ordine`) REFERENCES `ordini` (`id`)
+  CONSTRAINT `ordine` FOREIGN KEY (`ordine`) REFERENCES `ordini` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -166,7 +169,7 @@ CREATE TABLE `utenti` (
   `email` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username_UNIQUE` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -175,7 +178,7 @@ CREATE TABLE `utenti` (
 
 LOCK TABLES `utenti` WRITE;
 /*!40000 ALTER TABLE `utenti` DISABLE KEYS */;
-INSERT INTO `utenti` VALUES (1,'user','pass','carmine','colucci','2024-01-01',0,'antonio@luigi.carmine');
+INSERT INTO `utenti` VALUES (17,'carmine','pass','carmine','colucci','2003-03-22',0,'miamail@gmail.com');
 /*!40000 ALTER TABLE `utenti` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -188,4 +191,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-05 16:13:22
+-- Dump completed on 2024-07-08 11:35:54
