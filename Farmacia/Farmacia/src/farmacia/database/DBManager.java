@@ -100,8 +100,7 @@ public class DBManager {
 	 */
 	public ResultSet selectQuery(String query) throws ClassNotFoundException, SQLException {
 		Connection conn = getConnection();
-		try (Statement statement = conn.createStatement()) {
-			return statement.executeQuery(query);
-		}
+		Statement statement = conn.createStatement();
+		return statement.executeQuery(query);
 	}
 }
