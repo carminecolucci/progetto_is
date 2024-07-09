@@ -53,6 +53,7 @@ public class ScegliFarmacoModificaPage extends JFrame {
 					farmacoDaModificare = farmaco;
 				}
 			}
+			//TODO: Aggiornare tabella quando ritorno alla pagina di scelta del farmaco
 			new ModificaFarmacoPage(farmacoDaModificare);
 
 		});

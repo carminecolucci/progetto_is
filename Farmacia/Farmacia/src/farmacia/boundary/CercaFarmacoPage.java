@@ -42,6 +42,7 @@ public class CercaFarmacoPage extends JFrame {
 				} catch (FarmacoNotFoundException ex) {
 					JOptionPane.showMessageDialog(this, String.format("Farmaco '%s' non presente in farmacia.", nomeFarmaco), "Errore", JOptionPane.ERROR_MESSAGE);
 					txtFarmaco.setText("");
+					tblRicerca.setModel(model);
 				}
 			} else {
 				JOptionPane.showMessageDialog(this, "Nome farmaco non specificato", "Errore", JOptionPane.ERROR_MESSAGE);
