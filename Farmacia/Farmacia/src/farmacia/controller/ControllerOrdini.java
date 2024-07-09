@@ -92,9 +92,9 @@ public class ControllerOrdini {
 	 * @return l'<code>id</code> dell'ordine appena creato.
 	 * @throws OrderCreationFailedException quando la creazione dell'ordine fallisce
 	 */
-	public void creaOrdineAcquistoFarmacia(Map<Integer, Integer> farmaciQuantita) throws DBException, OrderCreationFailedException {
+	public String creaOrdineAcquistoFarmacia(Map<Integer, Integer> farmaciQuantita) throws DBException, OrderCreationFailedException {
 		EntityFarmacia farmacia = EntityFarmacia.getInstance();
-		farmacia.creaOrdineAcquisto(farmaciQuantita);
+		return farmacia.creaOrdineAcquisto(farmaciQuantita);
 	}
 
 	/**

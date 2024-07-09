@@ -4,6 +4,7 @@ import farmacia.controller.ControllerCatalogo;
 import farmacia.exceptions.FarmacoCreationFailedException;
 
 import javax.swing.*;
+import javax.swing.text.DefaultFormatter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -34,6 +35,15 @@ public class AggiungiFarmacoPage extends JFrame {
 		setContentPane(mainPanel);
 		spnPrezzo.setModel(new SpinnerNumberModel(0,0,100,0.1));
 		spnScorte.setModel(new SpinnerNumberModel(0,0,500,1));
+
+		JSpinner.NumberEditor editorPrezzo = (JSpinner.NumberEditor) spnPrezzo.getEditor();
+		DefaultFormatter formatterPrezzo = (DefaultFormatter)editorPrezzo.getTextField().getFormatter();
+		formatterPrezzo.setCommitsOnValidEdit(true);
+
+		JSpinner.NumberEditor editorScorte = (JSpinner.NumberEditor) spnScorte.getEditor();
+		DefaultFormatter formatterScorte = (DefaultFormatter)editorScorte.getTextField().getFormatter();
+		formatterScorte.setCommitsOnValidEdit(true);
+
 
 		btnConferma.addActionListener(new ActionListener() {
 			@Override

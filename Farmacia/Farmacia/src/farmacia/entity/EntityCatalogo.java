@@ -91,6 +91,8 @@ public class EntityCatalogo {
 	 * @throws FarmacoNotFoundException se il farmaco non esiste.
 	 * @throws DBException se non è possibile accedere al DB.
 	 */
+
+	//TODO: provare a risolvere problema rimozione farmaci se presenti in ordini
 	public void eliminaFarmaco(int id) throws FarmacoNotFoundException, DBException {
 		for (EntityFarmaco farmaco : farmaci) {
 			if (farmaco.getId() == id) {

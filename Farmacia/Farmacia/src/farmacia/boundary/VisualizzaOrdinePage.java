@@ -22,7 +22,7 @@ public class VisualizzaOrdinePage extends JFrame {
 		setSize(600, 400);
 		setLocationRelativeTo(null);
 
-		DefaultTableModel model = new DefaultTableModel(new Object[][]{}, new String[]{"Nome", "Prezzo", "Quantità"}) {
+		DefaultTableModel model = new DefaultTableModel(new Object[][]{}, new String[]{"Nome", "Quantità"}) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;
@@ -32,7 +32,7 @@ public class VisualizzaOrdinePage extends JFrame {
 
 		for (Map.Entry<DTO, Integer> farmacoQuantita : quantitaFarmaci.entrySet()) {
 			DTO farmaco = farmacoQuantita.getKey();
-			model.addRow(new Object[] {farmaco.get("nome"), farmaco.get("prezzo"), farmacoQuantita.getValue()});
+			model.addRow(new Object[] {farmaco.get("nome"), farmacoQuantita.getValue()});
 		}
 		setVisible(true);
 	}

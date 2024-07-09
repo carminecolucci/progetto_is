@@ -3,8 +3,6 @@ package farmacia.boundary;
 import farmacia.dto.DTO;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class HomePageFarmacista extends JFrame {
 	private JPanel mainPanel;
@@ -34,11 +32,11 @@ public class HomePageFarmacista extends JFrame {
 		btnGeneraOrdineAcquisto.addActionListener(e -> new GeneraOrdineAcquistoFarmacistaPage());
 		btnVisualizzaOrdiniClienti.addActionListener(e -> new VisualizzaOrdiniClientiFarmacistaPage());
 		btnVisualizzaOrdiniAcquisto.addActionListener(e -> new VisualizzaOrdiniAcquistoPage());
-		btnModificaFarmaco.addActionListener(e -> new ModificaFarmacoPage());
+		btnModificaFarmaco.addActionListener(e -> new ScegliFarmacoModificaPage());
 		btnRegistraRitiro.addActionListener(e -> new RegistraRitiroOrdineClientePage());
 		btnRegistraConsegnaOrdineAcquisto.addActionListener(e -> new RegistraConsegnaOrdineAcquistoPage());
 		btnCercaFarmaco.addActionListener(e -> new CercaFarmacoPage());
-		btnVisualizzaCatalogo.addActionListener(e -> new VisualizzaCatalogoPage());
+		btnVisualizzaCatalogo.addActionListener(e -> new VisualizzaCatalogoFarmacistaPage());
 		btnAggiungiFarmaco.addActionListener(e -> new AggiungiFarmacoPage());
 		btnEliminaFarmaco.addActionListener(e -> new EliminaFarmacoPage());
 	}

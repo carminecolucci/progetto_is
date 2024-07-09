@@ -90,7 +90,7 @@ public class EntityFarmacia {
 	 * @param farmaciQuantita una serie di coppie (idFarmaco, quantita).
 	 * @throws OrderCreationFailedException lanciata quando un farmaco non viene trovato o quando le scorte sono insufficienti
 	 */
-	public void creaOrdineAcquisto(Map<Integer, Integer> farmaciQuantita) throws OrderCreationFailedException {
+	public String creaOrdineAcquisto(Map<Integer, Integer> farmaciQuantita) throws OrderCreationFailedException {
 		EntityCatalogo catalogo = EntityCatalogo.getInstance();
 		EntityOrdineAcquisto ordineAcquisto = new EntityOrdineAcquisto();
 		try {
@@ -100,6 +100,7 @@ public class EntityFarmacia {
 			}
 			ordineAcquisto.salvaInDB();
 			ordiniAcquisto.add(ordineAcquisto);
+			return ordineAcquisto.getId();
 		} catch (FarmacoNotFoundException | DBException e) {
 			throw new OrderCreationFailedException(e.getMessage());
 		}

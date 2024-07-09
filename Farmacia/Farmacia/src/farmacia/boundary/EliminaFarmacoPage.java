@@ -24,6 +24,7 @@ public class EliminaFarmacoPage extends JFrame {
 
 		FarmaciTableModel model = new FarmaciTableModel();
 		tblFarmaci.setModel(model);
+		tblFarmaci.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		ListSelectionModel selectionModel = tblFarmaci.getSelectionModel();
 
 		selectionModel.addListSelectionListener(e -> {
