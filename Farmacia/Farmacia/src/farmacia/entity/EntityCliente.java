@@ -10,7 +10,7 @@ import farmacia.exceptions.OrderCreationFailedException;
 import java.util.*;
 
 public class EntityCliente extends EntityUtente {
-	List<EntityOrdine> storicoOrdini;
+	private final List<EntityOrdine> storicoOrdini;
 
 	/**
 	 * Costruttore di <code>EntityCliente</code>
@@ -69,6 +69,7 @@ public class EntityCliente extends EntityUtente {
 		}
 		EntityOrdine ordine = new EntityOrdine(this.getId());
 		try {
+			EntityOrdineAcquisto ordineAcquisto = new EntityOrdineAcquisto();
 			for (Map.Entry<Integer, Integer> entry : farmaciQuantita.entrySet()) {
 				int id = entry.getKey();
 				int quantita = entry.getValue();
@@ -76,11 +77,11 @@ public class EntityCliente extends EntityUtente {
 				ordine.aggiungiOrdineFarmaco(farmaco, quantita);
 				int scorteResidue = catalogo.decrementaScorte(id, quantita);
 				if (scorteResidue == 0) {
-					// TODO: OrdineAcquisto fuori dal for, per contenere più coppie
-					EntityOrdineAcquisto ordineAcquisto = new EntityOrdineAcquisto();
 					ordineAcquisto.aggiungiOrdineAcquistoFarmaco(farmaco, EntityOrdineAcquisto.QUANTITA_ORDINE_DEFAULT);
-					ordineAcquisto.salvaInDB();
 				}
+			}
+			if (!ordineAcquisto.getQuantitaFarmaci().isEmpty()) {
+				ordineAcquisto.salvaInDB();
 			}
 			ordine.salvaInDB();
 			storicoOrdini.add(ordine);

@@ -10,13 +10,12 @@ import java.util.List;
 import java.util.Map;
 
 public class EntityCatalogo {
-
-	List<EntityFarmaco> farmaci;
-
 	/**
 	 * L'unica istanza di <code>EntityCatalogo</code> che implementa il pattern Singleton.
 	 */
 	private static EntityCatalogo uniqueInstance;
+
+	private final List<EntityFarmaco> farmaci;
 
 	/**
 	 * Costruttore privato per impedire la creazione di istanze multiple.
@@ -49,7 +48,7 @@ public class EntityCatalogo {
 	 * @param prescrizione se il farmaco richiede una prescrizione.
 	 * @param nome nome del farmaco.
 	 * @param scorte scorte del farmaco.
-	 * @throws FarmacoCreationFailedException
+	 * @throws FarmacoCreationFailedException se non è possibile accedere al DB
 	 */
 	public void aggiungiFarmaco(float prezzo, boolean prescrizione, String nome, int scorte) throws FarmacoCreationFailedException {
 		EntityFarmaco farmaco = new EntityFarmaco(prezzo, prescrizione, nome, scorte);
@@ -136,22 +135,42 @@ public class EntityCatalogo {
 	}
 
 	/**
-	 * Funzione che aggiorna le scorte in <code>EntityCatalogo</code> e nel DB.
+	 * Funzione che incrementa le scorte in <code>EntityCatalogo</code> e nel DB.
+	 * @param idFarmaco id del farmaco di cui aggiornare le scorte.
+	 * @param quantita quantità da aggiungere alle scorte.
+	 * @return numero di scorte rimanenti del farmaco.
+	 */
+	public int incrementaScorte(int idFarmaco, int quantita) throws FarmacoNotFoundException {
+		return aggiornaScorte(idFarmaco, quantita);
+	}
+
+	/**
+	 * Funzione che decrementa le scorte in <code>EntityCatalogo</code> e nel DB.
 	 * @param idFarmaco id del farmaco di cui aggiornare le scorte.
 	 * @param quantita quantità da sottrarre alle scorte.
 	 * @return numero di scorte rimanenti del farmaco.
 	 */
 	public int decrementaScorte(int idFarmaco, int quantita) throws FarmacoNotFoundException {
+		return aggiornaScorte(idFarmaco, -quantita);
+	}
+
+	/**
+	 * Funzione privata che aggiorna le scorte in <code>EntityCatalogo</code> e nel DB.
+	 * @param idFarmaco id del farmaco di cui aggiornare le scorte.
+	 * @param quantita quantità da aggiungere (o da sottrarre, se negativa) alle scorte.
+	 * @return numero di scorte rimanenti del farmaco.
+	 */
+	private int aggiornaScorte(int idFarmaco, int quantita) throws FarmacoNotFoundException {
 		for (EntityFarmaco farmaco : farmaci) {
 			if (farmaco.getId() == idFarmaco) {
-				int differenza = farmaco.getScorte() - quantita;
+				int nuoveScorte = farmaco.getScorte() + quantita;
 				try {
-					FarmacoDAO.aggiornaScorteDB(farmaco.getId(), differenza);
+					FarmacoDAO.aggiornaScorteDB(farmaco.getId(), nuoveScorte);
 				} catch (DBException e) {
 					throw new FarmacoNotFoundException("Farmaco non trovato");
 				}
-				farmaco.setScorte(differenza);
-				return differenza;
+				farmaco.setScorte(nuoveScorte);
+				return nuoveScorte;
 			}
 		}
 		throw new FarmacoNotFoundException("Farmaco non trovato");

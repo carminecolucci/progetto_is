@@ -3,6 +3,7 @@ package farmacia.controller;
 import farmacia.dto.DTO;
 import farmacia.entity.*;
 import farmacia.exceptions.DBException;
+import farmacia.exceptions.FarmacoNotFoundException;
 import farmacia.exceptions.OrderCreationFailedException;
 import farmacia.exceptions.OrderNotFoundException;
 
@@ -149,7 +150,7 @@ public class ControllerOrdini {
 
 	/**
 	 * Funzione privata di utilità che converte una <code>List&lt;EntityOrdine&gt;</code> in una <code>List&lt;DTO&gt;</code>.
-	 * @param ordini
+	 * @param ordini <code>List&lt;EntityOrdine&gt;</code> da convertire
 	 @return una <code>List&lt;DTO&gt;</code>, in cui ogni istanza di <code>DTO</code> contiene un singolo ordine di un cliente.
 	  * In particolare il <code>DTO</code> contiene i seguenti campi:
 	  * <ul>
@@ -158,10 +159,10 @@ public class ControllerOrdini {
 	  *     <li>"ritirato": <code>ritirato</code> dell'ordine (<code>boolean</code>)</li>
 	  *     <li>"quantitaFarmaci": <code>quantitaFarmaci</code> dell'ordine (<code>Map&lt;DTO, Integer&gt;</code>). La chiave
 	  *     di questo <code>Map</code> è un'istanza di <code>DTO</code> rappresentante un farmaco.</li>
-	  *     <li>"cliente": <code>cliente</code> titolare dell'ordine (<code>String</code>)</li>
+	  *     <li>"cliente": username del <code>cliente</code> titolare dell'ordine (<code>String</code>)</li>
 	  *     <li>"totale": <code>totale</code> dell'ordine (<code>float</code>)</li>
 	  * </ul>
-	 * @throws DBException
+	 * @throws DBException se non è possibile accedere al DB
 	 */
 	private List<DTO> getDtoOrdini(List<EntityOrdine> ordini) throws DBException {
 		List<DTO> dtoOrdini = new ArrayList<>();
@@ -183,9 +184,8 @@ public class ControllerOrdini {
 	 * Funzione che cambia lo stato di un ordine da 'Non ritirato' a 'Ritirato' cercandolo con il suo <code>id</code>.
 	 * @param idOrdine viene usato per la ricerca dell'ordine.
 	 * @throws OrderNotFoundException quando non esiste un ordine con <code>id</code> uguale a <code>idOrdine</code>.
-	 * @throws DBException
 	 */
-	public void aggiornaOrdine(String idOrdine) throws OrderNotFoundException, DBException {
+	public void aggiornaOrdine(String idOrdine) throws OrderNotFoundException {
 		EntityFarmacia farmacia = EntityFarmacia.getInstance();
 		farmacia.aggiornaOrdine(idOrdine);
 	}
@@ -194,9 +194,9 @@ public class ControllerOrdini {
 	 * Funzione che cambia lo stato di un ordine di acquisto da 'Non ritirato' a 'Ritirato' cercandolo con il suo <code>id</code>.
 	 * @param idOrdine viene usato per la ricerca dell'ordine di acquisto.
 	 * @throws OrderNotFoundException quando non esiste un ordine di acquisto con <code>id</code> uguale a <code>idOrdine</code>.
-	 * @throws DBException
+	 * @throws FarmacoNotFoundException se uno dei farmaci all'interno dell'ordine di acquisto non esiste
 	 */
-	public void aggiornaOrdineAcquisto(String idOrdine) throws OrderNotFoundException, DBException {
+	public void aggiornaOrdineAcquisto(String idOrdine) throws OrderNotFoundException, FarmacoNotFoundException {
 		EntityFarmacia farmacia = EntityFarmacia.getInstance();
 		farmacia.aggiornaOrdineAcquisto(idOrdine);
 	}

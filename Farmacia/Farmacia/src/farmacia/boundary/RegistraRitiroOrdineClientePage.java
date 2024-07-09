@@ -70,7 +70,7 @@ public class RegistraRitiroOrdineClientePage extends JFrame {
 				controllerOrdini.aggiornaOrdine(idOrdine);
 				JOptionPane.showMessageDialog(this, String.format("Ordine '%s' ritirato.", idOrdine));
 				tableModel.removeRow(selectedRow);
-			} catch (OrderNotFoundException | DBException ex) {
+			} catch (OrderNotFoundException ex) {
 				JOptionPane.showMessageDialog(this, ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
 			}
 		});

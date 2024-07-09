@@ -12,13 +12,12 @@ import java.util.List;
 import java.util.Map;
 
 public class EntityFarmacia {
-
-	List<EntityOrdineAcquisto> ordiniAcquisto;
-
 	/**
 	 * L'unica istanza di <code>EntityFarmacia</code> che implementa il pattern Singleton.
 	 */
 	private static EntityFarmacia uniqueInstance;
+
+	private final List<EntityOrdineAcquisto> ordiniAcquisto;
 
 	/**
 	 * Costruttore privato per impedire la creazione di istanze multiple.
@@ -31,7 +30,7 @@ public class EntityFarmacia {
 	 * Funzione statica per richiamare l'unica istanza di <code>EntityFarmacia</code> o crearne una se non esiste già.
 	 * @return l'istanza singleton di <code>EntityFarmacia</code>.
 	 */
-	public static EntityFarmacia getInstance() throws DBException {
+	public static EntityFarmacia getInstance() {
 		if (uniqueInstance == null) {
 			uniqueInstance = new EntityFarmacia();
 		}
@@ -60,7 +59,7 @@ public class EntityFarmacia {
 					utenteLoggato = new EntityCliente(utenteDAO);
 				} else {
 					if (utenteDAO.getTipoUtente() == TipoUtente.FARMACISTA) {
-						for (OrdineAcquistoDAO ordineAcquistoDAO : OrdineAcquistoDAO.getOrdiniAcquisto()) {
+						for (OrdineAcquistoDAO ordineAcquistoDAO : OrdineAcquistoDAO.visualizzaOrdiniAcquisto()) {
 							ordiniAcquisto.add(new EntityOrdineAcquisto(ordineAcquistoDAO));
 						}
 					}
@@ -113,6 +112,11 @@ public class EntityFarmacia {
 		return ordiniAcquisto;
 	}
 
+	/**
+	 * Funzione che aggiorna lo stato di un ordine da "Non ritirato" a "Ritirato".
+	 * @param idOrdine id dell'ordine da aggiornare.
+	 * @throws OrderNotFoundException se l'ordine non esiste.
+	 */
 	public void aggiornaOrdine(String idOrdine) throws OrderNotFoundException {
 		try {
 			EntityOrdine ordine = new EntityOrdine(idOrdine);
@@ -122,20 +126,22 @@ public class EntityFarmacia {
 		}
 	}
 
-	public void aggiornaOrdineAcquisto(String idOrdine) throws OrderNotFoundException {
-		// TODO: aggiornare le scorte
+	/**
+	 * Funzione che aggiorna lo stato di un ordine d'acquisto "Non ritirato" a "Ritirato".
+	 * @param idOrdine viene usato per la ricerca dell'ordine di acquisto.
+	 * @throws OrderNotFoundException quando non esiste un ordine di acquisto con <code>id</code> uguale a <code>idOrdine</code>.
+	 * @throws FarmacoNotFoundException se uno dei farmaci all'interno dell'ordine di acquisto non esiste
+	 */
+	public void aggiornaOrdineAcquisto(String idOrdine) throws OrderNotFoundException, FarmacoNotFoundException {
 		for (EntityOrdineAcquisto ordineAcquisto : ordiniAcquisto) {
 			if (ordineAcquisto.getId().equals(idOrdine)) {
 				try {
 					ordineAcquisto.aggiorna();
-					// TODO: il bug sta nel fatto che che non si entra in questo for, ora vado a dormire
 					for (Map.Entry<EntityFarmaco, Integer> entry : ordineAcquisto.getQuantitaFarmaci().entrySet()) {
-						EntityCatalogo.getInstance().decrementaScorte(entry.getKey().getId(), -entry.getValue());
+						EntityCatalogo.getInstance().incrementaScorte(entry.getKey().getId(), entry.getValue());
 					}
 				} catch (DBException e) {
 					throw new OrderNotFoundException(e.getMessage());
-				} catch (FarmacoNotFoundException e) {
-					throw new RuntimeException(e);
 				}
 			}
 		}

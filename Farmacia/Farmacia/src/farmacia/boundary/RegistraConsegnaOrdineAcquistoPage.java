@@ -3,6 +3,7 @@ package farmacia.boundary;
 import farmacia.controller.ControllerOrdini;
 import farmacia.dto.DTO;
 import farmacia.exceptions.DBException;
+import farmacia.exceptions.FarmacoNotFoundException;
 import farmacia.exceptions.OrderNotFoundException;
 
 import javax.swing.*;
@@ -76,7 +77,7 @@ public class RegistraConsegnaOrdineAcquistoPage extends JFrame {
 				ordiniAcquistoNonRicevuti.remove(selectedRow);
 				JOptionPane.showMessageDialog(this, String.format("Ordine d'acquisto '%s' ricevuto.", idOrdine));
 				tableModel.removeRow(selectedRow);
-			} catch (OrderNotFoundException | DBException ex) {
+			} catch (OrderNotFoundException | FarmacoNotFoundException ex) {
 				JOptionPane.showMessageDialog(this, ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
 			}
 		});

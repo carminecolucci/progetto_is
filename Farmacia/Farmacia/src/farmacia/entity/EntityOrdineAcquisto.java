@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class EntityOrdineAcquisto {
-	private String id;
+	private final String id;
 	private Date dataCreazione;
 	private boolean ricevuto;
 	private Map<EntityFarmaco, Integer> quantitaFarmaci;
@@ -31,7 +31,7 @@ public class EntityOrdineAcquisto {
 		this.dataCreazione = ordineAcquistoDAO.getDataCreazione();
 		this.ricevuto = ordineAcquistoDAO.isRicevuto();
 		quantitaFarmaci = new HashMap<>();
-		for (Map.Entry<FarmacoDAO, Integer> entry : ordineAcquistoDAO.getOrdineAcquistoFarmaci().entrySet()) {
+		for (Map.Entry<FarmacoDAO, Integer> entry : ordineAcquistoDAO.getOrdiniAcquistoFarmaci().entrySet()) {
 			quantitaFarmaci.put(new EntityFarmaco(entry.getKey()), entry.getValue());
 		}
 	}

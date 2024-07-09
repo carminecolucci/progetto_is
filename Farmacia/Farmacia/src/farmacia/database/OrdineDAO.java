@@ -11,7 +11,7 @@ public class OrdineDAO {
 	private String id;
 	private Date dataCreazione;
 	private boolean ritirato;
-	private Map<FarmacoDAO, Integer> ordineFarmaci;
+	private final Map<FarmacoDAO, Integer> ordineFarmaci;
 	private int cliente;
 	private float totale;
 
@@ -177,8 +177,8 @@ public class OrdineDAO {
 				this.ordineFarmaci.put(new FarmacoDAO(idFarmaco), quantita);
 			}
 		} catch (ClassNotFoundException | SQLException e) {
-			logger.warning(String.format("Errore durante il caricamento di un ordine con id " +
-				"'%s'.%n%s", this.id, e.getMessage()));
+			logger.warning(String.format("Errore durante il caricamento di un ordine con id '%s'.%n%s",
+				this.id, e.getMessage()));
 			throw new DBException("Errore nel caricamento di un ordine");
 		}
 	}

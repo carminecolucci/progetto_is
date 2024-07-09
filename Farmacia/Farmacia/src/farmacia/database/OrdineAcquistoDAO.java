@@ -11,9 +11,16 @@ public class OrdineAcquistoDAO {
 	private String id;
 	private Date dataCreazione;
 	private boolean ricevuto;
-	private Map<FarmacoDAO, Integer> ordineAcquistoFarmaci;
+	private final Map<FarmacoDAO, Integer> ordiniAcquistoFarmaci;
 
 	private static final Logger logger = Logger.getLogger("OrdineAcquistoDAO");
+
+	/**
+	 * Costruttore di default di <code>OrdineAcquistoDAO</code>
+	 */
+	private OrdineAcquistoDAO() {
+		ordiniAcquistoFarmaci = new HashMap<>();
+	}
 
 	/**
 	 * Costruttore che popola il DAO a partire dall'id dell'ordine di acquisto.
@@ -21,7 +28,7 @@ public class OrdineAcquistoDAO {
 	 * @throws DBException Se non è possibile accedere al DB o se l'ordine di acquisto non esiste.
 	 */
 	public OrdineAcquistoDAO(String id) throws DBException {
-		ordineAcquistoFarmaci = new HashMap<>();
+		ordiniAcquistoFarmaci = new HashMap<>();
 		this.caricaDaDB(id);
 	}
 
@@ -36,7 +43,7 @@ public class OrdineAcquistoDAO {
 		this.id = id;
 		this.dataCreazione = dataCreazione;
 		this.ricevuto = ricevuto;
-		this.ordineAcquistoFarmaci = new HashMap<>();
+		this.ordiniAcquistoFarmaci = new HashMap<>();
 	}
 
 	/**
@@ -46,7 +53,7 @@ public class OrdineAcquistoDAO {
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se il farmaco non esiste.
 	 */
 	public void aggiungiOrdineAcquistoFarmaco(int idFarmaco, int quantita) throws DBException {
-		this.ordineAcquistoFarmaci.put(new FarmacoDAO(idFarmaco), quantita);
+		this.ordiniAcquistoFarmaci.put(new FarmacoDAO(idFarmaco), quantita);
 	}
 
 	/**
@@ -98,13 +105,21 @@ public class OrdineAcquistoDAO {
 			throw new DBException("Errore nel caricamento dell'ordine di acquisto con id '" + this.id + "'.");
 		}
 
-		query = String.format("SELECT * from ordini_acquisto_farmaci WHERE ordineAcquisto = '%s';", this.id);
+		this.caricaOrdiniAcquistoFarmaciDaDB();
+	}
+
+	/**
+	 * Funzione di utilità per caricare gli ordiniAcquisto
+	 * @throws DBException se non si possono caricare gli ordiniAcquisto
+	 */
+	private void caricaOrdiniAcquistoFarmaciDaDB() throws DBException {
+		String query = String.format("SELECT * FROM ordini_acquisto_farmaci WHERE ordineAcquisto = '%s'", this.id);
 		logger.info(query);
 		try (ResultSet rs = DBManager.getInstance().selectQuery(query)) {
 			while (rs.next()) {
 				int idFarmaco = rs.getInt("farmacoAcquisto");
 				int quantita = rs.getInt("quantita");
-				this.ordineAcquistoFarmaci.put(new FarmacoDAO(idFarmaco), quantita);
+				this.ordiniAcquistoFarmaci.put(new FarmacoDAO(idFarmaco), quantita);
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			logger.warning(String.format("Errore durante il caricamento dell'ordine di acquisto con id '%s'.%n%s",
@@ -139,7 +154,7 @@ public class OrdineAcquistoDAO {
 		query = "INSERT INTO ordini_acquisto_farmaci (ordineAcquisto, farmacoAcquisto, quantita) " +
 				"VALUES ('%s', %d, %d);";
 		logger.info(query);
-		for (Map.Entry<FarmacoDAO, Integer> item: this.ordineAcquistoFarmaci.entrySet()) {
+		for (Map.Entry<FarmacoDAO, Integer> item: this.ordiniAcquistoFarmaci.entrySet()) {
 			try {
 				rs = DBManager.getInstance().executeQuery(String.format(query, this.id, item.getKey().getId(), item.getValue()));
 			} catch (ClassNotFoundException | SQLException e) {
@@ -154,27 +169,26 @@ public class OrdineAcquistoDAO {
 	 * @return La lista di <code>OrdineAcquistoDAO</code> contenente tutti gli ordini di acquisto registrati presso la farmacia.
 	 * @throws DBException Lanciata se non è possibile accedere al DB.
 	 */
-	public static List<OrdineAcquistoDAO> getOrdiniAcquisto() throws DBException {
+	public static List<OrdineAcquistoDAO> visualizzaOrdiniAcquisto() throws DBException {
 		String query = "SELECT * FROM ordini_acquisto;";
 		logger.info(query);
 
-		List<OrdineAcquistoDAO> listaOrdiniAcquistoDAO = new ArrayList<>();
+		List<OrdineAcquistoDAO> ordiniAcquisto = new ArrayList<>();
 		try (ResultSet rs = DBManager.getInstance().selectQuery(query)) {
-			String idOrdine;
-			Date dataCreazione;
-			boolean ricevuto;
 			while (rs.next()) {
-				idOrdine = rs.getString("id");
-				dataCreazione = rs.getDate("dataCreazione");
-				ricevuto = rs.getBoolean("ricevuto");
-				listaOrdiniAcquistoDAO.add(new OrdineAcquistoDAO(idOrdine, dataCreazione, ricevuto));
+				OrdineAcquistoDAO ordine = new OrdineAcquistoDAO();
+				ordine.id = rs.getString("id");
+				ordine.dataCreazione = rs.getDate("dataCreazione");
+				ordine.ricevuto = rs.getBoolean("ricevuto");
+				ordine.caricaOrdiniAcquistoFarmaciDaDB();
+				ordiniAcquisto.add(ordine);
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			logger.warning(String.format("Errore durante il caricamento degli ordini di acquisto" +
 					".%n%s", e.getMessage()));
 			throw new DBException("Errore durante il caricamento degli ordini di acquisto: " + e.getMessage());
 		}
-		return listaOrdiniAcquistoDAO;
+		return ordiniAcquisto;
 	}
 
 
@@ -202,12 +216,7 @@ public class OrdineAcquistoDAO {
 		this.ricevuto = ricevuto;
 	}
 
-	public Map<FarmacoDAO, Integer> getOrdineAcquistoFarmaci() {
-		return ordineAcquistoFarmaci;
+	public Map<FarmacoDAO, Integer> getOrdiniAcquistoFarmaci() {
+		return ordiniAcquistoFarmaci;
 	}
-
-	public void setOrdineAcquistoFarmaci(Map<FarmacoDAO, Integer> ordineAcquistoFarmaci) {
-		this.ordineAcquistoFarmaci = ordineAcquistoFarmaci;
-	}
-
 }
