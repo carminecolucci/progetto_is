@@ -24,7 +24,7 @@ public class VisualizzaCatalogoFarmacistaPage extends JFrame {
 		setLocationRelativeTo(null);
 		setContentPane(mainPanel);
 
-		DefaultTableModel model = new DefaultTableModel(new Object[][]{}, new String[]{"Nome", "Prezzo", "Prescrizione", "Scorte"}) {
+		DefaultTableModel model = new DefaultTableModel(new Object[][]{}, new String[]{"Codice Identificativo", "Nome", "Prezzo", "Prescrizione", "Scorte"}) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;
@@ -48,7 +48,7 @@ public class VisualizzaCatalogoFarmacistaPage extends JFrame {
 			if ((boolean)farmaco.get("prescrizione")){
 				prescrizione = "Necessaria";
 			}
-			model.addRow(new Object[]{farmaco.get("nome"), farmaco.get("prezzo"), prescrizione, farmaco.get("scorte")});
+			model.addRow(new Object[]{farmaco.get("codice"), farmaco.get("nome"), farmaco.get("prezzo"), prescrizione, farmaco.get("scorte")});
 		}
 
 		setVisible(true);

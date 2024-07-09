@@ -75,6 +75,7 @@ public class ControllerCatalogo {
 		dto.set("prescrizione", farmaco.isPrescrizione());
 		dto.set("nome", farmaco.getNome());
 		dto.set("scorte", farmaco.getScorte());
+		dto.set("codice", farmaco.getCodice());
 		return dto;
 	}
 
@@ -104,6 +105,7 @@ public class ControllerCatalogo {
 			dto.set("prescrizione", farmaco.isPrescrizione());
 			dto.set("nome", farmaco.getNome());
 			dto.set("scorte", farmaco.getScorte());
+			dto.set("codice", farmaco.getCodice());
 			farmaciDTO.add(dto);
 		}
 		return farmaciDTO;

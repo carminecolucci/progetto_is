@@ -79,6 +79,7 @@ public class ControllerOrdini {
 			dtoFarmaco.set("prescrizione", farmaco.isPrescrizione());
 			dtoFarmaco.set("nome", farmaco.getNome());
 			dtoFarmaco.set("scorte", farmaco.getScorte());
+			dtoFarmaco.set("codice", farmaco.getCodice()); // non necessario?
 			dtoQuantitaFarmaci.put(dtoFarmaco, entry.getValue());
 		}
 		return dtoQuantitaFarmaci;
@@ -107,9 +108,8 @@ public class ControllerOrdini {
 	 *     <li>"ricevuto": <code>ricevuto</code> dell'ordine di acquisto (<code>boolean</code>)</li>
 	 *     <li>"quantitaFarmaci": <code>quantitaFarmaci</code> dell'ordine di acquisto (<code>Map&lt;DTO, Integer&gt;</code>)</li>
 	 * </ul>
-	 * @throws DBException
 	 */
-	public List<DTO> visualizzaOrdiniAcquistoFarmacia() throws DBException {
+	public List<DTO> visualizzaOrdiniAcquistoFarmacia() {
 		EntityFarmacia farmacia = EntityFarmacia.getInstance();
 		List<DTO> dtoOrdiniAcquisto = new ArrayList<>();
 

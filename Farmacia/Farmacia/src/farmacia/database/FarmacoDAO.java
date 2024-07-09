@@ -15,6 +15,7 @@ public class FarmacoDAO {
 	private boolean prescrizione;
 	private String nome;
 	private int scorte;
+	private String codice;
 
 	private static final Logger logger = Logger.getLogger("FarmacoDAO");
 
@@ -48,12 +49,14 @@ public class FarmacoDAO {
 	 * @param prescrizione Se il farmaco richiede una prescrizione per la vendita.
 	 * @param nome Il nome del farmaco.
 	 * @param scorte Le scorte del farmaco.
+	 * @param codice Il codice identificativo del farmaco (stringa alfanumerica di 20 caratteri).
 	 */
-	public FarmacoDAO(float prezzo, boolean prescrizione, String nome, int scorte) {
+	public FarmacoDAO(float prezzo, boolean prescrizione, String nome, int scorte, String codice) {
 		this.prezzo = prezzo;
 		this.prescrizione = prescrizione;
 		this.nome = nome;
 		this.scorte = scorte;
+		this.codice = codice;
 	}
 
 	/**
@@ -66,7 +69,7 @@ public class FarmacoDAO {
 			throw new DBException(String.format("Farmaco '%s' già esistente", nome));
 		}
 
-		salvaInDB(this.prezzo, this.prescrizione, this.nome, this.scorte);
+		salvaInDB();
 		this.id = cercaInDB(this.nome);
 	}
 
@@ -170,16 +173,12 @@ public class FarmacoDAO {
 
 	/**
 	 * Funzione che salva un farmaco nel DB.
-	 * @param prezzo Il prezzo del farmaco.
-	 * @param prescrizione Se il farmaco richiede o meno una prescrizione per la vendita.
-	 * @param nome Il nome del farmaco.
-	 * @param scorte Le scorte del farmaco.
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se non è stato possibile aggiungere il farmaco.
 	 */
-	private void salvaInDB(float prezzo, boolean prescrizione, String nome, int scorte) throws DBException {
-		String query = String.format(Locale.US, "INSERT INTO farmaci (prezzo, prescrizione, nome, scorte) " +
-				"VALUES (%.2f, %d, '%s', %d);",
-			prezzo, prescrizione ? 1 : 0, nome, scorte
+	private void salvaInDB() throws DBException {
+		String query = String.format(Locale.US, "INSERT INTO farmaci (prezzo, prescrizione, nome, scorte, codice) " +
+				"VALUES (%.2f, %d, '%s', %d, '%s');",
+			this.prezzo, this.prescrizione ? 1 : 0, this.nome, this.scorte, this.codice
 		);
 
 		try {
@@ -193,7 +192,7 @@ public class FarmacoDAO {
 
 	/**
 	 * Elimina il farmaco dal DB. Il metodo presuppone che l'istanza di <code>FarmacoDAO</code> sulla quale viene
-	 * richiamato abbia abbia popolato l'attributo <code>id</code>.
+	 * richiamato abbia popolato l'attributo <code>id</code>.
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se non è stato possibile eliminare il farmaco.
 	 */
 	private void eliminaDaDB() throws DBException {
@@ -226,6 +225,7 @@ public class FarmacoDAO {
 				farmaco.prescrizione = rs.getBoolean("prescrizione");
 				farmaco.nome = rs.getString("nome");
 				farmaco.scorte = rs.getInt("scorte");
+				farmaco.codice = rs.getString("codice");
 				farmaci.add(farmaco);
 			}
 		} catch (ClassNotFoundException | SQLException e) {
@@ -331,5 +331,13 @@ public class FarmacoDAO {
 
 	public int getId() {
 		return id;
+	}
+
+	public String getCodice() {
+		return codice;
+	}
+
+	public void setCodice(String codice) {
+		this.codice = codice;
 	}
 }

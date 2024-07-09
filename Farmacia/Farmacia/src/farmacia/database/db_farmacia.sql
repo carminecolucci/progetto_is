@@ -30,20 +30,12 @@ CREATE TABLE `farmaci` (
   `prescrizione` tinyint NOT NULL,
   `nome` varchar(45) NOT NULL,
   `scorte` int NOT NULL,
+  `codice` varchar(20) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `nome_UNIQUE` (`nome`)
-) ENGINE=InnoDB AUTO_INCREMENT=131 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  UNIQUE KEY `nome_UNIQUE` (`nome`),
+  UNIQUE KEY `codice_UNIQUE` (`codice`)
+) ENGINE=InnoDB AUTO_INCREMENT=146 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `farmaci`
---
-
-LOCK TABLES `farmaci` WRITE;
-/*!40000 ALTER TABLE `farmaci` DISABLE KEYS */;
-INSERT INTO `farmaci` VALUES (110,20,1,'Vicodin',7),(111,5,0,'Tachipirina',50),(113,20,1,'Xanax',10),(114,20,1,'Voltaren',10),(115,20,1,'Clavulin',10),(116,20,1,'Augmentin',10),(117,20,1,'Cortisone',10),(118,20,1,'Bentelan',10),(119,20,1,'PizzaMargherita',10),(120,20,1,'Rinazina',10),(121,20,1,'Viks',10),(122,20,1,'Neoduplamox',10),(123,20,1,'Ayrinal',10),(124,20,1,'Fluifort',10),(125,20,1,'Levotuss',10),(126,20,1,'MedicinaMagica',10),(127,20,1,'PizzaFritta',10),(128,20,1,'Unguento',10),(129,20,1,'FagioliBalzar',10),(130,20,1,'PastaSugo',10);
-/*!40000 ALTER TABLE `farmaci` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `ordini`
@@ -65,15 +57,6 @@ CREATE TABLE `ordini` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `ordini`
---
-
-LOCK TABLES `ordini` WRITE;
-/*!40000 ALTER TABLE `ordini` DISABLE KEYS */;
-/*!40000 ALTER TABLE `ordini` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `ordini_acquisto`
 --
 
@@ -89,15 +72,6 @@ CREATE TABLE `ordini_acquisto` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `ordini_acquisto`
---
-
-LOCK TABLES `ordini_acquisto` WRITE;
-/*!40000 ALTER TABLE `ordini_acquisto` DISABLE KEYS */;
-/*!40000 ALTER TABLE `ordini_acquisto` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `ordini_acquisto_farmaci`
 --
 
@@ -110,19 +84,10 @@ CREATE TABLE `ordini_acquisto_farmaci` (
   `quantita` int NOT NULL,
   PRIMARY KEY (`ordineAcquisto`,`farmacoAcquisto`),
   KEY `farmaco_idx` (`farmacoAcquisto`),
-  CONSTRAINT `farmacoAcquisto` FOREIGN KEY (`farmacoAcquisto`) REFERENCES `farmaci` (`id`),
+  CONSTRAINT `farmacoAcquisto` FOREIGN KEY (`farmacoAcquisto`) REFERENCES `farmaci` (`id`) ON DELETE CASCADE,
   CONSTRAINT `ordineAcquisto` FOREIGN KEY (`ordineAcquisto`) REFERENCES `ordini_acquisto` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `ordini_acquisto_farmaci`
---
-
-LOCK TABLES `ordini_acquisto_farmaci` WRITE;
-/*!40000 ALTER TABLE `ordini_acquisto_farmaci` DISABLE KEYS */;
-/*!40000 ALTER TABLE `ordini_acquisto_farmaci` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `ordini_farmaci`
@@ -137,19 +102,10 @@ CREATE TABLE `ordini_farmaci` (
   `quantita` int NOT NULL,
   PRIMARY KEY (`ordine`,`farmaco`),
   KEY `farmaco_idx` (`farmaco`),
-  CONSTRAINT `farmaco` FOREIGN KEY (`farmaco`) REFERENCES `farmaci` (`id`),
+  CONSTRAINT `farmaco` FOREIGN KEY (`farmaco`) REFERENCES `farmaci` (`id`) ON DELETE CASCADE,
   CONSTRAINT `ordine` FOREIGN KEY (`ordine`) REFERENCES `ordini` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `ordini_farmaci`
---
-
-LOCK TABLES `ordini_farmaci` WRITE;
-/*!40000 ALTER TABLE `ordini_farmaci` DISABLE KEYS */;
-/*!40000 ALTER TABLE `ordini_farmaci` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `utenti`
@@ -169,18 +125,8 @@ CREATE TABLE `utenti` (
   `email` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username_UNIQUE` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `utenti`
---
-
-LOCK TABLES `utenti` WRITE;
-/*!40000 ALTER TABLE `utenti` DISABLE KEYS */;
-INSERT INTO `utenti` VALUES (17,'carmine','pass','carmine','colucci','2003-03-22',0,'miamail@gmail.com');
-/*!40000 ALTER TABLE `utenti` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -191,4 +137,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-08 11:35:54
+-- Dump completed on 2024-07-09 17:17:11
