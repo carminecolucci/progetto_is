@@ -45,26 +45,21 @@ public class VisualizzaOrdiniAcquistoPage extends JFrame {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		List<DTO> ordiniAcquisto;
 
-		try {
-			ordiniAcquisto = controllerOrdini.visualizzaOrdiniAcquistoFarmacia();
-			String daRicevere;
-			for(DTO ordineAcquisto : ordiniAcquisto) {
-				if((boolean)ordineAcquisto.get("ricevuto"))
-					daRicevere = "Ricevuto";
-				else
-					daRicevere = "In attesa";
-				tableModel.addRow(new Object[] {ordineAcquisto.get("id"), formatter.format(ordineAcquisto.get("dataCreazione")), daRicevere});
-			}
-		} catch (DBException e) {
-			throw new RuntimeException(e);
+		ordiniAcquisto = controllerOrdini.visualizzaOrdiniAcquistoFarmacia();
+		String daRicevere;
+		for (DTO ordineAcquisto : ordiniAcquisto) {
+			if ((boolean)ordineAcquisto.get("ricevuto"))
+				daRicevere = "Ricevuto";
+			else
+				daRicevere = "In attesa";
+			tableModel.addRow(new Object[] {ordineAcquisto.get("id"), formatter.format(ordineAcquisto.get("dataCreazione")), daRicevere});
 		}
 
 		btnVisualizzaOrdineAcquisto.addActionListener(e -> {
 			int selectedRow = tblOrdiniAcquisto.getSelectedRow();
 			String idOrdine = (String)ordiniAcquisto.get(selectedRow).get("id");
-			DTO ordineDaVisualizzare;
-			for(DTO ordine : ordiniAcquisto) {
-				if(ordine.get("id").equals(idOrdine))
+			for (DTO ordine : ordiniAcquisto) {
+				if (ordine.get("id").equals(idOrdine))
 					new VisualizzaOrdinePage(ordine);
 			}
 		});

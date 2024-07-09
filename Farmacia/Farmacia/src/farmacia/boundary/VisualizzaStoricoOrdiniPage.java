@@ -14,7 +14,7 @@ public class VisualizzaStoricoOrdiniPage extends JFrame {
 	private final JTable table;
 	private final List<DTO> ordini;
 
-	public VisualizzaStoricoOrdiniPage() throws DBException {
+	public VisualizzaStoricoOrdiniPage() {
 		setTitle("Visualizza storico ordini");
 		setSize(600, 400);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);

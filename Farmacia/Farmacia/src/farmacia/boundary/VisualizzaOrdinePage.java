@@ -16,6 +16,7 @@ public class VisualizzaOrdinePage extends JFrame {
 	public VisualizzaOrdinePage(DTO ordine) {
 		this.quantitaFarmaci = (Map<DTO, Integer>)ordine.get("quantitaFarmaci");
 		this.idOrdine = (String)ordine.get("id");
+
 		setTitle(String.format("Visualizza ordine '%s'", idOrdine));
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setContentPane(mainPanel);

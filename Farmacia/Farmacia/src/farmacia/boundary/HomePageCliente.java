@@ -5,6 +5,10 @@ import farmacia.dto.DTO;
 import farmacia.exceptions.DBException;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class HomePageCliente extends JFrame {
 
@@ -29,14 +33,9 @@ public class HomePageCliente extends JFrame {
 
 		btnCreaOrdine.addActionListener(e -> new CreaOrdinePage());
 
-		btnVisualizzaStoricoOrdini.addActionListener(e -> {
-			try {
-				new VisualizzaStoricoOrdiniPage();
-			} catch (DBException ex) {
-				throw new RuntimeException(ex);
-			}
-		});
+		btnVisualizzaStoricoOrdini.addActionListener(e -> new VisualizzaStoricoOrdiniPage());
 
 		btnCercaFarmaco.addActionListener(e -> new CercaFarmacoPage());
+
 	}
 }

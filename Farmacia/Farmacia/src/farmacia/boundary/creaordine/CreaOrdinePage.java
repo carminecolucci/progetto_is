@@ -91,7 +91,7 @@ public class CreaOrdinePage extends JFrame {
 					JOptionPane.showMessageDialog(this, String.format("Ordine confermato! Numero ricevuta: '%s'.", idOrdine));
 					dispose();
 				} else {
-					JOptionPane.showMessageDialog(this, "Ordine nullo!");
+					JOptionPane.showMessageDialog(this, "L'ordine non contiene farmaci!", "Errore", JOptionPane.ERROR_MESSAGE);
 				}
 			} catch (OrderCreationFailedException ex) {
 				farmaciOrdine.clear();
@@ -100,7 +100,6 @@ public class CreaOrdinePage extends JFrame {
 		});
 
 		btnAnnulla.addActionListener(e -> {
-			JOptionPane.showMessageDialog(this, "Ordine annullato!");
 			dispose();
 		});
 
