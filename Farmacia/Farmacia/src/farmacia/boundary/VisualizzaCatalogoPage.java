@@ -26,19 +26,12 @@ public class VisualizzaCatalogoPage extends JFrame {
 		FarmaciTableModel model = new FarmaciTableModel();
 		tblFarmaci.setModel(model);
 
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosed(WindowEvent e) {
-				dispose();
-			}
-		});
 
 		ControllerCatalogo controllerCatalogo = ControllerCatalogo.getInstance();
 		List<DTO> farmaci = controllerCatalogo.visualizzaCatalogo();
 		for (DTO farmaco: farmaci){
 			model.addFarmaco(farmaco);
 		}
-
-		setVisible(true);
+			setVisible(true);
 	}
 }
