@@ -1,0 +1,17 @@
+\documentclass{article}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{tabularray}
+\UseTblrLibrary{varwidth}
+\usepackage{enumitem}
+\NewTblrEnviron{scenery}
+\SetTblrInner[scenery]{
+	hlines, vlines,
+	% rowsep=1.5pt,
+	row{1} = {bg=black, fg=white, font=\bfseries},
+	column{1} = {font=\bfseries},
+	measure=vbox, stretch=-1
+}
+\pagestyle{empty}
+\begin{document}
+\input{chapters/usecases/EliminaFarmaco.tex}
+\end{document}
