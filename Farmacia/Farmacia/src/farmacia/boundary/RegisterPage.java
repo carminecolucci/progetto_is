@@ -1,5 +1,6 @@
 package farmacia.boundary;
 
+import farmacia.boundary.datepicker.DateTextField;
 import farmacia.controller.ControllerUtenti;
 import farmacia.exceptions.DBException;
 import farmacia.exceptions.RegistrationFailedException;
@@ -7,88 +8,119 @@ import farmacia.exceptions.RegistrationFailedException;
 import javax.swing.*;
 import java.awt.event.WindowEvent;
 import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.regex.Pattern;
 
 public class RegisterPage extends JFrame {
+	private static final String ERROR_TITLE = "Errore Registrazione";
+	private static final String SUCCESS_TITLE = "Registrazione Effettuata";
+
 	private JPanel mainPanel;
 	private JTextField txtNome;
 	private JTextField txtCognome;
-	private JComboBox<Integer> boxGiorno;
-	private JComboBox<Integer> boxMese;
-	private JComboBox<Integer> boxAnno;
+	private final DateTextField txtDataNascita;
 	private JTextField txtUsername;
 	private JPasswordField pswPassword;
 	private JPasswordField pswRipetiPassword;
 	private JButton btnRegistrati;
 	private JTextField txtEmail;
 	private JButton btnAnnulla;
+	private JPanel dataPanel;
 
 	public RegisterPage() {
-		setSize(500, 300);
-
-		for (int i = 2024; i >= 1940; i--) {
-			boxAnno.addItem(i);
-		}
-
+		setSize(400, 250);
 		setLocationRelativeTo(null);
 		setContentPane(mainPanel);
 		setTitle("Registrazione");
 		setResizable(false);
 
-		btnRegistrati.addActionListener(e -> {
-			ControllerUtenti controllerUtenti = ControllerUtenti.getInstance();
-			String username = txtUsername.getText();
-			String password = String.valueOf(pswPassword.getPassword());
-			String nome = txtNome.getText();
-			String cognome = txtCognome.getText();
-			String email = txtEmail.getText();
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-			Date dataNascita = null;
-			try {
-				java.util.Date data = formatter.parse(boxAnno.getSelectedItem().toString() + "-" + boxMese.getSelectedItem().toString() + "-" + boxGiorno.getSelectedItem().toString());
-				dataNascita = new Date(data.getTime());
-			} catch (ParseException ex) {
-				throw new RuntimeException(ex);
-			}
-			try {
-				controllerUtenti.registraCliente(username, password, nome, cognome, dataNascita, email);
-				JOptionPane.showMessageDialog(mainPanel, "Registrazione Effettuata. Ora puoi effettuare il login", "Registrazione Effettuata", JOptionPane.PLAIN_MESSAGE);
-				dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-			} catch (RegistrationFailedException | DBException ex) {
-				JOptionPane.showMessageDialog(mainPanel, ex.getMessage(), "Errore Registrazione", JOptionPane.ERROR_MESSAGE);
-			}
-		});
+		txtDataNascita = new DateTextField();
+		dataPanel.add(txtDataNascita);
+
+		btnRegistrati.addActionListener(e -> registrationHandler());
 
 		btnAnnulla.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
 
-		boxMese.addActionListener(e -> {
-			String[] mesi31 = {"1", "3", "7", "8", "10", "12"};
-			ArrayList<String> mesi31array = new ArrayList<>(Arrays.asList(mesi31));
-			boxGiorno.removeAllItems();
-			if (mesi31array.contains(boxMese.getSelectedItem().toString())) {
-				// è stato selezionato un mese da 31 giorni
-				for (int i = 1; i <= 31; i++) {
-					boxGiorno.addItem(i);
-				}
-			} else if (boxMese.getSelectedItem().toString().equals("2")) {
-				// è stato selezionato febbraio
-				int anno = Integer.parseInt(boxAnno.getSelectedItem().toString());
-				int limit = (anno % 4) == 0 ? 29 : 28;
-				for (int i = 1; i <= limit; i++) {
-					boxGiorno.addItem(i);
-				}
-			} else {
-				// è stato selezionato un mese da 30 giorni
-				for (int i = 1; i <= 30; i++) {
-					boxGiorno.addItem(i);
-				}
-			}
-		});
-
 		getRootPane().setDefaultButton(btnRegistrati);
 		setVisible(true);
+	}
+
+	private void registrationHandler() {
+		ControllerUtenti controllerUtenti = ControllerUtenti.getInstance();
+		String username = txtUsername.getText();
+		String password = String.valueOf(pswPassword.getPassword());
+		String password2 = String.valueOf(pswRipetiPassword.getPassword());
+		String nome = txtNome.getText();
+		String cognome = txtCognome.getText();
+		String email = txtEmail.getText();
+		java.util.Date data = txtDataNascita.getDate();
+		Date dataNascita = new Date(data.getTime());
+
+		if (nome.isEmpty() || cognome.isEmpty() || email.isEmpty() || username.isEmpty() || password.isEmpty() || password2.isEmpty()) {
+			JOptionPane.showMessageDialog(mainPanel, "Inserire tutti i campi", ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+
+		if (!password.equals(password2)) {
+			JOptionPane.showMessageDialog(mainPanel, "Le due password sono differenti", ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
+			pswPassword.setText("");
+			pswRipetiPassword.setText("");
+			return;
+		}
+
+		if (data.after(new java.util.Date())) {
+			JOptionPane.showMessageDialog(mainPanel, "Sicuro di non essere ancora nato?", ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+
+		if (nome.length() > 45) {
+			JOptionPane.showMessageDialog(mainPanel, "Nome troppo lungo", ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+
+		if (cognome.length() > 45) {
+			JOptionPane.showMessageDialog(mainPanel, "Cognome troppo lungo", ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+
+		if (username.length() > 45) {
+			JOptionPane.showMessageDialog(mainPanel, "Username troppo lungo", ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+
+		if (password.length() > 45) {
+			JOptionPane.showMessageDialog(mainPanel, "Password troppo lunga", ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+
+		if (password.length() < 8) {
+			JOptionPane.showMessageDialog(mainPanel, "Password troppo corta", ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+
+		if (email.length() > 45) {
+			JOptionPane.showMessageDialog(mainPanel, "Email troppo lunga", ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+
+		if (!isValidEmail(email)) {
+			JOptionPane.showMessageDialog(mainPanel, "Email non valida", ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+
+		try {
+			controllerUtenti.registraCliente(username, password, nome, cognome, dataNascita, email);
+			JOptionPane.showMessageDialog(mainPanel, "Registrazione Effettuata. Ora puoi effettuare il login", SUCCESS_TITLE, JOptionPane.PLAIN_MESSAGE);
+			dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+		} catch (RegistrationFailedException | DBException ex) {
+			JOptionPane.showMessageDialog(mainPanel, ex.getMessage(), ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
+	public static boolean isValidEmail(String email) {
+		String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+		Pattern pat = Pattern.compile(emailRegex);
+		if (email == null)
+			return false;
+		return pat.matcher(email).matches();
 	}
 }

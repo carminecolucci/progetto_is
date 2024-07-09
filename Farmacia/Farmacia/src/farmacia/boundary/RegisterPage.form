@@ -2,7 +2,7 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="farmacia.boundary.RegisterPage">
   <grid id="27dc6" binding="mainPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
-      <xy x="20" y="20" width="717" height="310"/>
+      <xy x="20" y="20" width="717" height="412"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -10,7 +10,7 @@
       <grid id="c3910" layout-manager="BorderLayout" hgap="0" vgap="0">
         <constraints border-constraint="South"/>
         <properties/>
-        <border type="none"/>
+        <border type="etched"/>
         <children>
           <component id="eb3e1" class="javax.swing.JButton" binding="btnRegistrati">
             <constraints border-constraint="East"/>
@@ -28,7 +28,7 @@
         </children>
       </grid>
       <grid id="f2c9f" layout-manager="GridLayoutManager" row-count="7" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-        <margin top="0" left="0" bottom="0" right="0"/>
+        <margin top="10" left="10" bottom="10" right="10"/>
         <constraints border-constraint="Center"/>
         <properties/>
         <border type="none"/>
@@ -74,43 +74,6 @@
               </grid>
             </constraints>
             <properties/>
-          </component>
-          <component id="9948b" class="javax.swing.JComboBox" binding="boxGiorno">
-            <constraints>
-              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <model/>
-            </properties>
-          </component>
-          <component id="d1d7b" class="javax.swing.JComboBox" binding="boxMese">
-            <constraints>
-              <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <model>
-                <item value="1"/>
-                <item value="2"/>
-                <item value="3"/>
-                <item value="4"/>
-                <item value="5"/>
-                <item value="6"/>
-                <item value="7"/>
-                <item value="8"/>
-                <item value="9"/>
-                <item value="10"/>
-                <item value="11"/>
-                <item value="12"/>
-              </model>
-            </properties>
-          </component>
-          <component id="b1d87" class="javax.swing.JComboBox" binding="boxAnno">
-            <constraints>
-              <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <model/>
-            </properties>
           </component>
           <component id="6d064" class="javax.swing.JLabel">
             <constraints>
@@ -176,6 +139,16 @@
             </constraints>
             <properties/>
           </component>
+          <grid id="85d97" binding="dataPanel" layout-manager="CardLayout" hgap="0" vgap="0">
+            <constraints>
+              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                <maximum-size width="-1" height="20"/>
+              </grid>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children/>
+          </grid>
         </children>
       </grid>
     </children>
