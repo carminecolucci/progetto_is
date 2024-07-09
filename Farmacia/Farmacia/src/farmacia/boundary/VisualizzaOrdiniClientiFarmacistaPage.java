@@ -26,7 +26,7 @@ public class VisualizzaOrdiniClientiFarmacistaPage extends JFrame {
 		setLocationRelativeTo(null);
 		setContentPane(mainPanel);
 
-		DefaultTableModel tableModel = new DefaultTableModel(new Object[][]{}, new String[]{"ID", "Username cliente", "Data di creazione", "Totale da pagare"}) {
+		DefaultTableModel tableModel = new DefaultTableModel(new Object[][]{}, new String[]{"ID", "Username cliente", "Data di creazione", "Stato ordine", "Totale"}) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;
@@ -43,14 +43,20 @@ public class VisualizzaOrdiniClientiFarmacistaPage extends JFrame {
 		});
 
 		tblOrdiniClienti.setModel(tableModel);
+		tblOrdiniClienti.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		ControllerOrdini controllerOrdini = ControllerOrdini.getInstance();
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		List<DTO> ordiniClienti;
 
 		try {
 			ordiniClienti = controllerOrdini.visualizzaOrdiniFarmacia();
+			String daRitirare;
 			for(DTO ordine : ordiniClienti) {
-				tableModel.addRow(new Object[] {ordine.get("id"), ordine.get("cliente"), formatter.format(ordine.get("dataCreazione")), ordine.get("totale")});
+				if((boolean)ordine.get("ritirato"))
+					daRitirare = "Ritirato";
+				else
+					daRitirare = "Da ritirare";
+				tableModel.addRow(new Object[] {ordine.get("id"), ordine.get("cliente"), formatter.format(ordine.get("dataCreazione")), daRitirare, ordine.get("totale")});
 			}
 		} catch (DBException e) {
 			throw new RuntimeException(e);

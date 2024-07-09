@@ -5,6 +5,7 @@ import farmacia.dto.DTO;
 import farmacia.exceptions.FarmacoNotFoundException;
 
 import javax.swing.*;
+import java.util.List;
 
 public class CercaFarmacoPage extends JFrame {
 	private JPanel mainPanel;
@@ -23,20 +24,28 @@ public class CercaFarmacoPage extends JFrame {
 
 		FarmaciTableModel model = new FarmaciTableModel();
 		tblRicerca.setModel(model);
+		ControllerCatalogo controllerCatalogo = ControllerCatalogo.getInstance();
+		List<DTO> farmaciDTO = controllerCatalogo.visualizzaCatalogo();
+		for (DTO farmaco : farmaciDTO) {
+			model.addFarmaco(farmaco);
+		}
+
+		FarmaciTableModel modelRicerca = new FarmaciTableModel();
 
 		btnRicerca.addActionListener(e -> {
-			model.setRowCount(0);   // cancella tutte le righe della tabella
-
 			String nomeFarmaco = txtFarmaco.getText();
 			if (!nomeFarmaco.isEmpty()) {
-				ControllerCatalogo controllerCatalogo = ControllerCatalogo.getInstance();
 				try {
 					DTO farmaco = controllerCatalogo.cercaFarmaco(nomeFarmaco);
-					model.addFarmaco(farmaco);
+					modelRicerca.addFarmaco(farmaco);
+					tblRicerca.setModel(modelRicerca);
 				} catch (FarmacoNotFoundException ex) {
 					JOptionPane.showMessageDialog(this, String.format("Farmaco '%s' non presente in farmacia.", nomeFarmaco), "Errore", JOptionPane.ERROR_MESSAGE);
 					txtFarmaco.setText("");
 				}
+			} else {
+				JOptionPane.showMessageDialog(this, "Nome farmaco non specificato", "Errore", JOptionPane.ERROR_MESSAGE);
+				tblRicerca.setModel(model);
 			}
 		});
 

@@ -39,6 +39,7 @@ public class RegistraConsegnaOrdineAcquistoPage extends JFrame {
 		};
 
 		tblOrdiniAcquisto.setModel(tableModel);
+		tblOrdiniAcquisto.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		ListSelectionModel selectionModel = tblOrdiniAcquisto.getSelectionModel();
 		ControllerOrdini controllerOrdini = ControllerOrdini.getInstance();
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");

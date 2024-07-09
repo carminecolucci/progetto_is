@@ -35,6 +35,7 @@ public class RegistraRitiroOrdineClientePage extends JFrame {
 		};
 
 		tblOrdini.setModel(tableModel);
+		tblOrdini.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		ListSelectionModel selectionModel = tblOrdini.getSelectionModel();
 		ControllerOrdini controllerOrdini = ControllerOrdini.getInstance();
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -70,6 +71,7 @@ public class RegistraRitiroOrdineClientePage extends JFrame {
 				controllerOrdini.aggiornaOrdine(idOrdine);
 				JOptionPane.showMessageDialog(this, String.format("Ordine '%s' ritirato.", idOrdine));
 				tableModel.removeRow(selectedRow);
+				ordiniClientiDaRitirare.remove(selectedRow);
 			} catch (OrderNotFoundException ex) {
 				JOptionPane.showMessageDialog(this, ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
 			}
