@@ -46,6 +46,15 @@ public class GeneraOrdineAcquistoFarmacistaPage extends JFrame {
 		tblFarmaci.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		add(srlTable);
 
+		ListSelectionModel selectionModel = tblFarmaci.getSelectionModel();
+		selectionModel.addListSelectionListener(e -> {
+			if (!e.getValueIsAdjusting()) {
+				int selectedRow = tblFarmaci.getSelectedRow();
+				// Abilita il pulsante solo se viene selezionata una riga
+				btnConfermaOrdineAcquisto.setEnabled(selectedRow != -1);
+			}
+		});
+
 		tblFarmaci.getColumnModel().getColumn(1).setCellEditor(new QuantitaCellEditor());
 
 		ControllerCatalogo controllerCatalogo = ControllerCatalogo.getInstance();

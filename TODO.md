@@ -41,7 +41,7 @@
 
 ### Domande da chiedere
 
-1. Nel testing delle funzionalità del controller, si possono usare funzionalità del controller (già testate) per settare le precondizioni del test?
+1. Nel testing delle funzionalità del controller, si possono usare funzionalità del controller (già testate) per settare le precondizioni del test? Ex. per testare visualizzaStoricoOrdini abbiamo usato prima creaOrdine.
 
 1. Nella progettazione della test suite con il metodo del category-partitioning-testing dobbiamo includere solo i test di validazione dell'input? Come facciamo il formalismo tabellare dell'esempio del cinema a gestire le diverse precondizioni? (volendo ad esempio testare il fatto che non ci si può loggare se non si è registrati o che non ci si può registrare se si è già registrati).
 
