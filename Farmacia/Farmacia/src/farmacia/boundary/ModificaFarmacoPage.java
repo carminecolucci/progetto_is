@@ -27,7 +27,7 @@ public class ModificaFarmacoPage extends JFrame {
 	private JButton btnConferma;
 	private JButton btnAnnulla;
 
-	public ModificaFarmacoPage(DTO farmaco) {
+	public ModificaFarmacoPage(JFrame scegliFarmacoModificaPage, DTO farmaco) {
 
 		setTitle(String.format("Modifica farmaco '%s'", farmaco.get("nome")));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -55,6 +55,7 @@ public class ModificaFarmacoPage extends JFrame {
 					controllerCatalogo.modificaFarmaco((int)farmaco.get("id"), prezzo, prescrizione, nome, (int)farmaco.get("scorte"));
 					JOptionPane.showMessageDialog(mainPanel, String.format("Farmaco '%s' modificato correttamente.", nome));
 					dispose();
+					scegliFarmacoModificaPage.dispose();
 				} catch (FarmacoNotFoundException ex) {
 					throw new RuntimeException(ex);
 				}
