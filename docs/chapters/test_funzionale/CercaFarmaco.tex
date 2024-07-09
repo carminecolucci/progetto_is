@@ -1,0 +1,41 @@
+\section{CercaFarmaco}
+
+\subsubsection*{Category Partition Testing}
+
+\begin{table}[!hbp]
+	\centering
+	\footnotesize
+	\begin{tblr}{
+		colspec = XXXXXX,
+		hlines, vlines,
+		row{1} = {font=\bfseries},
+		measure=vbox, stretch=-1
+		}
+		Nome \\
+		\begin{itemize}[leftmargin=*]
+			\item Stringa di caratteri di lunghezza $\leq$ 45
+			\item Stringa di caratteri di lunghezza $>$ 45 \texttt{[ERROR]}
+			\item Stringa di caratteri vuota \texttt{[ERROR]}
+		\end{itemize}
+	\end{tblr}
+\end{table}
+
+\noindent Essendo previsto un solo input, il numero di test da effettuarsi è pari a 3.
+
+\subsubsection*{Test Suite}
+
+\begin{table}[!hbp]
+	\centering
+	\footnotesize
+	\begin{tblr}{
+			colspec = lXXXlXX,
+			hlines, vlines,
+			row{1} = {font=\bfseries},
+			measure=vbox
+		}
+		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-condizioni \\ Attese} \\
+		1 & Nome del farmaco valido & Nome del farmaco valido & - & Nome : Tachipirina & Ricerca effettuata & - \\
+		2 & Nome del farmaco $>$ 45 caratteri & Nome del farmaco $>$ 45 caratteri \texttt{[ERROR]} & - & Nome : ... & Nome del farmaco troppo lungo & - \\
+		3 & Nome del farmaco assente & Nome del farmaco assente \texttt{[ERROR]} & - & Nome : & Inserire il nome di un farmaco & - \\
+	\end{tblr}
+\end{table}
