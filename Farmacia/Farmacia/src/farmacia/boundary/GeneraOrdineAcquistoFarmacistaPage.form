@@ -35,6 +35,7 @@
       <component id="5f34a" class="javax.swing.JButton" binding="btnConfermaOrdineAcquisto">
         <constraints border-constraint="South"/>
         <properties>
+          <enabled value="false"/>
           <text value="Conferma richiesta fornitura"/>
         </properties>
       </component>

@@ -51,6 +51,7 @@
       <component id="5cacc" class="javax.swing.JButton" binding="btnModifica">
         <constraints border-constraint="South"/>
         <properties>
+          <enabled value="false"/>
           <text value="Modifica "/>
         </properties>
       </component>
