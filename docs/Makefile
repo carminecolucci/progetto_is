@@ -2,7 +2,7 @@ run:
 	latexmk -pdf -pvc
 
 build:
-	pdflatex main.tex
+	pdflatex -shell-escape main.tex
 
 clean:
 	latexmk -c
