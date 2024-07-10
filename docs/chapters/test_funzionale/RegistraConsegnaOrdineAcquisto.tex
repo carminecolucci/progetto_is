@@ -1,0 +1,41 @@
+\section{RegistraConsegnaOrdineAcquisto}
+
+\subsubsection*{Category Partition Testing}
+
+\begin{table}[!hbp]
+	\centering
+	\footnotesize
+	\begin{tblr}{
+		colspec = X,
+		hlines, vlines,
+		row{1} = {font=\bfseries},
+		measure=vbox, stretch=-1
+		}
+		Id dell'ordine \\
+		\begin{itemize}[leftmargin=*]
+			\item Stringa di caratteri di lunghezza $\leq$ 45
+			\item Stringa di caratteri di lunghezza $>$ 45 \texttt{[ERROR]}
+			\item Stringa di caratteri vuota \texttt{[ERROR]}
+		\end{itemize}
+	\end{tblr}
+\end{table}
+
+\noindent Essendo previsto un solo input, il numero di test da effettuarsi è pari a 3.
+
+\subsubsection*{Test Suite}
+
+\begin{table}[!hbp]
+	\centering
+	\footnotesize
+	\begin{tblr}{
+			colspec = lXXXXXX,
+			hlines, vlines,
+			row{1} = {font=\bfseries},
+			measure=vbox
+		}
+		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-condizioni \\ Attese} \\
+		1 & Id dell'ordine valido & Id dell'ordine valido & - & Id: 5ea930bc-f0a5-427a-8ca1-f9a2a6146948 & Ordine ritirato & - \\
+		2 & Id $>$ 45 caratteri & Id $>$ 45 caratteri \texttt{[ERROR]} & - & Id: \dots & Id troppo lungo & - \\
+		3 & Id assente & Id assente \texttt{[ERROR]} & - & Id: & Inserire l'id di un ordine & - \\
+	\end{tblr}
+\end{table}
