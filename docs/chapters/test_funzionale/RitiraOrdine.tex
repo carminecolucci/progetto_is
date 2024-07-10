@@ -1,4 +1,4 @@
-\section{CercaFarmaco}
+\section{RitiraOrdine}
 
 \subsubsection*{Category Partition Testing}
 
@@ -6,12 +6,12 @@
 	\centering
 	\footnotesize
 	\begin{tblr}{
-		colspec = X,
+		colspec = XXXXXX,
 		hlines, vlines,
 		row{1} = {font=\bfseries},
 		measure=vbox, stretch=-1
 		}
-		Nome \\
+		idOrdine \\
 		\begin{itemize}[leftmargin=*]
 			\item Stringa di caratteri di lunghezza $\leq$ 45
 			\item Stringa di caratteri di lunghezza $>$ 45 \texttt{[ERROR]}
@@ -34,8 +34,8 @@
 			measure=vbox
 		}
 		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-condizioni \\ Attese} \\
-		1 & Nome del farmaco valido & Nome del farmaco valido & Il farmaco è presente nel catalogo & Nome : Tachipirina & Il farmaco viene mostrato a video & - \\
-		2 & Nome del farmaco $>$ 45 caratteri & Nome del farmaco $>$ 45 caratteri \texttt{[ERROR]} & - & Nome : ... & Nome del farmaco troppo lungo & - \\
-		3 & Nome del farmaco assente & Nome del farmaco assente \texttt{[ERROR]} & - & Nome : & Inserire il nome di un farmaco & - \\
+		1 & ID dell'ordine valido & ID dell'ordine valido & - & ID : 5ea930bc-f0a5-427a-8ca1-f9a2a6146948 & Stato ordine cambiato con successo & - \\
+		2 & ID dell'ordine $>$ 45 caratteri & ID dell'ordine $>$ 45 caratteri \texttt{[ERROR]} & - & ID : ... & ID dell'ordine troppo lungo & - \\
+		3 & ID dell'ordine assente & ID dell'ordine assente \texttt{[ERROR]} & - & ID : & Inserire l'ID di un ordine & - \\
 	\end{tblr}
 \end{table}

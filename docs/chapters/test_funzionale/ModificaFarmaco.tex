@@ -1,0 +1,78 @@
+\section{ModificaFarmaco}
+
+\subsubsection*{Category Partition Testing}
+
+\begin{table}[!hbp]
+	\centering
+	\footnotesize
+	\begin{tblr}{
+		colspec = XXXl,
+		hlines, vlines,
+		row{1} = {font=\bfseries},
+		measure=vbox, stretch=-1
+		}
+		Nome & Prezzo & Prescrizione & Scorte \\
+		\begin{itemize}[leftmargin=*]
+			\item Stringa di caratteri di lunghezza $\leq$ 45
+			\item Stringa di caratteri di lunghezza $>$ 45 \texttt{[ERROR]}
+			\item Stringa di caratteri vuota \texttt{[ERROR]}
+		\end{itemize} &
+		\begin{itemize}[leftmargin=*]
+			\item Numero reale $>0$ (\euro)
+			\item Numero reale $\leq 0$ (\euro) \texttt{[ERROR]}
+		\end{itemize} &
+		\begin{itemize}[leftmargin=*]
+			\item {\texttt{True} (necessaria) / \\ \texttt{False} (non necessaria)}
+		\end{itemize} &
+		\begin{itemize}[leftmargin=*]
+			\item Numero intero $\geq 0 $
+			\item Numero intero $<0$ \texttt{[ERROR]}
+		\end{itemize}
+	\end{tblr}
+\end{table}
+
+\noindent Il numero di test da effettuarsi senza particolari vincoli è: $3 \cdot 2 \cdot 1 \cdot 2 = 12$.
+
+\noindent Introduciamo i vincoli \texttt{[ERROR]}. Il numero di test da eseguire per testare singolarmente i vincoli è 4 (2 per Nome, 1 per Prezzo, 1 per Scorte).
+
+\noindent Il numero di test risultante è 5: $(1 \cdot 1 \cdot 1 \cdot 1) + 4 = 5$.
+
+\subsubsection*{Test Suite}
+
+\begin{table}[!hbp]
+	\centering
+	\footnotesize
+	\begin{tblr}{
+			colspec = lXXXlXX,
+			hlines, vlines,
+			row{1} = {font=\bfseries},
+			measure=vbox
+		}
+		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-condizioni \\ Attese} \\
+		1 &
+		Tutti gli input validi &
+		Nome, Prezzo, Scorte e Prescrizione (sia \texttt{True} che \texttt{False}) validi &
+		Il farmaco è presente nel sistema &
+		{Nome: Tachipirina \\ Prezzo: 11.44 \euro \\ Scorte: 100 \\ Prescrizione: \texttt{boolean}} &
+		Modifica effettuata & Il farmaco viene correttamente modificato \\
+		2 &
+		Nome $>$ 45 caratteri &
+		Nome $>$ 45 caratteri \texttt{[ERROR]}, Prezzo, Scorte e Prescrizione (sia \texttt{True} che \texttt{False}) validi &
+		- &
+		{Nome: \dots \\ Prezzo: 22.00 \euro \\ Scorte: 50 \\ Prescrizione: \texttt{boolean}} &
+		Nome troppo lungo &
+		- \\
+		3 &
+		Nome assente &
+		Nome assente \texttt{[ERROR]}, Prezzo, Scorte e Prescrizione (sia \texttt{True} che \texttt{False}) validi &
+		- &
+		{Nome: \\ Prezzo: 9.99 \euro \\ Scorte: 44 \\ Prescrizione: \texttt{boolean}} &
+		Inserire un nome &
+		- \\
+        4 &
+        Prezzo $\leq 0$ (\euro) & Prezzo $\leq 0$ (\euro) \texttt{[ERROR]}, Nome, Scorte e Prescrizione (sia \texttt{True} che \texttt{False}) validi &
+        - & {Nome: Augmentin \\ Prezzo: -4.00 \euro \\ Scorte: 10 \\ Prescrizione: \texttt{boolean}} & Inserire un prezzo $> 0$ \euro & - \\
+        5 & Scorte $ < 0$ & Scorte $<0$, Nome, Prezzo e Prescrizione (sia \texttt{True} che \texttt{False}) validi & -
+        & {Nome: Neoduplamox \\ Prezzo: 7.50 \euro \\ Scorte: -8 \\ Prescrizione: \texttt{boolean}} & Inserire scorte $ \geq 0 $ & - \\
+	\end{tblr}
+\end{table}
