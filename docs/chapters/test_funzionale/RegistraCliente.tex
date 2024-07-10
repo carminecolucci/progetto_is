@@ -26,6 +26,7 @@
 			\item Stringa di caratteri di lunghezza $\leq$ 45
 			\item Stringa di caratteri di lunghezza $>$ 45 \texttt{[ERROR]}
 			\item Stringa di caratteri vuota \texttt{[ERROR]}
+			\item Stringa di caratteri già presente nel sistema \texttt{[ERROR]}
 		\end{itemize} &
 		\begin{itemize}[leftmargin=*]
 			\item Stringa di caratteri di lunghezza compresa tra 8 e 45
@@ -36,6 +37,7 @@
 			\item Stringa di caratteri di lunghezza $\leq$ 45
 			\item Stringa di caratteri di lunghezza $>$ 45 \texttt{[ERROR]}
 			\item Stringa di caratteri vuota \texttt{[ERROR]}
+			\item Stringa di caratteri già presente nel sistema \texttt{[ERROR]}
 		\end{itemize} &
 		\begin{itemize}[leftmargin=*]
 			\item Data con formato valido (gg-mm-aaaa)
@@ -44,11 +46,11 @@
 	\end{tblr}
 \end{table}
 
-\noindent Il numero di test da effettuarsi senza particolari vincoli è: $3 \cdot 3 \cdot 3 \cdot 3 \cdot 3 \cdot 2 = 486$.
+\noindent Il numero di test da effettuarsi senza particolari vincoli è: $3 \cdot 3 \cdot 4 \cdot 3 \cdot 4 \cdot 2 = 864$.
 
-\noindent Introduciamo i vincoli \texttt{[ERROR]}. Il numero di test da eseguire per testare singolarmente i vincoli è 11 (2 per Nome, 2 per Cognome, 2 per Username, 2 per Password, 2 per Email, 1 per DataNascita).
+\noindent Introduciamo i vincoli \texttt{[ERROR]}. Il numero di test da eseguire per testare singolarmente i vincoli è 13 (2 per Nome, 2 per Cognome, 3 per Username, 2 per Password, 3 per Email, 1 per DataNascita).
 
-\noindent Il numero di test risultante è 12: $(1 \cdot 1 \cdot 1 \cdot 1 \cdot 1 \cdot 1) + 11 = 12$.
+\noindent Il numero di test risultante è 14: $(1 \cdot 1 \cdot 1 \cdot 1 \cdot 1 \cdot 1) + 13 = 14$.
 
 \subsubsection*{Test Suite}
 
@@ -157,6 +159,20 @@
 		- &
 		{Nome: Mario \\ Cognome: Rossi \\ Username: mariorossi \\ Password: miapassword \\ Email: mariorossi@gmail.com \\ DataNascita: 1989-06-22} &
 		Formato data non valido &
+		- \\
+		13 &
+		Username già presente nel sistema &
+		Username già esistente \texttt{[ERROR]}, Nome, Cognome, Password, DataNascita ed Email validi &
+		Username "pippo2002" già presente nel sistema &
+		{Nome: Pippo \\ Cognome: Baudo \\ Username: pippo2002 \\ Password: miapassword \\ Email: pippo@gmail.com \\ DataNascita: 1989-06-22} &
+		Username già utilizzato &
+		- \\
+		14 &
+		Email già presente nel sistema &
+		Email già esistente \texttt{[ERROR]}, Nome, Cognome, Password, DataNascita e Username validi &
+		Email "pippo@gmail.com" già presente nel sistema &
+		{Nome: Pippo \\ Cognome: Baudo \\ Username: pippo2002 \\ Password: miapassword \\ Email: pippo@gmail.com \\ DataNascita: 1989-06-22} &
+		Email già utilizzata &
 		- \\
 	\end{tblr}
 \end{table}
