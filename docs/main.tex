@@ -50,6 +50,18 @@
 % \DefTblrTemplate{conthead-text}{empty}{}
 % \SetTblrTemplate{conthead-text}{empty}
 
+% This command includes an exported pdf table in the document, if it exists. Otherwise it includes table.tex.
+\newcommand{\IncludeTable}[1]{
+	\IfFileExists{#1.pdf}{%
+		\begin{figure}[!hbp]%
+			\centering%
+			\includegraphics[width=\linewidth]{#1.pdf}%
+		\end{figure}%
+	}{
+		\input{#1}%
+	}
+}
+
 \title{Titolo}
 \author{Autori}
 
@@ -58,11 +70,11 @@
 
 \tableofcontents
 
-% \input{chapters/specifiche_informali.tex}
-% \input{chapters/requisiti.tex}
-\input{chapters/usecases.tex}
-\input{chapters/testing_funzionale.tex}
-\input{chapters/progettazione.tex}
-\input{chapters/implementazione.tex}
+% \include{chapters/specifiche_informali}
+% \include{chapters/requisiti}
+\include{chapters/usecases}
+\include{chapters/testing_funzionale}
+\include{chapters/progettazione}
+\include{chapters/implementazione}
 
 \end{document}

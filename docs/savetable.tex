@@ -1,4 +1,8 @@
-\documentclass{article}
+% To compile a table to a standalone pdf:
+% pdflatex savetable.tex
+% pdfcrop savetable.pdf
+\documentclass{book}
+\usepackage[a4paper,top=2cm,bottom=2cm,left=2cm,right=2cm,marginparwidth=1.75cm]{geometry}
 \usepackage[dvipsnames]{xcolor}
 \usepackage{tabularray}
 \UseTblrLibrary{varwidth}
@@ -13,5 +17,5 @@
 }
 \pagestyle{empty}
 \begin{document}
-\input{chapters/usecases/EliminaFarmaco.tex}
+\input{chapters/usecases/VisualizzaStoricoOrdini}
 \end{document}
