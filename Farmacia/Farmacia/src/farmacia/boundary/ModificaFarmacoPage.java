@@ -36,7 +36,7 @@ public class ModificaFarmacoPage extends JFrame {
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setContentPane(mainPanel);
-		spnPrezzo.setModel(new SpinnerNumberModel(0,0,100,0.1));
+		spnPrezzo.setModel(new SpinnerNumberModel((float)farmaco.get("prezzo"),0,100,0.1));
 
 		JSpinner.NumberEditor editorPrezzo = (JSpinner.NumberEditor) spnPrezzo.getEditor();
 		DefaultFormatter formatterPrezzo = (DefaultFormatter)editorPrezzo.getTextField().getFormatter();
