@@ -1,0 +1,20 @@
+\begin{table}[!hbp]
+	\centering
+	\footnotesize
+	\begin{tblr}{
+			colspec = lXXXXX,
+			hlines, vlines,
+			row{1} = {font=\bfseries},
+			measure=vbox
+		}
+		{Test \\ Case \\ ID} & Descrizione & {Cammino \\ Coperto} & Pre-condizioni & Input & Esito \\
+		1 & Ordine vuoto & 0-1 & -- & {[]} & Viene lanciata l'eccezione OrderCreationFailedException("Ordine vuoto") \\
+		2 & Scorte insufficienti & 0-2 & {Sono presenti 10 scorte del farmaco `Tachipirina'} & {[($\langle$idTachipirina$\rangle$, 15)]} & Viene lanciata l'eccezione OrderCreationFailedException("Ordine non creato per mancanza scorte") \\
+		3 & Ordine contempraneamente vuoto e non vuoto & 0-2-3-4-9-11 & -- & [] -- & Cammino non percorribile \\
+		4 & Ordine vuoto, viene generato un ordine d'acquisto &0-2-3-4-9-10-11 & -- & {[]} & Cammino non percorribile \\
+		5 & Ordine creato, senza generare un ordine d'acquisto & 0-2-3-4-5-6-8-4-9-11 & {Sono presenti 10 scorte del farmaco `Tachipirina'} & {[($\langle$idTachipirina$\rangle$, 5)]} & Viene creato un ordine \\
+		6 & Ordine creato, si genera un ordine d'acquisto &0-2-3-4-5-6-7-8-4-9-10-11 & {Sono presenti 10 scorte del farmaco `Tachipirina'} & {[($\langle$idTachipirina$\rangle$, 10)]} & Ordine creato, parte una richiesta di fornitura per 50 `Tachipirina'
+	\end{tblr}
+\end{table}
+
+L'id dei farmaci viene scelto dal DB all'atto dell'aggiunta (indice autoincrementale). Pertanto, nel test l'id del farmaco viene ricavato con una funzione esterna.

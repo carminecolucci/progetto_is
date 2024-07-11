@@ -1,4 +1,7 @@
 public String creaOrdine(Map<Integer, Integer> farmaciQuantita) throws OrderCreationFailedException {
+	if (farmaciQuantita.isEmpty())
+		throw new OrderCreationFailedException("Ordine vuoto");
+
 	EntityCatalogo catalogo = EntityCatalogo.getInstance();
 	if (!catalogo.checkScorte(farmaciQuantita)) {
 		throw new OrderCreationFailedException("Ordine non creato per mancanza scorte");

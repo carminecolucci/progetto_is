@@ -1,41 +1,43 @@
 \begin{tikzpicture}[
     node/.style={circle, minimum height=20pt,text centered, draw=black, fill=purple!30},
-    try/.style={rectangle, rounded corners=5, dashed, inner sep=12pt, draw=blue},
-    node distance=0.75cm,
-    arrow/.style={->,>=stealth},
-	baseline={(current bounding box.north)}
+    try/.style={rectangle, rounded corners=5, dashed, inner sep=8pt, draw=blue},
+    node distance=0.8cm,
+    arrow/.style={->,>=stealth}
 ]
-\node (start) [node] {$\text{inizio}$};
+\node (start) [node] {inizio};
 \node (0) [node, below=of start] {$0$};
 \node (1) [node, below right=of 0] {$1$};
+\node (2) [node, below left=of 0] {$2$};
 % below left=y and x distances
-\node (2) [node, below left=2cm and 1cm of 0] {$2$};
-\node (3) [node, below left=of 2] {$3$};
-\node (4) [node, below=of 3] {$4$};
+\node (3) [node, below left=1.5cm and 1cm of 2] {$3$};
+\node (4) [node, below left=of 3] {$4$};
 \node (5) [node, below=of 4] {$5$};
-\node (6) [node, below right=of 5] {$6$};
-\node (7) [node, below left=of 6] {$7$};
-\node (8) [node, right=of 6] {$8$};
-\node (9) [node, below right=of 8] {$9$};
-\node (10) [node, below left=of 9] {$10$};
-\node (try) [try, fit=(2) (3) (4) (5) (6) (7) (8) (9) (10), shift={(-0.25, -0.1)}] {};
-\node [anchor=north east, inner sep=5pt, text=blue] at (try.north east) {$\text{try}$};
-\node (end) [node, below=1.5cm of 10] {$\text{fine}$};
+\node (6) [node, below=of 5] {$6$};
+\node (7) [node, below right=of 6] {$7$};
+\node (8) [node, below left=of 7] {$8$};
+\node (9) [node, right=1.2cm of 6] {$9$};
+\node (10) [node, below right=of 9] {$10$};
+\node (11) [node, below left=of 10] {$11$};
+\node (try) [try, fit=(3) (4) (5) (6) (7) (8) (9) (10) (11), shift={(-0.22, -0.1)}] {};
+\node [anchor=north east, inner sep=5pt, text=blue] at (try.north east) {try};
+\node (end) [node, below right=1.5cm and 0.6cm of 11] {fine};
 \draw[arrow] (start) -- (0);
 \draw[arrow] (0) -- (1);
-\draw[arrow] (0) to [bend right=15] (2);
+\draw[arrow] (0) -- (2);
 \draw[arrow] (2) -- (3);
+\draw[arrow] (2) -- ++(1.4, 0) |- (end);
 \draw[arrow] (3) -- (4);
 \draw[arrow] (4) -- (5);
 \draw[arrow] (5) -- (6);
-\draw[arrow] (5) -- (7);
-\draw[arrow] (7) to [bend left] (3);
-\draw[arrow] (3) to [bend left] (8);
 \draw[arrow] (6) -- (7);
-\draw[arrow] (8) -- (9);
-\draw[arrow] (8) -- (10);
+\draw[arrow] (7) -- (8);
+\draw[arrow] (8) to [bend left=25] (4);
+\draw[arrow] (4) -- (9);
+\draw[arrow] (6) -- (8);
 \draw[arrow] (9) -- (10);
-\draw[arrow] (10) -- (end);
-\draw[arrow] (1) -- ++(1, 0) |- (end);
+\draw[arrow] (9) -- (11);
+\draw[arrow] (10) -- (11);
+\draw[arrow] (11) -- (end);
+\draw[arrow] (1) |- (end);
 \draw[arrow] (try) to [bend right=20] (end) {};
 \end{tikzpicture}
