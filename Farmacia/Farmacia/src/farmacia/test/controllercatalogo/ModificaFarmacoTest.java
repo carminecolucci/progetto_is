@@ -24,35 +24,43 @@ public class ModificaFarmacoTest {
 	}
 
 	@AfterClass
-	public static void tearDownAfter() throws DBException {
-		FarmacoDAO.deleteFarmaco("SuperAulin");
+	public static void tearDown() throws DBException {
+		FarmacoDAO.deleteFarmaco("SuperAulin1");
+		FarmacoDAO.deleteFarmaco("SuperAulin2");
 	}
 
 	@Test
-	public void testModificaFarmacoSuccess() throws FarmacoCreationFailedException, FarmacoNotFoundException {
+	public void testModificaFarmacoPrescrizioneTrueSuccess() throws FarmacoCreationFailedException, FarmacoNotFoundException {
 		float prezzo = 10;
-		boolean prescrizione = false;
-		String nome = "Aulin";
+		boolean prescrizione = true;
+		String nome = "Aulin1";
 		int scorte = 50;
 		controllerCatalogo.aggiungiFarmaco(prezzo, prescrizione, nome, scorte);
 		// TODO: rifare il test con codice più pulito, farsi restituire i farmaci con visualizzaCatalogo come se stessimo usando la GUI
-		controllerCatalogo.modificaFarmaco((int)controllerCatalogo.cercaFarmaco(nome).get("id"), 20, true, "SuperAulin", 50);
-		DTO dto = controllerCatalogo.cercaFarmaco("SuperAulin");
+		controllerCatalogo.modificaFarmaco((int)controllerCatalogo.cercaFarmaco(nome).get("id"), 20, false, "SuperAulin1", 50);
+		DTO dto = controllerCatalogo.cercaFarmaco("SuperAulin1");
 		assertTrue((float)dto.get("prezzo") == 20
-			&& (boolean) dto.get("prescrizione")
-			&& "SuperAulin".equals(dto.get("nome"))
-			&& (int)dto.get("scorte") == 50
+				&& !(boolean) dto.get("prescrizione")
+				&& "SuperAulin1".equals(dto.get("nome"))
+				&& (int)dto.get("scorte") == 50
 		);
 	}
 
 	@Test
-	public void testModificaFarmacoCheNonEsiste() {
-		boolean esito = true;
-		try {
-			controllerCatalogo.modificaFarmaco((int)controllerCatalogo.cercaFarmaco("FarmacoNonEsistente").get("id"), 20, true, "SuperAulin", 50);
-		} catch (FarmacoNotFoundException e) {
-			esito = false;
-		}
-		assertFalse(esito);
+	public void testModificaFarmacoPrescrizioneFalseSuccess() throws FarmacoCreationFailedException, FarmacoNotFoundException {
+		float prezzo = 10;
+		boolean prescrizione = false;
+		String nome = "Aulin2";
+		int scorte = 50;
+		controllerCatalogo.aggiungiFarmaco(prezzo, prescrizione, nome, scorte);
+		// TODO: rifare il test con codice più pulito, farsi restituire i farmaci con visualizzaCatalogo come se stessimo usando la GUI
+		controllerCatalogo.modificaFarmaco((int)controllerCatalogo.cercaFarmaco(nome).get("id"), 20, true, "SuperAulin2", 50);
+		DTO dto = controllerCatalogo.cercaFarmaco("SuperAulin2");
+		assertTrue((float)dto.get("prezzo") == 20
+			&& (boolean) dto.get("prescrizione")
+			&& "SuperAulin2".equals(dto.get("nome"))
+			&& (int)dto.get("scorte") == 50
+		);
 	}
+
 }

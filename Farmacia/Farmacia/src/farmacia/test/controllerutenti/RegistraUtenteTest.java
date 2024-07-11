@@ -47,7 +47,7 @@ public class RegistraUtenteTest {
 	}
 
 	@Test
-	public void testRegistraClienteGiaRegistrato() throws ParseException {
+	public void testRegistraClienteGiaRegistratoUsername() throws ParseException {
 		String dateString = "2023-07-06";
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		java.util.Date date = formatter.parse(dateString);
@@ -61,9 +61,34 @@ public class RegistraUtenteTest {
 		}
 		assertTrue(esito);
 
-		// provo a registrare l'utente per la seconda volta
+		// provo a registrare l'utente per la seconda volta con lo stesso username, con email diversa
+		try {
+			controllerUtenti.registraCliente("user", "MiaPassword", "Utente", "Di Prova", dataNascita, "pippo@gmail.com");
+		} catch (RegistrationFailedException | DBException e) {
+			System.err.println(e.getMessage());
+			esito = false;
+		}
+		assertFalse(esito);
+	}
+
+	@Test
+	public void testRegistraClienteGiaRegistratoEmail() throws ParseException {
+		String dateString = "2023-07-06";
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		java.util.Date date = formatter.parse(dateString);
+		Date dataNascita = new Date(date.getTime());
+		boolean esito = true;
 		try {
 			controllerUtenti.registraCliente("user", "MiaPassword", "Utente", "Di Prova", dataNascita, "clienteeee@gmail.com");
+		} catch (RegistrationFailedException | DBException e) {
+			System.err.println(e.getMessage());
+			esito = false;
+		}
+		assertTrue(esito);
+
+		// provo a registrare l'utente per la seconda volta con la stessa email, con username diverso
+		try {
+			controllerUtenti.registraCliente("userNuovo", "MiaPassword", "Utente", "Di Prova", dataNascita, "clienteeee@gmail.com");
 		} catch (RegistrationFailedException | DBException e) {
 			System.err.println(e.getMessage());
 			esito = false;

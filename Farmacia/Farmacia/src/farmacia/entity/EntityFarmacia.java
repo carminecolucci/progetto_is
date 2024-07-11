@@ -134,9 +134,11 @@ public class EntityFarmacia {
 	 * @throws FarmacoNotFoundException se uno dei farmaci all'interno dell'ordine di acquisto non esiste
 	 */
 	public void aggiornaOrdineAcquisto(String idOrdine) throws OrderNotFoundException, FarmacoNotFoundException {
+		boolean trovato = false;
 		for (EntityOrdineAcquisto ordineAcquisto : ordiniAcquisto) {
 			if (ordineAcquisto.getId().equals(idOrdine)) {
 				try {
+					trovato = true;
 					ordineAcquisto.aggiorna();
 					for (Map.Entry<EntityFarmaco, Integer> entry : ordineAcquisto.getQuantitaFarmaci().entrySet()) {
 						EntityCatalogo.getInstance().incrementaScorte(entry.getKey().getId(), entry.getValue());
@@ -145,6 +147,9 @@ public class EntityFarmacia {
 					throw new OrderNotFoundException(e.getMessage());
 				}
 			}
+		}
+		if (!trovato) {
+			throw new OrderNotFoundException("Ordine di acquisto non trovato");
 		}
 	}
 }
