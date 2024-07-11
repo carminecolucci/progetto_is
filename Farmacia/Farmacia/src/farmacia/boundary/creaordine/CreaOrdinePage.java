@@ -6,8 +6,12 @@ import farmacia.dto.DTO;
 import farmacia.exceptions.OrderCreationFailedException;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import java.awt.BorderLayout;
 import java.util.*;
+import java.awt.Component;
 
 public class CreaOrdinePage extends JFrame {
 	private final JTable tblFarmaciOrdine;
@@ -19,11 +23,41 @@ public class CreaOrdinePage extends JFrame {
 		setSize(800, 400);
 		setLocationRelativeTo(null);
 
-		CustomTableModel model = new CustomTableModel(new Object[][]{}, new String[]{"Nome", "Prezzo", "Prescrizione", "Possiedi la prescrizione?", "Quantità"});
+		DefaultTableModel model = new DefaultTableModel(new Object[][]{}, new String[]{"Nome", "Prezzo", "Prescrizione", "Possiedi la prescrizione?", "Quantità"}) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				if (column == 4)
+					return true;
+				if (column == 3 ) {
+					return !"-".equals((String) getValueAt(row, column));
+				}
+				return false;
+			}
+		};
 
 		tblFarmaciOrdine = new JTable(model);
-		tblFarmaciOrdine.getColumnModel().getColumn(3).setCellRenderer(new CheckBoxRenderer());
-		tblFarmaciOrdine.getColumnModel().getColumn(3).setCellEditor(new CheckBoxEditor());
+
+		String[] options = {"Sì", "No"};
+		JComboBox<String> comboBox = new JComboBox<>(options);
+		comboBox.setEditable(false);
+
+		TableColumn comboBoxColumn = tblFarmaciOrdine.getColumnModel().getColumn(3);
+
+		comboBoxColumn.setCellEditor(new DefaultCellEditor(comboBox));
+		comboBoxColumn.setCellRenderer(new DefaultTableCellRenderer() {
+			@Override
+			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+				if ("-".equals(value)) {
+					setText("-");
+					setEnabled(false);
+				} else {
+					setText((String) value);
+					setEnabled(true);
+				}
+				return this;
+			}
+		});
+
 
 		JScrollPane scrollPane = new JScrollPane(tblFarmaciOrdine);
 		getContentPane().add(scrollPane);
@@ -40,13 +74,14 @@ public class CreaOrdinePage extends JFrame {
 			if (!((boolean) farmaco.get("prescrizione"))){
 				prescrizioneNecessaria = "-";
 				model.addRow(new Object[]{farmaco.get("nome"), farmaco.get("prezzo"),
-					prescrizioneNecessaria, farmaco.get("possiediPrescrizione"), 0});
-				model.toggleCellEditability(model.getRowCount() - 1, 3);
+						prescrizioneNecessaria, "-", 0});
 			}
 			else{
 				prescrizioneNecessaria = "Necessaria";
+				JComboBox<String> comboBoxNecessaria = new JComboBox<>(new String[]{"Sì", "No"});
+				comboBoxNecessaria.setEditable(false);
 				model.addRow(new Object[]{farmaco.get("nome"), farmaco.get("prezzo"),
-						prescrizioneNecessaria, farmaco.get("possiediPrescrizione"), 0});
+						prescrizioneNecessaria, "No", 0});
 			}
 		}
 		JPanel buttonPanel = new JPanel();
@@ -55,8 +90,6 @@ public class CreaOrdinePage extends JFrame {
 		JButton btnConferma = new JButton("Conferma l'ordine");
 		JButton btnAnnulla = new JButton("Annulla l'ordine");
 
-
-		//TODO: Risolvere problema per cui la checkbox non viene correttamente letta se il suo stato viene cambiato più volte
 		buttonPanel.add(btnConferma, BorderLayout.EAST);
 		buttonPanel.add(btnAnnulla, BorderLayout.WEST);
 		add(buttonPanel, BorderLayout.SOUTH);
@@ -67,12 +100,12 @@ public class CreaOrdinePage extends JFrame {
 			for (int row = 0; row < tblFarmaciOrdine.getRowCount(); row++) {
 				String nome = (String)tblFarmaciOrdine.getValueAt(row, 0);
 				String necessitaPrescrizione = (String)tblFarmaciOrdine.getValueAt(row, 2);
-				Boolean possiediPrescrizione = tblFarmaciOrdine.getValueAt(row, 3) != null;
+				String possiediPrescrizione = (String) model.getValueAt(row, 3);
 				Integer quantita = (Integer)tblFarmaciOrdine.getValueAt(row, 4);
 				if (quantita > 0) {
 					numeroFarmaci += 1;
 					if (necessitaPrescrizione.equals("Necessaria")) {
-						if (possiediPrescrizione)
+						if (possiediPrescrizione.equals("Sì"))
 							farmaciOrdine.put(listId.get(row), quantita);
 						else {
 							JOptionPane.showMessageDialog(this, String.format("Ordine annullato: non hai la prescrizione per il farmaco '%s'.", nome), "Errore", JOptionPane.ERROR_MESSAGE);
@@ -102,8 +135,6 @@ public class CreaOrdinePage extends JFrame {
 		btnAnnulla.addActionListener(e -> {
 			dispose();
 		});
-
-
 
 		setVisible(true);
 	}

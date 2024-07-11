@@ -1,6 +1,5 @@
 package farmacia.boundary;
 
-import farmacia.boundary.creaordine.CustomTableModel;
 import farmacia.controller.ControllerCatalogo;
 import farmacia.dto.DTO;
 

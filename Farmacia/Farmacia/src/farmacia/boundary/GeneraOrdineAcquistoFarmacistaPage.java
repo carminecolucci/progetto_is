@@ -1,6 +1,5 @@
 package farmacia.boundary;
 
-import farmacia.boundary.creaordine.CustomTableModel;
 import farmacia.boundary.creaordine.QuantitaCellEditor;
 import farmacia.controller.ControllerCatalogo;
 import farmacia.controller.ControllerOrdini;
@@ -10,8 +9,6 @@ import farmacia.exceptions.OrderCreationFailedException;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

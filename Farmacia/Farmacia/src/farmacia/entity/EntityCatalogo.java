@@ -127,7 +127,7 @@ public class EntityCatalogo {
 	 */
 	public EntityFarmaco cercaFarmaco(String nome) throws FarmacoNotFoundException {
 		for (EntityFarmaco farmaco : farmaci) {
-			if (farmaco.getNome().equals(nome)) {
+			if (farmaco.getNome().equalsIgnoreCase(nome)) {
 				return farmaco;
 			}
 		}

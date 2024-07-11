@@ -26,7 +26,6 @@ public class RegistraRitiroOrdineClientePage extends JFrame {
 		setLocationRelativeTo(null);
 		setContentPane(mainPanel);
 
-
 		DefaultTableModel tableModel = new DefaultTableModel(new Object[][]{}, new String[]{"ID", "Username cliente", "Data di creazione", "Totale da pagare"}) {
 			@Override
 			public boolean isCellEditable(int row, int column) {

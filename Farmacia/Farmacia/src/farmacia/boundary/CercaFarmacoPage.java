@@ -33,6 +33,7 @@ public class CercaFarmacoPage extends JFrame {
 		FarmaciTableModel modelRicerca = new FarmaciTableModel();
 
 		btnRicerca.addActionListener(e -> {
+			modelRicerca.setRowCount(0);
 			String nomeFarmaco = txtFarmaco.getText();
 			if (!nomeFarmaco.isEmpty()) {
 				try {
