@@ -35,7 +35,7 @@
 			measure=vbox
 		}
 		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-condizioni \\ Attese} \\
-		1 & Id dell'ordine valido & Id dell'ordine valido & - & Id: 5ea930bc-f0a5-427a-8ca1-f9a2a6146948 & Ordine ritirato & Lo stato dell'ordine è stato cambiato correttamente \\
+		1 & Id dell'ordine valido & Id dell'ordine valido & - & Id: 5ea930bc-f0a5-427a-8ca1-f9a2a6146948 & Ordine ritirato & Lo stato dell'ordine è stato cambiato correttamente e le scorte in magazzino sono state correttamente incrementate \\
 		2 & Id $>$ 45 caratteri & Id $>$ 45 caratteri \texttt{[ERROR]} & - & Id: \dots & Id troppo lungo & - \\
 		3 & Id assente & Id assente \texttt{[ERROR]} & - & Id: & Inserire l'id di un ordine & - \\
 		4 & Id inesistente & Id inesistente \texttt{[ERROR]} & Non esiste un farmaco con id "5ea930bc-f0a5-427a-8ca1-f9a2a6146948" & Id: 5ea930bc-f0a5-427a-8ca1-f9a2a6146948 & L'ordine non esiste & - \\

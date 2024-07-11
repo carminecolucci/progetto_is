@@ -1,0 +1,37 @@
+\section{GeneraOrdineAcquistoFarmacista}
+
+\begin{table}[!hbp]
+	\centering
+	\footnotesize
+	\begin{tblr}{
+		colspec = XXXl,
+		hlines, vlines,
+		row{1} = {font=\bfseries},
+		measure=vbox, stretch=-1
+		}
+		Farmaci-Quantità \\
+		\begin{itemize}[leftmargin=*]
+			\item Lista di coppie (nomeFarmaco, quantità) non vuota, in cui per ogni nomeFarmaco esiste un corrispondente farmaco nel sistema.
+			\item Lista vuota \texttt{[ERROR]}
+		\end{itemize}
+	\end{tblr}
+\end{table}
+
+\noindent Essendo previsto un solo input, il numero di test da effettuarsi è pari a 2.
+
+\subsubsection*{Test Suite}
+
+\begin{table}[!hbp]
+	\centering
+	\footnotesize
+	\begin{tblr}{
+			colspec = lXXXlXX,
+			hlines, vlines,
+			row{1} = {font=\bfseries},
+			measure=vbox
+		}
+		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-condizioni \\ Attese} \\
+		1 & Ordine valido & Farmaci-Quantità valido & Esistono nel sistema i farmaci 'Tachipirina' e 'Fluifort' & {[('Tachipirina', 5),\\ ('Fluifort', 10)]} & Ordine di acquisto generato & Un ordine di acquisto viene correttamente creato \\
+		2 & Ordine vuoto & Lista vuota \texttt{[ERROR]} & - & - & Non puoi creare un ordine vuoto & - \\
+	\end{tblr}
+\end{table}
