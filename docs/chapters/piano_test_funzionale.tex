@@ -1,0 +1,48 @@
+\chapter{Piano di Test Funzionale}
+
+% \tiny
+% \scriptsize
+% \footnotesize
+% \small
+% \normalsize
+% \large
+% \Large
+% \LARGE
+% \huge
+% \Huge
+
+% Ordine dei casi d'uso
+% RegistraCliente 					[X]
+% LoginUtente						[X] (anche se non è un caso d'uso)
+% VisualizzaCatalogo
+% AggiungiFarmaco 					[X]
+% CercaFarmaco 						[X]
+% ModificaFarmaco 					[X]
+% EliminaFarmaco 					[X]
+% VisualizzaOrdiniAcquisto
+% RegistraConsegnaOrdineAcquisto	[X]
+% VisualizzaOrdiniFarmacia
+% RitiraOrdine						[X]
+% VisualizzaStoricoOrdini
+% CreaOrdine						[X] (GeneraOrdineAcquisto lo infiliamo nelle postcondizioni di questo)
+% GeneraOrdineAcquistoFarmacista	[X]
+% GeneraReport						[ ]
+
+\input{chapters/piano_test_funzionale/RegistraCliente.tex}
+\pagebreak
+\input{chapters/piano_test_funzionale/LoginUtente.tex}
+\input{chapters/piano_test_funzionale/CercaFarmaco.tex}
+\input{chapters/piano_test_funzionale/ModificaFarmaco.tex}
+\input{chapters/piano_test_funzionale/AggiungiFarmaco.tex}
+\input{chapters/piano_test_funzionale/EliminaFarmaco.tex}
+\vfill
+\pagebreak
+\input{chapters/piano_test_funzionale/RegistraConsegnaOrdineAcquisto.tex}
+% TODO: GeneraReport qui, e togliere le 2 righe qua sotto
+\vfill
+\pagebreak
+\input{chapters/piano_test_funzionale/RitiraOrdine.tex}
+\input{chapters/piano_test_funzionale/GeneraOrdineAcquistoFarmacista.tex}
+\vfill
+\pagebreak
+\input{chapters/piano_test_funzionale/CreaOrdine.tex}

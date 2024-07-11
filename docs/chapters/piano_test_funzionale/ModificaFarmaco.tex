@@ -13,10 +13,10 @@
 		}
 		Nome & Prezzo & Prescrizione & Scorte \\
 		\begin{itemize}[leftmargin=*]
-			\item Stringa di caratteri di lunghezza $\leq$ 45
-			\item Stringa di caratteri di lunghezza $>$ 45 \texttt{[ERROR]}
-			\item Stringa di caratteri vuota \texttt{[ERROR]}
-			\item Stringa di caratteri non presente nel sistema \texttt{[ERROR]}
+			\item Stringa di lunghezza $\leq$ 45
+			\item Stringa di lunghezza $>$ 45 \texttt{[ERROR]}
+			\item Stringa vuota \texttt{[ERROR]}
+			\item Stringa non presente nel sistema \texttt{[ERROR]}
 		\end{itemize} &
 		\begin{itemize}[leftmargin=*]
 			\item Numero reale $>0$ (\euro)
@@ -56,6 +56,19 @@
 		Il farmaco è presente nel sistema &
 		{Nome: Tachipirina \\ Prezzo: 11.44 \euro \\ Scorte: 100 \\ Prescrizione: \texttt{True}} &
 		Modifica effettuata & Il farmaco viene correttamente modificato \\
+	\end{tblr}
+\end{table}
+
+\begin{table}[!ht]
+	\centering
+	\footnotesize
+	\begin{tblr}{
+			colspec = lXXXlXX,
+			hlines, vlines,
+			row{1} = {font=\bfseries},
+			measure=vbox
+		}
+		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-condizioni \\ Attese} \\
 		2 &
 		Tutti gli input validi, prescrizione \texttt{False} &
 		Nome, Prezzo, Scorte e Prescrizione (\texttt{False}) validi &
@@ -65,27 +78,27 @@
 		3 &
 		Nome $>$ 45 caratteri &
 		Nome $>$ 45 caratteri \texttt{[ERROR]}, Prezzo, Scorte e Prescrizione (sia \texttt{True} che \texttt{False}) validi &
-		- &
+		--- &
 		{Nome: \dots \\ Prezzo: 22.00 \euro \\ Scorte: 50 \\ Prescrizione: \texttt{boolean}} &
 		Nome troppo lungo &
-		- \\
+		-- \\
 		4 &
 		Nome assente &
 		Nome assente \texttt{[ERROR]}, Prezzo, Scorte e Prescrizione (sia \texttt{True} che \texttt{False}) validi &
-		- &
+		--- &
 		{Nome: \\ Prezzo: 9.99 \euro \\ Scorte: 44 \\ Prescrizione: \texttt{boolean}} &
 		Inserire un nome &
-		- \\
+		-- \\
         5 &
         Prezzo $\leq 0$ (\euro) & Prezzo $\leq 0$ (\euro) \texttt{[ERROR]}, Nome, Scorte e Prescrizione (sia \texttt{True} che \texttt{False}) validi &
-        - & {Nome: Augmentin \\ Prezzo: -4.00 \euro \\ Scorte: 10 \\ Prescrizione: \texttt{boolean}} & Inserire un prezzo $> 0$ \euro & - \\
+        --- & {Nome: Augmentin \\ Prezzo: -4.00 \euro \\ Scorte: 10 \\ Prescrizione: \texttt{boolean}} & Inserire un prezzo $> 0$ \euro & -- \\
         6 & Scorte $ < 0$ & Scorte $<0$, Nome, Prezzo e Prescrizione (sia \texttt{True} che \texttt{False}) validi & -
-        & {Nome: Neoduplamox \\ Prezzo: 7.50 \euro \\ Scorte: -8 \\ Prescrizione: \texttt{boolean}} & Inserire scorte $ \geq 0 $ & - \\
+        & {Nome: Neoduplamox \\ Prezzo: 7.50 \euro \\ Scorte: -8 \\ Prescrizione: \texttt{boolean}} & Inserire scorte $ \geq 0 $ & -- \\
 		7 &
 		Il nome del farmaco non esiste &
 		Nome non presente nel sistema \texttt{[ERROR]}, Prezzo, Scorte e Prescrizione validi &
-		Il farmaco "Tachipirina" non esiste nel sistema &
+		Il farmaco ``Tachipirina'' non esiste nel sistema &
 		{Nome: Tachipirina \\ Prezzo: 11.44 \euro \\ Scorte: 100 \\ Prescrizione: \texttt{False}} &
-		Il farmaco non esiste & - \\
+		Il farmaco non esiste & -- \\
 	\end{tblr}
 \end{table}
