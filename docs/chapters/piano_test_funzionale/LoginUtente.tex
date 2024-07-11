@@ -13,15 +13,15 @@
 		}
 		Username & Password \\
 		\begin{itemize}[leftmargin=*]
-			\item Stringa di caratteri di lunghezza $\leq$ 45
-			\item Stringa di caratteri di lunghezza $>$ 45 \texttt{[ERROR]}
-			\item Stringa di caratteri vuota \texttt{[ERROR]}
+			\item Stringa di lunghezza $\leq$ 45
+			\item Stringa di lunghezza $>$ 45 \texttt{[ERROR]}
+			\item Stringa vuota \texttt{[ERROR]}
 		\end{itemize} &
 		\begin{itemize}[leftmargin=*]
-			\item Stringa di caratteri di lunghezza compresa tra 8 e 45 e corrispondente alla Password memorizzate per l'utente che cerca di effettuare il login
-			\item Stringa di caratteri di lunghezza $<$ 8 \texttt{[ERROR]}
-			\item Stringa di caratteri di lunghezza $>$ 45 \texttt{[ERROR]}
-			\item Stringa di caratteri non corrispondente alla Password memorizzata per l'utente che cerca di effettuare il login \texttt{[ERROR]}
+			\item Stringa di lunghezza compresa tra 8 e 45 e corrispondente alla Password memorizzate per l'utente che cerca di effettuare il login
+			\item Stringa di lunghezza $<$ 8 \texttt{[ERROR]}
+			\item Stringa di lunghezza $>$ 45 \texttt{[ERROR]}
+			\item Stringa non corrispondente alla Password memorizzata per l'utente che cerca di effettuare il login \texttt{[ERROR]}
 		\end{itemize}
 	\end{tblr}
 \end{table}
@@ -53,37 +53,37 @@
 		2 &
 		Username $>$ 45 caratteri &
 		Username $>$ 45 caratteri \texttt{[ERROR]}, Password valida &
-		- &
+		--- &
 		{Username: \dots \\ Password: miapassword} &
 		Username troppo lungo &
-		- \\
+		-- \\
 		3 &
 		Username assente &
 		Username assente \texttt{[ERROR]}, Password valida &
-		- &
+		--- &
 		{Username: \\ Password: miapassword} &
 		Inserire un username &
-		- \\
+		-- \\
 		4 &
 		Password $<$ 8 caratteri &
 		Password $<$ 8 caratteri \texttt{[ERROR]}, Username valido &
-		- &
+		--- &
 		{Username: mariorossi \\ Password: prova} &
 		Password troppo corta &
-		- \\
+		-- \\
 		5 &
 		Password $>$ 45 caratteri &
 		Password $>$ 45 caratteri \texttt{[ERROR]}, Username valido &
-		- &
+		--- &
 		{Username: mariorossi \\ Password: \dots} &
 		Password troppo lunga &
-		- \\
+		-- \\
 		6 &
 		Password valida ma errata &
 		Password errata \texttt{[ERROR]}, Username valido &
-		Esiste nel sistema l'utente con username: 'mariorossi' e password: 'passwd' &
-		{Username: 'mariorossi' \\ Password: 'ciao'} &
+		L'utente esiste nel sistema e ha come password `passwd' &
+		{Username: mariorossi \\ Password: ciao} &
 		Password errata &
-		- \\
+		-- \\
 	\end{tblr}
 \end{table}

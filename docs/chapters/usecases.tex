@@ -63,35 +63,38 @@
 	\end{tblr}
 \end{table}
 
-\begin{table}[!hbp]
+\begin{table}[!ht]
 	\centering
+	\small
 	\begin{tblr}{
 		colspec = lllll,
 		hlines,
 		row{1} = {font=\bfseries}
 	}
 		Caso d'uso & Attori primari & {Attori \\ secondari} & Incl. / Ext. & Requisito \\
-		VisualizzaCatalogo & UtenteRegistrato & - & - & {\Req{rf}{01} \\ \Req{rf}{06}} \\
-		AggiungiFarmaco & Farmacista & - & - & \Req{rf}{02} \\
-		ModificaFarmaco & Farmacista & - & {Include \\ CercaFarmaco} & \Req{rf}{03} \\
-		EliminaFarmaco & Farmacista & - & {Include \\ CercaFarmaco} & \Req{rf}{04} \\
-		RegistraCliente & {Cliente \\ non registrato} & - & - & \Req{rf}{05} \\
-		CreaOrdine & Cliente & - & {Include \\ CercaFarmaco} & {\Req{rf}{07} \\ \Req{rf}{08} \\ \Req{rf}{09} \\ \Req{rf}{17}} \\
-		GeneraOrdineAcquisto & Cliente & - & Incluso in CreaOrdine & \Req{rf}{10} \\
-		VisualizzaOrdiniAcquisto & Farmacista & - & - & \Req{rf}{11} \\
-		RegistraConsegnaOrdineAcquisto & Farmacista & - & {Include \\ VisualizzaOrdiniAcquisto} & \Req{rf}{12} \\
-		GeneraReport & Direttore & - & - & \Req{rf}{13} \\
-		VisualizzaOrdiniFarmacia & Farmacista & - & - & \Req{rf}{14} \\
+		VisualizzaCatalogo & UtenteRegistrato & -- & -- & {\Req{rf}{01} \\ \Req{rf}{06}} \\
+		AggiungiFarmaco & Farmacista & -- & -- & \Req{rf}{02} \\
+		ModificaFarmaco & Farmacista & -- & {Include \\ CercaFarmaco} & \Req{rf}{03} \\
+		EliminaFarmaco & Farmacista & -- & {Include \\ CercaFarmaco} & \Req{rf}{04} \\
+		RegistraCliente & {Cliente \\ non registrato} & -- & -- & \Req{rf}{05} \\
+		CreaOrdine & Cliente & -- & {Include \\ CercaFarmaco} & {\Req{rf}{07} \\ \Req{rf}{08} \\ \Req{rf}{09} \\ \Req{rf}{17}} \\
+		GeneraOrdineAcquisto & Cliente & -- & Incluso in CreaOrdine & \Req{rf}{10} \\
+		VisualizzaOrdiniAcquisto & Farmacista & -- & -- & \Req{rf}{11} \\
+		RegistraConsegnaOrdineAcquisto & Farmacista & -- & {Include \\ VisualizzaOrdiniAcquisto} & \Req{rf}{12} \\
+		GeneraReport & Direttore & -- & -- & \Req{rf}{13} \\
+		VisualizzaOrdiniFarmacia & Farmacista & -- & -- & \Req{rf}{14} \\
 		RitiraOrdine & Cliente & Farmacista & {Include \\ VisualizzaOrdiniFarmacia} & \Req{rf}{15} \\
-		VisualizzaStoricoOrdini & Cliente & - & - & \Req{rf}{16} \\
-		CercaFarmaco & UtenteRegistrato & - & - & \Req{rf}{18} \\
-		GeneraOrdineAcquistoFarmacista & Farmacista & - & - & \Req{rf}{19}
+		VisualizzaStoricoOrdini & Cliente & -- & -- & \Req{rf}{16} \\
+		CercaFarmaco & UtenteRegistrato & -- & -- & \Req{rf}{18} \\
+		GeneraOrdineAcquistoFarmacista & Farmacista & -- & -- & \Req{rf}{19}
 	\end{tblr}
 \end{table}
 
 \section{Diagramma dei Casi d'Uso}
-% TODO: add image from vpp or create diagram with tikzuml package
+
 \includegraphics[width=\linewidth]{assets/UseCaseFarmacia.png}
+
+\pagebreak
 
 \section{Scenari}
 
@@ -115,13 +118,11 @@
 
 \section{Diagramma delle Classi}
 Di seguito riportiamo il diagramma delle classi di analisi.
-\begin{figure}[!hbp]
+\begin{figure}[!ht]
 	\centering
 	\includegraphics[width=\linewidth]{assets/ClassDiagramAnalisi.png}
 	\caption{Diagramma delle classi di analisi}
 \end{figure}
-
-\pagebreak
 
 \section{Diagrammi di Sequenza}
 
@@ -145,25 +146,25 @@ Di seguito riportiamo il diagramma delle classi di analisi.
 
 \begin{figure}[!hbp]
 	\centering
-	\includegraphics[width=0.8\linewidth]{assets/sequence_analisi/SequenceAnalisiCercaFarmaco.png}
+	\includegraphics[width=0.7\linewidth]{assets/sequence_analisi/SequenceAnalisiCercaFarmaco.png}
 	\caption{Diagramma di sequenza di analisi di CercaFarmaco}
 \end{figure}
 
 \begin{figure}[!hbp]
 	\centering
-	\includegraphics[width=0.8\linewidth]{assets/sequence_analisi/SequenceAnalisiModificaFarmaco.png}
+	\includegraphics[width=\linewidth]{assets/sequence_analisi/SequenceAnalisiModificaFarmaco.png}
 	\caption{Diagramma di sequenza di analisi di ModificaFarmaco}
 \end{figure}
 
 \begin{figure}[!hbp]
 	\centering
-	\includegraphics[width=0.8\linewidth]{assets/sequence_analisi/SequenceAnalisiEliminaFarmaco.png}
+	\includegraphics[width=\linewidth]{assets/sequence_analisi/SequenceAnalisiEliminaFarmaco.png}
 	\caption{Diagramma di sequenza di analisi di EliminaFarmaco}
 \end{figure}
 
 \begin{figure}[!hbp]
 	\centering
-	\includegraphics[width=0.8\linewidth]{assets/sequence_analisi/SequenceAnalisiVisualizzaOrdiniAcquisto.png}
+	\includegraphics[width=0.9\linewidth]{assets/sequence_analisi/SequenceAnalisiVisualizzaOrdiniAcquisto.png}
 	\caption{Diagramma di sequenza di analisi di VisualizzaOrdiniAcquisto}
 \end{figure}
 
@@ -175,7 +176,7 @@ Di seguito riportiamo il diagramma delle classi di analisi.
 
 \begin{figure}[!hbp]
 	\centering
-	\includegraphics[width=0.8\linewidth]{assets/sequence_analisi/SequenceAnalisiVisualizzaOrdiniFarmacia.png}
+	\includegraphics[width=0.9\linewidth]{assets/sequence_analisi/SequenceAnalisiVisualizzaOrdiniFarmacia.png}
 	\caption{Diagramma di sequenza di analisi di VisualizzaOrdiniFarmacia}
 \end{figure}
 
@@ -185,20 +186,10 @@ Di seguito riportiamo il diagramma delle classi di analisi.
 	\caption{Diagramma di sequenza di analisi di RitiraOrdine}
 \end{figure}
 
-\pagebreak
-
 \begin{figure}[!hbp]
 	\centering
 	\includegraphics[width=0.8\linewidth]{assets/sequence_analisi/SequenceAnalisiVisualizzaStoricoOrdini.png}
 	\caption{Diagramma di sequenza di analisi di VisualizzaStoricoOrdini}
-\end{figure}
-
-\pagebreak
-
-\begin{figure}[!hbp]
-	\centering
-	\includegraphics[width=\linewidth]{assets/sequence_analisi/SequenceAnalisiCreaOrdine.png}
-	\caption{Diagramma di sequenza di analisi di CreaOrdine}
 \end{figure}
 
 \begin{figure}[!hbp]
@@ -209,19 +200,24 @@ Di seguito riportiamo il diagramma delle classi di analisi.
 
 \begin{figure}[!hbp]
 	\centering
-	\includegraphics[width=\linewidth]{assets/sequence_analisi/SequenceAnalisiGeneraOrdineAcquistoFarmacista.png}
-	\caption{Diagramma di sequenza di analisi di GeneraOrdineAcquistoFarmacista}
-\end{figure}
-
-\begin{figure}[!hbp]
-	\centering
 	\includegraphics[width=0.8\linewidth]{assets/sequence_analisi/SequenceAnalisiGeneraReport.png}
 	\caption{Diagramma di sequenza di analisi di GeneraReport}
 \end{figure}
 
-\pagebreak
+\begin{figure}[!hbp]
+	\centering
+	\includegraphics[width=\linewidth]{assets/sequence_analisi/SequenceAnalisiCreaOrdine.png}
+	\caption{Diagramma di sequenza di analisi di CreaOrdine}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\linewidth]{assets/sequence_analisi/SequenceAnalisiGeneraOrdineAcquistoFarmacista.png}
+	\caption{Diagramma di sequenza di analisi di GeneraOrdineAcquistoFarmacista}
+\end{figure}
 
 \section{Verifica Completezza dei Requisiti}
+
 \begin{itemize}
 	\item \Req{rf}{01}, \Req{rf}{06} Modellati in UCD da VisualizzaCatalogo con l'attore UtenteRegistrato e con il caso d'uso UC1
 	\item \Req{rf}{02} Modellato in UCD da AggiungiFarmaco con l'attore primario Farmacista
