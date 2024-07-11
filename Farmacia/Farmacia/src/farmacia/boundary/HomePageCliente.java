@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Locale;
 
 public class HomePageCliente extends JFrame {
 
@@ -27,7 +28,7 @@ public class HomePageCliente extends JFrame {
 		setLocationRelativeTo(null);
 		setContentPane(homePanel);
 		setVisible(true);
-		lblBenvenuto.setText(String.format("Benvenuto %s %s", cliente.get("nome"), cliente.get("cognome")));
+		lblBenvenuto.setText(String.format("Benvenuto %s %s", ((String)cliente.get("nome")).toUpperCase(Locale.ITALY), ((String)cliente.get("cognome")).toUpperCase(Locale.ITALY)));
 
 		btnVisualizzaCatalogo.addActionListener(e -> new VisualizzaCatalogoPage());
 

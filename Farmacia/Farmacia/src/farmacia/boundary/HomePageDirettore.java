@@ -3,6 +3,7 @@ package farmacia.boundary;
 import farmacia.dto.DTO;
 
 import javax.swing.*;
+import java.util.Locale;
 
 public class HomePageDirettore extends JFrame {
 	private JButton btnVisualizzaCatalogo;
@@ -19,10 +20,10 @@ public class HomePageDirettore extends JFrame {
 		setContentPane(mainPanel);
 		setResizable(false);
 		setVisible(true);
-		lblBenvenuto.setText(String.format("Benvenuto, direttore %s %s.", direttore.get("nome"), direttore.get("cognome")));
+		lblBenvenuto.setText(String.format("Benvenuto, direttore %s %s", ((String)direttore.get("nome")).toUpperCase(Locale.ITALY), ((String)direttore.get("cognome")).toUpperCase(Locale.ITALY)));
 
 		btnCercaFarmaco.addActionListener(e -> new CercaFarmacoPage());
-		btnVisualizzaCatalogo.addActionListener(e -> new VisualizzaCatalogoPage());
+		btnVisualizzaCatalogo.addActionListener(e -> new VisualizzaCatalogoFarmacistaPage());
 		btnGeneraReport.addActionListener(e -> new GeneraReportPage());
 	}
 }

@@ -3,6 +3,7 @@ package farmacia.boundary;
 import farmacia.dto.DTO;
 
 import javax.swing.*;
+import java.util.Locale;
 
 public class HomePageFarmacista extends JFrame {
 	private JPanel mainPanel;
@@ -27,7 +28,7 @@ public class HomePageFarmacista extends JFrame {
 		setContentPane(mainPanel);
 		setResizable(false);
 		setVisible(true);
-		lblBenvenuto.setText(String.format("Benvenuto, farmacista %s %s.", farmacista.get("nome"), farmacista.get("cognome")));
+		lblBenvenuto.setText(String.format("Benvenuto, farmacista %s %s.", ((String)farmacista.get("nome")).toUpperCase(Locale.ITALY), ((String)farmacista.get("cognome")).toUpperCase(Locale.ITALY)));
 
 		btnGeneraOrdineAcquisto.addActionListener(e -> new GeneraOrdineAcquistoFarmacistaPage());
 		btnVisualizzaOrdiniClienti.addActionListener(e -> new VisualizzaOrdiniClientiFarmacistaPage());
