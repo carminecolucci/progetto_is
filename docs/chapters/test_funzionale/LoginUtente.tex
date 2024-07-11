@@ -18,18 +18,19 @@
 			\item Stringa di caratteri vuota \texttt{[ERROR]}
 		\end{itemize} &
 		\begin{itemize}[leftmargin=*]
-			\item Stringa di caratteri di lunghezza compresa tra 8 e 45
+			\item Stringa di caratteri di lunghezza compresa tra 8 e 45 e corrispondente alla Password memorizzate per l'utente che cerca di effettuare il login
 			\item Stringa di caratteri di lunghezza $<$ 8 \texttt{[ERROR]}
 			\item Stringa di caratteri di lunghezza $>$ 45 \texttt{[ERROR]}
+			\item Stringa di caratteri non corrispondente alla Password memorizzata per l'utente che cerca di effettuare il login \texttt{[ERROR]}
 		\end{itemize}
 	\end{tblr}
 \end{table}
 
-\noindent Il numero di test da effettuarsi senza particolari vincoli è: $3 \cdot 3 = 9$.
+\noindent Il numero di test da effettuarsi senza particolari vincoli è: $3 \cdot 4 = 12$.
 
-\noindent Introduciamo i vincoli \texttt{[ERROR]}. Il numero di test da eseguire per testare singolarmente i vincoli è 4 (2 per Username, 2 per Password).
+\noindent Introduciamo i vincoli \texttt{[ERROR]}. Il numero di test da eseguire per testare singolarmente i vincoli è 5 (2 per Username, 3 per Password).
 
-\noindent Il numero di test risultante è 5: $(1 \cdot 1) + 4 = 5$.
+\noindent Il numero di test risultante è 6: $(1 \cdot 1) + 5 = 6$.
 
 \subsubsection*{Test Suite}
 
@@ -37,7 +38,7 @@
 	\centering
 	\footnotesize
 	\begin{tblr}{
-			colspec = lXXllXX,
+			colspec = lXXXXXX,
 			hlines, vlines,
 			row{1} = {font=\bfseries},
 			measure=vbox
@@ -76,6 +77,13 @@
 		- &
 		{Username: mariorossi \\ Password: \dots} &
 		Password troppo lunga &
+		- \\
+		6 &
+		Password valida ma errata &
+		Passowrd errata \texttt{[ERROR]}, Username valido &
+		Esiste nel sistema l'utente con username: 'mariorossi' e password: 'passwd' &
+		{Username: 'mariorossi' \\ Password: 'ciao'} &
+		Password errata &
 		- \\
 	\end{tblr}
 \end{table}
