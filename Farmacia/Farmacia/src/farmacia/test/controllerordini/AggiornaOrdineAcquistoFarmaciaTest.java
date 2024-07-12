@@ -29,7 +29,7 @@ public class AggiornaOrdineAcquistoFarmaciaTest {
 	private static String idOrdineAcquistoSuccess;
 
 	@BeforeClass
-	public static void setUp() throws ParseException, FarmacoCreationFailedException, FarmacoNotFoundException, OrderCreationFailedException, DBException {
+	public static void setUp() throws FarmacoCreationFailedException, FarmacoNotFoundException, OrderCreationFailedException, DBException {
 
 		// inizializzazione dei controller
 		controllerOrdini = ControllerOrdini.getInstance();
@@ -52,7 +52,6 @@ public class AggiornaOrdineAcquistoFarmaciaTest {
 		ordineAcquisto.put((int)controllerCatalogo.cercaFarmaco("FarmacoAcquisto").get("id"), 20);
 		idOrdineAcquistoSuccess = controllerOrdini.creaOrdineAcquistoFarmacia(ordineAcquisto);
 	}
-
 
 	@After
 	public void tearDown() throws DBException {

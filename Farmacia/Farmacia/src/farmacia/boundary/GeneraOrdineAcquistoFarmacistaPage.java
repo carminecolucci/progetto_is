@@ -90,8 +90,6 @@ public class GeneraOrdineAcquistoFarmacistaPage extends JFrame {
 			} catch (OrderCreationFailedException ex) {
 				farmaciOrdineAcquisto.clear();
 				JOptionPane.showMessageDialog(this, ex.getMessage());
-			} catch (DBException ex) {
-				throw new RuntimeException(ex);
 			}
 		});
 	}

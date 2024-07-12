@@ -91,6 +91,9 @@ public class EntityFarmacia {
 	 * @throws OrderCreationFailedException lanciata quando un farmaco non viene trovato o quando le scorte sono insufficienti
 	 */
 	public String creaOrdineAcquisto(Map<Integer, Integer> farmaciQuantita) throws OrderCreationFailedException {
+		if (farmaciQuantita.isEmpty())
+			throw new OrderCreationFailedException("Ordine vuoto");
+
 		EntityCatalogo catalogo = EntityCatalogo.getInstance();
 		EntityOrdineAcquisto ordineAcquisto = new EntityOrdineAcquisto();
 		try {

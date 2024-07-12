@@ -54,7 +54,6 @@ public class VisualizzaStoricoOrdiniTest {
 		FarmacoDAO.deleteFarmaco("test1");
 		FarmacoDAO.deleteFarmaco("test2");
 		FarmacoDAO.deleteFarmaco("test3");
-
 	}
 
 	@Test
