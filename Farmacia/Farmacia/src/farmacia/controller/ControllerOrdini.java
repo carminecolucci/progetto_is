@@ -10,7 +10,6 @@ import farmacia.exceptions.OrderNotFoundException;
 import java.util.*;
 
 public class ControllerOrdini {
-
 	/**
 	 * L'unica istanza di <code>ControllerOrdini</code> che implementa il pattern Singleton.
 	 */
@@ -57,7 +56,7 @@ public class ControllerOrdini {
 	 *     <li>"cliente": <code>cliente</code> titolare dell'ordine (<code>String</code>)</li>
 	 *     <li>"totale": <code>totale</code> dell'ordine (<code>float</code>)</li>
 	 * </ul>
-	 * @throws DBException
+	 * @throws DBException se non è possibile accedere al DB.
 	 */
 	public List<DTO> visualizzaStoricoOrdini() throws DBException {
 		EntityCliente cliente = (EntityCliente) Sessione.getInstance().getUtenteCorrente();
@@ -67,7 +66,7 @@ public class ControllerOrdini {
 
 	/**
 	 * Metodo privato che converte un <code>Map&lt;EntityFarmaco, Integer&gt;</code> in un <code>Map&lt;DTO, Integer&gt;</code>.
-	 * @param quantitaFarmaci
+	 * @param quantitaFarmaci mappa che contiene una serie di coppie (<code>Farmaco DTO</code>, <code>quantità</code>).
 	 */
 	private static Map<DTO, Integer> getDtoQuantitaFarmaci(Map<EntityFarmaco, Integer> quantitaFarmaci) {
 		Map<DTO, Integer> dtoQuantitaFarmaci = new HashMap<>();
@@ -93,7 +92,7 @@ public class ControllerOrdini {
 	 * @return l'<code>id</code> dell'ordine appena creato.
 	 * @throws OrderCreationFailedException quando la creazione dell'ordine fallisce
 	 */
-	public String creaOrdineAcquistoFarmacia(Map<Integer, Integer> farmaciQuantita) throws DBException, OrderCreationFailedException {
+	public String creaOrdineAcquistoFarmacia(Map<Integer, Integer> farmaciQuantita) throws OrderCreationFailedException {
 		EntityFarmacia farmacia = EntityFarmacia.getInstance();
 		return farmacia.creaOrdineAcquisto(farmaciQuantita);
 	}
@@ -140,7 +139,7 @@ public class ControllerOrdini {
 	 *     <li>"cliente": <code>cliente</code> titolare dell'ordine (<code>String</code>)</li>
 	 *     <li>"totale": <code>totale</code> dell'ordine (<code>float</code>)</li>
 	 * </ul>
-	 * @throws DBException
+	 * @throws DBException se non è possibile accedere al DB.
 	 */
 	public List<DTO> visualizzaOrdiniFarmacia() throws DBException {
 		EntityFarmacia farmacia = EntityFarmacia.getInstance();

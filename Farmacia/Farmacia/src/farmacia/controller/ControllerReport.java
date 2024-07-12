@@ -13,11 +13,20 @@ import java.util.Date;
 import java.util.Map;
 
 public class ControllerReport {
-
+	/**
+	 * L'unica istanza di <code>ControllerReport</code> che implementa il pattern Singleton.
+	 */
 	private static ControllerReport uniqueInstance;
 
+	/**
+	 * Costruttore privato per impedire la creazione di istanze multiple.
+	 */
 	private ControllerReport() {}
 
+	/**
+	 * Funzione statica per richiamare l'unica istanza di <code>ControllerReport</code> o crearne una se non esiste già.
+	 * @return l'istanza singleton di <code>ControllerReport</code>.
+	 */
 	public static ControllerReport getInstance() {
 		if (uniqueInstance == null) {
 			uniqueInstance = new ControllerReport();
@@ -25,6 +34,23 @@ public class ControllerReport {
 		return uniqueInstance;
 	}
 
+	/**
+	 * Funzione che genera un report sulle vendite da banco e da prescrizione in un dato intervallo di date.
+	 * @param dataInizio data di inizio del report
+	 * @param dataFine data di fine del report
+	 * @return <code>DTO</code> contenente i seguenti campi:
+	 * <ul>
+	 *     <li>"venditeBanco": numero totale di farmaci da banco venduti (<code>int</code>)</li>
+	 *     <li>"venditePrescrizione": numero totale di farmaci da prescrizione venduti (<code>int</code>)</li>
+	 *     <li>"incassoBanco": incasso totale di tutte le vendite da banco (<code>float</code>)</li>
+	 *     <li>"incassoPrescrizione": incasso totale di tutte le vendite da prescrizione (<code>float</code>)</li>
+	 *     <li>"nomeBanco": nome del farmaco da banco più venduto (<code>String</code>)</li>
+	 *     <li>"unitaBanco": numero di unità del farmaco <code>nomeBanco</code> vendute (<code>int</code>)</li>
+	 *     <li>"nomePrescrizione": nome del farmaco da prescrizione più venduto (<code>String</code>)</li>
+	 *     <li>"unitaPrescrizione": numero di unità del farmaco <code>nomePrescrizione</code> vendute (<code>int</code>)</li>
+	 * </ul>
+	 * @throws ReportException se non è possibile creare il report.
+	 */
 	public DTO generaReport(Date dataInizio, Date dataFine) throws ReportException {
 		DTO report = new DTO();
 		EntityFarmacia farmacia = EntityFarmacia.getInstance();
@@ -46,19 +72,11 @@ public class ControllerReport {
 						EntityFarmaco farmaco = entry.getKey();
 						int quantita = entry.getValue();
 						if (farmaco.isPrescrizione()){
-							if (farmaciVendutiPrescrizione.containsKey(farmaco.getNome())){
-								farmaciVendutiPrescrizione.put(farmaco.getNome(), farmaciVendutiPrescrizione.get(farmaco.getNome()) + quantita);
-							} else {
-								farmaciVendutiPrescrizione.put(farmaco.getNome(), quantita);
-							}
+							aggiungiVenditeFarmaco(farmaciVendutiPrescrizione, farmaco.getNome(), quantita);
 							venditePrescrizione += quantita;
 							incassoPrescrizione += quantita * farmaco.getPrezzo();
 						} else {
-							if (farmaciVendutiBanco.containsKey(farmaco.getNome())){
-								farmaciVendutiBanco.put(farmaco.getNome(), farmaciVendutiBanco.get(farmaco.getNome()) + quantita);
-							} else {
-								farmaciVendutiBanco.put(farmaco.getNome(), quantita);
-							}
+							aggiungiVenditeFarmaco(farmaciVendutiBanco, farmaco.getNome(), quantita);
 							venditeBanco += quantita;
 							incassoBanco += quantita * farmaco.getPrezzo();
 						}
@@ -66,24 +84,13 @@ public class ControllerReport {
 				}
 			}
 
-			String nomePrescrizione = "-";
-			int unitaPrescrizione = 0;
-			String nomeBanco = "-";
-			int unitaBanco = 0;
+			Map.Entry<String, Integer> maxPrescrizione = maxVendite(farmaciVendutiPrescrizione);
+			String nomePrescrizione = maxPrescrizione.getKey();
+			int unitaPrescrizione = maxPrescrizione.getValue();
 
-			for (Map.Entry<String, Integer> entry : farmaciVendutiPrescrizione.entrySet()) {
-				if (entry.getValue() > unitaPrescrizione){
-					unitaPrescrizione = entry.getValue();
-					nomePrescrizione = entry.getKey();
-				}
-			}
-
-			for (Map.Entry<String, Integer> entry : farmaciVendutiBanco.entrySet()) {
-				if (entry.getValue() > unitaBanco){
-					unitaBanco = entry.getValue();
-					nomeBanco = entry.getKey();
-				}
-			}
+			Map.Entry<String, Integer> maxBanco = maxVendite(farmaciVendutiBanco);
+			String nomeBanco = maxBanco.getKey();
+			int unitaBanco = maxBanco.getValue();
 
 			report.set("venditeBanco", venditeBanco);
 			report.set("venditePrescrizione", venditePrescrizione);
@@ -94,10 +101,39 @@ public class ControllerReport {
 			report.set("unitaPrescrizione", unitaPrescrizione);
 			report.set("nomePrescrizione", nomePrescrizione);
 			return report;
-
 		} catch (DBException e) {
 			throw new ReportException(e.getMessage());
 		}
 	}
 
+	/**
+	 * Funzione privata che aggiunge la coppia <code>nomeFarmaco</code>, <code>quantità</code> alla mappa di farmaci venduti.
+	 * @param farmaci mappa che contiene le coppie (<code>nomeFarmaco</code>, <code>quantità</code>) venduti
+	 * @param nomeFarmaco nome del farmaco
+	 * @param quantita quantità venduta del farmaco
+	 */
+	private static void aggiungiVenditeFarmaco(Map<String, Integer> farmaci, String nomeFarmaco, int quantita) {
+		int nuovaQuantita = quantita;
+		if (farmaci.containsKey(nomeFarmaco)){
+			nuovaQuantita += farmaci.get(nomeFarmaco);
+		}
+		farmaci.put(nomeFarmaco, nuovaQuantita);
+	}
+
+	/**
+	 * Funzone privata che trova la coppia <code>nomeFarmaco</code>, <code>quantità</code> più venduta.
+	 * @param farmaci mappa che contiene le coppie (<code>nomeFarmaco</code>, <code>quantità</code>) venduti.
+	 * @return coppia <code>nomeFarmaco</code>, <code>quantità</code> più venduta.
+	 */
+	private static Map.Entry<String, Integer> maxVendite(Map<String, Integer> farmaci) {
+		String nome = "";
+		int unita = 0;
+		for (Map.Entry<String, Integer> entry: farmaci.entrySet()) {
+			if (entry.getValue() > unita){
+				unita = entry.getValue();
+				nome = entry.getKey();
+			}
+		}
+		return Map.entry(nome, unita);
+	}
 }
