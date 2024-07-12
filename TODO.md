@@ -46,3 +46,8 @@
 1. Nella progettazione della test suite con il metodo del category-partitioning-testing dobbiamo includere solo i test di validazione dell'input? Come facciamo il formalismo tabellare dell'esempio del cinema a gestire le diverse precondizioni? (volendo ad esempio testare il fatto che non ci si può loggare se non si è registrati o che non ci si può registrare se si è già registrati).
 
 1. I test della domanda sopracitata dobbiamo inserirli anche se a livello GUI rendiamo impossibile finire nella maggioranza delle casistiche di errore? Ad esempio potremmo pensare ad un test che verifica che il controller ci restituisca un errore quando cerchiamo di eliminare un farmaco che non esiste, ma noi a livello GUI permettiamo al farmacista di eliminare solo farmaci cliccando sull'elenco del catalogo.
+
+1. Gestione delle eccezioni nei CFG
+
+1. Domanda classe di equivalenza (booleano in input, esempio ModificaFarmaco)
+

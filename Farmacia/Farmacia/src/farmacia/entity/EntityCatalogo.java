@@ -78,6 +78,7 @@ public class EntityCatalogo {
 					farmaco.setPrescrizione(prescrizione);
 					farmaco.setNome(nome);
 					farmaco.setScorte(scorte);
+					break;
 				}
 			}
 		} catch (DBException e) {

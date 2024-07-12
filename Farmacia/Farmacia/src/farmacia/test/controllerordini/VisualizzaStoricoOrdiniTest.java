@@ -75,7 +75,7 @@ public class VisualizzaStoricoOrdiniTest {
 			controllerOrdini.creaOrdine(farmaciQuantita);
 
 			List<DTO> ordini = controllerOrdini.visualizzaStoricoOrdini();
-			DTO ordine = ordini.getFirst();
+			DTO ordine = ordini.get(0);
 			assertEquals("testUser", ordine.get("cliente"));
 			Map<DTO, Integer> quantitaFarmaci = (Map<DTO, Integer>)ordine.get("quantitaFarmaci");
 			for (Map.Entry<DTO, Integer> entry: quantitaFarmaci.entrySet()) {

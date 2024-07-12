@@ -16,6 +16,7 @@
 			\item Stringa di lunghezza $\leq$ 45
 			\item Stringa di lunghezza $>$ 45 \texttt{[ERROR]}
 			\item Stringa vuota \texttt{[ERROR]}
+			\item Stringa già memorizzata \texttt{[ERROR]}
 		\end{itemize} &
 		\begin{itemize}[leftmargin=*]
 			\item Numero reale $>0$ (\euro)
@@ -31,11 +32,11 @@
 	\end{tblr}
 \end{table}
 
-\noindent Il numero di test da effettuarsi senza particolari vincoli è: $3 \cdot 2 \cdot 1 \cdot 2 = 12$.
+\noindent Il numero di test da effettuarsi senza particolari vincoli è: $4 \cdot 2 \cdot 1 \cdot 2 = 16$.
 
-\noindent Introduciamo i vincoli \texttt{[ERROR]}. Il numero di test da eseguire per testare singolarmente i vincoli è 4 (2 per Nome, 1 per Prezzo, 1 per Scorte).
+\noindent Introduciamo i vincoli \texttt{[ERROR]}. Il numero di test da eseguire per testare singolarmente i vincoli è 5 (3 per Nome, 1 per Prezzo, 1 per Scorte).
 
-\noindent Il numero di test risultante è 5: $(1 \cdot 1 \cdot 1 \cdot 1) + 4 = 5$.
+\noindent Il numero di test risultante è 6: $(1 \cdot 1 \cdot 1 \cdot 1) + 5 = 6$.
 
 \subsubsection*{Test Suite}
 
@@ -87,5 +88,8 @@
         -- & {Nome: Brufen \\ Prezzo: -8.00 \euro \\ Scorte: 200 \\ Prescrizione: \texttt{boolean}} & Inserire un prezzo $> 0$ \euro & -- \\
         5 & Scorte $ < 0$ & Scorte $<0$, Nome, Prezzo e Prescrizione (sia \texttt{True} che \texttt{False}) validi & -
         & {Nome: Macladin \\ Prezzo: 11.50 \euro \\ Scorte: -36 \\ Prescrizione: \texttt{boolean}} & Inserire scorte $ \geq 0 $ & -- \\
+		6 & 
+		Nome già memorizzato & Nome già memorizzato \texttt{[ERROR]}, Prezzo, Scorte e Prescrizione (sia \texttt{True} che \texttt{False}) validi &
+		Esiste già un farmaco con il nome inserito & {Nome: Cistalgan \\ Prezzo: 19.90 \euro \\ Scorte: 50 \\ Prescrizione : \texttt{boolean}} & Farmaco già esistente & --
 	\end{tblr}
 \end{table}

@@ -1,0 +1,30 @@
+\begin{tikzpicture}[
+    node/.style={circle, minimum height=20pt,text centered, draw=black, fill=purple!30},
+    try/.style={rectangle, rounded corners=5, dashed, inner sep=8pt, draw=blue},
+    node distance=0.8cm,
+    arrow/.style={->,>=stealth}
+]
+\node (start) [node] {inizio};
+\node (0) [node, below=of start] {$0$};
+\node (1) [node, below=of 0] {$1$};
+\node (2) [node, below left=of 1] {$2$};
+\node (3) [node, below left=of 2] {$3$};
+\node (4) [node, below=1.5cm of 2] {$4$};
+\node (fine) [node, below = 4cm of 1] {fine};
+\node (try) [try, fit=(0) (1) (2) (3) (4)] {};
+\node [anchor=north west, inner sep=5pt, text=blue] at (try.north west) {try};
+
+
+
+\draw[arrow] (start) -- (0);
+\draw[arrow] (0) -- (1);
+\draw[arrow] (1) -- (2);
+\draw[arrow] (2) -- (3);
+\draw[arrow] (2) -- (4);
+\draw[arrow] (2) -- (4);
+\draw[arrow] (3) -- (4);
+\draw[arrow] (4) to [bend right=10] (1);
+\draw[arrow] (1) to [bend left=50] (fine);
+\draw[arrow] (try) to [bend right=10] (fine) {};
+
+\end{tikzpicture}

@@ -16,7 +16,7 @@
 			\item Stringa di lunghezza $\leq$ 45
 			\item Stringa di lunghezza $>$ 45 \texttt{[ERROR]}
 			\item Stringa vuota \texttt{[ERROR]}
-			\item Stringa non presente nel sistem \texttt{[ERROR]}
+			\item Stringa non presente nel sistema \texttt{[ERROR]}
 		\end{itemize}
 	\end{tblr}
 \end{table}
@@ -36,8 +36,8 @@
 		}
 		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-condizioni \\ Attese} \\
 		1 & Nome del farmaco valido & Nome del farmaco valido & Il farmaco è presente nel catalogo & Nome: Tachipirina & Farmaco cancellato & Il farmaco viene cancellato dal catalogo \\
-		2 & Nome del farmaco $>$ 45 caratteri & Nome del farmaco $>$ 45 caratteri \texttt{[ERROR]} & -- & Nome: ... & Nome del farmaco troppo lungo & -- \\
-		3 & Nome del farmaco assente & Nome del farmaco assente \texttt{[ERROR]} & -- & Nome: & Inserire il nome di un farmaco & -- \\
+		2 & Nome del farmaco $>$ 45 caratteri & Nome del farmaco $>$ 45 caratteri \texttt{[ERROR]} & -- & Nome: \dots & Nome del farmaco troppo lungo & -- \\
+		3 & Nome del farmaco non specificato & Nome del farmaco non specificato \texttt{[ERROR]} & -- & Nome: & Inserire il nome di un farmaco & -- \\
 		4 & Il farmaco non esiste & Farmaco non presente nel sistema \texttt{[ERROR]} & Non esiste il farmaco chiamato ``Tachipirina'' & Nome: Tachipirina & Non puoi eliminare un farmaco che non esiste & -- \\
 	\end{tblr}
 \end{table}

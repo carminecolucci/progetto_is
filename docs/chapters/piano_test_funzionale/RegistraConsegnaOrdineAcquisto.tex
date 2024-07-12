@@ -11,7 +11,7 @@
 		row{1} = {font=\bfseries},
 		measure=vbox, stretch=-1
 		}
-		Id dell'ordine \\
+		ID dell'ordine di acquisto \\
 		\begin{itemize}[leftmargin=*]
 			\item Stringa di lunghezza $\leq$ 45
 			\item Stringa di lunghezza $>$ 45 \texttt{[ERROR]}
@@ -35,9 +35,9 @@
 			measure=vbox
 		}
 		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-condizioni \\ Attese} \\
-		1 & Id dell'ordine valido & Id dell'ordine valido & -- & Id: 5ea930bc-f0a5-427a-8ca1-f9a2a6146948 & Ordine ritirato & Lo stato dell'ordine è stato cambiato correttamente e le scorte in magazzino sono state correttamente incrementate \\
-		2 & Id $>$ 45 caratteri & Id $>$ 45 caratteri \texttt{[ERROR]} & -- & Id: \dots & Id troppo lungo & -- \\
-		3 & Id assente & Id assente \texttt{[ERROR]} & -- & Id: & Inserire l'id di un ordine & -- \\
-		4 & Id inesistente & Id inesistente \texttt{[ERROR]} & Non esiste un farmaco con id ``5ea930bc-f0a5-427a-8ca1-f9a2a6146948'' & Id: 5ea930bc-f0a5-427a-8ca1-f9a2a6146948 & L'ordine non esiste & -- \\
+		1 & ID dell'ordine di acquisto valido & ID dell'ordine di acquisto valido & -- & {ID: 5ea930bc-f0a5-427a-8ca1-f9a2a6146948} & Ordine ricevuto & Lo stato dell'ordine di acquisto e le scorte in magazzino sono aggiornati \\
+		2 & ID $>$ 45 caratteri & ID $>$ 45 caratteri \texttt{[ERROR]} & -- & ID: \dots & ID troppo lungo & -- \\
+		3 & ID vuoto & ID vuoto \texttt{[ERROR]} & -- & ID: & Inserire l'ID di un ordine di acquisto & -- \\
+		4 & ID inesistente & ID inesistente \texttt{[ERROR]} & Non esiste un ordine di acquisto con ID ``5ea930bc-f0a5-427a-8ca1-f9a2a6146948'' & ID: 5ea930bc-f0a5-427a-8ca1-f9a2a6146948 & L'ordine di acquisto non esiste & -- \\
 	\end{tblr}
 \end{table}
