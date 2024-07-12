@@ -87,6 +87,23 @@ public class FarmacoDAO {
 	}
 
 	/**
+	 * Funzione di utilità che è stata aggiunta in fase di testing solo per rendere agevole la cancellazione del farmaco
+	 * creato nel test <code>AggiuntiEliminaFarmacoTest</code>.
+	 * @param nome Il nome del farmaco.
+	 * @throws DBException Lanciata se non è possibile accedere al DB o se il farmaco da eliminare non è stato trovato.
+	 */
+	public static void deleteFarmaco(String nome) throws DBException {
+		String query = String.format("DELETE FROM farmaci WHERE nome = '%s';", nome);
+		logger.info(query);
+		try {
+			DBManager.getInstance().executeQuery(query);
+		} catch (ClassNotFoundException | SQLException e) {
+			logger.warning(String.format("Errore durante l'eliminazione dal DB del farmaco '%s'.", nome));
+			throw new DBException(String.format("Errore durante l'eliminazione dal DB del farmaco '%s'.", nome));
+		}
+	}
+
+	/**
 	 * Funzione privata che popola il <code>FarmacoDAO</code> consultando il DB a partire dall'id.
 	 * @param id l'<code>id</code> del farmaco da caricare.
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se il farmaco non esiste.
@@ -151,23 +168,6 @@ public class FarmacoDAO {
 			logger.warning(String.format("Errore nella ricerca del farmaco '%s'.%n%s",
 				nome, e.getMessage()));
 			throw new DBException(String.format("Errore nella ricerca del farmaco '%s'", nome));
-		}
-	}
-
-	/**
-	 * Funzione di utilità che è stata aggiunta in fase di testing solo per rendere agevole la cancellazione del farmaco
-	 * creato nel test <code>AggiuntiEliminaFarmacoTest</code>.
-	 * @param nome Il nome del farmaco.
-	 * @throws DBException Lanciata se non è possibile accedere al DB o se il farmaco da eliminare non è stato trovato.
-	 */
-	public static void deleteFarmaco(String nome) throws DBException {
-		String query = String.format("DELETE FROM farmaci WHERE nome = '%s';", nome);
-		logger.info(query);
-		try {
-			DBManager.getInstance().executeQuery(query);
-		} catch (ClassNotFoundException | SQLException e) {
-			logger.warning(String.format("Errore durante l'eliminazione dal DB del farmaco '%s'.", nome));
-			throw new DBException(String.format("Errore durante l'eliminazione dal DB del farmaco '%s'.", nome));
 		}
 	}
 

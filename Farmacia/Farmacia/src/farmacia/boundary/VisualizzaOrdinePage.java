@@ -10,12 +10,10 @@ public class VisualizzaOrdinePage extends JFrame {
 	private JPanel mainPanel;
 	private JScrollPane srlTable;
 	private JTable ordineTable;
-	private String idOrdine;
-	private Map<DTO, Integer> quantitaFarmaci;
 
 	public VisualizzaOrdinePage(DTO ordine) {
-		this.quantitaFarmaci = (Map<DTO, Integer>)ordine.get("quantitaFarmaci");
-		this.idOrdine = (String)ordine.get("id");
+		Map<DTO, Integer> quantitaFarmaci = (Map<DTO, Integer>) ordine.get("quantitaFarmaci");
+		String idOrdine = (String) ordine.get("id");
 
 		setTitle(String.format("Visualizza ordine '%s'", idOrdine));
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);

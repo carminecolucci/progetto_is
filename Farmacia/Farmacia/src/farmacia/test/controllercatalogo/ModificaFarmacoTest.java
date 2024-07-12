@@ -6,12 +6,10 @@ import farmacia.dto.DTO;
 import farmacia.exceptions.DBException;
 import farmacia.exceptions.FarmacoCreationFailedException;
 import farmacia.exceptions.FarmacoNotFoundException;
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class ModificaFarmacoTest {
@@ -36,7 +34,6 @@ public class ModificaFarmacoTest {
 		String nome = "Aulin1";
 		int scorte = 50;
 		controllerCatalogo.aggiungiFarmaco(prezzo, prescrizione, nome, scorte);
-		// TODO: rifare il test con codice più pulito, farsi restituire i farmaci con visualizzaCatalogo come se stessimo usando la GUI
 		controllerCatalogo.modificaFarmaco((int)controllerCatalogo.cercaFarmaco(nome).get("id"), 20, false, "SuperAulin1", 50);
 		DTO dto = controllerCatalogo.cercaFarmaco("SuperAulin1");
 		assertTrue((float)dto.get("prezzo") == 20
@@ -53,7 +50,6 @@ public class ModificaFarmacoTest {
 		String nome = "Aulin2";
 		int scorte = 50;
 		controllerCatalogo.aggiungiFarmaco(prezzo, prescrizione, nome, scorte);
-		// TODO: rifare il test con codice più pulito, farsi restituire i farmaci con visualizzaCatalogo come se stessimo usando la GUI
 		controllerCatalogo.modificaFarmaco((int)controllerCatalogo.cercaFarmaco(nome).get("id"), 20, true, "SuperAulin2", 50);
 		DTO dto = controllerCatalogo.cercaFarmaco("SuperAulin2");
 		assertTrue((float)dto.get("prezzo") == 20
@@ -62,5 +58,4 @@ public class ModificaFarmacoTest {
 			&& (int)dto.get("scorte") == 50
 		);
 	}
-
 }

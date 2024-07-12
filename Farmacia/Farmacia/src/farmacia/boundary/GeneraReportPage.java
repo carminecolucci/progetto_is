@@ -1,17 +1,12 @@
 package farmacia.boundary;
 
 import farmacia.boundary.datepicker.DateTextField;
-import farmacia.controller.ControllerOrdini;
 import farmacia.controller.ControllerReport;
 import farmacia.dto.DTO;
-import farmacia.exceptions.DBException;
 import farmacia.exceptions.ReportException;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Date;
 
 public class GeneraReportPage extends JFrame {
@@ -42,7 +37,7 @@ public class GeneraReportPage extends JFrame {
 		setSize(700, 400);
 		setLocationRelativeTo(null);
 		setContentPane(mainPanel);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setTitle("Genera report");
 		setResizable(true);

@@ -2,7 +2,6 @@ package farmacia.boundary;
 
 import farmacia.controller.ControllerOrdini;
 import farmacia.dto.DTO;
-import farmacia.exceptions.DBException;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -65,6 +64,5 @@ public class VisualizzaOrdiniAcquistoPage extends JFrame {
 		});
 
 		setVisible(true);
-
 	}
 }

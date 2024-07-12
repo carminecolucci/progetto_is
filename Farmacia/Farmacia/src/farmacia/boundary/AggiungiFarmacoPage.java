@@ -28,7 +28,7 @@ public class AggiungiFarmacoPage extends JFrame {
 
 	public AggiungiFarmacoPage (){
 		setTitle("Aggiungi Farmaco");
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setSize(500,200);
 		setLocationRelativeTo(null);
 		setResizable(false);
@@ -44,23 +44,18 @@ public class AggiungiFarmacoPage extends JFrame {
 		DefaultFormatter formatterScorte = (DefaultFormatter)editorScorte.getTextField().getFormatter();
 		formatterScorte.setCommitsOnValidEdit(true);
 
-
-		btnConferma.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String nome = txtNome.getText();
-				float prezzo = (float)(double)spnPrezzo.getValue();
-				boolean prescrizione = chkPrescrizione.isSelected();
-				int scorte = (int)spnScorte.getValue();
-				ControllerCatalogo controllerCatalogo = ControllerCatalogo.getInstance();
-				try {
-					controllerCatalogo.aggiungiFarmaco(prezzo, prescrizione, nome, scorte);
-					JOptionPane.showMessageDialog(mainPanel, String.format("Farmaco '%s' aggiunto correttamente.", nome));
-					dispose();
-				} catch (FarmacoCreationFailedException ex) {
-					JOptionPane.showMessageDialog(mainPanel, ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
-					throw new RuntimeException(ex);
-				}
+		btnConferma.addActionListener(e -> {
+			String nome = txtNome.getText();
+			float prezzo = (float)(double)spnPrezzo.getValue();
+			boolean prescrizione = chkPrescrizione.isSelected();
+			int scorte = (int)spnScorte.getValue();
+			ControllerCatalogo controllerCatalogo = ControllerCatalogo.getInstance();
+			try {
+				controllerCatalogo.aggiungiFarmaco(prezzo, prescrizione, nome, scorte);
+				JOptionPane.showMessageDialog(mainPanel, String.format("Farmaco '%s' aggiunto correttamente.", nome));
+				dispose();
+			} catch (FarmacoCreationFailedException ex) {
+				JOptionPane.showMessageDialog(mainPanel, ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
 			}
 		});
 		btnAnnulla.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));

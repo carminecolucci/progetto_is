@@ -23,7 +23,6 @@ import static org.junit.Assert.*;
 
 public class CreaOrdineTest {
 	private static ControllerOrdini controllerOrdini;
-	private static ControllerUtenti controllerUtenti;
 	private static ControllerCatalogo controllerCatalogo;
 	private String idOrdineSuccess;
 	private String idOrdineAzzeraScorte;
@@ -33,7 +32,7 @@ public class CreaOrdineTest {
 
 		// inizializzazione dei controller
 		controllerOrdini = ControllerOrdini.getInstance();
-		controllerUtenti = ControllerUtenti.getInstance();
+		ControllerUtenti controllerUtenti = ControllerUtenti.getInstance();
 		controllerCatalogo = ControllerCatalogo.getInstance();
 
 		String dateString = "2023-07-06";
@@ -44,7 +43,7 @@ public class CreaOrdineTest {
 		try {
 			controllerUtenti.registraCliente("testUserCreaOrdine", "MiaPassword", "Utente", "Di Prova", dataNascita, "cliente@creaordine.com");
 			controllerUtenti.loginUtente("testUserCreaOrdine", "MiaPassword");
-		} catch (RegistrationFailedException | DBException | LoginFailedException e) {
+		} catch (RegistrationFailedException | LoginFailedException e) {
 			System.err.println(e.getMessage());
 			esito = false;
 		}

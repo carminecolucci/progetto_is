@@ -110,6 +110,24 @@ public class OrdineDAO {
 	}
 
 	/**
+	 * Funzione di utilità che è stata aggiunta in fase di testing solo per rendere agevole la cancellazione dell'ordine.
+	 * @param id Id dell'ordine da eliminare.
+	 * @throws DBException Lanciata se non è possibile accedere al DB o se l'ordine da eliminare non è stato trovato.
+	 */
+	public static void deleteOrdine(String id) throws DBException {
+		String query = String.format("DELETE FROM ordini WHERE id = '%s';", id);
+		logger.info(query);
+		try {
+			DBManager.getInstance().executeQuery(query);
+		} catch (ClassNotFoundException | SQLException e) {
+			logger.warning(String.format("Errore durante l'eliminazione dal DB dell'ordine '%s'.", id));
+			throw new DBException(String.format("Errore durante l'eliminazione dal DB dell'ordine '%s'.", id));
+		}
+		// i farmaci presenti nell'ordine sono cancellati automaticamente dalla tabella ordini_farmaci
+		// poiché abbiamo utilizzato la politica ON DELETE CASCADE.
+	}
+
+	/**
 	 * Funzione di utilità per caricare tutti gli ordini dal DB che soddisfano una query
 	 * @param query da cercare nel DB
 	 * @return <code>List&lt;OrdineDAO&gt;</code> lista di ordini

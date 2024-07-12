@@ -29,7 +29,7 @@ public class CreaOrdinePage extends JFrame {
 				if (column == 4)
 					return true;
 				if (column == 3 ) {
-					return !"-".equals((String) getValueAt(row, column));
+					return !"-".equals(getValueAt(row, column));
 				}
 				return false;
 			}
@@ -132,9 +132,7 @@ public class CreaOrdinePage extends JFrame {
 			}
 		});
 
-		btnAnnulla.addActionListener(e -> {
-			dispose();
-		});
+		btnAnnulla.addActionListener(e -> dispose());
 
 		setVisible(true);
 	}

@@ -7,12 +7,12 @@ import farmacia.exceptions.DBException;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.BorderLayout;
+import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class VisualizzaStoricoOrdiniPage extends JFrame {
 	private final JTable table;
-	private final List<DTO> ordini;
 
 	public VisualizzaStoricoOrdiniPage() {
 		setTitle("Visualizza storico ordini");
@@ -49,10 +49,13 @@ public class VisualizzaStoricoOrdiniPage extends JFrame {
 		});
 
 		ControllerOrdini controllerOrdini = ControllerOrdini.getInstance();
+		List<DTO> ordini;
 		try {
 			ordini = controllerOrdini.visualizzaStoricoOrdini();
 		} catch (DBException ex) {
-			throw new RuntimeException(ex);
+			JOptionPane.showMessageDialog(this, ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+			dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+			return;
 		}
 
 		for (DTO ordine: ordini) {

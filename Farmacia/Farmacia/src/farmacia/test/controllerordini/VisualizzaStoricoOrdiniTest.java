@@ -20,8 +20,6 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-// DELETE from farmaci WHERE nome='test1' or nome='test2' or nome='test3'
-
 public class VisualizzaStoricoOrdiniTest {
 	private static ControllerOrdini controllerOrdini;
 	private static ControllerUtenti controllerUtenti;
@@ -40,7 +38,7 @@ public class VisualizzaStoricoOrdiniTest {
 		boolean esito = true;
 		try {
 			controllerUtenti.registraCliente("testUser", "MiaPassword", "Utente", "Di Prova", dataNascita, "cliente@gmail.com");
-		} catch (RegistrationFailedException | DBException e) {
+		} catch (RegistrationFailedException e) {
 			System.err.println(e.getMessage());
 			esito = false;
 		}
@@ -77,13 +75,13 @@ public class VisualizzaStoricoOrdiniTest {
 			controllerOrdini.creaOrdine(farmaciQuantita);
 
 			List<DTO> ordini = controllerOrdini.visualizzaStoricoOrdini();
-			DTO ordine = ordini.get(0);
-			assertTrue((ordine.get("cliente").equals("testUser")));
+			DTO ordine = ordini.getFirst();
+			assertEquals("testUser", ordine.get("cliente"));
 			Map<DTO, Integer> quantitaFarmaci = (Map<DTO, Integer>)ordine.get("quantitaFarmaci");
 			for (Map.Entry<DTO, Integer> entry: quantitaFarmaci.entrySet()) {
 				DTO farmaco  = entry.getKey();
 				int quantita = farmaciQuantita.get(farmaco.get("id"));
-				assertTrue(quantita == entry.getValue());
+				assertEquals(quantita, (int) entry.getValue());
 			}
 
 		} catch (LoginFailedException | FarmacoNotFoundException | FarmacoCreationFailedException |

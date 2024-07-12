@@ -2,13 +2,10 @@ package farmacia.boundary;
 
 import farmacia.controller.ControllerCatalogo;
 import farmacia.dto.DTO;
-import farmacia.exceptions.FarmacoCreationFailedException;
 import farmacia.exceptions.FarmacoNotFoundException;
 
 import javax.swing.*;
 import javax.swing.text.DefaultFormatter;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 
 public class ModificaFarmacoPage extends JFrame {
@@ -30,7 +27,7 @@ public class ModificaFarmacoPage extends JFrame {
 	public ModificaFarmacoPage(JFrame scegliFarmacoModificaPage, DTO farmaco) {
 
 		setTitle(String.format("Modifica farmaco '%s'", farmaco.get("nome")));
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		txtNome.setText((String)farmaco.get("nome"));
 		setSize(500,200);
 		setLocationRelativeTo(null);
@@ -45,21 +42,18 @@ public class ModificaFarmacoPage extends JFrame {
 
 		setVisible(true);
 
-		btnConferma.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String nome = txtNome.getText();
-				float prezzo = (float)(double)spnPrezzo.getValue();
-				boolean prescrizione = chkPrescrizione.isSelected();
-				ControllerCatalogo controllerCatalogo = ControllerCatalogo.getInstance();
-				try {
-					controllerCatalogo.modificaFarmaco((int)farmaco.get("id"), prezzo, prescrizione, nome, (int)farmaco.get("scorte"));
-					JOptionPane.showMessageDialog(mainPanel, String.format("Farmaco '%s' modificato correttamente.", nome));
-					dispose();
-					scegliFarmacoModificaPage.dispose();
-				} catch (FarmacoNotFoundException ex) {
-					throw new RuntimeException(ex);
-				}
+		btnConferma.addActionListener(e -> {
+			String nome = txtNome.getText();
+			float prezzo = (float)(double)spnPrezzo.getValue();
+			boolean prescrizione = chkPrescrizione.isSelected();
+			ControllerCatalogo controllerCatalogo = ControllerCatalogo.getInstance();
+			try {
+				controllerCatalogo.modificaFarmaco((int)farmaco.get("id"), prezzo, prescrizione, nome, (int)farmaco.get("scorte"));
+				JOptionPane.showMessageDialog(mainPanel, String.format("Farmaco '%s' modificato correttamente.", nome));
+				dispose();
+				scegliFarmacoModificaPage.dispose();
+			} catch (FarmacoNotFoundException ex) {
+				JOptionPane.showMessageDialog(mainPanel, ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
 			}
 		});
 		btnAnnulla.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));

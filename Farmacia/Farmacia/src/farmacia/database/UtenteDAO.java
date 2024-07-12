@@ -54,13 +54,12 @@ public class UtenteDAO {
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se l'utente non esiste.
 	 */
 	public UtenteDAO(String username) throws DBException {
-		int id = cercaInDB(username);
-		if (id == -1) {
+		int idUtente = cercaInDB(username);
+		if (idUtente == -1) {
 			throw new DBException(String.format("Utente '%s' non esistente", username));
 		}
 
-		this.id = id;
-		this.caricaDaDB(id);
+		this.caricaDaDB(idUtente);
 	}
 
 	/**

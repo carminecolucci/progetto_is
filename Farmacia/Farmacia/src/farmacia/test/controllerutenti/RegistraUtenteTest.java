@@ -39,7 +39,7 @@ public class RegistraUtenteTest {
 		boolean esito = true;
 		try {
 			controllerUtenti.registraCliente("user", "MiaPassword", "Utente", "Di Prova", dataNascita, "clienteeee@gmail.com");
-		} catch (RegistrationFailedException | DBException e) {
+		} catch (RegistrationFailedException e) {
 			System.err.println(e.getMessage());
 			esito = false;
 		}
@@ -55,7 +55,7 @@ public class RegistraUtenteTest {
 		boolean esito = true;
 		try {
 			controllerUtenti.registraCliente("user", "MiaPassword", "Utente", "Di Prova", dataNascita, "clienteeee@gmail.com");
-		} catch (RegistrationFailedException | DBException e) {
+		} catch (RegistrationFailedException e) {
 			System.err.println(e.getMessage());
 			esito = false;
 		}
@@ -64,7 +64,7 @@ public class RegistraUtenteTest {
 		// provo a registrare l'utente per la seconda volta con lo stesso username, con email diversa
 		try {
 			controllerUtenti.registraCliente("user", "MiaPassword", "Utente", "Di Prova", dataNascita, "pippo@gmail.com");
-		} catch (RegistrationFailedException | DBException e) {
+		} catch (RegistrationFailedException e) {
 			System.err.println(e.getMessage());
 			esito = false;
 		}
@@ -80,7 +80,7 @@ public class RegistraUtenteTest {
 		boolean esito = true;
 		try {
 			controllerUtenti.registraCliente("user", "MiaPassword", "Utente", "Di Prova", dataNascita, "clienteeee@gmail.com");
-		} catch (RegistrationFailedException | DBException e) {
+		} catch (RegistrationFailedException e) {
 			System.err.println(e.getMessage());
 			esito = false;
 		}
@@ -89,7 +89,7 @@ public class RegistraUtenteTest {
 		// provo a registrare l'utente per la seconda volta con la stessa email, con username diverso
 		try {
 			controllerUtenti.registraCliente("userNuovo", "MiaPassword", "Utente", "Di Prova", dataNascita, "clienteeee@gmail.com");
-		} catch (RegistrationFailedException | DBException e) {
+		} catch (RegistrationFailedException e) {
 			System.err.println(e.getMessage());
 			esito = false;
 		}

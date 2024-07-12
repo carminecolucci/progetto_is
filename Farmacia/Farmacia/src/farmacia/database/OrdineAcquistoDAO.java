@@ -86,6 +86,24 @@ public class OrdineAcquistoDAO {
 	}
 
 	/**
+	 * Funzione di utilità che è stata aggiunta in fase di testing solo per rendere agevole la cancellazione dell'ordine d'acquisto.
+	 * @param id Id dell'ordine da eliminare.
+	 * @throws DBException Lanciata se non è possibile accedere al DB o se l'ordine da eliminare non è stato trovato.
+	 */
+	public static void deleteOrdineAcquisto(String id) throws DBException {
+		String query = String.format("DELETE FROM ordini_acquisto WHERE id = '%s';", id);
+		logger.info(query);
+		try {
+			DBManager.getInstance().executeQuery(query);
+		} catch (ClassNotFoundException | SQLException e) {
+			logger.warning(String.format("Errore durante l'eliminazione dal DB dell'ordine '%s'.", id));
+			throw new DBException(String.format("Errore durante l'eliminazione dal DB dell'ordine '%s'.", id));
+		}
+		// i farmaci presenti nell'ordine sono cancellati automaticamente dalla tabella ordini_acquisto_farmaci
+		// poiché abbiamo utilizzato la politica ON DELETE CASCADE.
+	}
+
+	/**
 	 * Funzione privata che popola l'OrdineAcquistoDAO consultando il DB a partire dall'id.
 	 * @param id l'<code>id</code> dell'ordine di acquisto da cariacare.
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se l'ordine di acquisto non esiste.

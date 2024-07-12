@@ -43,9 +43,8 @@ public class ControllerUtenti {
 	 * @param email email dell'utente che vuole registrarsi.
 	 * @throws RegistrationFailedException quando <code>username</code> e/o <code>email</code> sono già presenti in
 	 * un altro utente registrato nella piattaforma.
-	 * @throws DBException
 	 */
-	public void registraCliente(String username, String password, String nome, String cognome, Date dataNascita, String email) throws RegistrationFailedException, DBException {
+	public void registraCliente(String username, String password, String nome, String cognome, Date dataNascita, String email) throws RegistrationFailedException {
 		EntityFarmacia farmacia = EntityFarmacia.getInstance();
 		farmacia.registraCliente(username, password, nome, cognome, dataNascita, email);
 	}
@@ -57,9 +56,8 @@ public class ControllerUtenti {
 	 * @param password password dell'utente che vuole loggarsi.
 	 * @throws LoginFailedException quando lo <code>username</code> dell'utente che cerca di loggarsi non esiste nella piattaforma
 	 * o la <code>password</code> inserita è sbagliata.
-	 * @throws DBException
 	 */
-	public void loginUtente(String username, String password) throws LoginFailedException, DBException {
+	public void loginUtente(String username, String password) throws LoginFailedException {
 		EntityFarmacia farmacia = EntityFarmacia.getInstance();
 		farmacia.loginUtente(username, password);
 	}

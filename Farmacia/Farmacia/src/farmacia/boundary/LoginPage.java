@@ -64,7 +64,7 @@ public class LoginPage extends JFrame {
 						break;
 				}
 				setVisible(false);
-			} catch (LoginFailedException | DBException ex) {
+			} catch (LoginFailedException ex) {
 				JOptionPane.showMessageDialog(loginPanel, ex.getMessage(), ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
 			}
 		});

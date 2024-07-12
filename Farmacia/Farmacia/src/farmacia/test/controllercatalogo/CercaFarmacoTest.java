@@ -37,7 +37,7 @@ public class CercaFarmacoTest {
 		DTO dto;
 		try {
 			dto = controllerCatalogo.cercaFarmaco("Clavulin");
-			assertTrue((float)dto.get("prezzo") == 10 && (boolean)dto.get("prescrizione") == false && ((String)dto.get("nome")).equals("Clavulin") && (int)dto.get("scorte") == 50);
+			assertTrue((float)dto.get("prezzo") == 10 && !((boolean) dto.get("prescrizione")) && dto.get("nome").equals("Clavulin") && (int)dto.get("scorte") == 50);
 		} catch (FarmacoNotFoundException e) {
 			System.err.println(e.getMessage());
 			esito = false;

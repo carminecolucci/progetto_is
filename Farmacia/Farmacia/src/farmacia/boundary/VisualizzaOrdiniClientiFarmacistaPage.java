@@ -6,8 +6,7 @@ import farmacia.exceptions.DBException;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -19,7 +18,6 @@ public class VisualizzaOrdiniClientiFarmacistaPage extends JFrame {
 	private JButton btnVisualizzaOrdine;
 
 	public VisualizzaOrdiniClientiFarmacistaPage() {
-
 		setTitle("Visualizza Ordini Clienti");
 		setSize(600, 400);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -51,23 +49,24 @@ public class VisualizzaOrdiniClientiFarmacistaPage extends JFrame {
 		try {
 			ordiniClienti = controllerOrdini.visualizzaOrdiniFarmacia();
 			String daRitirare;
-			for(DTO ordine : ordiniClienti) {
-				if((boolean)ordine.get("ritirato"))
+			for (DTO ordine : ordiniClienti) {
+				if ((boolean)ordine.get("ritirato"))
 					daRitirare = "Ritirato";
 				else
 					daRitirare = "Da ritirare";
 				tableModel.addRow(new Object[] {ordine.get("id"), ordine.get("cliente"), formatter.format(ordine.get("dataCreazione")), daRitirare, ordine.get("totale")});
 			}
 		} catch (DBException e) {
-			throw new RuntimeException(e);
+			JOptionPane.showMessageDialog(this, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+			dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+			return;
 		}
 
 		btnVisualizzaOrdine.addActionListener(e -> {
 			int selectedRow = tblOrdiniClienti.getSelectedRow();
 			String idOrdine = (String)ordiniClienti.get(selectedRow).get("id");
-			DTO ordineDaVisualizzare;
-			for(DTO ordine : ordiniClienti) {
-				if(ordine.get("id").equals(idOrdine))
+			for (DTO ordine : ordiniClienti) {
+				if (ordine.get("id").equals(idOrdine))
 					new VisualizzaOrdinePage(ordine);
 			}
 		});

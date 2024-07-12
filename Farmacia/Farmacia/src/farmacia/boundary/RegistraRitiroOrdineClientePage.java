@@ -7,6 +7,7 @@ import farmacia.exceptions.OrderNotFoundException;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +52,8 @@ public class RegistraRitiroOrdineClientePage extends JFrame {
 			}
 
 		} catch (DBException e) {
-			throw new RuntimeException(e);
+			JOptionPane.showMessageDialog(this, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+			dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 		}
 
 		selectionModel.addListSelectionListener(e -> {

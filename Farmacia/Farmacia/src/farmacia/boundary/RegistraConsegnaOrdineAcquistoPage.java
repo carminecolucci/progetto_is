@@ -2,14 +2,11 @@ package farmacia.boundary;
 
 import farmacia.controller.ControllerOrdini;
 import farmacia.dto.DTO;
-import farmacia.exceptions.DBException;
 import farmacia.exceptions.FarmacoNotFoundException;
 import farmacia.exceptions.OrderNotFoundException;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,13 +45,11 @@ public class RegistraConsegnaOrdineAcquistoPage extends JFrame {
 		List<DTO> ordiniAcquisto;
 		List<DTO> ordiniAcquistoNonRicevuti = new ArrayList<>();
 
-		List<String> idOrdiniAcquisto = new ArrayList<>();
 		ordiniAcquisto = controllerOrdini.visualizzaOrdiniAcquistoFarmacia();
 		for (DTO ordineAcquisto : ordiniAcquisto) {
 			if (!(boolean)ordineAcquisto.get("ricevuto")){
 				ordiniAcquistoNonRicevuti.add(ordineAcquisto);
 				String idOrdineAcquisto = (String)ordineAcquisto.get("id");
-				idOrdiniAcquisto.add(idOrdineAcquisto);
 				tableModel.addRow(new Object[] {idOrdineAcquisto, formatter.format(ordineAcquisto.get("dataCreazione"))});
 			}
 		}

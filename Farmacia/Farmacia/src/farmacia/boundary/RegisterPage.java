@@ -111,7 +111,7 @@ public class RegisterPage extends JFrame {
 			controllerUtenti.registraCliente(username, password, nome, cognome, dataNascita, email);
 			JOptionPane.showMessageDialog(mainPanel, "Registrazione Effettuata. Ora puoi effettuare il login", SUCCESS_TITLE, JOptionPane.PLAIN_MESSAGE);
 			dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-		} catch (RegistrationFailedException | DBException ex) {
+		} catch (RegistrationFailedException ex) {
 			JOptionPane.showMessageDialog(mainPanel, ex.getMessage(), ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
 		}
 	}

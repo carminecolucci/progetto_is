@@ -3,6 +3,7 @@ package farmacia.test.controllerordini;
 import farmacia.controller.ControllerCatalogo;
 import farmacia.controller.ControllerOrdini;
 import farmacia.database.FarmacoDAO;
+import farmacia.database.OrdineAcquistoDAO;
 import farmacia.dto.DTO;
 import farmacia.exceptions.*;
 import static farmacia.util.Utility.contains;
@@ -83,6 +84,6 @@ public class GeneraOrdineAcquistoFarmacistaTest {
 	public void tearDown() throws DBException {
 		FarmacoDAO.deleteFarmaco("FarmacoOrdineAcquisto1");
 		FarmacoDAO.deleteFarmaco("FarmacoOrdineAcquisto2");
-		// TODO: aggiungere codice per eliminare un ordine di acquisto a partire dal suo ID
+		OrdineAcquistoDAO.deleteOrdineAcquisto(idOrdineSuccess);
 	}
 }

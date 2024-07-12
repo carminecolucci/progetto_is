@@ -17,7 +17,7 @@ import javax.swing.*;
  */
 public class DateTextField extends JTextField {
 
-	private static String DEFAULT_DATE_FORMAT = "dd/MM/yyyy";
+	private static final String DEFAULT_DATE_FORMAT = "dd/MM/yyyy";
 	private static final int DIALOG_WIDTH = 200;
 	private static final int DIALOG_HEIGHT = 200;
 

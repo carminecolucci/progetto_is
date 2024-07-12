@@ -4,7 +4,6 @@ import farmacia.boundary.creaordine.QuantitaCellEditor;
 import farmacia.controller.ControllerCatalogo;
 import farmacia.controller.ControllerOrdini;
 import farmacia.dto.DTO;
-import farmacia.exceptions.DBException;
 import farmacia.exceptions.OrderCreationFailedException;
 
 import javax.swing.*;
@@ -33,10 +32,7 @@ public class GeneraOrdineAcquistoFarmacistaPage extends JFrame {
 		DefaultTableModel model = new DefaultTableModel(new Object[][]{}, new String[]{"Nome", "Quantità"}){
 			@Override
 			public boolean isCellEditable(int row, int column) {
-				if (column == 0){
-					return false;
-				}
-				return true;
+				return column != 0;
 			}
 		};
 		tblFarmaci.setModel(model);
@@ -71,7 +67,6 @@ public class GeneraOrdineAcquistoFarmacistaPage extends JFrame {
 			int numeroFarmaci = 0;
 			Map<Integer, Integer> farmaciOrdineAcquisto = new HashMap<>();
 			for (int row = 0; row < tblFarmaci.getRowCount(); row++) {
-				String nome = (String)tblFarmaci.getValueAt(row, 0);
 				Integer quantita = (Integer)tblFarmaci.getValueAt(row, 1);
 				if (quantita > 0) {
 					numeroFarmaci += 1;
