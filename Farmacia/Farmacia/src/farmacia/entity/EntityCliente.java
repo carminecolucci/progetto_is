@@ -59,10 +59,14 @@ public class EntityCliente extends EntityUtente {
 	/**
 	 * Funzione che permette di creare un nuovo Ordine.
 	 * @param farmaciQuantita una serie di coppie (idFarmaco, quantita).
-	 * @throws OrderCreationFailedException lanciata quando un farmaco non viene trovato o quando le scorte sono insufficienti
+	 * @throws OrderCreationFailedException lanciata quando un farmaco non viene trovato o quando le scorte sono
+	 * insufficienti, o quando l'ordine è vuoto
 	 * @return l'<code>id</code> dell'ordine appena creato.
 	 */
 	public String creaOrdine(Map<Integer, Integer> farmaciQuantita) throws OrderCreationFailedException {
+		if (farmaciQuantita.isEmpty())
+			throw new OrderCreationFailedException("Ordine vuoto");
+
 		EntityCatalogo catalogo = EntityCatalogo.getInstance();
 		if (!catalogo.checkScorte(farmaciQuantita)) {
 			throw new OrderCreationFailedException("Ordine non creato per mancanza scorte");
