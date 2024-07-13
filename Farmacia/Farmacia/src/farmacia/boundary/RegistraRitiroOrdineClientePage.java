@@ -22,7 +22,7 @@ public class RegistraRitiroOrdineClientePage extends JFrame {
 
 	public RegistraRitiroOrdineClientePage() {
 		setTitle("Registra ritiro ordine cliente");
-		setSize(600, 400);
+		setSize(1000, 400);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setContentPane(mainPanel);

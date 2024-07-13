@@ -19,7 +19,7 @@ public class VisualizzaOrdiniClientiFarmacistaPage extends JFrame {
 
 	public VisualizzaOrdiniClientiFarmacistaPage() {
 		setTitle("Visualizza Ordini Clienti");
-		setSize(600, 400);
+		setSize(1000, 400);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setContentPane(mainPanel);

@@ -23,6 +23,7 @@ public class HomePageCliente extends JFrame {
 		setLocationRelativeTo(null);
 		setContentPane(homePanel);
 		setVisible(true);
+		setResizable(false);
 		lblBenvenuto.setText(String.format("Benvenuto %s %s", ((String)cliente.get("nome")).toUpperCase(Locale.ITALY), ((String)cliente.get("cognome")).toUpperCase(Locale.ITALY)));
 
 		btnVisualizzaCatalogo.addActionListener(e -> new VisualizzaCatalogoPage());

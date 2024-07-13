@@ -19,11 +19,12 @@ public class LoginPage extends JFrame {
 	private JButton btnRegistrati;
 
 	public LoginPage() {
-		setSize(650, 750);
+		setSize(500, 750);
 		setTitle("Schermata di login");
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setContentPane(loginPanel);
+		setResizable(false);
 
 		btnLogin.addActionListener(e -> {
 			ControllerUtenti controllerUtenti = ControllerUtenti.getInstance();
