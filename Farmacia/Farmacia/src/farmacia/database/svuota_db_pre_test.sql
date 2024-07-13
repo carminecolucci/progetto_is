@@ -4,4 +4,5 @@ DELETE from ordini;
 DELETE from ordini_acquisto;
 DELETE from farmaci;
 DELETE from utenti;
-INSERT INTO utenti (username, password, nome, cognome, dataNascita, tipo, email) VALUES ("farmacista", "farmacista", "farmacista", "farmacista", "2002-12-03", 1, "farmacista@farmacia.com");
+INSERT INTO utenti (username, password, nome, cognome, dataNascita, tipo, email) VALUES ("direttore", "direttore", "Gerry", "Scotti", "1956-08-07", 2, "gerry@farmacia.com");
+INSERT INTO utenti (username, password, nome, cognome, dataNascita, tipo, email) VALUES ("farmacista", "farmacista", "Paolo", "Bonolis", "1961-06-14", 1, "paolo@farmacia.com");

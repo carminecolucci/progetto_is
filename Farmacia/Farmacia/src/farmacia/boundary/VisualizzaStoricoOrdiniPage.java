@@ -19,6 +19,7 @@ public class VisualizzaStoricoOrdiniPage extends JFrame {
 		setSize(600, 400);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
+		setResizable(false);
 
 		// Creazione della tabella con un DefaultTableModel vuoto
 		DefaultTableModel tableModel = new DefaultTableModel(new Object[][]{}, new String[]{"ID", "Data di creazione", "Stato ordine", "Totale da pagare"}) {

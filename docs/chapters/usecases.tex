@@ -77,7 +77,7 @@
 		ModificaFarmaco & Farmacista & -- & {Include \\ CercaFarmaco} & \Req{rf}{03} \\
 		EliminaFarmaco & Farmacista & -- & {Include \\ CercaFarmaco} & \Req{rf}{04} \\
 		RegistraCliente & {Cliente \\ non registrato} & -- & -- & \Req{rf}{05} \\
-		CreaOrdine & Cliente & -- & {Include \\ CercaFarmaco} & {\Req{rf}{07} \\ \Req{rf}{08} \\ \Req{rf}{09} \\ \Req{rf}{17}} \\
+		CreaOrdine & Cliente & -- & {Include \\ VisualizzaCatalogo} & {\Req{rf}{07} \\ \Req{rf}{08} \\ \Req{rf}{09} \\ \Req{rf}{17}} \\
 		GeneraOrdineAcquisto & Cliente & -- & Incluso in CreaOrdine & \Req{rf}{10} \\
 		VisualizzaOrdiniAcquisto & Farmacista & -- & -- & \Req{rf}{11} \\
 		RegistraConsegnaOrdineAcquisto & Farmacista & -- & {Include \\ VisualizzaOrdiniAcquisto} & \Req{rf}{12} \\

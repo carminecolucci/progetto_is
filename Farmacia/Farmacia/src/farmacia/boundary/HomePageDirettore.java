@@ -14,7 +14,7 @@ public class HomePageDirettore extends JFrame {
 
 	public HomePageDirettore(DTO direttore) {
 		setTitle("Homepage Direttore");
-		setSize(600, 400);
+		setSize(500, 400);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setContentPane(mainPanel);

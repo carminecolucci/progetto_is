@@ -40,7 +40,7 @@ public class GeneraReportPage extends JFrame {
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setTitle("Genera report");
-		setResizable(true);
+		setResizable(false);
 
 		txtDataInizio = new DateTextField();
 		txtDataFine = new DateTextField();

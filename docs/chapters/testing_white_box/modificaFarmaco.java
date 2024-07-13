@@ -7,7 +7,6 @@ public void modificaFarmaco(int id, float prezzo, boolean prescrizione, String n
                 farmaco.setPrescrizione(prescrizione);
                 farmaco.setNome(nome);
                 farmaco.setScorte(scorte);
-                break;
             }
         }
     } catch (DBException e) {
