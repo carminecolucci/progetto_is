@@ -1,4 +1,4 @@
-package farmacia.test.controllerreport;
+package farmacia.testcontrollerreport;
 
 import farmacia.controller.ControllerCatalogo;
 import farmacia.controller.ControllerOrdini;
@@ -122,12 +122,12 @@ public class GeneraReportTest {
 
 			assertEquals(incassoBanco, totaleBancoExpected, 0.01);
 			assertEquals(incassoPrescrizione, totalePrescrizioneExpected, 0.01);
-			assert(unitaBancoExpected == unitaBanco);
-			assert(unitaPrescrizione == unitaPrescrizioneExpected);
-			assert(nomeBanco.equals(nomeBancoExpected));
-			assert(nomePrescrizione.equals(nomePrescrizioneExpected));
+			assertEquals(nomeBanco, nomeBancoExpected);
+			assertEquals(nomePrescrizione, nomePrescrizioneExpected);
+			assertEquals(unitaBanco, unitaBancoExpected);
+			assertEquals(unitaPrescrizione, unitaPrescrizioneExpected);
 		} catch (ReportException e) {
-			fail("");
+			fail("Errore nella generazione del report: " + e.getMessage());
 		}
 
 	}
