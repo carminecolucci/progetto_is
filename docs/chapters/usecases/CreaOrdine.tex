@@ -9,7 +9,7 @@
 		{Sequenza di eventi \\ principale} &
 			\begin{enumerate}
 				\item Il cliente richiede al sistema di creare un ordine
-				\item Il sistema mostra a video la lista dei farmaci
+				\item include (VisualizzaCatalogo)
 				\item Finché il cliente vuole aggiungere farmaci all'ordine
 				\begin{enumerate}[label*=\arabic*.]
 					\item Se viene richiesto un farmaco non da banco, il sistema chiede conferma del possesso della prescrizione
@@ -28,18 +28,18 @@
 					\item Il sistema elimina l'ordine
 				\end{enumerate}
 			\end{enumerate} \\
-		Post-condizioni & È stato correttamente generato un ordine \\
+		Post-condizioni & L'ordine viene correttamente generato \\
 		Casi d'uso correlati & Nessuno \\
 		{Sequenza di eventi \\ alternativa} &
 			\begin{enumerate}
 				\item Al punto 3.1, il sistema mostra un messaggio di errore se il cliente non è in possesso della prescrizione
 				\begin{enumerate}[label*=\arabic*.]
-					\item Il farmaco non viene aggiunto all'ordine, il caso d'uso riprende dal punto 3
+					\item L'ordine non viene creato
 				\end{enumerate}
 				\item Al punto 3.3, il sistema rileva che le scorte non sono sufficienti
-					\begin{enumerate}[label*=\arabic*.]
-						\item Il farmaco viene rimosso dall'ordine
-					\end{enumerate}
+				\begin{enumerate}[label*=\arabic*.]
+					\item L'ordine non viene creato
+				\end{enumerate}
 			\end{enumerate} \\
 	\end{scenery}
 \end{table}

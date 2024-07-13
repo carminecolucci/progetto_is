@@ -74,11 +74,11 @@
 		Caso d'uso & Attori primari & {Attori \\ secondari} & Incl. / Ext. & Requisito \\
 		VisualizzaCatalogo & UtenteRegistrato & -- & -- & {\Req{rf}{01} \\ \Req{rf}{06}} \\
 		AggiungiFarmaco & Farmacista & -- & -- & \Req{rf}{02} \\
-		ModificaFarmaco & Farmacista & -- & {Include \\ CercaFarmaco} & \Req{rf}{03} \\
-		EliminaFarmaco & Farmacista & -- & {Include \\ CercaFarmaco} & \Req{rf}{04} \\
+		ModificaFarmaco & Farmacista & -- & {Include \\ VisualizzaCatalogo} & \Req{rf}{03} \\
+		EliminaFarmaco & Farmacista & -- & {Include \\ VisualizzaCatalogo} & \Req{rf}{04} \\
 		RegistraCliente & {Cliente \\ non registrato} & -- & -- & \Req{rf}{05} \\
 		CreaOrdine & Cliente & -- & {Include \\ VisualizzaCatalogo} & {\Req{rf}{07} \\ \Req{rf}{08} \\ \Req{rf}{09} \\ \Req{rf}{17}} \\
-		GeneraOrdineAcquisto & Cliente & -- & Incluso in CreaOrdine & \Req{rf}{10} \\
+		GeneraOrdineAcquisto & Cliente & -- & Estende CreaOrdine & \Req{rf}{10} \\
 		VisualizzaOrdiniAcquisto & Farmacista & -- & -- & \Req{rf}{11} \\
 		RegistraConsegnaOrdineAcquisto & Farmacista & -- & {Include \\ VisualizzaOrdiniAcquisto} & \Req{rf}{12} \\
 		GeneraReport & Direttore & -- & -- & \Req{rf}{13} \\
@@ -86,7 +86,7 @@
 		RitiraOrdine & Cliente & Farmacista & {Include \\ VisualizzaOrdiniFarmacia} & \Req{rf}{15} \\
 		VisualizzaStoricoOrdini & Cliente & -- & -- & \Req{rf}{16} \\
 		CercaFarmaco & UtenteRegistrato & -- & -- & \Req{rf}{18} \\
-		GeneraOrdineAcquistoFarmacista & Farmacista & -- & -- & \Req{rf}{19}
+		GeneraOrdineAcquistoFarmacista & Farmacista & -- & {Include \\ VisualizzaCatalogo} & \Req{rf}{19}
 	\end{tblr}
 \end{table}
 
@@ -98,21 +98,37 @@
 
 \section{Scenari}
 
-\IncludeTable{chapters/usecases/RegistraCliente}
-\IncludeTable{chapters/usecases/VisualizzaCatalogo}
-\IncludeTable{chapters/usecases/AggiungiFarmaco}
-\IncludeTable{chapters/usecases/CercaFarmaco}
-\IncludeTable{chapters/usecases/ModificaFarmaco}
-\IncludeTable{chapters/usecases/EliminaFarmaco}
-\IncludeTable{chapters/usecases/VisualizzaOrdiniAcquisto}
-\IncludeTable{chapters/usecases/RegistraConsegnaOrdineAcquisto}
-\IncludeTable{chapters/usecases/VisualizzaOrdiniFarmacia}
-\IncludeTable{chapters/usecases/RitiraOrdine}
-\IncludeTable{chapters/usecases/VisualizzaStoricoOrdini}
-\IncludeTable{chapters/usecases/CreaOrdine}
-\IncludeTable{chapters/usecases/GeneraOrdineAcquisto}
-\IncludeTable{chapters/usecases/GeneraOrdineAcquistoFarmacista}
-\IncludeTable{chapters/usecases/GeneraReport}
+\input{chapters/usecases/RegistraCliente}
+\input{chapters/usecases/VisualizzaCatalogo}
+\input{chapters/usecases/AggiungiFarmaco}
+\input{chapters/usecases/CercaFarmaco}
+\input{chapters/usecases/ModificaFarmaco}
+\input{chapters/usecases/EliminaFarmaco}
+\input{chapters/usecases/VisualizzaOrdiniAcquisto}
+\input{chapters/usecases/RegistraConsegnaOrdineAcquisto}
+\input{chapters/usecases/VisualizzaOrdiniFarmacia}
+\input{chapters/usecases/RitiraOrdine}
+\input{chapters/usecases/VisualizzaStoricoOrdini}
+\input{chapters/usecases/CreaOrdine}
+\input{chapters/usecases/GeneraOrdineAcquisto}
+\input{chapters/usecases/GeneraOrdineAcquistoFarmacista}
+\input{chapters/usecases/GeneraReport}
+
+% \IncludeTable{chapters/usecases/RegistraCliente}
+% \IncludeTable{chapters/usecases/VisualizzaCatalogo}
+% \IncludeTable{chapters/usecases/AggiungiFarmaco}
+% \IncludeTable{chapters/usecases/CercaFarmaco}
+% \IncludeTable{chapters/usecases/ModificaFarmaco}
+% \IncludeTable{chapters/usecases/EliminaFarmaco}
+% \IncludeTable{chapters/usecases/VisualizzaOrdiniAcquisto}
+% \IncludeTable{chapters/usecases/RegistraConsegnaOrdineAcquisto}
+% \IncludeTable{chapters/usecases/VisualizzaOrdiniFarmacia}
+% \IncludeTable{chapters/usecases/RitiraOrdine}
+% \IncludeTable{chapters/usecases/VisualizzaStoricoOrdini}
+% \IncludeTable{chapters/usecases/CreaOrdine}
+% \IncludeTable{chapters/usecases/GeneraOrdineAcquisto}
+% \IncludeTable{chapters/usecases/GeneraOrdineAcquistoFarmacista}
+% \IncludeTable{chapters/usecases/GeneraReport}
 
 \pagebreak
 

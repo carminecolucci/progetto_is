@@ -9,8 +9,15 @@
 	{Sequenza di eventi \\ principale} &
 		\begin{enumerate}
 			\item L'utente richiede al sistema di cercare un farmaco nel catalogo
-			\item L'utente inserisce i parametri di ricerca
-			\item Il sistema mostra il farmaco ricercato
+			\item L'utente inserisce il nome del farmaco
+			\item Se il farmaco è presente nel catalogo
+			\begin{enumerate}[label*=\arabic*.]
+				\item Il sistema mostra le informazioni del farmaco
+			\end{enumerate}
+			\item Altrimenti
+			\begin{enumerate}[label*=\arabic*.]
+				\item Il sistema mostra un messaggio di errore
+			\end{enumerate}
 		\end{enumerate} \\
 	Post-condizioni & -- \\
 	Casi d'uso correlati & Nessuno \\

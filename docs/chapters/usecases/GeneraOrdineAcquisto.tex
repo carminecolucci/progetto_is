@@ -5,16 +5,16 @@
 		Attore primario & Cliente \\
 		Attore secondario & -- \\
 		Descrizione & Il sistema genera un ordine di fornitura \\
-		Pre-condizioni & Le scorte di uno o più prodotti sono terminate \\
+		Pre-condizioni & Le scorte di uno o più prodotti terminano in seguito ad un ordine \\
 		{Sequenza di eventi \\ principale} &
 			\begin{enumerate}
-				\item Per ogni farmaco senza scorte
+				\item Per ogni farmaco terminato 
 				\begin{enumerate}[label*=\arabic*.]
 					\item Il sistema aggiunge il farmaco all'ordine d'acquisto con una quantità di default
 				\end{enumerate}
 				\item Il sistema crea l'ordine d'acquisto
 			\end{enumerate} \\
-		Post-condizioni & Viene generato un nuovo ordine d'acquisto \\
+		Post-condizioni & L'ordine di acquisto viene generato con successo \\
 		Casi d'uso correlati & CreaOrdine \\
 		{Sequenza di eventi \\ alternativa} & --
 	\end{scenery}
