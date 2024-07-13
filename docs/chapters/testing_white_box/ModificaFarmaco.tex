@@ -8,9 +8,9 @@
 			measure=vbox
 		}
 		{Test \\ Case \\ ID} & Descrizione & {Cammino \\ Coperto} & Pre-condizioni & Input & Esito \\
-		1 & Farmaco non trovato & 0-1 & Non deve esistere il farmaco inserito & {Nome: Supradyn \\ Prezzo: 8.50 \euro \\ Scorte: 100 \\ Prescrizione: \texttt{False}} &
-        Viene lanciata l'eccezione FarmacoNotFoundException \\
-		2 & Il catalogo contiene un solo farmaco e non è quello da modificare & 0-1-2-4-1 & -- & -- & Cammino non percorribile \\
-		3 & Il farmaco esiste ed è il primo nel catalogo & 0-1-2-3-4-1 & Il farmaco esiste ed è il primo nel catalogo & {Nome: Plasil \\ Prezzo: 11.50 \euro \\ Scorte: 30 \\ Prescrizione: \texttt{True}} & Farmaco modificato \\
+		1 & Il farmaco è presente nel DB ma non nella collection locale, che risulta vuota & 0-1 & Il farmaco è presente nel DB ma non nella collection locale & -- &
+       	Cammino non percorribile: la collection locale è sempre sincronizzata con il DB \\
+		2 & La collection locale ha un solo farmaco che non è quello da modificare & 0-1-2-4-1 & -- & -- & Cammino non percorribile: se il farmaco è presente nel DB, deve essere presente anche nella collection locale \\
+		3 & Il farmaco esiste & 0-1-2-3-4-1 & Il farmaco esiste & {Nome: Plasil \\ Prezzo: 11.50 \euro \\ Scorte: 30 \\ Prescrizione: \texttt{True}} & Farmaco modificato \\
 	\end{tblr}
 \end{table}

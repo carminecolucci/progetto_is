@@ -1,5 +1,6 @@
 package farmacia.test.controllercatalogo;
 
+import farmacia.controller.ControllerCatalogo;
 import farmacia.database.FarmacoDAO;
 import farmacia.entity.EntityCatalogo;
 import farmacia.exceptions.DBException;
@@ -11,11 +12,11 @@ import static org.junit.Assert.assertTrue;
 
 public class AggiungiFarmacoTest {
 
-	private static EntityCatalogo catalogo;
+	private static ControllerCatalogo catalogo;
 
 	@BeforeClass
 	public static void setUpBeforeClass() {
-		catalogo = EntityCatalogo.getInstance();
+		catalogo = ControllerCatalogo.getInstance();
 	}
 
 	@After
