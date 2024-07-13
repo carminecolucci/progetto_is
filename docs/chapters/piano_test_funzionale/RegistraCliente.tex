@@ -5,12 +5,7 @@
 \begin{table}[!hbp]
 	\centering
 	\footnotesize
-	\begin{tblr}{
-		colspec = XXXXXX,
-		hlines, vlines,
-		row{1} = {font=\bfseries},
-		measure=vbox, stretch=-1
-		}
+	\begin{partest}{colspec = XXXXXX}
 		Nome & Cognome & Username & Password & Email & DataNascita \\
 		\begin{itemize}[leftmargin=*]
 			\item Stringa di lunghezza $\leq$ 45
@@ -43,7 +38,7 @@
 			\item Data con formato valido (gg-mm-aaaa)
 			\item Data con formato non valido \texttt{[ERROR]}
 		\end{itemize}
-	\end{tblr}
+	\end{partest}
 \end{table}
 
 \noindent Il numero di test da effettuarsi senza particolari vincoli è: $3 \cdot 3 \cdot 4 \cdot 3 \cdot 4 \cdot 2 = 864$.
@@ -57,135 +52,37 @@
 \begin{table}[!hbp]
 	\centering
 	\footnotesize
-	\begin{tblr}{
-			colspec = lXXXlXX,
-			hlines, vlines,
-			row{1} = {font=\bfseries},
-			measure=vbox
-		}
+	\begin{testsuite}{colspec = lXXXlXX}
 		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-condizioni \\ Attese} \\
-		1 &
-		Tutti gli input validi &
-		Nome, Cognome, Username, Password, Email, DataNascita validi &
-		Il cliente non è ancora registrato nel sistema &
-		{Nome: Mario \\ Cognome: Rossi \\ Username: mariorossi \\ Password: miapassword \\ Email: mariorossi@gmail.com \\ DataNascita: 22-06-1989} &
-		Registrazione effettuata & Il cliente è stato correttamente registrato nel sistema \\
-		2 &
-		Nome $>$ 45 caratteri &
-		Nome $>$ 45 caratteri \texttt{[ERROR]}, Cognome, Username, Password, Email, DataNascita validi &
-		-- &
-		{Nome: \dots \\ Cognome: Rossi \\ Username: mariorossi \\ Password: miapassword \\ Email: mariorossi@gmail.com \\ DataNascita: 22-06-1989} &
-		Nome troppo lungo &
-		-- \\
-		3 &
-		Nome assente &
-		Nome assente \texttt{[ERROR]}, Cognome, Username, Password, Email, DataNascita validi &
-		-- &
-		{Nome: \\ Cognome: Rossi \\ Username: mariorossi \\ Password: miapassword \\ Email: mariorossi@gmail.com \\ DataNascita: 22-06-1989} &
-		Inserire un nome &
-		-- \\
-	\end{tblr}
+		1 & Tutti gli input validi & Nome, Cognome, Username, Password, Email, DataNascita validi & Il cliente non è ancora registrato nel sistema & {Nome: Mario \\ Cognome: Rossi \\ Username: mariorossi \\ Password: miapassword \\ Email: mariorossi@gmail.com \\ DataNascita: 22-06-1989} & Registrazione effettuata & Il cliente è stato correttamente registrato nel sistema \\
+		2 & Nome $>$ 45 caratteri & Nome $>$ 45 caratteri \texttt{[ERROR]}, Cognome, Username, Password, Email, DataNascita validi & -- & {Nome: \dots \\ Cognome: Rossi \\ Username: mariorossi \\ Password: miapassword \\ Email: mariorossi@gmail.com \\ DataNascita: 22-06-1989} & Nome troppo lungo & -- \\
+		3 & Nome assente & Nome assente \texttt{[ERROR]}, Cognome, Username, Password, Email, DataNascita validi & -- & {Nome: \\ Cognome: Rossi \\ Username: mariorossi \\ Password: miapassword \\ Email: mariorossi@gmail.com \\ DataNascita: 22-06-1989} & Inserire un nome & -- \\
+	\end{testsuite}
 \end{table}
 
 \begin{table}[!ht]
 	\centering
 	\footnotesize
-	\begin{tblr}{
-		colspec = lXXXlXX,
-		hlines, vlines,
-		row{1} = {font=\bfseries},
-		measure=vbox
-		}
-		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-condizioni \\ Attese} \\
-		4 &
-		Cognome $>$ 45 caratteri &
-		Cognome $>$ 45 caratteri \texttt{[ERROR]}, Nome, Username, Password, Email, DataNascita validi &
-		-- &
-		{Nome: Mario \\ Cognome: \dots \\ Username: mariorossi \\ Password: miapassword \\ Email: mariorossi@gmail.com \\ DataNascita: 22-06-1989} &
-		Cognome troppo lungo &
-		-- \\
-		5 &
-		Cognome assente &
-		Cognome assente \texttt{[ERROR]}, Nome, Username, Password, Email, DataNascita validi &
-		-- &
-		{Nome: Mario \\ Cognome: \\ Username: mariorossi \\ Password: miapassword \\ Email: mariorossi@gmail.com \\ DataNascita: 22-06-1989} &
-		Inserire un cognome &
-		-- \\
-		6 &
-		Username $>$ 45 caratteri &
-		Username $>$ 45 caratteri \texttt{[ERROR]}, Nome, Cognome, Password, Email, DataNascita validi &
-		-- &
-		{Nome: Mario \\ Cognome: Rossi \\ Username: \dots \\ Password: miapassword \\ Email: mariorossi@gmail.com \\ DataNascita: 22-06-1989} &
-		Username troppo lungo &
-		-- \\
-		7 &
-		Username assente &
-		Username assente \texttt{[ERROR]}, Nome, Cognome, Password, Email, DataNascita validi &
-		-- &
-		{Nome: Mario \\ Cognome: Rossi \\ Username: \\ Password: miapassword \\ Email: mariorossi@gmail.com \\ DataNascita: 22-06-1989} &
-		Inserire un username &
-		-- \\
-		8 &
-		Password $<$ 8 caratteri &
-		Password $<$ 8 caratteri \texttt{[ERROR]}, Nome, Cognome, Username, Email, DataNascita validi &
-		-- &
-		{Nome: Mario \\ Cognome: Rossi \\ Username: mariorossi \\ Password: prova \\ Email: mariorossi@gmail.com \\ DataNascita: 22-06-1989} &
-		Password troppo corta &
-		-- \\
-		9 &
-		Password $>$ 45 caratteri &
-		Password $>$ 45 caratteri \texttt{[ERROR]}, Nome, Cognome, Username, Email, DataNascita validi &
-		-- &
-		{Nome: Mario \\ Cognome: Rossi \\ Username: mariorossi \\ Password: \dots \\ Email: mariorossi@gmail.com \\ DataNascita: 22-06-1989} &
-		Password troppo lunga &
-		-- \\
-		10 &
-		Email $>$ 45 caratteri &
-		Email $>$ 45 caratteri \texttt{[ERROR]}, Nome, Cognome, Username, Password, DataNascita validi &
-		-- &
-		{Nome: Mario \\ Cognome: Rossi \\ Username: mariorossi \\ Password: miapassword \\ Email: \dots \\ DataNascita: 22-06-1989} &
-		Email troppo lunga &
-		-- \\
-		11 &
-		Email assente &
-		Email assente \texttt{[ERROR]}, Nome, Cognome, Username, Password, DataNascita validi &
-		-- &
-		{Nome: Mario \\ Cognome: Rossi \\ Username: \\ Password: miapassword \\ Email: \\ DataNascita: 22-06-1989} &
-		Inserire un'email &
-		-- \\
-		12 &
-		Formato DataNascita non valida &
-		Formato DataNascita non valida \texttt{[ERROR]}, Nome, Cognome, Username, Password, Email validi &
-		-- &
-		{Nome: Mario \\ Cognome: Rossi \\ Username: mariorossi \\ Password: miapassword \\ Email: mariorossi@gmail.com \\ DataNascita: 1989-06-22} &
-		Formato data non valido &
-		-- \\
-	\end{tblr}
+	\begin{testsuite}{colspec = lXXXlXl}
+		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-\\condizioni \\ Attese} \\
+		4 & Cognome $>$ 45 caratteri & Cognome $>$ 45 caratteri \texttt{[ERROR]}, Nome, Username, Password, Email, DataNascita validi & -- & {Nome: Mario \\ Cognome: \dots \\ Username: mariorossi \\ Password: miapassword \\ Email: mariorossi@gmail.com \\ DataNascita: 22-06-1989} & Cognome troppo lungo & -- \\
+		5 & Cognome assente & Cognome assente \texttt{[ERROR]}, Nome, Username, Password, Email, DataNascita validi & -- & {Nome: Mario \\ Cognome: \\ Username: mariorossi \\ Password: miapassword \\ Email: mariorossi@gmail.com \\ DataNascita: 22-06-1989} & Inserire un cognome & -- \\
+		6 & Username $>$ 45 caratteri & Username $>$ 45 caratteri \texttt{[ERROR]}, Nome, Cognome, Password, Email, DataNascita validi & -- & {Nome: Mario \\ Cognome: Rossi \\ Username: \dots \\ Password: miapassword \\ Email: mariorossi@gmail.com \\ DataNascita: 22-06-1989} & Username troppo lungo & -- \\
+		7 & Username assente & Username assente \texttt{[ERROR]}, Nome, Cognome, Password, Email, DataNascita validi & -- & {Nome: Mario \\ Cognome: Rossi \\ Username: \\ Password: miapassword \\ Email: mariorossi@gmail.com \\ DataNascita: 22-06-1989} & Inserire un username & -- \\
+		8 & Password $<$ 8 caratteri & Password $<$ 8 caratteri \texttt{[ERROR]}, Nome, Cognome, Username, Email, DataNascita validi & -- & {Nome: Mario \\ Cognome: Rossi \\ Username: mariorossi \\ Password: prova \\ Email: mariorossi@gmail.com \\ DataNascita: 22-06-1989} & Password troppo corta & -- \\
+		9 & Password $>$ 45 caratteri & Password $>$ 45 caratteri \texttt{[ERROR]}, Nome, Cognome, Username, Email, DataNascita validi & -- & {Nome: Mario \\ Cognome: Rossi \\ Username: mariorossi \\ Password: \dots \\ Email: mariorossi@gmail.com \\ DataNascita: 22-06-1989} & Password troppo lunga & -- \\
+		10 & Email $>$ 45 caratteri & Email $>$ 45 caratteri \texttt{[ERROR]}, Nome, Cognome, Username, Password, DataNascita validi & -- & {Nome: Mario \\ Cognome: Rossi \\ Username: mariorossi \\ Password: miapassword \\ Email: \dots \\ DataNascita: 22-06-1989} & Email troppo lunga & -- \\
+		11 & Email assente & Email assente \texttt{[ERROR]}, Nome, Cognome, Username, Password, DataNascita validi & -- & {Nome: Mario \\ Cognome: Rossi \\ Username: \\ Password: miapassword \\ Email: \\ DataNascita: 22-06-1989} & Inserire un'email & -- \\
+		12 & Formato DataNascita non valido & Formato DataNascita non valido \texttt{[ERROR]}, Nome, Cognome, Username, Password, Email validi & -- & {Nome: Mario \\ Cognome: Rossi \\ Username: mariorossi \\ Password: miapassword \\ Email: mariorossi@gmail.com \\ DataNascita: 1989-06-22} & Formato data non valido & -- \\
+	\end{testsuite}
 \end{table}
 
-\begin{table}[t]
+\begin{table}[!ht]
 	\centering
 	\footnotesize
-	\begin{tblr}{
-		colspec = lXXXlXX,
-		hlines, vlines,
-		row{1} = {font=\bfseries},
-		measure=vbox
-		}
-		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-condizioni \\ Attese} \\
-		13 &
-		Username già presente nel sistema &
-		Username già esistente \texttt{[ERROR]}, Nome, Cognome, Password, DataNascita ed Email validi &
-		Username ``pippo2002'' già presente nel sistema &
-		{Nome: Pippo \\ Cognome: Baudo \\ Username: pippo2002 \\ Password: miapassword \\ Email: pippo@gmail.com \\ DataNascita: 1989-06-22} &
-		Username già utilizzato &
-		-- \\
-		14 &
-		Email già presente nel sistema &
-		Email già esistente \texttt{[ERROR]}, Nome, Cognome, Password, DataNascita e Username validi &
-		Email ``pippo@gmail.com'' già presente nel sistema &
-		{Nome: Pippo \\ Cognome: Baudo \\ Username: pippo2002 \\ Password: miapassword \\ Email: pippo@gmail.com \\ DataNascita: 1989-06-22} &
-		Email già utilizzata &
-		-- \\
-	\end{tblr}
+	\begin{testsuite}{colspec = lXXXlll}
+		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-\\condizioni \\ Attese} \\
+		13 & Username già presente nel sistema & Username già esistente \texttt{[ERROR]}, Nome, Cognome, Password, DataNascita ed Email validi & Username ``pippo2002'' già presente nel sistema & {Nome: Pippo \\ Cognome: Baudo \\ Username: pippo2002 \\ Password: miapassword \\ Email: pippo@gmail.com \\ DataNascita: 1989-06-22} & {Username già \\ utilizzato} & -- \\
+		14 & Email già presente nel sistema & Email già esistente \texttt{[ERROR]}, Nome, Cognome, Password, DataNascita e Username validi & Email ``pippo@gmail.com'' già presente nel sistema & {Nome: Pippo \\ Cognome: Baudo \\ Username: pippo2002 \\ Password: miapassword \\ Email: pippo@gmail.com \\ DataNascita: 1989-06-22} & {Email già \\ utilizzata} & -- \\
+	\end{testsuite}
 \end{table}

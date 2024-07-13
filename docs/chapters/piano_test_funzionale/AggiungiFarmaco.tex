@@ -5,12 +5,7 @@
 \begin{table}[!hbp]
 	\centering
 	\footnotesize
-	\begin{tblr}{
-		colspec = XXXl,
-		hlines, vlines,
-		row{1} = {font=\bfseries},
-		measure=vbox, stretch=-1
-		}
+	\begin{partest}{colspec = XXll}
 		Nome & Prezzo & Prescrizione & Scorte \\
 		\begin{itemize}[leftmargin=*]
 			\item Stringa di lunghezza $\leq$ 45
@@ -27,9 +22,9 @@
 		\end{itemize} &
 		\begin{itemize}[leftmargin=*]
 			\item Numero intero $\geq 0 $
-			\item Numero intero $<0$ \texttt{[ERROR]}
+			\item {Numero intero $<0$ \\ \texttt{[ERROR]}}
 		\end{itemize}
-	\end{tblr}
+	\end{partest}
 \end{table}
 
 \noindent Il numero di test da effettuarsi senza particolari vincoli è: $4 \cdot 2 \cdot 1 \cdot 2 = 16$.
@@ -43,53 +38,13 @@
 \begin{table}[!hbp]
 	\centering
 	\footnotesize
-	\begin{tblr}{
-			colspec = lXXXlXX,
-			hlines, vlines,
-			row{1} = {font=\bfseries},
-			measure=vbox
-		}
+	\begin{testsuite}{colspec = lXXXlXX}
 		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-condizioni \\ Attese} \\
-		1 &
-		Tutti gli input validi &
-		Nome, Prezzo, Scorte e Prescrizione (sia \texttt{True} che \texttt{False}) validi &
-		Il farmaco non è presente nel sistema &
-		{Nome: Rocefin \\ Prezzo: 15.00 \euro \\ Scorte: 60 \\ Prescrizione: \texttt{boolean}} &
-		Farmaco aggiunto & Il farmaco viene correttamente aggiunto al catalogo \\
-	\end{tblr}
-\end{table}
-
-\begin{table}[!ht]
-	\centering
-	\footnotesize
-	\begin{tblr}{
-			colspec = lXXXlXX,
-			hlines, vlines,
-			row{1} = {font=\bfseries},
-			measure=vbox
-		}
-		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-condizioni \\ Attese} \\
-		2 &
-		Nome $>$ 45 caratteri &
-		Nome $>$ 45 caratteri \texttt{[ERROR]}, Prezzo, Scorte e Prescrizione (sia \texttt{True} che \texttt{False}) validi &
-		-- &
-		{Nome: \dots \\ Prezzo: 16.10 \euro \\ Scorte: 23 \\ Prescrizione: \texttt{boolean}} &
-		Nome troppo lungo &
-		-- \\
-		3 &
-		Nome assente &
-		Nome assente \texttt{[ERROR]}, Prezzo, Scorte e Prescrizione (sia \texttt{True} che \texttt{False}) validi &
-		-- &
-		{Nome: \\ Prezzo: 9.99 \euro \\ Scorte: 10 \\ Prescrizione: \texttt{boolean}} &
-		Inserire un nome &
-		-- \\
-        4 &
-        Prezzo $\leq 0$ (\euro) & Prezzo $\leq 0$ (\euro) \texttt{[ERROR]}, Nome, Scorte e Prescrizione (sia \texttt{True} che \texttt{False}) validi &
-        -- & {Nome: Brufen \\ Prezzo: -8.00 \euro \\ Scorte: 200 \\ Prescrizione: \texttt{boolean}} & Inserire un prezzo $> 0$ \euro & -- \\
-        5 & Scorte $ < 0$ & Scorte $<0$, Nome, Prezzo e Prescrizione (sia \texttt{True} che \texttt{False}) validi & -
-        & {Nome: Macladin \\ Prezzo: 11.50 \euro \\ Scorte: -36 \\ Prescrizione: \texttt{boolean}} & Inserire scorte $ \geq 0 $ & -- \\
-		6 & 
-		Nome già memorizzato & Nome già memorizzato \texttt{[ERROR]}, Prezzo, Scorte e Prescrizione (sia \texttt{True} che \texttt{False}) validi &
-		Esiste già un farmaco con il nome inserito & {Nome: Cistalgan \\ Prezzo: 19.90 \euro \\ Scorte: 50 \\ Prescrizione : \texttt{boolean}} & Farmaco già esistente & --
-	\end{tblr}
+		1 & Tutti gli input validi & Nome, Prezzo, Scorte e Prescrizione (sia \texttt{True} che \texttt{False}) validi & Il farmaco non è presente nel sistema & {Nome: Rocefin \\ Prezzo: 15.00 \euro \\ Scorte: 60 \\ Prescrizione: \texttt{boolean}} & Farmaco aggiunto & Il farmaco viene correttamente aggiunto al catalogo \\
+		2 & Nome $>$ 45 caratteri & Nome $>$ 45 caratteri \texttt{[ERROR]}, Prezzo, Scorte e Prescrizione (sia \texttt{True} che \texttt{False}) validi & -- & {Nome: \dots \\ Prezzo: 16.10 \euro \\ Scorte: 23 \\ Prescrizione: \texttt{boolean}} &Nome troppo lungo & -- \\
+		3 & Nome assente & Nome assente \texttt{[ERROR]}, Prezzo, Scorte e Prescrizione (sia \texttt{True} che \texttt{False}) validi & -- & {Nome: \\ Prezzo: 9.99 \euro \\ Scorte: 10 \\ Prescrizione: \texttt{boolean}} & Inserire un nome & -- \\
+        4 & Prezzo $\leq 0$ (\euro) & Prezzo $\leq 0$ (\euro) \texttt{[ERROR]}, Nome, Scorte e Prescrizione (sia \texttt{True} che \texttt{False}) validi & -- & {Nome: Brufen \\ Prezzo: -8.00 \euro \\ Scorte: 200 \\ Prescrizione: \texttt{boolean}} & Inserire un prezzo $> 0$ \euro & -- \\
+        5 & Scorte $ < 0$ & Scorte $<0$, Nome, Prezzo e Prescrizione (sia \texttt{True} che \texttt{False}) validi & - & {Nome: Macladin \\ Prezzo: 11.50 \euro \\ Scorte: -36 \\ Prescrizione: \texttt{boolean}} & Inserire scorte $ \geq 0 $ & -- \\
+		6 & Nome già memorizzato & Nome già memorizzato \texttt{[ERROR]}, Prezzo, Scorte e Prescrizione (sia \texttt{True} che \texttt{False}) validi & Esiste già un farmaco con il nome inserito & {Nome: Cistalgan \\ Prezzo: 19.90 \euro \\ Scorte: 50 \\ Prescrizione : \texttt{boolean}} & Farmaco già esistente & -- \\
+	\end{testsuite}
 \end{table}

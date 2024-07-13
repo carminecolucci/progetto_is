@@ -5,12 +5,7 @@
 \begin{table}[!hbp]
 	\centering
 	\footnotesize
-	\begin{tblr}{
-		colspec = XXXXXX,
-		hlines, vlines,
-		row{1} = {font=\bfseries},
-		measure=vbox, stretch=-1
-		}
+	\begin{partest}{colspec = XXXXXX}
 		idOrdine \\
 		\begin{itemize}[leftmargin=*]
 			\item Stringa di lunghezza $\leq$ 45
@@ -18,26 +13,29 @@
 			\item Stringa vuota \texttt{[ERROR]}
 			\item Stringa non presente nel sistema \texttt{[ERROR]}
 		\end{itemize}
-	\end{tblr}
+	\end{partest}
 \end{table}
 
 \noindent Essendo previsto un solo input, il numero di test da effettuarsi è pari a 4.
 
 \subsubsection*{Test Suite}
 
-\begin{table}[!hbp]
+\begin{table}[!ht]
 	\centering
 	\footnotesize
-	\begin{tblr}{
-			colspec = lXXXXXX,
-			hlines, vlines,
-			row{1} = {font=\bfseries},
-			measure=vbox
-		}
+	\begin{testsuite}{colspec = lXXXXXX}
 		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-condizioni \\ Attese} \\
-		1 & ID dell'ordine valido & ID dell'ordine valido & -- & ID: 5ea930bc-f0a5-427a-8ca1-f9a2a6146948 & Stato ordine cambiato con successo & Lo stato dell'ordine è stato cambiato con successo \\
-		2 & ID dell'ordine $>$ 45 caratteri & ID dell'ordine $>$ 45 caratteri \texttt{[ERROR]} & -- & ID: ... & ID dell'ordine troppo lungo & -- \\
-		3 & ID dell'ordine assente & ID dell'ordine assente \texttt{[ERROR]} & -- & ID: & Inserire l'ID di un ordine & -- \\
+		1 & Id dell'ordine valido & Id dell'ordine valido & -- & Id: 5ea930bc-f0a5-427a-8ca1-f9a2a6146948 & Stato ordine cambiato con successo & Lo stato dell'ordine è stato cambiato con successo \\
+		2 & Id dell'ordine $>$ 45 caratteri & Id dell'ordine $>$ 45 caratteri \texttt{[ERROR]} & -- & Id: \dots & Id dell'ordine troppo lungo & -- \\
+	\end{testsuite}
+\end{table}
+
+\begin{table}[!ht]
+	\centering
+	\footnotesize
+	\begin{testsuite}{colspec = lXXXXXX}
+		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-condizioni \\ Attese} \\
+		3 & Id dell'ordine assente & Id dell'ordine assente \texttt{[ERROR]} & -- & Id: & Inserire l'ID di un ordine & -- \\
 		4 & Id inesistente & Id inesistente \texttt{[ERROR]} & Non esiste un farmaco con id ``5ea930bc-f0a5-427a-8ca1-f9a2a6146948'' & Id: 5ea930bc-f0a5-427a-8ca1-f9a2a6146948 & L'ordine non esiste & -- \\
-	\end{tblr}
+	\end{testsuite}
 \end{table}

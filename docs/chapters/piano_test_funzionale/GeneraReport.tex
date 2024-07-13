@@ -1,0 +1,40 @@
+\section{GeneraReport}
+
+\subsubsection*{Category Partition Testing}
+
+\begin{table}[!ht]
+	\centering
+	\footnotesize
+	\begin{partest}{colspec = XX}
+		DataInizio & DataFine\\
+		\begin{itemize}[leftmargin=*]
+			\item Data con formato valido (gg-mm-aaaa)
+			\item Data con formato non valido \texttt{[ERROR]}
+		\end{itemize} &
+		\begin{itemize}[leftmargin=*]
+			\item Data con formato valido (gg-mm-aaaa)
+			\item Data con formato non valido \texttt{[ERROR]}
+			\item DataFine precede DataInizio \texttt{[ERROR]}
+		\end{itemize} \\
+	\end{partest}
+\end{table}
+
+\noindent Il numero di test da effettuarsi senza particolari vincoli è: $2 \cdot 3 = 6$.
+
+\noindent Introduciamo i vincoli \texttt{[ERROR]}. Il numero di test da eseguire per testare singolarmente i vincoli è 3 (1 per DataInizio, 2 per DataFine).
+
+\noindent Il numero di test risultante è 4: $(1 \cdot 1) + 3 = 4$.
+
+\subsubsection*{Test Suite}
+
+\begin{table}[!hbp]
+	\centering
+	\footnotesize
+	\begin{testsuite}{colspec = llXXX}
+		{Test \\ Case \\ ID} & Descrizione & {Classi di Equivalenza \\ Coperte} & Input & Output Attesi \\
+		1 & {Tutti gli input \\ validi} & DataInizio, DataFine validi & {DataInizio: 01-06-2024 \\ DataFine: 31-06-2024} & Il report viene generato \\
+		2 & {Formato \\ DataInizio non valido} & Formato DataInizio non valido \texttt{[ERROR]} & {DataInizio: 2024-06-01 \\ DataFine: 31-06-2024} & Formato DataInizio non valido \\
+		3 & {Formato DataFine \\ non valido} & Formato DataFine non valido \texttt{[ERROR]} & {DataInizio: 01-06-2024 \\ DataFine: 2024-06-31} & Formato DataFine non valido \\
+		4 & {DataFine precede \\ DataInizio} & DataFine precede DataInizio \texttt{[ERROR]} & {DataInizio: 31-06-2024 \\ DataFine: 01-06-2024} & Intervallo di date errato \\
+	\end{testsuite}
+\end{table}

@@ -5,12 +5,7 @@
 \begin{table}[!hbp]
 	\centering
 	\footnotesize
-	\begin{tblr}{
-		colspec = XX,
-		hlines, vlines,
-		row{1} = {font=\bfseries},
-		measure=vbox, stretch=-1
-		}
+	\begin{partest}{colspec = lX}
 		Username & Password \\
 		\begin{itemize}[leftmargin=*]
 			\item Stringa di lunghezza $\leq$ 45
@@ -19,12 +14,12 @@
 			\item Stringa valida ma non registrata nel sistema \texttt{[ERROR]}
 		\end{itemize} &
 		\begin{itemize}[leftmargin=*]
-			\item Stringa di lunghezza compresa tra 8 e 45 e corrispondente alla Password memorizzate per l'utente che cerca di effettuare il login
+			\item Stringa di lunghezza compresa tra 8 e 45 e corrispondente alla password dell'utente
 			\item Stringa di lunghezza $<$ 8 \texttt{[ERROR]}
 			\item Stringa di lunghezza $>$ 45 \texttt{[ERROR]}
-			\item Stringa non corrispondente alla password memorizzata per l'utente che cerca di effettuare il login \texttt{[ERROR]}
+			\item Stringa non corrispondente alla password dell'utente \texttt{[ERROR]}
 		\end{itemize}
-	\end{tblr}
+	\end{partest}
 \end{table}
 
 \noindent Il numero di test da effettuarsi senza particolari vincoli è: $4 \cdot 4 = 16$.
@@ -38,55 +33,22 @@
 \begin{table}[!hbp]
 	\centering
 	\footnotesize
-	\begin{tblr}{
-			colspec = lXXXXXX,
-			hlines, vlines,
-			row{1} = {font=\bfseries},
-			measure=vbox
-		}
+	\begin{testsuite}{colspec = lXXXXXX}
 		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-condizioni \\ Attese} \\
-		1 &
-		Tutti gli input validi &
-		Username, Password validi &
-		{L'utente deve essere \\ correttamente \\ registrato nel sistema} &
-		{Username: mariorossi \\ Password: miapassword} &
-		Login effettuato & L'utente è entrato correttamente nel sistema \\
-		2 &
-		Username $>$ 45 caratteri &
-		Username $>$ 45 caratteri \texttt{[ERROR]}, Password valida &
-		-- &
-		{Username: \dots \\ Password: miapassword} &
-		Username troppo lungo &
-		-- \\
-		3 &
-		Username non specificato &
-		Username non specificato \texttt{[ERROR]}, Password valida &
-		-- &
-		{Username: \\ Password: miapassword} &
-		Inserire uno username &
-		-- \\
-		4 &
-		Password $<$ 8 caratteri &
-		Password $<$ 8 caratteri \texttt{[ERROR]}, Username valido &
-		-- &
-		{Username: mariorossi \\ Password: prova} &
-		Password troppo corta &
-		-- \\
-		5 &
-		Password $>$ 45 caratteri &
-		Password $>$ 45 caratteri \texttt{[ERROR]}, Username valido &
-		-- &
-		{Username: mariorossi \\ Password: \dots} &
-		Password troppo lunga &
-		-- \\
-		6 &
-		Password valida (in formato) ma errata &
-		Password errata \texttt{[ERROR]}, Username valido &
-		L'utente esiste nel sistema e ha come password `passwd' &
-		{Username: mariorossi \\ Password: ciao} &
-		Password errata &
-		-- \\
-		7 & Username non registrato & Username non registrato \texttt{[ERROR]} & L'utente non esiste nel sistema & {Username: geronimo \\ Password: stilton} & 
-		Utente non registrato & --
-	\end{tblr}
+		1 & Tutti gli input validi & Username, Password validi & {L'utente deve essere \\ correttamente \\ registrato nel sistema} & {Username: mariorossi \\ Password: miapassword} & Login effettuato & L'utente è entrato correttamente nel sistema \\
+		2 & Username $>$ 45 caratteri & Username $>$ 45 caratteri \texttt{[ERROR]}, Password valida & -- & {Username: \dots \\ Password: miapassword} & Username troppo lungo & -- \\
+		3 & Username non specificato & Username non specificato \texttt{[ERROR]}, Password valida & -- & {Username: \\ Password: miapassword} & Inserire uno username & -- \\
+		4 & Password $<$ 8 caratteri & Password $<$ 8 caratteri \texttt{[ERROR]}, Username valido & -- & {Username: mariorossi \\ Password: prova} & Password troppo corta & -- \\
+		5 & Password $>$ 45 caratteri & Password $>$ 45 caratteri \texttt{[ERROR]}, Username valido & -- & {Username: mariorossi \\ Password: \dots} & Password troppo lunga & -- \\
+		6 & Password errata & Password errata \texttt{[ERROR]}, Username valido & L'utente esiste nel sistema e ha come password `passwd' & {Username: mariorossi \\ Password: ciao} & Password errata & -- \\
+	\end{testsuite}
+\end{table}
+
+\begin{table}[!ht]
+	\centering
+	\footnotesize
+	\begin{testsuite}{colspec = lXXXXXl}
+		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-\\condizioni \\ Attese} \\
+		7 & Username non registrato & Username non registrato \texttt{[ERROR]} & L'utente non esiste nel sistema & {Username: geronimo \\ Password: stilton} & Utente non registrato & -- \\
+	\end{testsuite}
 \end{table}

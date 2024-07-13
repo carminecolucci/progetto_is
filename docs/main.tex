@@ -48,6 +48,21 @@
 	measure=vbox, stretch=-1
 }
 
+% Tabella per il category partition testing
+\NewTblrEnviron{partest}
+\SetTblrInner[partest]{
+	hlines, vlines,
+	row{1} = {font=\bfseries},
+	measure=vbox, stretch=-1
+}
+
+% Tabella per le test suite
+\NewTblrEnviron{testsuite}
+\SetTblrInner[testsuite]{
+	hlines, vlines,
+	row{1} = {font=\bfseries}
+}
+
 % This command includes an exported pdf table in the document, if it exists. Otherwise it includes table.tex.
 \newcommand{\IncludeTable}[1]{
 	\IfFileExists{#1.pdf}{%
@@ -63,7 +78,7 @@
 \title{Titolo}
 \author{Autori}
 
-\includeonly{chapters/piano_test_funzionale,chapters/testing_white_box}
+% \includeonly{chapters/piano_test_funzionale}
 
 \begin{document}
 \maketitle
