@@ -57,15 +57,14 @@
 
 \input{chapters/testing_white_box/CreaOrdine.tex}
 
+\vfill
+\pagebreak
+
 \subsection{\texttt{modificaFarmaco()}}
 
 \paragraph{Codice Java}
 
 \inputminted[breaklines,tabsize=4,linenos]{java}{chapters/testing_white_box/modificaFarmaco.java}
-
-\vfill
-
-\pagebreak
 
 \paragraph{Control Flow Graph}\mbox{}\newline
 
@@ -111,17 +110,16 @@
 
 
 \section{Test funzionale}
-In questa sezione ci occupiamo di riportare i risultati dell'applicazione della test suite definita nel \hyperref[cap:piano_test_funzionale]{Capitolo 4: Piano di Test Funzionale} all'implementazione Java del progetto.
-Di seguito vengono quindi riportati gli esiti dell'esecuzione dei vari test case, in particolare non vengono mostrati quei casi di test basati esclusivamente sull'input validation, poiché la validazione del formato dei parametri di input viene effettuata completamente a livello \texttt{Boundary}. Tutti i test sono effettuati sul package \texttt{Controller}.
+In questa sezione ci occupiamo di riportare i risultati dell'applicazione della test suite definita nel \hyperref[cap:piano_test_funzionale]{Capitolo 4: Piano di Test Funzionale} all'implementazione Java del progetto. Di seguito vengono quindi riportati gli esiti dell'esecuzione dei vari test case, in particolare non vengono mostrati quei casi di test basati esclusivamente sull'input validation, poiché la validazione del formato dei parametri di input viene effettuata completamente a livello \texttt{Boundary}. Tutti i test sono effettuati sul package \texttt{Controller}.
 
 \subsection{RegistraCliente}
 
-\begin{table}[!hbp]
+\begin{table}[!hb]
 	\centering
 	\footnotesize
 	\begin{testsuite}{colspec = lXXXlXX}
 		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-condizioni \\ Attese} & Esito\\
-		1 & Tutti gli input validi & Nome, Cognome, Username, Password, Email, DataNascita validi & Il cliente non è ancora registrato nel sistema & {Nome: Mario \\ Cognome: Rossi \\ Username: mariorossi \\ Password: miapassword \\ Email: mariorossi@gmail.com \\ DataNascita: 22-06-1989} & Registrazione effettuata & Il cliente è stato correttamente registrato nel sistema & PASS \\
+		1 & Tutti gli input validi & Nome, Cognome, Username, Password, Email, DataNascita validi & Il cliente non è ancora registrato nel sistema & {Nome: Mario \\ Cognome: Rossi \\ Username: mariorossi \\ Password: miapassword \\ Email: mario@gmail.com \\ DataNascita: 22-06-1989} & Registrazione effettuata & Il cliente è stato correttamente registrato nel sistema & PASS \\
 		13 & Username già presente nel sistema & Username già esistente \texttt{[ERROR]}, Nome, Cognome, Password, DataNascita ed Email validi & Username ``pippo2002'' già presente nel sistema & {Nome: Pippo \\ Cognome: Baudo \\ Username: pippo2002 \\ Password: miapassword \\ Email: pippo@gmail.com \\ DataNascita: 1989-06-22} & {Username già \\ utilizzato} & -- & PASS \\
 		14 & Email già presente nel sistema & Email già esistente \texttt{[ERROR]}, Nome, Cognome, Password, DataNascita e Username validi & Email ``pippo@gmail.com'' già presente nel sistema & {Nome: Pippo \\ Cognome: Baudo \\ Username: pippo2002 \\ Password: miapassword \\ Email: pippo@gmail.com \\ DataNascita: 1989-06-22} & {Email già \\ utilizzata} & -- & PASS \\
 	\end{testsuite}
@@ -129,7 +127,7 @@ Di seguito vengono quindi riportati gli esiti dell'esecuzione dei vari test case
 
 \subsection{LoginUtente}
 
-\begin{table}[!hbp]
+\begin{table}[H]
 	\centering
 	\footnotesize
 	\begin{testsuite}{colspec = lXXXXXX}
@@ -142,7 +140,7 @@ Di seguito vengono quindi riportati gli esiti dell'esecuzione dei vari test case
 
 \subsection{AggiungiFarmaco}
 
-\begin{table}[!hbp]
+\begin{table}[H]
 	\centering
 	\footnotesize
 	\begin{testsuite}{colspec = lXXXlXX}
@@ -152,22 +150,9 @@ Di seguito vengono quindi riportati gli esiti dell'esecuzione dei vari test case
 	\end{testsuite}
 \end{table}
 
-\subsection{ModificaFarmaco}
-
-\begin{table}[!ht]
-	\centering
-	\footnotesize
-	\begin{testsuite}{colspec = lXXXlXX}
-		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-condizioni \\ Attese} & Esito \\
-		1 & Tutti gli input validi, prescrizione \texttt{True} & Nome, Prezzo, Scorte e Prescrizione (\texttt{True}) validi & Il farmaco è presente nel sistema & {Nome: Tachipirina \\ Prezzo: 11.44 \euro \\ Scorte: 100 \\ Prescrizione: \texttt{True}} & {Modifica \\ effettuata} & Il farmaco viene correttamente modificato & PASS \\
-		2 & Tutti gli input validi, prescrizione \texttt{False} & Nome, Prezzo, Scorte e Prescrizione (\texttt{False}) validi & Il farmaco è presente nel sistema & {Nome: Tachipirina \\ Prezzo: 11.44 \euro \\ Scorte: 100 \\ Prescrizione: \texttt{False}} & {Modifica \\ effettuata} & Il farmaco viene correttamente modificato & PASS \\
-		7 & Il nome del farmaco non esiste & Nome non presente nel sistema \texttt{[ERROR]}, Prezzo, Scorte e Prescrizione validi & Il farmaco ``Tachipirina'' non esiste nel sistema & {Nome: Tachipirina \\ Prezzo: 11.44 \euro \\ Scorte: 100 \\ Prescrizione: \texttt{False}} & Il farmaco non esiste & -- & PASS \\
-	\end{testsuite}
-\end{table}
-
 \subsection{CercaFarmaco}
 
-\begin{table}[!hbp]
+\begin{table}[H]
 	\centering
 	\footnotesize
 	\begin{testsuite}{colspec = lXXXlXl}
@@ -179,7 +164,7 @@ Di seguito vengono quindi riportati gli esiti dell'esecuzione dei vari test case
 
 \subsection{EliminaFarmaco}
 
-\begin{table}[!ht]
+\begin{table}[H]
 	\centering
 	\footnotesize
 	\begin{testsuite}{colspec = lXXXlXX}
@@ -189,9 +174,22 @@ Di seguito vengono quindi riportati gli esiti dell'esecuzione dei vari test case
 	\end{testsuite}
 \end{table}
 
+\subsection{ModificaFarmaco}
+
+\begin{table}[H]
+	\centering
+	\footnotesize
+	\begin{testsuite}{colspec = lXXXlXX}
+		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-condizioni \\ Attese} & Esito \\
+		1 & Tutti gli input validi, prescrizione \texttt{True} & Nome, Prezzo, Scorte e Prescrizione (\texttt{True}) validi & Il farmaco è presente nel sistema & {Nome: Tachipirina \\ Prezzo: 11.44 \euro \\ Scorte: 100 \\ Prescrizione: \texttt{True}} & {Modifica \\ effettuata} & Il farmaco viene correttamente modificato & PASS \\
+		2 & Tutti gli input validi, prescrizione \texttt{False} & Nome, Prezzo, Scorte e Prescrizione (\texttt{False}) validi & Il farmaco è presente nel sistema & {Nome: Tachipirina \\ Prezzo: 11.44 \euro \\ Scorte: 100 \\ Prescrizione: \texttt{False}} & {Modifica \\ effettuata} & Il farmaco viene correttamente modificato & PASS \\
+		7 & Il nome del farmaco non esiste & Nome non presente nel sistema \texttt{[ERROR]}, Prezzo, Scorte e Prescrizione validi & Il farmaco ``Tachipirina'' non esiste nel sistema & {Nome: Tachipirina \\ Prezzo: 11.44 \euro \\ Scorte: 100 \\ Prescrizione: \texttt{False}} & Il farmaco non esiste & -- & PASS \\
+	\end{testsuite}
+\end{table}
+
 \subsection{GeneraReport}
 
-\begin{table}[!hbp]
+\begin{table}[H]
 	\centering
 	\footnotesize
 	\begin{testsuite}{colspec = llXXX}
@@ -212,27 +210,27 @@ Di seguito vengono quindi riportati gli esiti dell'esecuzione dei vari test case
 	\end{testsuite}
 \end{table}
 
-\subsection{RegistraConsegnaOrdineAcquisto}
-
-\begin{table}[!hbp]
-	\centering
-	\footnotesize
-	\begin{testsuite}{colspec = lXXXXXX}
-		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-condizioni \\ Attese} & Esito \\
-		1 & Id dell'ordine di acquisto valido & Id dell'ordine di acquisto valido & -- & {Id: 5ea930bc-f0a5-427a-8ca1-f9a2a6146948} & Ordine ricevuto & Lo stato dell'ordine di acquisto e le scorte in magazzino sono aggiornati & PASS \\
-		4 & Id inesistente & Id inesistente \texttt{[ERROR]} & Non esiste un ordine di acquisto con Id ``5ea930bc-f0a5-427a-8ca1-f9a2a6146948'' & Id: 5ea930bc-f0a5-427a-8ca1-f9a2a6146948 & L'ordine di acquisto non esiste & -- & PASS \\
-	\end{testsuite}
-\end{table}
-
 \subsection{RitiraOrdine}
 
-\begin{table}[!ht]
+\begin{table}[!hb]
 	\centering
 	\footnotesize
 	\begin{testsuite}{colspec = lXXXXXX}
 		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-condizioni \\ Attese} & Esito \\
 		1 & Id dell'ordine valido & Id dell'ordine valido & -- & Id: 5ea930bc-f0a5-427a-8ca1-f9a2a6146948 & Stato ordine cambiato con successo & Lo stato dell'ordine è stato cambiato con successo & PASS \\
 		4 & Id inesistente & Id inesistente \texttt{[ERROR]} & Non esiste un farmaco con id ``5ea930bc-f0a5-427a-8ca1-f9a2a6146948'' & Id: 5ea930bc-f0a5-427a-8ca1-f9a2a6146948 & L'ordine non esiste & -- & PASS \\
+	\end{testsuite}
+\end{table}
+
+\subsection{RegistraConsegnaOrdineAcquisto}
+
+\begin{table}[H]
+	\centering
+	\footnotesize
+	\begin{testsuite}{colspec = lXXXXXX}
+		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-condizioni \\ Attese} & Esito \\
+		1 & Id dell'ordine di acquisto valido & Id dell'ordine di acquisto valido & -- & {Id: 5ea930bc-f0a5-427a-8ca1-f9a2a6146948} & Ordine ricevuto & Lo stato dell'ordine di acquisto e le scorte in magazzino sono aggiornati & PASS \\
+		4 & Id inesistente & Id inesistente \texttt{[ERROR]} & Non esiste un ordine di acquisto con Id ``5ea930bc-f0a5-427a-8ca1-f9a2a6146948'' & Id: 5ea930bc-f0a5-427a-8ca1-f9a2a6146948 & L'ordine di acquisto non esiste & -- & PASS \\
 	\end{testsuite}
 \end{table}
 
