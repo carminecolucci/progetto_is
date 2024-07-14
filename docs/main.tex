@@ -64,21 +64,21 @@
 }
 
 % This command includes an exported pdf table in the document, if it exists. Otherwise it includes table.tex.
-\newcommand{\IncludeTable}[1]{
-	\IfFileExists{#1.pdf}{%
-		\begin{figure}[!hbp]%
+\newcommand{\IncludeTable}[2][!h]{
+	\IfFileExists{#2.pdf}{%
+		\begin{figure}[#1]%
 			\centering%
-			\includegraphics[width=\linewidth]{#1.pdf}%
+			\includegraphics[width=\linewidth]{#2.pdf}%
 		\end{figure}%
 	}{
-		\input{#1}%
+		\input{#2}%
 	}
 }
 
 \title{Titolo}
 \author{Autori}
 
-% \includeonly{chapters/piano_test_funzionale,chapters/testing_white_box}
+\includeonly{chapters/usecases,chapters/piano_test_funzionale,chapters/testing_white_box}
 
 \begin{document}
 \maketitle
