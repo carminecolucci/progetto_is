@@ -35,7 +35,7 @@
 	\footnotesize
 	\begin{testsuite}{colspec = lXXXXXX}
 		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-condizioni \\ Attese} \\
-		3 & Id dell'ordine assente & Id dell'ordine assente \texttt{[ERROR]} & -- & Id: & Inserire l'ID di un ordine & -- \\
-		4 & Id inesistente & Id inesistente \texttt{[ERROR]} & Non esiste un farmaco con id ``5ea930bc-f0a5-427a-8ca1-f9a2a6146948'' & Id: 5ea930bc-f0a5-427a-8ca1-f9a2a6146948 & L'ordine non esiste & -- \\
+		3 & Id dell'ordine non specificato & Id dell'ordine non specificato \texttt{[ERROR]} & -- & Id: & Inserire l'ID di un ordine & -- \\
+		4 & Id non presente nel sistema & Id non presente nel sistema \texttt{[ERROR]} & Non esiste un farmaco con id ``5ea930bc-f0a5-427a-8ca1-f9a2a6146948'' & Id: 5ea930bc-f0a5-427a-8ca1-f9a2a6146948 & L'ordine non esiste & -- \\
 	\end{testsuite}
 \end{table}

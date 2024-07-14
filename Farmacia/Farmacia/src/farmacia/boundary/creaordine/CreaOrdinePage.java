@@ -117,7 +117,6 @@ public class CreaOrdinePage extends JFrame {
 					}
 				}
 			}
-			System.out.println(farmaciOrdine);
 			try {
 				if (numeroFarmaci >= 1){
 					String idOrdine = controllerOrdini.creaOrdine(farmaciOrdine);

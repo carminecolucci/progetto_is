@@ -27,7 +27,7 @@
 		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-condizioni \\ Attese} \\
 		1 & Id dell'ordine di acquisto valido & Id dell'ordine di acquisto valido & -- & {Id: 5ea930bc-f0a5-427a-8ca1-f9a2a6146948} & Ordine ricevuto & Lo stato dell'ordine di acquisto e le scorte in magazzino sono aggiornati \\
 		2 & Id $>$ 45 caratteri & Id $>$ 45 caratteri \texttt{[ERROR]} & -- & Id: \dots & Id troppo lungo & -- \\
-		3 & Id vuoto & Id vuoto \texttt{[ERROR]} & -- & Id: & Inserire l'Id di un ordine di acquisto & -- \\
-		4 & Id inesistente & Id inesistente \texttt{[ERROR]} & Non esiste un ordine di acquisto con Id ``5ea930bc-f0a5-427a-8ca1-f9a2a6146948'' & Id: 5ea930bc-f0a5-427a-8ca1-f9a2a6146948 & L'ordine di acquisto non esiste & -- \\
+		3 & Id non specificato & Id non specificato \texttt{[ERROR]} & -- & Id: & Inserire l'Id di un ordine di acquisto & -- \\
+		4 & Id non presente nel sistema & Id non presente nel sistema \texttt{[ERROR]} & Non esiste un ordine di acquisto con Id ``5ea930bc-f0a5-427a-8ca1-f9a2a6146948'' & Id: 5ea930bc-f0a5-427a-8ca1-f9a2a6146948 & L'ordine di acquisto non esiste & -- \\
 	\end{testsuite}
 \end{table}
