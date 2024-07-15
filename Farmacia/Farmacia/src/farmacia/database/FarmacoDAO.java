@@ -125,8 +125,6 @@ public class FarmacoDAO {
 				this.id = id;
 			}
 		} catch (ClassNotFoundException | SQLException e) {
-			logger.warning(String.format("Errore durante il caricamento dal database del farmaco con id %d.%n%s",
-				id, e.getMessage()));
 			throw new DBException("Errore nel caricamento di un farmaco. " + e.getMessage());
 		}
 	}
@@ -149,8 +147,6 @@ public class FarmacoDAO {
 				this.scorte = rs.getInt(SCORTE_STATIC);
 			}
 		} catch (ClassNotFoundException | SQLException e) {
-			logger.warning(String.format("Errore durante il caricamento dal database del farmaco '%s'.%n%s",
-				nome, e.getMessage()));
 			throw new DBException("Errore nel caricamento di un farmaco." + e.getMessage());
 		}
 	}
