@@ -81,10 +81,7 @@ public class GeneraReportPage extends JFrame {
 			} catch (ReportException ex) {
 				JOptionPane.showMessageDialog(null, ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
 			}
-
-
 		});
-
 		setVisible(true);
 	}
 }

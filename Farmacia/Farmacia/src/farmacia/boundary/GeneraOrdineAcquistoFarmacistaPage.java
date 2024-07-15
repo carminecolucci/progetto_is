@@ -73,7 +73,6 @@ public class GeneraOrdineAcquistoFarmacistaPage extends JFrame {
 					farmaciOrdineAcquisto.put(listId.get(row), quantita);
 				}
 			}
-			System.out.println(farmaciOrdineAcquisto);
 			try {
 				if (numeroFarmaci >= 1){
 					String idOrdine = controllerOrdini.creaOrdineAcquistoFarmacia(farmaciOrdineAcquisto);
