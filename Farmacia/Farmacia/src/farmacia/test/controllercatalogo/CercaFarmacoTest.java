@@ -10,11 +10,15 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.logging.Logger;
+
 import static org.junit.Assert.*;
 
 public class CercaFarmacoTest {
 
 	private static ControllerCatalogo controllerCatalogo;
+	private static final String CLAVULIN = "Clavulin";
+	private static final Logger logger = Logger.getLogger("CercaFarmacoTest");
 
 	@BeforeClass
 	public static void setUpBeforeClass() {
@@ -23,23 +27,22 @@ public class CercaFarmacoTest {
 
 	@AfterClass
 	public static void tearDownAfterClass() throws DBException {
-		FarmacoDAO.deleteFarmaco("Clavulin");
+		FarmacoDAO.deleteFarmaco(CLAVULIN);
 	}
 
 	@Test
 	public void testCercaFarmaco() throws FarmacoCreationFailedException {
 		float prezzo = 10;
 		boolean prescrizione = false;
-		String nome = "Clavulin";
 		int scorte = 50;
-		controllerCatalogo.aggiungiFarmaco(prezzo, prescrizione, nome, scorte);
+		controllerCatalogo.aggiungiFarmaco(prezzo, prescrizione, CLAVULIN, scorte);
 		boolean esito = true;
 		DTO dto;
 		try {
-			dto = controllerCatalogo.cercaFarmaco("Clavulin");
-			assertTrue((float)dto.get("prezzo") == 10 && !((boolean) dto.get("prescrizione")) && dto.get("nome").equals("Clavulin") && (int)dto.get("scorte") == 50);
+			dto = controllerCatalogo.cercaFarmaco(CLAVULIN);
+			assertTrue((float)dto.get("prezzo") == 10 && !((boolean) dto.get("prescrizione")) && dto.get("nome").equals(CLAVULIN) && (int)dto.get("scorte") == 50);
 		} catch (FarmacoNotFoundException e) {
-			System.err.println(e.getMessage());
+			logger.warning(e.getMessage());
 			esito = false;
 		}
 		assertTrue(esito);

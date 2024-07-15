@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -20,6 +21,10 @@ import static org.junit.Assert.assertTrue;
 public class AggiornaOrdineAcquistoFarmaciaTest {
 	private static ControllerOrdini controllerOrdini;
 	private static String idOrdineAcquistoSuccess;
+	private static final String FARMACO_ACQUISTO = "FarmacoAcquisto";
+	private static final Logger logger = Logger.getLogger("AggiornaOrdineAcquistoFarmaciaTest");
+
+
 
 	@BeforeClass
 	public static void setUp() throws FarmacoCreationFailedException, FarmacoNotFoundException, OrderCreationFailedException {
@@ -34,21 +39,21 @@ public class AggiornaOrdineAcquistoFarmaciaTest {
 		try {
 			controllerUtenti.loginUtente("farmacista", "farmacista"); // il test assume che ESISTA questo account nel DB
 		} catch (LoginFailedException e) {
-			System.err.println(e.getMessage());
+			logger.warning(e.getMessage());
 			esito = false;
 		}
 		assertTrue(esito);
 
 		// aggiunta di un farmaco e creazione di un ordine di acquisto
-		controllerCatalogo.aggiungiFarmaco(50, true, "FarmacoAcquisto", 20);
+		controllerCatalogo.aggiungiFarmaco(50, true, FARMACO_ACQUISTO, 20);
 		Map<Integer, Integer> ordineAcquisto = new HashMap<>();
-		ordineAcquisto.put((int) controllerCatalogo.cercaFarmaco("FarmacoAcquisto").get("id"), 20);
+		ordineAcquisto.put((int) controllerCatalogo.cercaFarmaco(FARMACO_ACQUISTO).get("id"), 20);
 		idOrdineAcquistoSuccess = controllerOrdini.creaOrdineAcquistoFarmacia(ordineAcquisto);
 	}
 
 	@AfterClass
 	public static void tearDown() throws DBException {
-		FarmacoDAO.deleteFarmaco("FarmacoAcquisto");
+		FarmacoDAO.deleteFarmaco(FARMACO_ACQUISTO);
 		OrdineAcquistoDAO.deleteOrdineAcquisto(idOrdineAcquistoSuccess);
 	}
 

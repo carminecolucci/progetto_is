@@ -17,6 +17,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import static farmacia.util.Utility.contains;
 import static org.junit.Assert.*;
@@ -26,6 +27,13 @@ public class CreaOrdineTest {
 	private static ControllerCatalogo controllerCatalogo;
 	private String idOrdineSuccess;
 	private String idOrdineAzzeraScorte;
+	private static final String TEST_USER_CREA_ORDINE = "testUserCreaOrdine";
+	private static final String FARMACO1 = "Farmaco1";
+	private static final String FARMACO2 = "Farmaco2";
+	private static final String FARMACO3 = "Farmaco3";
+	private static final String FARMACO4 = "Farmaco4";
+	private static final String QUANTITA_FARMACI = "quantitaFarmaci";
+	private static final Logger logger = Logger.getLogger("CreaOrdineTest");
 
 	@BeforeClass
 	public static void setUp() throws FarmacoCreationFailedException, ParseException {
@@ -41,19 +49,19 @@ public class CreaOrdineTest {
 		Date dataNascita = new Date(date.getTime());
 		boolean esito = true;
 		try {
-			controllerUtenti.registraCliente("testUserCreaOrdine", "MiaPassword", "Utente", "Di Prova", dataNascita, "cliente@creaordine.com");
-			controllerUtenti.loginUtente("testUserCreaOrdine", "MiaPassword");
+			controllerUtenti.registraCliente(TEST_USER_CREA_ORDINE, "MiaPassword", "Utente", "Di Prova", dataNascita, "cliente@creaordine.com");
+			controllerUtenti.loginUtente(TEST_USER_CREA_ORDINE, "MiaPassword");
 		} catch (RegistrationFailedException | LoginFailedException e) {
-			System.err.println(e.getMessage());
+			logger.warning(e.getMessage());
 			esito = false;
 		}
 		assertTrue(esito);
 
 		// aggiunta di un farmaco e creazione di un ordine di acquisto
-		controllerCatalogo.aggiungiFarmaco(50, true, "Farmaco1", 20);
-		controllerCatalogo.aggiungiFarmaco(50, false, "Farmaco2", 20);
-		controllerCatalogo.aggiungiFarmaco(50, false, "Farmaco3", 20);
-		controllerCatalogo.aggiungiFarmaco(50, false, "Farmaco4", 20);
+		controllerCatalogo.aggiungiFarmaco(50, true, FARMACO1, 20);
+		controllerCatalogo.aggiungiFarmaco(50, false, FARMACO2, 20);
+		controllerCatalogo.aggiungiFarmaco(50, false, FARMACO3, 20);
+		controllerCatalogo.aggiungiFarmaco(50, false, FARMACO4, 20);
 	}
 
 	@Test
@@ -61,11 +69,11 @@ public class CreaOrdineTest {
 		Map<Integer, Integer> ordine = new HashMap<>();
 		boolean esito = true;
 		try {
-			ordine.put((int)controllerCatalogo.cercaFarmaco("Farmaco1").get("id"), 5);
-			ordine.put((int)controllerCatalogo.cercaFarmaco("Farmaco2").get("id"), 10);
+			ordine.put((int)controllerCatalogo.cercaFarmaco(FARMACO1).get("id"), 5);
+			ordine.put((int)controllerCatalogo.cercaFarmaco(FARMACO2).get("id"), 10);
 			idOrdineSuccess = controllerOrdini.creaOrdine(ordine);
 		} catch (FarmacoNotFoundException | OrderCreationFailedException e) {
-			System.err.println(e.getMessage());
+			logger.warning(e.getMessage());
 			esito = false;
 		}
 		assertTrue(esito);
@@ -73,18 +81,18 @@ public class CreaOrdineTest {
 		try {
 			for (DTO ordineCreato: controllerOrdini.visualizzaStoricoOrdini()) {
 				if (ordineCreato.get("id").equals(idOrdineSuccess)) {
-					Map<DTO, Integer> quantitaFarmaci = (Map<DTO, Integer>) ordineCreato.get("quantitaFarmaci");
-					if (!contains(quantitaFarmaci, "Farmaco1", 5)) {
+					Map<DTO, Integer> quantitaFarmaci = (Map<DTO, Integer>) ordineCreato.get(QUANTITA_FARMACI);
+					if (!contains(quantitaFarmaci, FARMACO1, 5)) {
 						esito = false;
 					}
-					if (!contains(quantitaFarmaci, "Farmaco2", 10)) {
+					if (!contains(quantitaFarmaci, FARMACO2, 10)) {
 						esito = false;
 					}
 					break;
 				}
 			}
 		} catch (DBException e) {
-			System.err.println(e.getMessage());
+			logger.warning(e.getMessage());
 			fail();
 		}
 
@@ -96,10 +104,10 @@ public class CreaOrdineTest {
 		Map<Integer, Integer> ordine = new HashMap<>();
 		boolean esito = true;
 		try {
-			ordine.put((int)controllerCatalogo.cercaFarmaco("Farmaco3").get("id"), 20);
+			ordine.put((int)controllerCatalogo.cercaFarmaco(FARMACO3).get("id"), 20);
 			idOrdineAzzeraScorte = controllerOrdini.creaOrdine(ordine);
 		} catch (FarmacoNotFoundException | OrderCreationFailedException e) {
-			System.err.println(e.getMessage());
+			logger.warning(e.getMessage());
 			esito = false;
 		}
 		assertTrue(esito);
@@ -107,23 +115,23 @@ public class CreaOrdineTest {
 		try {
 			for (DTO ordineCreato: controllerOrdini.visualizzaStoricoOrdini()) {
 				if (ordineCreato.get("id").equals(idOrdineAzzeraScorte)) {
-					Map<DTO, Integer> quantitaFarmaci = (Map<DTO, Integer>) ordineCreato.get("quantitaFarmaci");
-					if (!contains(quantitaFarmaci, "Farmaco3", 20)) {
+					Map<DTO, Integer> quantitaFarmaci = (Map<DTO, Integer>) ordineCreato.get(QUANTITA_FARMACI);
+					if (!contains(quantitaFarmaci, FARMACO3, 20)) {
 						esito = false;
 					}
 					break;
 				}
 			}
 		} catch (DBException e) {
-			System.err.println(e.getMessage());
+			logger.warning(e.getMessage());
 			fail();
 		}
 		assertTrue(esito);
 
 		for (DTO ordineAcquisto: controllerOrdini.visualizzaOrdiniAcquistoFarmacia()) {
 			if (ordineAcquisto.get("id").equals(idOrdineAzzeraScorte)) {
-				Map<DTO, Integer> quantitaFarmaci = (Map<DTO, Integer>) ordineAcquisto.get("quantitaFarmaci");
-				if (!contains(quantitaFarmaci, "Farmaco3", EntityOrdineAcquisto.QUANTITA_ORDINE_DEFAULT)) {
+				Map<DTO, Integer> quantitaFarmaci = (Map<DTO, Integer>) ordineAcquisto.get(QUANTITA_FARMACI);
+				if (!contains(quantitaFarmaci, FARMACO3, EntityOrdineAcquisto.QUANTITA_ORDINE_DEFAULT)) {
 					esito = false;
 				}
 				break;
@@ -139,7 +147,7 @@ public class CreaOrdineTest {
 		try {
 			controllerOrdini.creaOrdine(ordine);
 		} catch (OrderCreationFailedException e) {
-			System.err.println(e.getMessage());
+			logger.warning(e.getMessage());
 			esito = false;
 		}
 
@@ -151,10 +159,10 @@ public class CreaOrdineTest {
 		Map<Integer, Integer> ordine = new HashMap<>();
 		boolean esito = true;
 		try {
-			ordine.put((int)controllerCatalogo.cercaFarmaco("Farmaco4").get("id"), 100);
+			ordine.put((int)controllerCatalogo.cercaFarmaco(FARMACO4).get("id"), 100);
 			controllerOrdini.creaOrdine(ordine);
 		} catch (OrderCreationFailedException | FarmacoNotFoundException e) {
-			System.err.println(e.getMessage());
+			logger.warning(e.getMessage());
 			esito = false;
 		}
 
@@ -163,11 +171,11 @@ public class CreaOrdineTest {
 
 	@AfterClass
 	public static void tearDown() throws DBException {
-		UtenteDAO utenteDAO = new UtenteDAO("testUserCreaOrdine");
+		UtenteDAO utenteDAO = new UtenteDAO(TEST_USER_CREA_ORDINE);
 		utenteDAO.deleteUtente();
-		FarmacoDAO.deleteFarmaco("Farmaco1");
-		FarmacoDAO.deleteFarmaco("Farmaco2");
-		FarmacoDAO.deleteFarmaco("Farmaco3");
-		FarmacoDAO.deleteFarmaco("Farmaco4");
+		FarmacoDAO.deleteFarmaco(FARMACO1);
+		FarmacoDAO.deleteFarmaco(FARMACO2);
+		FarmacoDAO.deleteFarmaco(FARMACO3);
+		FarmacoDAO.deleteFarmaco(FARMACO4);
 	}
 }

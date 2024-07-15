@@ -28,6 +28,14 @@ public class GeneraReportTest {
 	private static String idOrdine2;
 	private static String idOrdine3;
 
+	private static final String ERRORE_CONTROLLER = "Errore dovuto alle dipendenze: controllerUtenti";
+	private static final String FARMACO_REPORT1 = "FarmacoReport1";
+	private static final String FARMACO_REPORT2 = "FarmacoReport2";
+	private static final String FARMACO_REPORT3 = "FarmacoReport3";
+	private static final String FARMACO_REPORT4 = "FarmacoReport4";
+	private static final String UTENTE_REPORT = "utentereport";
+
+
 	@BeforeClass
 	public static void setUpBeforeClass() throws ParseException {
 		controllerReport = ControllerReport.getInstance();
@@ -38,16 +46,16 @@ public class GeneraReportTest {
 		try {
 			controllerUtenti.loginUtente("farmacista", "farmacista");
 		} catch (LoginFailedException e) {
-			fail("Errore dovuto alle dipendenze: controllerUtenti");
+			fail(ERRORE_CONTROLLER);
 		}
 
 		try {
-			controllerCatalogo.aggiungiFarmaco(17.00f, true, "FarmacoReport1", 100);
-			controllerCatalogo.aggiungiFarmaco(11.00f, true, "FarmacoReport2", 100);
-			controllerCatalogo.aggiungiFarmaco(6.00f, false, "FarmacoReport3", 100);
-			controllerCatalogo.aggiungiFarmaco(10.00f, false, "FarmacoReport4", 100);
+			controllerCatalogo.aggiungiFarmaco(17.00f, true, FARMACO_REPORT1, 100);
+			controllerCatalogo.aggiungiFarmaco(11.00f, true, FARMACO_REPORT2, 100);
+			controllerCatalogo.aggiungiFarmaco(6.00f, false, FARMACO_REPORT3, 100);
+			controllerCatalogo.aggiungiFarmaco(10.00f, false, FARMACO_REPORT4, 100);
 		} catch (FarmacoCreationFailedException e) {
-			fail("Errore dovuto alle dipendenze: controllerCatalogo");
+			fail(ERRORE_CONTROLLER);
 		}
 
 		String dateString = "2023-07-06";
@@ -56,15 +64,15 @@ public class GeneraReportTest {
 		java.sql.Date dataNascita = new java.sql.Date(date.getTime());
 
 		try {
-			controllerUtenti.registraCliente("utentereport", "utentereport", "Franco", "Bollo", dataNascita, "franco.bollo@libero.it");
+			controllerUtenti.registraCliente(UTENTE_REPORT, UTENTE_REPORT, "Franco", "Bollo", dataNascita, "franco.bollo@libero.it");
 		} catch (RegistrationFailedException e) {
-			fail("Errore dovuto alle dipendenze: controllerUtenti");
+			fail(ERRORE_CONTROLLER);
 		}
 
 		try {
-			controllerUtenti.loginUtente("utentereport", "utentereport");
+			controllerUtenti.loginUtente(UTENTE_REPORT, UTENTE_REPORT);
 		} catch (LoginFailedException e) {
-			fail("Errore dovuto alle dipendenze: controllerUtenti");
+			fail(ERRORE_CONTROLLER);
 		}
 
 		Map<Integer, Integer> ordine1 = new HashMap<>();
@@ -72,13 +80,13 @@ public class GeneraReportTest {
 		Map<Integer, Integer> ordine3 = new HashMap<>();
 
 		try {
-			ordine1.put((int) controllerCatalogo.cercaFarmaco("FarmacoReport1").get("id"), 2);
-			ordine1.put((int) controllerCatalogo.cercaFarmaco("FarmacoReport2").get("id"), 6);
-			ordine2.put((int) controllerCatalogo.cercaFarmaco("FarmacoReport3").get("id"), 11);
-			ordine3.put((int) controllerCatalogo.cercaFarmaco("FarmacoReport3").get("id"), 3);
-			ordine3.put((int) controllerCatalogo.cercaFarmaco("FarmacoReport4").get("id"), 4);
+			ordine1.put((int) controllerCatalogo.cercaFarmaco(FARMACO_REPORT1).get("id"), 2);
+			ordine1.put((int) controllerCatalogo.cercaFarmaco(FARMACO_REPORT2).get("id"), 6);
+			ordine2.put((int) controllerCatalogo.cercaFarmaco(FARMACO_REPORT3).get("id"), 11);
+			ordine3.put((int) controllerCatalogo.cercaFarmaco(FARMACO_REPORT3).get("id"), 3);
+			ordine3.put((int) controllerCatalogo.cercaFarmaco(FARMACO_REPORT4).get("id"), 4);
 		} catch (FarmacoNotFoundException e) {
-			fail("Errore dovuto alle dipendenze: controllerCatalogo");
+			fail(ERRORE_CONTROLLER);
 		}
 
 		try {
@@ -86,7 +94,7 @@ public class GeneraReportTest {
 			idOrdine2 = controllerOrdini.creaOrdine(ordine2);
 			idOrdine3 = controllerOrdini.creaOrdine(ordine3);
 		} catch (OrderCreationFailedException e) {
-			fail("Errore dovuto alle dipendenze: controllerOrdini");
+			fail(ERRORE_CONTROLLER);
 		}
 	}
 
@@ -101,10 +109,9 @@ public class GeneraReportTest {
 		java.util.Date date = formatter.parse(dataReportString);
 		java.sql.Date dataReport = new java.sql.Date(date.getTime());
 
-		float totaleBancoExpected = (14 * 6) + (4 * 10);
-		float totalePrescrizioneExpected = (2 * 17) + (6 * 11);
-		String nomeBancoExpected = "FarmacoReport3";
-		String nomePrescrizioneExpected = "FarmacoReport2";
+		float totaleBancoExpected = (float)(14 * 6) + (float)(4 * 10);
+		float totalePrescrizioneExpected = (float)(2 * 17) + (float)(6 * 11);
+
 		int unitaPrescrizioneExpected = 6;
 		int unitaBancoExpected = 14;
 
@@ -119,8 +126,8 @@ public class GeneraReportTest {
 
 			assertEquals(incassoBanco, totaleBancoExpected, 0.01);
 			assertEquals(incassoPrescrizione, totalePrescrizioneExpected, 0.01);
-			assertEquals(nomeBanco, nomeBancoExpected);
-			assertEquals(nomePrescrizione, nomePrescrizioneExpected);
+			assertEquals(nomeBanco, FARMACO_REPORT3);
+			assertEquals(nomePrescrizione, FARMACO_REPORT2);
 			assertEquals(unitaBanco, unitaBancoExpected);
 			assertEquals(unitaPrescrizione, unitaPrescrizioneExpected);
 		} catch (ReportException e) {
@@ -132,14 +139,14 @@ public class GeneraReportTest {
 	@AfterClass
 	public static void tearDown() {
 		try {
-			FarmacoDAO.deleteFarmaco("FarmacoReport1");
-			FarmacoDAO.deleteFarmaco("FarmacoReport2");
-			FarmacoDAO.deleteFarmaco("FarmacoReport3");
-			FarmacoDAO.deleteFarmaco("FarmacoReport4");
+			FarmacoDAO.deleteFarmaco(FARMACO_REPORT1);
+			FarmacoDAO.deleteFarmaco(FARMACO_REPORT2);
+			FarmacoDAO.deleteFarmaco(FARMACO_REPORT3);
+			FarmacoDAO.deleteFarmaco(FARMACO_REPORT4);
 			OrdineDAO.deleteOrdine(idOrdine1);
 			OrdineDAO.deleteOrdine(idOrdine2);
 			OrdineDAO.deleteOrdine(idOrdine3);
-			UtenteDAO utente = new UtenteDAO("utentereport");
+			UtenteDAO utente = new UtenteDAO(UTENTE_REPORT);
 			utente.deleteUtente();
 		} catch (DBException e) {
 			fail("Errore nel cleanup:" + e.getMessage());

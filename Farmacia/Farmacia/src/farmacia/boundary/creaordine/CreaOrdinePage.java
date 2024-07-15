@@ -14,7 +14,6 @@ public class CreaOrdinePage extends JFrame {
 	private final OrdineTableModel model;
 	private final List<Integer> idFarmaci;
 
-	// 25 to 15
 	public CreaOrdinePage() {
 		setTitle("Crea Ordine");
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);

@@ -17,6 +17,10 @@ public class FarmacoDAO {
 	private int scorte;
 	private String codice;
 
+	private static final String ERRORE_ELIMINAZIONE = "Errore durante l'eliminazione dal DB del farmaco '%s'.";
+	private static final String PREZZO_STATIC = "prezzo";
+	private static final String PRESCRIZIONE_STATIC = "prescrizione";
+	private static final String SCORTE_STATIC = "scorte";
 	private static final Logger logger = Logger.getLogger("FarmacoDAO");
 
 	/**
@@ -98,8 +102,8 @@ public class FarmacoDAO {
 		try {
 			DBManager.getInstance().executeQuery(query);
 		} catch (ClassNotFoundException | SQLException e) {
-			logger.warning(String.format("Errore durante l'eliminazione dal DB del farmaco '%s'.", nome));
-			throw new DBException(String.format("Errore durante l'eliminazione dal DB del farmaco '%s'.", nome));
+			logger.warning(String.format(ERRORE_ELIMINAZIONE, nome));
+			throw new DBException(String.format(ERRORE_ELIMINAZIONE, nome));
 		}
 	}
 
@@ -115,9 +119,9 @@ public class FarmacoDAO {
 		try (ResultSet rs = DBManager.getInstance().selectQuery(query)) {
 			if (rs.next()) {
 				this.nome = rs.getString("nome");
-				this.prezzo = rs.getFloat("prezzo");
-				this.prescrizione = rs.getBoolean("prescrizione");
-				this.scorte = rs.getInt("scorte");
+				this.prezzo = rs.getFloat(PREZZO_STATIC);
+				this.prescrizione = rs.getBoolean(PRESCRIZIONE_STATIC);
+				this.scorte = rs.getInt(SCORTE_STATIC);
 				this.id = id;
 			}
 		} catch (ClassNotFoundException | SQLException e) {
@@ -140,9 +144,9 @@ public class FarmacoDAO {
 			if (rs.next()) {
 				this.id = rs.getInt("id");
 				this.nome = nome;
-				this.prezzo = rs.getFloat("prezzo");
-				this.prescrizione = rs.getBoolean("prescrizione");
-				this.scorte = rs.getInt("scorte");
+				this.prezzo = rs.getFloat(PREZZO_STATIC);
+				this.prescrizione = rs.getBoolean(PRESCRIZIONE_STATIC);
+				this.scorte = rs.getInt(SCORTE_STATIC);
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			logger.warning(String.format("Errore durante il caricamento dal database del farmaco '%s'.%n%s",
@@ -201,8 +205,8 @@ public class FarmacoDAO {
 		try {
 			DBManager.getInstance().executeQuery(query);
 		} catch (ClassNotFoundException | SQLException e) {
-			logger.warning(String.format("Errore durante l'eliminazione dal DB del farmaco '%s'.", this.nome));
-			throw new DBException(String.format("Errore durante l'eliminazione dal DB del farmaco '%s'.", this.nome));
+			logger.warning(String.format(ERRORE_ELIMINAZIONE, this.nome));
+			throw new DBException(String.format(ERRORE_ELIMINAZIONE, this.nome));
 		}
 	}
 
@@ -221,10 +225,10 @@ public class FarmacoDAO {
 			while (rs.next()) {
 				FarmacoDAO farmaco = new FarmacoDAO();
 				farmaco.id = rs.getInt("id");
-				farmaco.prezzo = rs.getFloat("prezzo");
-				farmaco.prescrizione = rs.getBoolean("prescrizione");
+				farmaco.prezzo = rs.getFloat(PREZZO_STATIC);
+				farmaco.prescrizione = rs.getBoolean(PRESCRIZIONE_STATIC);
 				farmaco.nome = rs.getString("nome");
-				farmaco.scorte = rs.getInt("scorte");
+				farmaco.scorte = rs.getInt(SCORTE_STATIC);
 				farmaco.codice = rs.getString("codice");
 				farmaci.add(farmaco);
 			}
@@ -234,24 +238,6 @@ public class FarmacoDAO {
 		}
 
 		return farmaci;
-	}
-
-	/**
-	 * Funzione che aggiorna il prezzo di un farmaco.
-	 * @param nome Nome del farmaco da modificare.
-	 * @param nuovoPrezzo Nuovo prezzo da impostare per il farmaco.
-	 * @throws DBException Lanciata se non è possibile accedere al DB o se il farmaco non esiste.
-	 */
-	public static void aggiornaPrezzoDB(String nome, float nuovoPrezzo) throws DBException {
-		FarmacoDAO farmacoDaModificare = new FarmacoDAO(nome);
-		String nomeFarmacoDaModificare = farmacoDaModificare.getNome();
-		String query = String.format("UPDATE farmaci SET prezzo = %f WHERE nome = '%s';", nuovoPrezzo, nome);
-		logger.info(query);
-		try {
-			DBManager.getInstance().executeQuery(query);
-		} catch (ClassNotFoundException | SQLException e) {
-			logger.warning("Errore durante l'aggiornamento del prezzo del farmaco '" + nomeFarmacoDaModificare + "'.");
-		}
 	}
 
 	/**
