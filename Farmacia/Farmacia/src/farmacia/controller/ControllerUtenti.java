@@ -4,7 +4,6 @@ import farmacia.dto.DTO;
 import farmacia.entity.EntityFarmacia;
 import farmacia.entity.EntityUtente;
 import farmacia.entity.Sessione;
-import farmacia.exceptions.DBException;
 import farmacia.exceptions.LoginFailedException;
 import farmacia.exceptions.RegistrationFailedException;
 

@@ -24,9 +24,6 @@ import static org.junit.Assert.*;
 public class GeneraReportTest {
 
 	private static ControllerReport controllerReport;
-	private static ControllerCatalogo controllerCatalogo;
-	private static ControllerUtenti controllerUtenti;
-	private static ControllerOrdini controllerOrdini;
 	private static String idOrdine1;
 	private static String idOrdine2;
 	private static String idOrdine3;
@@ -34,9 +31,9 @@ public class GeneraReportTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws ParseException {
 		controllerReport = ControllerReport.getInstance();
-		controllerCatalogo = ControllerCatalogo.getInstance();
-		controllerUtenti = ControllerUtenti.getInstance();
-		controllerOrdini = ControllerOrdini.getInstance();
+		ControllerCatalogo controllerCatalogo = ControllerCatalogo.getInstance();
+		ControllerUtenti controllerUtenti = ControllerUtenti.getInstance();
+		ControllerOrdini controllerOrdini = ControllerOrdini.getInstance();
 
 		try {
 			controllerUtenti.loginUtente("farmacista", "farmacista");
@@ -75,11 +72,11 @@ public class GeneraReportTest {
 		Map<Integer, Integer> ordine3 = new HashMap<>();
 
 		try {
-			ordine1.put((int)controllerCatalogo.cercaFarmaco("FarmacoReport1").get("id"), 2);
-			ordine1.put((int)controllerCatalogo.cercaFarmaco("FarmacoReport2").get("id"), 6);
-			ordine2.put((int)controllerCatalogo.cercaFarmaco("FarmacoReport3").get("id"), 11);
-			ordine3.put((int)controllerCatalogo.cercaFarmaco("FarmacoReport3").get("id"), 3);
-			ordine3.put((int)controllerCatalogo.cercaFarmaco("FarmacoReport4").get("id"), 4);
+			ordine1.put((int) controllerCatalogo.cercaFarmaco("FarmacoReport1").get("id"), 2);
+			ordine1.put((int) controllerCatalogo.cercaFarmaco("FarmacoReport2").get("id"), 6);
+			ordine2.put((int) controllerCatalogo.cercaFarmaco("FarmacoReport3").get("id"), 11);
+			ordine3.put((int) controllerCatalogo.cercaFarmaco("FarmacoReport3").get("id"), 3);
+			ordine3.put((int) controllerCatalogo.cercaFarmaco("FarmacoReport4").get("id"), 4);
 		} catch (FarmacoNotFoundException e) {
 			fail("Errore dovuto alle dipendenze: controllerCatalogo");
 		}

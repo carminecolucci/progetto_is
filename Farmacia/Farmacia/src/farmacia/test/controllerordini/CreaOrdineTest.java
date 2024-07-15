@@ -28,7 +28,7 @@ public class CreaOrdineTest {
 	private String idOrdineAzzeraScorte;
 
 	@BeforeClass
-	public static void setUp() throws FarmacoCreationFailedException, DBException, ParseException {
+	public static void setUp() throws FarmacoCreationFailedException, ParseException {
 
 		// inizializzazione dei controller
 		controllerOrdini = ControllerOrdini.getInstance();

@@ -24,7 +24,7 @@ public class AggiornaOrdineTest {
 	private static String idOrdineSuccess;
 
 	@BeforeClass
-	public static void setUp() throws ParseException, FarmacoCreationFailedException, FarmacoNotFoundException, OrderCreationFailedException, DBException {
+	public static void setUp() throws ParseException, FarmacoCreationFailedException, FarmacoNotFoundException, OrderCreationFailedException {
   ControllerUtenti controllerUtenti;
 
 		// inizializzazione dei controller

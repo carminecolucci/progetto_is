@@ -2,7 +2,6 @@ package farmacia.test.controllercatalogo;
 
 import farmacia.controller.ControllerCatalogo;
 import farmacia.database.FarmacoDAO;
-import farmacia.entity.EntityCatalogo;
 import farmacia.exceptions.DBException;
 import farmacia.exceptions.FarmacoCreationFailedException;
 import org.junit.*;

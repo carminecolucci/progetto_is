@@ -22,7 +22,7 @@ public class AggiornaOrdineAcquistoFarmaciaTest {
 	private static String idOrdineAcquistoSuccess;
 
 	@BeforeClass
-	public static void setUp() throws FarmacoCreationFailedException, FarmacoNotFoundException, OrderCreationFailedException, DBException {
+	public static void setUp() throws FarmacoCreationFailedException, FarmacoNotFoundException, OrderCreationFailedException {
 
 		// inizializzazione dei controller
 		controllerOrdini = ControllerOrdini.getInstance();

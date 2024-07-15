@@ -2,7 +2,6 @@ package farmacia.boundary;
 
 import farmacia.boundary.datepicker.DateTextField;
 import farmacia.controller.ControllerUtenti;
-import farmacia.exceptions.DBException;
 import farmacia.exceptions.RegistrationFailedException;
 
 import javax.swing.*;

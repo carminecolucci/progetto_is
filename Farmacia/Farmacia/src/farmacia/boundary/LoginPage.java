@@ -2,7 +2,6 @@ package farmacia.boundary;
 
 import farmacia.controller.ControllerUtenti;
 import farmacia.dto.DTO;
-import farmacia.exceptions.DBException;
 import farmacia.exceptions.LoginFailedException;
 
 import javax.swing.*;
@@ -19,7 +18,7 @@ public class LoginPage extends JFrame {
 	private JButton btnRegistrati;
 
 	public LoginPage() {
-		setSize(500, 750);
+		setSize(550, 550);
 		setTitle("Schermata di login");
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
