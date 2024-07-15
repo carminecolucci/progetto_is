@@ -15,6 +15,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -22,6 +23,10 @@ import static org.junit.Assert.assertTrue;
 public class AggiornaOrdineTest {
 	private static ControllerOrdini controllerOrdini;
 	private static String idOrdineSuccess;
+	private static final Logger logger = Logger.getLogger("AggiornaOrdineTest");
+	private static final String TEST_USER_ORDINE = "testUserOrdine";
+	private static final String FARMACO_ORDINE = "FarmacoOrdine";
+
 
 	@BeforeClass
 	public static void setUp() throws ParseException, FarmacoCreationFailedException, FarmacoNotFoundException, OrderCreationFailedException {
@@ -39,33 +44,33 @@ public class AggiornaOrdineTest {
 		Date dataNascita = new Date(date.getTime());
 		boolean esito = true;
 		try {
-			controllerUtenti.registraCliente("testUserOrdine", "MiaPassword", "Utente", "Di Prova", dataNascita, "clienteordine@gmail.com");
+			controllerUtenti.registraCliente(TEST_USER_ORDINE, "MiaPassword", "Utente", "Di Prova", dataNascita, "clienteordine@gmail.com");
 		} catch (RegistrationFailedException e) {
-			System.err.println(e.getMessage());
+			logger.warning(e.getMessage());
 			esito = false;
 		}
 		assertTrue(esito);
 
 		// login di un cliente
 		try {
-			controllerUtenti.loginUtente("testUserOrdine", "MiaPassword");
+			controllerUtenti.loginUtente(TEST_USER_ORDINE, "MiaPassword");
 		} catch (LoginFailedException e) {
-			System.err.println(e.getMessage());
+			logger.warning(e.getMessage());
 			esito = false;
 		}
 		assertTrue(esito);
 
 		// aggiunta di un farmaco e creazione di un ordine
-		controllerCatalogo.aggiungiFarmaco(50, true, "FarmacoOrdine", 20);
+		controllerCatalogo.aggiungiFarmaco(50, true, FARMACO_ORDINE, 20);
 		Map<Integer, Integer> ordine = new HashMap<>();
-		ordine.put((int) controllerCatalogo.cercaFarmaco("FarmacoOrdine").get("id"), 20);
+		ordine.put((int) controllerCatalogo.cercaFarmaco(FARMACO_ORDINE).get("id"), 20);
 		idOrdineSuccess = controllerOrdini.creaOrdine(ordine);
 
 		// login di un farmacista (per caricare gli ordini di tutti i clienti)
 		try {
 			controllerUtenti.loginUtente("farmacista", "farmacista"); // il test assume che ESISTA questo account nel DB
 		} catch (LoginFailedException e) {
-			System.err.println(e.getMessage());
+			logger.warning(e.getMessage());
 			esito = false;
 		}
 		assertTrue(esito);
@@ -74,8 +79,8 @@ public class AggiornaOrdineTest {
 
 	@AfterClass
 	public static void tearDown() throws DBException {
-		FarmacoDAO.deleteFarmaco("FarmacoOrdine");
-		UtenteDAO utenteDAO = new UtenteDAO("testUserOrdine");
+		FarmacoDAO.deleteFarmaco(FARMACO_ORDINE);
+		UtenteDAO utenteDAO = new UtenteDAO(TEST_USER_ORDINE);
 		utenteDAO.deleteUtente();
 		OrdineDAO.deleteOrdine(idOrdineSuccess);
 	}

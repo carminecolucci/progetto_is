@@ -6,12 +6,9 @@ import farmacia.dto.DTO;
 import farmacia.exceptions.OrderCreationFailedException;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 import java.awt.BorderLayout;
 import java.util.*;
-import java.awt.Component;
+
 
 public class CreaOrdinePage extends JFrame {
 	private final JTable tblFarmaciOrdine;

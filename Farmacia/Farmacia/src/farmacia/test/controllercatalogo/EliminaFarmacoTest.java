@@ -13,6 +13,7 @@ import static org.junit.Assert.fail;
 public class EliminaFarmacoTest {
 
 	private static ControllerCatalogo controllerCatalogo;
+	private static final String TEST_ELIMINA_FARMACO = "TestEliminaFarmaco";
 
 	@BeforeClass
 	public static void setUpBeforeClass() {
@@ -23,17 +24,16 @@ public class EliminaFarmacoTest {
 	public void testEliminaFarmacoSuccess() throws FarmacoCreationFailedException {
 		float prezzo = 50;
 		boolean prescrizione = true;
-		String nome = "TestEliminaFarmaco";
 		int scorte = 10;
-		controllerCatalogo.aggiungiFarmaco(prezzo, prescrizione, nome, scorte);
+		controllerCatalogo.aggiungiFarmaco(prezzo, prescrizione, TEST_ELIMINA_FARMACO, scorte);
 		try {
-			controllerCatalogo.eliminaFarmaco((int)controllerCatalogo.cercaFarmaco("TestEliminaFarmaco").get("id"));
+			controllerCatalogo.eliminaFarmaco((int)controllerCatalogo.cercaFarmaco(TEST_ELIMINA_FARMACO).get("id"));
 		} catch (FarmacoNotFoundException | DBException e) {
 			fail("Errore dovuto alle dipendenze" + e.getMessage());
 		}
 		boolean esito = true;
 		try {
-			controllerCatalogo.cercaFarmaco("TestEliminaFarmaco");
+			controllerCatalogo.cercaFarmaco(TEST_ELIMINA_FARMACO);
 		} catch (FarmacoNotFoundException e) {
 			esito = false;
 		}

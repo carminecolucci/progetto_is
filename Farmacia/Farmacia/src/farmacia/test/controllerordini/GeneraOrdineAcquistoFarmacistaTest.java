@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -21,6 +22,10 @@ public class GeneraOrdineAcquistoFarmacistaTest {
 	private static ControllerOrdini controllerOrdini;
 	private static ControllerCatalogo controllerCatalogo;
 	private String idOrdineSuccess;
+	private static final String FARMACO_ORDINE_ACQUISTO1 = "FarmacoOrdineAcquisto1";
+	private static final String FARMACO_ORDINE_ACQUISTO2 = "FarmacoOrdineAcquisto2";
+
+	private static final Logger logger = Logger.getLogger("GeneraOrdineAcquistoFarmacistaTest");
 
 	@BeforeClass
 	public static void setUp() throws FarmacoCreationFailedException {
@@ -30,8 +35,8 @@ public class GeneraOrdineAcquistoFarmacistaTest {
 		controllerCatalogo = ControllerCatalogo.getInstance();
 
 		// aggiunta di un farmaco e creazione di un ordine
-		controllerCatalogo.aggiungiFarmaco(50, true, "FarmacoOrdineAcquisto1", 20);
-		controllerCatalogo.aggiungiFarmaco(50, true, "FarmacoOrdineAcquisto2", 20);
+		controllerCatalogo.aggiungiFarmaco(50, true, FARMACO_ORDINE_ACQUISTO1, 20);
+		controllerCatalogo.aggiungiFarmaco(50, true, FARMACO_ORDINE_ACQUISTO2, 20);
 	}
 
 	@Test
@@ -40,11 +45,11 @@ public class GeneraOrdineAcquistoFarmacistaTest {
 
 		boolean esito = true;
 		try {
-			ordine.put((int)controllerCatalogo.cercaFarmaco("FarmacoOrdineAcquisto1").get("id"), 5);
-			ordine.put((int)controllerCatalogo.cercaFarmaco("FarmacoOrdineAcquisto2").get("id"), 10);
+			ordine.put((int)controllerCatalogo.cercaFarmaco(FARMACO_ORDINE_ACQUISTO1).get("id"), 5);
+			ordine.put((int)controllerCatalogo.cercaFarmaco(FARMACO_ORDINE_ACQUISTO2).get("id"), 10);
 			idOrdineSuccess = controllerOrdini.creaOrdineAcquistoFarmacia(ordine);
 		} catch (FarmacoNotFoundException | OrderCreationFailedException e) {
-			System.err.println(e.getMessage());
+			logger.warning(e.getMessage());
 			esito = false;
 		}
 
@@ -53,10 +58,10 @@ public class GeneraOrdineAcquistoFarmacistaTest {
 		for (DTO ordineAcquisto: controllerOrdini.visualizzaOrdiniAcquistoFarmacia()) {
 			if (ordineAcquisto.get("id").equals(idOrdineSuccess)) {
 				Map<DTO, Integer> quantitaFarmaci = (Map<DTO, Integer>) ordineAcquisto.get("quantitaFarmaci");
-				if (!contains(quantitaFarmaci, "FarmacoOrdineAcquisto1", 5)) {
+				if (!contains(quantitaFarmaci, FARMACO_ORDINE_ACQUISTO1, 5)) {
 					esito = false;
 				}
-				if (!contains(quantitaFarmaci, "FarmacoOrdineAcquisto2", 10)) {
+				if (!contains(quantitaFarmaci, FARMACO_ORDINE_ACQUISTO2, 10)) {
 					esito = false;
 				}
 				break;
@@ -73,7 +78,7 @@ public class GeneraOrdineAcquistoFarmacistaTest {
 		try {
 			controllerOrdini.creaOrdineAcquistoFarmacia(ordine);
 		} catch (OrderCreationFailedException e) {
-			System.err.println(e.getMessage());
+			logger.warning(e.getMessage());
 			esito = false;
 		}
 
@@ -82,8 +87,8 @@ public class GeneraOrdineAcquistoFarmacistaTest {
 
 	@After
 	public void tearDown() throws DBException {
-		FarmacoDAO.deleteFarmaco("FarmacoOrdineAcquisto1");
-		FarmacoDAO.deleteFarmaco("FarmacoOrdineAcquisto2");
+		FarmacoDAO.deleteFarmaco(FARMACO_ORDINE_ACQUISTO1);
+		FarmacoDAO.deleteFarmaco(FARMACO_ORDINE_ACQUISTO2);
 		OrdineAcquistoDAO.deleteOrdineAcquisto(idOrdineSuccess);
 	}
 }

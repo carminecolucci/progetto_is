@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import static org.junit.Assert.*;
 
@@ -24,6 +25,12 @@ public class VisualizzaStoricoOrdiniTest {
 	private static ControllerOrdini controllerOrdini;
 	private static ControllerUtenti controllerUtenti;
 	private static ControllerCatalogo controllerCatalogo;
+
+	private static final String TEST_USER = "testUser";
+	private static final String TEST1 = "test1";
+	private static final String TEST2 = "test2";
+	private static final String TEST3 = "test3";
+	private static final Logger logger = Logger.getLogger("VisualizzaStoricoOrdiniTest");
 
 	@BeforeClass
 	public static void setUp() throws ParseException {
@@ -37,9 +44,9 @@ public class VisualizzaStoricoOrdiniTest {
 		Date dataNascita = new Date(date.getTime());
 		boolean esito = true;
 		try {
-			controllerUtenti.registraCliente("testUser", "MiaPassword", "Utente", "Di Prova", dataNascita, "cliente@gmail.com");
+			controllerUtenti.registraCliente(TEST_USER, "MiaPassword", "Utente", "Di Prova", dataNascita, "cliente@gmail.com");
 		} catch (RegistrationFailedException e) {
-			System.err.println(e.getMessage());
+			logger.warning(e.getMessage());
 			esito = false;
 		}
 		assertTrue(esito);
@@ -47,25 +54,25 @@ public class VisualizzaStoricoOrdiniTest {
 
 	@AfterClass
 	public static void tearDown() throws DBException {
-		UtenteDAO utenteDAO = new UtenteDAO("testUser");
+		UtenteDAO utenteDAO = new UtenteDAO(TEST_USER);
 		utenteDAO.deleteUtente();
-		FarmacoDAO.deleteFarmaco("test1");
-		FarmacoDAO.deleteFarmaco("test2");
-		FarmacoDAO.deleteFarmaco("test3");
+		FarmacoDAO.deleteFarmaco(TEST1);
+		FarmacoDAO.deleteFarmaco(TEST2);
+		FarmacoDAO.deleteFarmaco(TEST3);
 	}
 
 	@Test
 	public void testVisualizzaStoricoOrdini() throws DBException {
 		boolean esito = true;
 		try {
-			controllerUtenti.loginUtente("testUser", "MiaPassword");
-			controllerCatalogo.aggiungiFarmaco(23, false, "test1", 23);
-			controllerCatalogo.aggiungiFarmaco(34, true, "test2", 34);
-			controllerCatalogo.aggiungiFarmaco(45, true, "test3", 45);
+			controllerUtenti.loginUtente(TEST_USER, "MiaPassword");
+			controllerCatalogo.aggiungiFarmaco(23, false, TEST1, 23);
+			controllerCatalogo.aggiungiFarmaco(34, true, TEST2, 34);
+			controllerCatalogo.aggiungiFarmaco(45, true, TEST3, 45);
 
-			int id1 = (int)controllerCatalogo.cercaFarmaco("test1").get("id");
-			int id2 = (int)controllerCatalogo.cercaFarmaco("test2").get("id");
-			int id3 = (int)controllerCatalogo.cercaFarmaco("test3").get("id");
+			int id1 = (int)controllerCatalogo.cercaFarmaco(TEST1).get("id");
+			int id2 = (int)controllerCatalogo.cercaFarmaco(TEST2).get("id");
+			int id3 = (int)controllerCatalogo.cercaFarmaco(TEST3).get("id");
 
 			Map<Integer, Integer> farmaciQuantita = new HashMap<>();
 			farmaciQuantita.put(id1, 3);
@@ -76,7 +83,7 @@ public class VisualizzaStoricoOrdiniTest {
 
 			List<DTO> ordini = controllerOrdini.visualizzaStoricoOrdini();
 			DTO ordine = ordini.get(0);
-			assertEquals("testUser", ordine.get("cliente"));
+			assertEquals(TEST_USER, ordine.get("cliente"));
 			Map<DTO, Integer> quantitaFarmaci = (Map<DTO, Integer>)ordine.get("quantitaFarmaci");
 			for (Map.Entry<DTO, Integer> entry: quantitaFarmaci.entrySet()) {
 				DTO farmaco  = entry.getKey();

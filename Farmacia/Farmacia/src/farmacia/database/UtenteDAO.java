@@ -124,8 +124,6 @@ public class UtenteDAO {
 				throw new DBException(String.format("Utente '%s' non esistente", id));
 			}
 		} catch (ClassNotFoundException | SQLException e) {
-			logger.warning(String.format("Errore durante il caricamento dal database di un utente con id %d.%n%s",
-				id, e.getMessage()));
 			throw new DBException("Errore nel caricamento di un utente. " + e.getMessage());
 		}
 	}
