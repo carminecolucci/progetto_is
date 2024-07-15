@@ -15,7 +15,10 @@ import java.awt.Component;
 
 public class CreaOrdinePage extends JFrame {
 	private final JTable tblFarmaciOrdine;
+	private final OrdineTableModel model;
+	private final List<Integer> idFarmaci;
 
+	// 25 to 15
 	public CreaOrdinePage() {
 		setTitle("Crea Ordine");
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -23,67 +26,24 @@ public class CreaOrdinePage extends JFrame {
 		setSize(800, 400);
 		setLocationRelativeTo(null);
 
-		DefaultTableModel model = new DefaultTableModel(new Object[][]{}, new String[]{"Nome", "Prezzo", "Prescrizione", "Possiedi la prescrizione?", "Quantità"}) {
-			@Override
-			public boolean isCellEditable(int row, int column) {
-				if (column == 4)
-					return true;
-				if (column == 3 ) {
-					return !"-".equals(getValueAt(row, column));
-				}
-				return false;
-			}
-		};
-
-		tblFarmaciOrdine = new JTable(model);
-
-		String[] options = {"Sì", "No"};
-		JComboBox<String> comboBox = new JComboBox<>(options);
-		comboBox.setEditable(false);
-
-		TableColumn comboBoxColumn = tblFarmaciOrdine.getColumnModel().getColumn(3);
-
-		comboBoxColumn.setCellEditor(new DefaultCellEditor(comboBox));
-		comboBoxColumn.setCellRenderer(new DefaultTableCellRenderer() {
-			@Override
-			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-				if ("-".equals(value)) {
-					setText("-");
-					setEnabled(false);
-				} else {
-					setText((String) value);
-					setEnabled(true);
-				}
-				return this;
-			}
-		});
-
+		model = new OrdineTableModel();
+		OrdineTableColumnModel columnModel = new OrdineTableColumnModel();
+		tblFarmaciOrdine = new JTable(model, columnModel);
+		tblFarmaciOrdine.createDefaultColumnsFromModel();
+		columnModel.begin();
 
 		JScrollPane scrollPane = new JScrollPane(tblFarmaciOrdine);
 		getContentPane().add(scrollPane);
 
-		tblFarmaciOrdine.getColumnModel().getColumn(4).setCellEditor(new QuantitaCellEditor());
-
 		ControllerCatalogo controllerCatalogo = ControllerCatalogo.getInstance();
-		List<DTO> listDTO = controllerCatalogo.visualizzaCatalogo();
-		List<Integer> listId = new ArrayList<>();
+		List<DTO> farmaci = controllerCatalogo.visualizzaCatalogo();
+		idFarmaci = new ArrayList<>();
 
-		for(DTO farmaco : listDTO){
-			String prescrizioneNecessaria;
-			listId.add((int)farmaco.get("id"));
-			if (!((boolean) farmaco.get("prescrizione"))){
-				prescrizioneNecessaria = "-";
-				model.addRow(new Object[]{farmaco.get("nome"), farmaco.get("prezzo"),
-						prescrizioneNecessaria, "-", 0});
-			}
-			else{
-				prescrizioneNecessaria = "Necessaria";
-				JComboBox<String> comboBoxNecessaria = new JComboBox<>(new String[]{"Sì", "No"});
-				comboBoxNecessaria.setEditable(false);
-				model.addRow(new Object[]{farmaco.get("nome"), farmaco.get("prezzo"),
-						prescrizioneNecessaria, "No", 0});
-			}
+		for (DTO farmaco: farmaci){
+			idFarmaci.add((int)farmaco.get("id"));
+			model.addFarmaco(farmaco);
 		}
+
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new BorderLayout());
 
@@ -93,46 +53,42 @@ public class CreaOrdinePage extends JFrame {
 		buttonPanel.add(btnConferma, BorderLayout.EAST);
 		buttonPanel.add(btnAnnulla, BorderLayout.WEST);
 		add(buttonPanel, BorderLayout.SOUTH);
-		btnConferma.addActionListener(e -> {
-			ControllerOrdini controllerOrdini = ControllerOrdini.getInstance();
-			int numeroFarmaci = 0;
-			Map<Integer, Integer> farmaciOrdine = new HashMap<>();
-			for (int row = 0; row < tblFarmaciOrdine.getRowCount(); row++) {
-				String nome = (String)tblFarmaciOrdine.getValueAt(row, 0);
-				String necessitaPrescrizione = (String)tblFarmaciOrdine.getValueAt(row, 2);
-				String possiediPrescrizione = (String) model.getValueAt(row, 3);
-				Integer quantita = (Integer)tblFarmaciOrdine.getValueAt(row, 4);
-				if (quantita > 0) {
-					numeroFarmaci += 1;
-					if (necessitaPrescrizione.equals("Necessaria")) {
-						if (possiediPrescrizione.equals("Sì"))
-							farmaciOrdine.put(listId.get(row), quantita);
-						else {
-							JOptionPane.showMessageDialog(this, String.format("Ordine annullato: non hai la prescrizione per il farmaco '%s'.", nome), "Errore", JOptionPane.ERROR_MESSAGE);
-							dispose();
-							return;
-						}
-					} else {
-						farmaciOrdine.put(listId.get(row), quantita);
-					}
-				}
-			}
-			try {
-				if (numeroFarmaci >= 1){
-					String idOrdine = controllerOrdini.creaOrdine(farmaciOrdine);
-					JOptionPane.showMessageDialog(this, String.format("Ordine confermato! Numero ricevuta: '%s'.", idOrdine));
-					dispose();
-				} else {
-					JOptionPane.showMessageDialog(this, "L'ordine non contiene farmaci!", "Errore", JOptionPane.ERROR_MESSAGE);
-				}
-			} catch (OrderCreationFailedException ex) {
-				farmaciOrdine.clear();
-				JOptionPane.showMessageDialog(this, ex.getMessage());
-			}
-		});
+		btnConferma.addActionListener(e -> creaOrdineHandler());
 
 		btnAnnulla.addActionListener(e -> dispose());
-
 		setVisible(true);
+	}
+
+	private void creaOrdineHandler() {
+		ControllerOrdini controllerOrdini = ControllerOrdini.getInstance();
+		int numeroFarmaci = 0;
+		Map<Integer, Integer> farmaciOrdine = new HashMap<>();
+		for (int row = 0; row < tblFarmaciOrdine.getRowCount(); row++) {
+			String nome = (String)tblFarmaciOrdine.getValueAt(row, 0);
+			String necessitaPrescrizione = (String)tblFarmaciOrdine.getValueAt(row, 2);
+			String possiediPrescrizione = (String) model.getValueAt(row, 3);
+			Integer quantita = (Integer)tblFarmaciOrdine.getValueAt(row, 4);
+			if (quantita > 0) {
+				if (necessitaPrescrizione.equals("Necessaria") && !possiediPrescrizione.equals("Sì")) {
+					JOptionPane.showMessageDialog(this, String.format("Ordine annullato: non hai la prescrizione per il farmaco '%s'.", nome), "Errore", JOptionPane.ERROR_MESSAGE);
+					dispose();
+					return;
+				}
+				farmaciOrdine.put(idFarmaci.get(row), quantita);
+				numeroFarmaci += 1;
+			}
+		}
+		try {
+			if (numeroFarmaci >= 1){
+				String idOrdine = controllerOrdini.creaOrdine(farmaciOrdine);
+				JOptionPane.showMessageDialog(this, String.format("Ordine confermato! Numero ricevuta: '%s'.", idOrdine));
+				dispose();
+			} else {
+				JOptionPane.showMessageDialog(this, "L'ordine non contiene farmaci!", "Errore", JOptionPane.ERROR_MESSAGE);
+			}
+		} catch (OrderCreationFailedException ex) {
+			farmaciOrdine.clear();
+			JOptionPane.showMessageDialog(this, ex.getMessage());
+		}
 	}
 }

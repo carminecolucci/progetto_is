@@ -1,22 +1,21 @@
 package farmacia.boundary.creaordine;
 
+import java.awt.Component;
 import javax.swing.*;
 import javax.swing.text.DefaultFormatter;
-import java.awt.*;
 
 public class QuantitaCellEditor extends DefaultCellEditor {
 
-	private JSpinner input;
+	private final JSpinner input;
 
 	public QuantitaCellEditor() {
 		super(new JCheckBox());
 		input = new JSpinner();
-		SpinnerNumberModel model = (SpinnerNumberModel) input.getModel();
+		SpinnerNumberModel model = (SpinnerNumberModel)input.getModel();
 		model.setMinimum(0);
-		JSpinner.NumberEditor editor = (JSpinner.NumberEditor) input.getEditor();
+		JSpinner.NumberEditor editor = (JSpinner.NumberEditor)input.getEditor();
 		DefaultFormatter formatter = (DefaultFormatter)editor.getTextField().getFormatter();
 		formatter.setCommitsOnValidEdit(true);
-
 	}
 
 	@Override
