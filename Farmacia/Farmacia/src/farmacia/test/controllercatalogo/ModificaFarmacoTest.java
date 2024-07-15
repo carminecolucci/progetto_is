@@ -15,6 +15,8 @@ import static org.junit.Assert.assertTrue;
 public class ModificaFarmacoTest {
 
 	private static ControllerCatalogo controllerCatalogo;
+	private static final String SUPER_AULIN1 = "SuperAulin1";
+	private static final String SUPER_AULIN2 = "SuperAulin2";
 
 	@BeforeClass
 	public static void setUpBeforeClass() {
@@ -23,8 +25,8 @@ public class ModificaFarmacoTest {
 
 	@AfterClass
 	public static void tearDown() throws DBException {
-		FarmacoDAO.deleteFarmaco("SuperAulin1");
-		FarmacoDAO.deleteFarmaco("SuperAulin2");
+		FarmacoDAO.deleteFarmaco(SUPER_AULIN1);
+		FarmacoDAO.deleteFarmaco(SUPER_AULIN2);
 	}
 
 	@Test
@@ -34,11 +36,11 @@ public class ModificaFarmacoTest {
 		String nome = "Aulin1";
 		int scorte = 50;
 		controllerCatalogo.aggiungiFarmaco(prezzo, prescrizione, nome, scorte);
-		controllerCatalogo.modificaFarmaco((int)controllerCatalogo.cercaFarmaco(nome).get("id"), 20, false, "SuperAulin1", 50);
-		DTO dto = controllerCatalogo.cercaFarmaco("SuperAulin1");
+		controllerCatalogo.modificaFarmaco((int)controllerCatalogo.cercaFarmaco(nome).get("id"), 20, false, SUPER_AULIN1, 50);
+		DTO dto = controllerCatalogo.cercaFarmaco(SUPER_AULIN1);
 		assertTrue((float)dto.get("prezzo") == 20
 				&& !(boolean) dto.get("prescrizione")
-				&& "SuperAulin1".equals(dto.get("nome"))
+				&& SUPER_AULIN1.equals(dto.get("nome"))
 				&& (int)dto.get("scorte") == 50
 		);
 	}
@@ -50,11 +52,11 @@ public class ModificaFarmacoTest {
 		String nome = "Aulin2";
 		int scorte = 50;
 		controllerCatalogo.aggiungiFarmaco(prezzo, prescrizione, nome, scorte);
-		controllerCatalogo.modificaFarmaco((int)controllerCatalogo.cercaFarmaco(nome).get("id"), 20, true, "SuperAulin2", 50);
-		DTO dto = controllerCatalogo.cercaFarmaco("SuperAulin2");
+		controllerCatalogo.modificaFarmaco((int)controllerCatalogo.cercaFarmaco(nome).get("id"), 20, true, SUPER_AULIN2, 50);
+		DTO dto = controllerCatalogo.cercaFarmaco(SUPER_AULIN2);
 		assertTrue((float)dto.get("prezzo") == 20
 			&& (boolean) dto.get("prescrizione")
-			&& "SuperAulin2".equals(dto.get("nome"))
+			&& SUPER_AULIN2.equals(dto.get("nome"))
 			&& (int)dto.get("scorte") == 50
 		);
 	}

@@ -12,6 +12,7 @@ import org.junit.Test;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.logging.Logger;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -19,6 +20,7 @@ import static org.junit.Assert.assertTrue;
 public class LoginUtenteTest {
 
 	private static ControllerUtenti controllerUtenti;
+	private static final Logger logger = Logger.getLogger("LoginUtenteTest");
 
 	@BeforeClass
 	public static void setUp() throws ParseException {
@@ -31,7 +33,7 @@ public class LoginUtenteTest {
 		try {
 			controllerUtenti.registraCliente("user", "MiaPassword", "Utente", "Di Prova", dataNascita, "cliente@gmail.com");
 		} catch (RegistrationFailedException e) {
-			System.err.println(e.getMessage());
+			logger.warning(e.getMessage());
 			esito = false;
 		}
 		assertTrue(esito);
@@ -49,7 +51,7 @@ public class LoginUtenteTest {
 		try {
 			controllerUtenti.loginUtente("user", "MiaPassword");
 		} catch (LoginFailedException e) {
-			System.err.println(e.getMessage());
+			logger.warning(e.getMessage());
 			esito = false;
 		}
 		assertTrue(esito);
@@ -61,7 +63,7 @@ public class LoginUtenteTest {
 		try {
 			controllerUtenti.loginUtente("user_sconosciuto", "passwd");
 		} catch (LoginFailedException e) {
-			System.err.println(e.getMessage());
+			logger.warning(e.getMessage());
 			esito = false;
 		}
 		assertFalse(esito);
@@ -73,7 +75,7 @@ public class LoginUtenteTest {
 		try {
 			controllerUtenti.loginUtente("user", "passwd");
 		} catch (LoginFailedException e) {
-			System.err.println(e.getMessage());
+			logger.warning(e.getMessage());
 			esito = false;
 		}
 		assertFalse(esito);

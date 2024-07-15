@@ -14,8 +14,8 @@ public class EntityCatalogo {
 	 * L'unica istanza di <code>EntityCatalogo</code> che implementa il pattern Singleton.
 	 */
 	private static EntityCatalogo uniqueInstance;
-
 	private final List<EntityFarmaco> farmaci;
+	private static final String FARMACO_NON_TROVATO = "Farmaco non trovato";
 
 	/**
 	 * Costruttore privato per impedire la creazione di istanze multiple.
@@ -100,7 +100,7 @@ public class EntityCatalogo {
 				return;
 			}
 		}
-		throw new FarmacoNotFoundException("Farmaco non trovato");
+		throw new FarmacoNotFoundException(FARMACO_NON_TROVATO);
 	}
 
 	/**
@@ -115,7 +115,7 @@ public class EntityCatalogo {
 				return farmaco;
 			}
 		}
-		throw new FarmacoNotFoundException("Farmaco non trovato");
+		throw new FarmacoNotFoundException(FARMACO_NON_TROVATO);
 	}
 
 	// cercaById è necessario?
@@ -132,7 +132,7 @@ public class EntityCatalogo {
 				return farmaco;
 			}
 		}
-		throw new FarmacoNotFoundException("Farmaco non trovato");
+		throw new FarmacoNotFoundException(FARMACO_NON_TROVATO);
 	}
 
 	/**
@@ -168,13 +168,13 @@ public class EntityCatalogo {
 				try {
 					FarmacoDAO.aggiornaScorteDB(farmaco.getId(), nuoveScorte);
 				} catch (DBException e) {
-					throw new FarmacoNotFoundException("Farmaco non trovato");
+					throw new FarmacoNotFoundException(FARMACO_NON_TROVATO);
 				}
 				farmaco.setScorte(nuoveScorte);
 				return nuoveScorte;
 			}
 		}
-		throw new FarmacoNotFoundException("Farmaco non trovato");
+		throw new FarmacoNotFoundException(FARMACO_NON_TROVATO);
 	}
 
 	/**

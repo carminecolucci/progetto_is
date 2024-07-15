@@ -6,12 +6,17 @@ import farmacia.exceptions.DBException;
 import farmacia.exceptions.FarmacoCreationFailedException;
 import org.junit.*;
 
+import java.util.logging.Logger;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class AggiungiFarmacoTest {
 
 	private static ControllerCatalogo catalogo;
+	private static final String OKI_TASK = "OkiTask";
+	private static final Logger logger = Logger.getLogger("AggiungiFarmacoTest");
+
 
 	@BeforeClass
 	public static void setUpBeforeClass() {
@@ -20,7 +25,7 @@ public class AggiungiFarmacoTest {
 
 	@After
 	public void tearDown() throws DBException {
-		FarmacoDAO.deleteFarmaco("OkiTask");
+		FarmacoDAO.deleteFarmaco(OKI_TASK);
 	}
 
 	@Test
@@ -28,13 +33,12 @@ public class AggiungiFarmacoTest {
 		// risolto bug della , nel formato di rappresentazione standard di Java
 		float prezzo = 50;
 		boolean prescrizione = false;
-		String nome = "OkiTask";
 		int scorte = 20;
 		boolean esito = true;
 		try {
-			catalogo.aggiungiFarmaco(prezzo, prescrizione, nome, scorte);
+			catalogo.aggiungiFarmaco(prezzo, prescrizione, OKI_TASK, scorte);
 		} catch (FarmacoCreationFailedException e) {
-			System.err.println(e.getMessage());
+			logger.warning(e.getMessage());
 			esito = false;
 		}
 		assertTrue(esito);
@@ -44,20 +48,19 @@ public class AggiungiFarmacoTest {
 	public void testAggiungiFarmacoGiaEsistente() {
 		float prezzo = 50;
 		boolean prescrizione = false;
-		String nome = "OkiTask";
 		int scorte = 20;
 		boolean esito = true;
 		try {
-			catalogo.aggiungiFarmaco(prezzo, prescrizione, nome, scorte);
+			catalogo.aggiungiFarmaco(prezzo, prescrizione, OKI_TASK, scorte);
 		} catch (FarmacoCreationFailedException e) {
-			System.err.println(e.getMessage());
+			logger.warning(e.getMessage());
 			esito = false;
 		}
 		assertTrue(esito);
 		try {
-			catalogo.aggiungiFarmaco(prezzo, prescrizione, nome, scorte);
+			catalogo.aggiungiFarmaco(prezzo, prescrizione, OKI_TASK, scorte);
 		} catch (FarmacoCreationFailedException e) {
-			System.err.println(e.getMessage());
+			logger.warning(e.getMessage());
 			esito = false;
 		}
 		assertFalse(esito);
