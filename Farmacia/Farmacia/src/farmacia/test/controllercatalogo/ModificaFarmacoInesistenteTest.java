@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;
 
-public class ModificaFarmacoCheNonEsisteTest {
+public class ModificaFarmacoInesistenteTest {
 
 	private static ControllerCatalogo controllerCatalogo;
 

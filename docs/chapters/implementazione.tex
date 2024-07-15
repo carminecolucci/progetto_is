@@ -1,1 +1,119 @@
 \chapter{Implementazione}
+
+\section{Specifiche di implementazione Java}
+
+Riportiamo di seguito le classi Java utilizzate, con la loro suddivisione in package:
+
+\begin{itemize}
+	\item \textbf{Package farmacia.boundary}
+	\begin{itemize}
+		\item RegisterPage
+		\item LoginPage
+		\item HomePageCliente
+		\item VisualizzaCatalogoPage
+		\item FarmaciTableModel
+		\item CreaOrdinePage
+		\item VisualizzaStoricoOrdiniPage
+		\item CercaFarmacoPage
+		\item HomePageFarmacista
+		\item AggiungiFarmacoPage
+		\item EliminaFarmacoPage
+		\item VisualizzaCatalogoFarmacistaPage
+		\item VisualizzaOrdiniClientiPage
+		\item VisualizzaOrdiniAcquistoPage
+		\item GeneraOrdineAcquistoPage
+		\item ScegliFarmacoModificaPage
+		\item RegistraRitiroOrdineClientePage
+		\item RegistraConsegnaOrdineAcquistoPage
+		\item HomePageDirettore
+		\item GeneraReportPage
+	\end{itemize}
+	\item \textbf{Package farmacia.boundary.creaordine}
+	\begin{itemize}
+		\item CreaOrdinePage
+		\item OrdineTableModel
+		\item OrdineTableColumnModel
+		\item QuantitaCellEditor
+	\end{itemize}
+	\item \textbf{Package farmacia.boundary.datepicker}
+	\begin{itemize}
+		\item DatePanel
+		\item DateTextField
+	\end{itemize}
+	\item \textbf{Package farmacia.controller}
+	\begin{itemize}
+		\item ControllerCatalogo
+		\item ControllerOrdini
+		\item ControllerUtenti
+		\item ControllerReport
+	\end{itemize}
+	\item \textbf{Package farmacia.entity}
+	\begin{itemize}
+		\item EntityCatalogo
+		\item EntityCliente
+		\item EntityUtente
+		\item EntityFarmacia
+		\item EntityFarmaco
+		\item EntityOrdine
+		\item EntityOrdineAcquisto
+		\item Sessione
+	\end{itemize}
+	\item \textbf{Package farmacia.database}
+	\begin{itemize}
+		\item DBManager
+		\item UtenteDAO
+		\item FarmacoDAO
+		\item OrdineDAO
+		\item OrdineAcquistoDAO
+	\end{itemize}
+	\item \textbf{Package farmacia.dto}
+	\begin{itemize}
+		\item DTO
+	\end{itemize}
+	\item \textbf{Package farmacia.exceptions}
+	\begin{itemize}
+		\item DBException
+		\item LoginFailedException
+		\item RegistrationFailedException
+		\item FarmacoCreationFailedException
+		\item FarmacoNotFoundException
+		\item OrderCreationFailedException
+		\item OrderNotFoundException
+		\item ReportException
+	\end{itemize}
+	\item \textbf{Package farmacia.test.controllercatalogo}
+	\begin{itemize}
+		\item AggiungiFarmacoTest
+		\item CercaFarmacoTest
+		\item CercaFarmacoInesistenteTest
+		\item EliminaFarmacoTest
+		\item ModificaFarmacoTest
+		\item ModificaFarmacoInesistenteTest
+	\end{itemize}
+	\item \textbf{Package farmacia.test.controllerutenti}
+	\begin{itemize}
+		\item LoginUtenteTest
+		\item RegistraUtenteTest
+	\end{itemize}
+	\item \textbf{Package farmacia.test.controllerordini}
+	\begin{itemize}
+		\item CreaOrdineTest
+		\item VisualizzaStoricoOrdiniTest
+		\item AggiornaOrdineTest
+		\item AggiornaOrdineAcquistoFarmaciaTest
+		\item GeneraOrdineAcquistoFarmacistaTest
+	\end{itemize}
+	\item \textbf{Package farmacia.testcontrollerreport}
+	\begin{itemize}
+		\item GeneraReportTest
+	\end{itemize}
+	\item \textbf{Package farmacia.util}
+	\begin{itemize}
+		\item Utility
+		\item TipoUtente
+	\end{itemize}
+	\item \textbf{Package farmacia}
+	\begin{itemize}
+		\item Main
+	\end{itemize}
+\end{itemize}

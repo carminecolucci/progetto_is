@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.logging.Logger;
 
-import farmacia.TipoUtente;
+import farmacia.util.TipoUtente;
 import farmacia.exceptions.DBException;
 
 public class UtenteDAO {

@@ -2,10 +2,7 @@ package farmacia.controller;
 
 import farmacia.dto.DTO;
 import farmacia.entity.*;
-import farmacia.exceptions.DBException;
-import farmacia.exceptions.FarmacoNotFoundException;
-import farmacia.exceptions.OrderCreationFailedException;
-import farmacia.exceptions.OrderNotFoundException;
+import farmacia.exceptions.*;
 
 import java.util.*;
 

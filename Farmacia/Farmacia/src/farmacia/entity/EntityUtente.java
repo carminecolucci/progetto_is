@@ -1,6 +1,6 @@
 package farmacia.entity;
 
-import farmacia.TipoUtente;
+import farmacia.util.TipoUtente;
 import farmacia.database.UtenteDAO;
 import farmacia.exceptions.DBException;
 

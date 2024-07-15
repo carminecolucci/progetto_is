@@ -13,15 +13,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GeneraOrdineAcquistoFarmacistaPage extends JFrame {
+public class GeneraOrdineAcquistoPage extends JFrame {
 	private JPanel mainPanel;
-	private JLabel lblGeneraOrdineAcquistoFarmacista;
+	private JLabel lblGeneraOrdineAcquisto;
 	private JTable tblFarmaci;
 	private JPanel pnlTable;
 	private JScrollPane srlTable;
 	private JButton btnConfermaOrdineAcquisto;
+	private final List<Integer> idFarmaci;
 
-	public GeneraOrdineAcquistoFarmacistaPage() {
+	public GeneraOrdineAcquistoPage() {
 		setTitle("Richiesta fornitura");
 		setSize(600, 400);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -51,41 +52,41 @@ public class GeneraOrdineAcquistoFarmacistaPage extends JFrame {
 		tblFarmaci.getColumnModel().getColumn(1).setCellEditor(new QuantitaCellEditor());
 
 		ControllerCatalogo controllerCatalogo = ControllerCatalogo.getInstance();
-		List<DTO> listDTO = controllerCatalogo.visualizzaCatalogo();
-		List<Integer> listId = new ArrayList<>();
+		List<DTO> farmaci = controllerCatalogo.visualizzaCatalogo();
+		idFarmaci = new ArrayList<>();
 
-
-		for (DTO farmaco : listDTO) {
+		for (DTO farmaco : farmaci) {
 			model.addRow(new Object[]{farmaco.get("nome"), 0});
-			listId.add((int)farmaco.get("id"));
+			idFarmaci.add((int)farmaco.get("id"));
 		}
 
-
-		btnConfermaOrdineAcquisto.addActionListener(e -> {
-
-			ControllerOrdini controllerOrdini = ControllerOrdini.getInstance();
-			int numeroFarmaci = 0;
-			Map<Integer, Integer> farmaciOrdineAcquisto = new HashMap<>();
-			for (int row = 0; row < tblFarmaci.getRowCount(); row++) {
-				Integer quantita = (Integer)tblFarmaci.getValueAt(row, 1);
-				if (quantita > 0) {
-					numeroFarmaci += 1;
-					farmaciOrdineAcquisto.put(listId.get(row), quantita);
-				}
-			}
-			try {
-				if (numeroFarmaci >= 1){
-					String idOrdine = controllerOrdini.creaOrdineAcquistoFarmacia(farmaciOrdineAcquisto);
-					JOptionPane.showMessageDialog(this, String.format("Ordine di acquisto confermato! Numero ordine: '%s'.", idOrdine));
-					dispose();
-				} else {
-					JOptionPane.showMessageDialog(this, "Ordine nullo!");
-				}
-			} catch (OrderCreationFailedException ex) {
-				farmaciOrdineAcquisto.clear();
-				JOptionPane.showMessageDialog(this, ex.getMessage());
-			}
-		});
+		btnConfermaOrdineAcquisto.addActionListener(e ->
+			generaOrdineAcquistoHandler()
+		);
 	}
 
+	private void generaOrdineAcquistoHandler() {
+		ControllerOrdini controllerOrdini = ControllerOrdini.getInstance();
+		int numeroFarmaci = 0;
+		Map<Integer, Integer> farmaciOrdineAcquisto = new HashMap<>();
+		for (int row = 0; row < tblFarmaci.getRowCount(); row++) {
+			Integer quantita = (Integer)tblFarmaci.getValueAt(row, 1);
+			if (quantita > 0) {
+				numeroFarmaci += 1;
+				farmaciOrdineAcquisto.put(idFarmaci.get(row), quantita);
+			}
+		}
+		try {
+			if (numeroFarmaci >= 1){
+				String idOrdine = controllerOrdini.creaOrdineAcquistoFarmacia(farmaciOrdineAcquisto);
+				JOptionPane.showMessageDialog(this, String.format("Ordine di acquisto confermato! Numero ordine: '%s'.", idOrdine));
+				dispose();
+			} else {
+				JOptionPane.showMessageDialog(this, "Ordine nullo!");
+			}
+		} catch (OrderCreationFailedException ex) {
+			farmaciOrdineAcquisto.clear();
+			JOptionPane.showMessageDialog(this, ex.getMessage());
+		}
+	}
 }

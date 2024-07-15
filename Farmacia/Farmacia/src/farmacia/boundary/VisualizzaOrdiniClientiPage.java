@@ -10,14 +10,14 @@ import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class VisualizzaOrdiniClientiFarmacistaPage extends JFrame {
+public class VisualizzaOrdiniClientiPage extends JFrame {
 	private JPanel mainPanel;
 	private JTable tblOrdiniClienti;
 	private JPanel pnlTable;
 	private JScrollPane srlTable;
 	private JButton btnVisualizzaOrdine;
 
-	public VisualizzaOrdiniClientiFarmacistaPage() {
+	public VisualizzaOrdiniClientiPage() {
 		setTitle("Visualizza Ordini Clienti");
 		setSize(1000, 400);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);

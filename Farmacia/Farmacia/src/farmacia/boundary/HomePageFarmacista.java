@@ -30,8 +30,8 @@ public class HomePageFarmacista extends JFrame {
 		setVisible(true);
 		lblBenvenuto.setText(String.format("Benvenuto, farmacista %s %s.", ((String)farmacista.get("nome")).toUpperCase(Locale.ITALY), ((String)farmacista.get("cognome")).toUpperCase(Locale.ITALY)));
 
-		btnGeneraOrdineAcquisto.addActionListener(e -> new GeneraOrdineAcquistoFarmacistaPage());
-		btnVisualizzaOrdiniClienti.addActionListener(e -> new VisualizzaOrdiniClientiFarmacistaPage());
+		btnGeneraOrdineAcquisto.addActionListener(e -> new GeneraOrdineAcquistoPage());
+		btnVisualizzaOrdiniClienti.addActionListener(e -> new VisualizzaOrdiniClientiPage());
 		btnVisualizzaOrdiniAcquisto.addActionListener(e -> new VisualizzaOrdiniAcquistoPage());
 		btnModificaFarmaco.addActionListener(e -> new ScegliFarmacoModificaPage());
 		btnRegistraRitiro.addActionListener(e -> new RegistraRitiroOrdineClientePage());
