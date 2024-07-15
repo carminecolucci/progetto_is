@@ -110,9 +110,9 @@
 
 
 \section{Test funzionale}
-In questa sezione ci occupiamo di riportare i risultati dell'applicazione della test suite definita nel \hyperref[cap:piano_test_funzionale]{Capitolo 4: Piano di Test Funzionale} all'implementazione Java del progetto. Di seguito vengono quindi riportati gli esiti dell'esecuzione dei vari test case, in particolare non vengono mostrati quei casi di test basati esclusivamente sull'input validation, poiché la validazione del formato dei parametri di input viene effettuata completamente a livello \texttt{Boundary}. I controlli sono quindi effettuati tutti sul livello \texttt{Controller}.
+In questa sezione ci occupiamo di riportare i risultati associati alla test suite definita nel \hyperref[cap:piano_test_funzionale]{Capitolo 4}. Di seguito sono riportati gli esiti dell'esecuzione dei vari test case sull'implementazione Java del servizio richiesto: in particolare non vengono mostrati i casi di test basati esclusivamente sull'input validation, effettuata completamente a livello \texttt{Boundary}. I test riportati, dunque, sono eseguiti a livello \texttt{Controller}.
 
-Tutti i test presenti nelle successive tabelle sono stati implementati nel progetto attraverso il framework \texttt{JUnit}. Al fine di garantire la corretta esecuzione dei test sul codice è necessario eseguire nel pannello di controllo dell'istanza \texttt{MySQL} lo script \texttt{svuota\_db\_pre\_test.sql}. Lo script si occupa di svuotare tutte le tabelle del database nell'ordine corretto (per rispettare i vincoli inter-relazionali) e di registrare un account da farmacista e uno da direttore. È necessario inoltre disabilitare la \texttt{SAFE UPDATE/DELETE MODE} di \texttt{MySQL}.
+I test sono stati implementati utilizzando il framework \texttt{JUnit}. Per la corretta esecuzione dei test è necessario eseguire nel pannello di controllo dell'istanza \texttt{MySQL} lo script \texttt{svuota\_db\_pre\_test.sql}, che svuota tutte le tabelle del database nell'ordine corretto (per rispettare i vincoli inter-relazionali), oltre a registrare un account da farmacista ed uno da direttore. È necessario, inoltre, disabilitare la \texttt{SAFE UPDATE/DELETE MODE} di \texttt{MySQL}.
 
 \subsection{RegistraCliente}
 
@@ -157,13 +157,13 @@ String query = String.format("INSERT INTO farmaci (prezzo, prescrizione, nome, s
 			this.prezzo, this.prescrizione ? 1 : 0, this.nome, this.scorte, this.codice
 		);
 \end{minted}
-Il problema sta nel fatto che il metodo \texttt{String.format(...)} stampa le variabili \texttt{float} utilizzando la virgola come separatore tra parte intera e parte decimale (per la convenzione geografica), quello che succede è che qualsiasi numero decimale passato nel parametro \texttt{prezzo} viene considerato, in sintassi \texttt{SQL}, come due parametri. Abbiamo quindi sostituito questa chiamata con la seguente:
+Il problema è stato individuato a livello del metodo \texttt{String.format(...)}, che stampa le variabili \texttt{float} utilizzando la virgola come separatore tra parte intera e parte decimale (per la convenzione geografica), dunque qualsiasi numero decimale passato nel parametro \texttt{prezzo} viene diviso, a livello \texttt{SQL}, in due parametri. Il corpo della chiamata è stato modificato come segue:
 \begin{minted}[breaklines,tabsize=4,linenos]{java}
 String query = String.format(Locale.US, "INSERT INTO farmaci (prezzo, prescrizione, nome, scorte, codice) " + "VALUES (%.2f, %d, '%s', %d, '%s');",
 			this.prezzo, this.prescrizione ? 1 : 0, this.nome, this.scorte, this.codice
 		);
 \end{minted}
-Tale problematica è estesa in ogni metodo delle classi \texttt{DAO} che esegue query \texttt{SQL} contenenti un parametro di tipo \texttt{float}. La documentazione di \texttt{java.util.String} riporta che è possibile forzare la rappresentazione geografica dei numeri floating point passando la costante \texttt{Locale.US}, ora tutti i test che presentano questa problematica restituiscono esito positivo.
+Tale problematica è presente in ogni metodo delle classi \texttt{DAO} che esegue query \texttt{SQL} contenenti un parametro di tipo \texttt{float}. La documentazione di \texttt{java.util.String} riporta che è possibile forzare la rappresentazione geografica dei numeri floating point utilizzando la costante \texttt{Locale.US}: con questo accorgimento, tutti i test che presentano questa problematica restituiscono esito positivo.
 
 \subsection{CercaFarmaco}
 
