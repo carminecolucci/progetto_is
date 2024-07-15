@@ -67,7 +67,6 @@ public class RegistraRitiroOrdineClientePage extends JFrame {
 		btnConfermaRitiro.addActionListener(e -> {
 			int selectedRow = tblOrdini.getSelectedRow();
 			String idOrdine = (String)ordiniClientiDaRitirare.get(selectedRow).get("id");
-			System.out.println(idOrdine);
 			try {
 				controllerOrdini.aggiornaOrdine(idOrdine);
 				JOptionPane.showMessageDialog(this, String.format("Ordine '%s' ritirato.", idOrdine));
