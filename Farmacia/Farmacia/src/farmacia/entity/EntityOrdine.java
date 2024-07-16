@@ -9,6 +9,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * Classe che rappresenta un ordine di un cliente.
+ */
 public class EntityOrdine {
 	private final String id;
 	private Date dataCreazione;
@@ -50,34 +53,43 @@ public class EntityOrdine {
 		this.dataCreazione = ordineDAO.getDataCreazione();
 		this.idCliente = ordineDAO.getCliente();
 		this.totale = ordineDAO.getTotale();
-		quantitaFarmaci = new HashMap<>();
-		for (Map.Entry<FarmacoDAO, Integer> entry : ordineDAO.getOrdineFarmaci().entrySet()) {
-			quantitaFarmaci.put(new EntityFarmaco(entry.getKey()), entry.getValue());
+		this.quantitaFarmaci = new HashMap<>();
+		for (Map.Entry<FarmacoDAO, Integer> entry: ordineDAO.getOrdineFarmaci().entrySet()) {
+			this.quantitaFarmaci.put(new EntityFarmaco(entry.getKey()), entry.getValue());
 		}
+	}
+
+	/**
+	 * Funzione che aggiunge un nuovo farmaco all'ordine.
+	 * @param farmaco farmaco da aggiungere all'ordine.
+	 * @param quantita quantità di farmaco da aggiungere.
+	 */
+	public void aggiungiFarmaco(EntityFarmaco farmaco, int quantita) {
+		quantitaFarmaci.put(farmaco, quantita);
+		this.totale += quantita * farmaco.getPrezzo();
 	}
 
 	/**
 	 * Funzione che permette di creare un nuovo Ordine nel DB a partire da
 	 * un'istanza di <code>EntityOrdine</code> già popolata.
-	 * @throws DBException Errore generico del DB
+	 * @throws DBException Se non è possibile accedere al DB.
 	 */
 	public void salvaInDB() throws DBException {
 		OrdineDAO ordineDAO = new OrdineDAO(this.id, this.dataCreazione, this.idCliente, this.totale);
-		for (Map.Entry<EntityFarmaco, Integer> entry : quantitaFarmaci.entrySet()) {
-			ordineDAO.aggiungiOrdineFarmaco(entry.getKey().getId(), entry.getValue());
+		for (Map.Entry<EntityFarmaco, Integer> entry: quantitaFarmaci.entrySet()) {
+			ordineDAO.aggiungiFarmaco(entry.getKey().getId(), entry.getValue());
 		}
 		ordineDAO.createOrdine();
 	}
 
+	/**
+	 * Funzione che aggiorna lo stato dell'ordine da "Non ritirato" a "Ritirato".
+	 * @throws DBException Se non è possibile accedere al DB.
+	 */
 	public void aggiorna() throws DBException {
 		OrdineDAO ordine = new OrdineDAO(this.id);
 		ordine.aggiorna();
 		this.ritirato = true;
-	}
-
-	public void aggiungiOrdineFarmaco(EntityFarmaco farmaco, int quantita) {
-		quantitaFarmaci.put(farmaco, quantita);
-		this.totale += quantita * farmaco.getPrezzo();
 	}
 
 	public String getId() {

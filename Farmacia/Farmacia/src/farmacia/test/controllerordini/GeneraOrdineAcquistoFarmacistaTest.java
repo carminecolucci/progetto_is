@@ -6,7 +6,7 @@ import farmacia.database.FarmacoDAO;
 import farmacia.database.OrdineAcquistoDAO;
 import farmacia.dto.DTO;
 import farmacia.exceptions.*;
-import static farmacia.util.Utility.contains;
+import static farmacia.dto.DTO.contains;
 import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;

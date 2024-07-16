@@ -6,6 +6,9 @@ import farmacia.exceptions.*;
 
 import java.util.*;
 
+/**
+ * Classe che ha la responsabilità di gestire gli ordini degli utenti e gli ordini di fornitura della farmacia.
+ */
 public class ControllerOrdini {
 	/**
 	 * L'unica istanza di <code>ControllerOrdini</code> che implementa il pattern Singleton.
@@ -62,26 +65,6 @@ public class ControllerOrdini {
 	}
 
 	/**
-	 * Metodo privato che converte un <code>Map&lt;EntityFarmaco, Integer&gt;</code> in un <code>Map&lt;DTO, Integer&gt;</code>.
-	 * @param quantitaFarmaci mappa che contiene una serie di coppie (<code>Farmaco DTO</code>, <code>quantità</code>).
-	 */
-	private static Map<DTO, Integer> getDtoQuantitaFarmaci(Map<EntityFarmaco, Integer> quantitaFarmaci) {
-		Map<DTO, Integer> dtoQuantitaFarmaci = new HashMap<>();
-		for (Map.Entry<EntityFarmaco, Integer> entry: quantitaFarmaci.entrySet()) {
-			DTO dtoFarmaco = new DTO();
-			EntityFarmaco farmaco = entry.getKey();
-			dtoFarmaco.set("id", farmaco.getId());
-			dtoFarmaco.set("prezzo", farmaco.getPrezzo());
-			dtoFarmaco.set("prescrizione", farmaco.isPrescrizione());
-			dtoFarmaco.set("nome", farmaco.getNome());
-			dtoFarmaco.set("scorte", farmaco.getScorte());
-			dtoFarmaco.set("codice", farmaco.getCodice()); // non necessario?
-			dtoQuantitaFarmaci.put(dtoFarmaco, entry.getValue());
-		}
-		return dtoQuantitaFarmaci;
-	}
-
-	/**
 	 * Funzione che permette di creare un ordine di acquisto. Viene richiamata quando un ordine da parte di un cliente
 	 * azzera le scorte di un determinato farmaco ({@link #creaOrdine(Map)}) o quando un farmacista decide di generare
 	 * un ordine di acquisto.
@@ -110,13 +93,8 @@ public class ControllerOrdini {
 		List<DTO> dtoOrdiniAcquisto = new ArrayList<>();
 
 		List<EntityOrdineAcquisto> ordiniAcquisto = farmacia.visualizzaOrdiniAcquisto();
-		for (EntityOrdineAcquisto ordineAcquisto : ordiniAcquisto) {
-			DTO dtoOrdineAcquisto = new DTO();
-			dtoOrdineAcquisto.set("id", ordineAcquisto.getId());
-			dtoOrdineAcquisto.set("dataCreazione", ordineAcquisto.getDataCreazione());
-			dtoOrdineAcquisto.set("ricevuto", ordineAcquisto.isRicevuto());
-			Map<DTO, Integer> dtoQuantitaFarmaci = getDtoQuantitaFarmaci(ordineAcquisto.getQuantitaFarmaci());
-			dtoOrdineAcquisto.set("quantitaFarmaci", dtoQuantitaFarmaci);
+		for (EntityOrdineAcquisto ordineAcquisto: ordiniAcquisto) {
+			DTO dtoOrdineAcquisto = DTO.getDTOOrdineAcquisto(ordineAcquisto);
 			dtoOrdiniAcquisto.add(dtoOrdineAcquisto);
 		}
 
@@ -162,15 +140,8 @@ public class ControllerOrdini {
 	 */
 	private List<DTO> getDtoOrdini(List<EntityOrdine> ordini) throws DBException {
 		List<DTO> dtoOrdini = new ArrayList<>();
-		for (EntityOrdine ordine : ordini) {
-			DTO dtoOrdine = new DTO();
-			dtoOrdine.set("id", ordine.getId());
-			dtoOrdine.set("dataCreazione", ordine.getDataCreazione());
-			dtoOrdine.set("ritirato", ordine.isRitirato());
-			dtoOrdine.set("cliente", EntityUtente.getUsername(ordine.getIdCliente()));
-			Map<DTO, Integer> dtoQuantitaFarmaci = getDtoQuantitaFarmaci(ordine.getQuantitaFarmaci());
-			dtoOrdine.set("quantitaFarmaci", dtoQuantitaFarmaci);
-			dtoOrdine.set("totale", ordine.getTotale());
+		for (EntityOrdine ordine: ordini) {
+			DTO dtoOrdine = DTO.getDTOOrdine(ordine);
 			dtoOrdini.add(dtoOrdine);
 		}
 		return dtoOrdini;

@@ -10,6 +10,11 @@ import farmacia.exceptions.FarmacoNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static farmacia.dto.DTO.getDTOFarmaco;
+
+/**
+ * Classe che ha la responsabilità di gestire il catalogo e i farmaci.
+ */
 public class ControllerCatalogo {
 
 	/**
@@ -69,14 +74,7 @@ public class ControllerCatalogo {
 	public DTO cercaFarmaco(String nome) throws FarmacoNotFoundException {
 		EntityCatalogo catalogo = EntityCatalogo.getInstance();
 		EntityFarmaco farmaco = catalogo.cercaFarmaco(nome);
-		DTO dto = new DTO();
-		dto.set("id", farmaco.getId());
-		dto.set("prezzo", farmaco.getPrezzo());
-		dto.set("prescrizione", farmaco.isPrescrizione());
-		dto.set("nome", farmaco.getNome());
-		dto.set("scorte", farmaco.getScorte());
-		dto.set("codice", farmaco.getCodice());
-		return dto;
+		return getDTOFarmaco(farmaco);
 	}
 
 	/**
@@ -98,14 +96,8 @@ public class ControllerCatalogo {
 		List<DTO> farmaciDTO = new ArrayList<>();
 		EntityCatalogo catalogo = EntityCatalogo.getInstance();
 		List<EntityFarmaco> farmaci = catalogo.visualizza();
-		for (EntityFarmaco farmaco : farmaci) {
-			DTO dto = new DTO();
-			dto.set("id", farmaco.getId());
-			dto.set("prezzo", farmaco.getPrezzo());
-			dto.set("prescrizione", farmaco.isPrescrizione());
-			dto.set("nome", farmaco.getNome());
-			dto.set("scorte", farmaco.getScorte());
-			dto.set("codice", farmaco.getCodice());
+		for (EntityFarmaco farmaco: farmaci) {
+			DTO dto = getDTOFarmaco(farmaco);
 			farmaciDTO.add(dto);
 		}
 		return farmaciDTO;

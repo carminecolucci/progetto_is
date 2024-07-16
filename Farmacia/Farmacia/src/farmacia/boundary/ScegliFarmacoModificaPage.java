@@ -40,7 +40,7 @@ public class ScegliFarmacoModificaPage extends JFrame {
 
 		ControllerCatalogo controllerCatalogo = ControllerCatalogo.getInstance();
 		List<DTO> farmaci = controllerCatalogo.visualizzaCatalogo();
-		for (DTO farmaco : farmaci) {
+		for (DTO farmaco: farmaci) {
 			tableModel.addFarmaco(farmaco);
 		}
 
@@ -48,7 +48,7 @@ public class ScegliFarmacoModificaPage extends JFrame {
 			int selectedRow = tblFarmaci.getSelectedRow();
 			String nomeFarmaco = (String)tblFarmaci.getValueAt(selectedRow, 0);
 			DTO farmacoDaModificare = new DTO();
-			for (DTO farmaco : farmaci) {
+			for (DTO farmaco: farmaci) {
 				if (farmaco.get("nome").equals(nomeFarmaco)) {
 					farmacoDaModificare = farmaco;
 				}

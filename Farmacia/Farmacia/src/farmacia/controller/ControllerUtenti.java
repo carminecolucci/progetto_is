@@ -9,6 +9,9 @@ import farmacia.exceptions.RegistrationFailedException;
 
 import java.util.Date;
 
+/**
+ * Classe che ha la responsabilità di gestire gli utenti della farmacia.
+ */
 public class ControllerUtenti {
 	
 	/**
@@ -49,7 +52,7 @@ public class ControllerUtenti {
 	}
 
 	/**
-	 * Funzione che permette ad un utente registrato di loggarsi nella piattaforma. La funzione autentica l'utente e setta
+	 * Funzione che permette a un utente registrato di loggarsi nella piattaforma. La funzione autentica l'utente e setta
 	 * la sessione corrente del programma.
 	 * @param username username dell'utente che vuole loggarsi.
 	 * @param password password dell'utente che vuole loggarsi.

@@ -45,7 +45,7 @@ public class RegistraRitiroOrdineClientePage extends JFrame {
 		try {
 			ordiniClienti = controllerOrdini.visualizzaOrdiniFarmacia();
 			for (DTO ordine : ordiniClienti) {
-				if(!(boolean)ordine.get("ritirato")){
+				if (!(boolean)ordine.get("ritirato")){
 					ordiniClientiDaRitirare.add(ordine);
 					tableModel.addRow(new Object[] {ordine.get("id"), ordine.get("cliente"), formatter.format(ordine.get("dataCreazione")), ordine.get("totale")});
 				}

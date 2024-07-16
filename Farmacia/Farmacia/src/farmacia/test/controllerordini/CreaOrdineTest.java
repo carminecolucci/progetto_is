@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import static farmacia.util.Utility.contains;
+import static farmacia.dto.DTO.contains;
 import static org.junit.Assert.*;
 
 public class CreaOrdineTest {

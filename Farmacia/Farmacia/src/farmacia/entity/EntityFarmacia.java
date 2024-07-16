@@ -1,6 +1,7 @@
 package farmacia.entity;
 
-import farmacia.util.TipoUtente;
+
+import farmacia.TipoUtente;
 import farmacia.database.OrdineAcquistoDAO;
 import farmacia.database.OrdineDAO;
 import farmacia.database.UtenteDAO;
@@ -11,6 +12,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Classe che rappresenta la farmacia.
+ */
 public class EntityFarmacia {
 	/**
 	 * L'unica istanza di <code>EntityFarmacia</code> che implementa il pattern Singleton.
@@ -50,22 +54,28 @@ public class EntityFarmacia {
 		}
 	}
 
+	/**
+	 * Funzione che permette a un utente di effettuare il login nella farmacia.
+	 * @param username username dell'utente.
+	 * @param password password dell'utente.
+	 * @throws LoginFailedException se il login fallisce.
+	 */
 	public void loginUtente(String username, String password) throws LoginFailedException {
 		try {
 			UtenteDAO utenteDAO = new UtenteDAO(username);
 			if (utenteDAO.getPassword().equals(password)) {
-				EntityUtente utenteLoggato;
+				EntityUtente utente;
 				if (utenteDAO.getTipoUtente() == TipoUtente.CLIENTE) {
-					utenteLoggato = new EntityCliente(utenteDAO);
+					utente = new EntityCliente(utenteDAO);
 				} else {
 					if (utenteDAO.getTipoUtente() == TipoUtente.FARMACISTA) {
-						for (OrdineAcquistoDAO ordineAcquistoDAO : OrdineAcquistoDAO.visualizzaOrdiniAcquisto()) {
+						for (OrdineAcquistoDAO ordineAcquistoDAO: OrdineAcquistoDAO.visualizzaOrdiniAcquisto()) {
 							ordiniAcquisto.add(new EntityOrdineAcquisto(ordineAcquistoDAO));
 						}
 					}
-					utenteLoggato = new EntityUtente(utenteDAO);
+					utente = new EntityUtente(utenteDAO);
 				}
-				Sessione.getInstance().setUtenteCorrente(utenteLoggato);
+				Sessione.getInstance().setUtenteCorrente(utente);
 			} else {
 				throw new LoginFailedException("Login fallito, password errata");
 			}
@@ -75,11 +85,12 @@ public class EntityFarmacia {
 	}
 
 	/**
-	 *
+	 * Funzione che consente di visualizzare tutti gli ordini effettuati dai clienti della farmacia.
+	 * @return <code>List&lt;EntityOrdine&gt;</code> lista di ordini.
 	 */
 	public List<EntityOrdine> visualizzaOrdini() throws DBException {
 		List<EntityOrdine> ordini = new ArrayList<>();
-		for (OrdineDAO ordineDAO : OrdineDAO.visualizzaOrdini()) {
+		for (OrdineDAO ordineDAO: OrdineDAO.visualizzaOrdini()) {
 			ordini.add(new EntityOrdine(ordineDAO));
 		}
 		return ordini;
@@ -97,9 +108,9 @@ public class EntityFarmacia {
 		EntityCatalogo catalogo = EntityCatalogo.getInstance();
 		EntityOrdineAcquisto ordineAcquisto = new EntityOrdineAcquisto();
 		try {
-			for (Map.Entry<Integer, Integer> entry : farmaciQuantita.entrySet()) {
+			for (Map.Entry<Integer, Integer> entry: farmaciQuantita.entrySet()) {
 				EntityFarmaco farmaco = catalogo.cercaFarmacoById(entry.getKey());
-				ordineAcquisto.aggiungiOrdineAcquistoFarmaco(farmaco, entry.getValue());
+				ordineAcquisto.aggiungiFarmaco(farmaco, entry.getValue());
 			}
 			ordineAcquisto.salvaInDB();
 			ordiniAcquisto.add(ordineAcquisto);
@@ -110,7 +121,8 @@ public class EntityFarmacia {
 	}
 
 	/**
-	 *
+	 * Funzione che restituisce gli ordini di fornitura richiesti dalla farmacia.
+	 * @return <code>List&lt;EntityOrdineAcquisto&gt;</code> lista di ordini di acquisto.
 	 */
 	public List<EntityOrdineAcquisto> visualizzaOrdiniAcquisto() {
 		return ordiniAcquisto;
@@ -138,12 +150,12 @@ public class EntityFarmacia {
 	 */
 	public void aggiornaOrdineAcquisto(String idOrdine) throws OrderNotFoundException, FarmacoNotFoundException {
 		boolean trovato = false;
-		for (EntityOrdineAcquisto ordineAcquisto : ordiniAcquisto) {
+		for (EntityOrdineAcquisto ordineAcquisto: ordiniAcquisto) {
 			if (ordineAcquisto.getId().equals(idOrdine)) {
 				try {
 					trovato = true;
 					ordineAcquisto.aggiorna();
-					for (Map.Entry<EntityFarmaco, Integer> entry : ordineAcquisto.getQuantitaFarmaci().entrySet()) {
+					for (Map.Entry<EntityFarmaco, Integer> entry: ordineAcquisto.getQuantitaFarmaci().entrySet()) {
 						EntityCatalogo.getInstance().incrementaScorte(entry.getKey().getId(), entry.getValue());
 					}
 				} catch (DBException e) {

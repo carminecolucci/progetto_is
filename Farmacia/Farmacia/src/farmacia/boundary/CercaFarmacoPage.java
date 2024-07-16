@@ -26,7 +26,7 @@ public class CercaFarmacoPage extends JFrame {
 		tblRicerca.setModel(model);
 		ControllerCatalogo controllerCatalogo = ControllerCatalogo.getInstance();
 		List<DTO> farmaciDTO = controllerCatalogo.visualizzaCatalogo();
-		for (DTO farmaco : farmaciDTO) {
+		for (DTO farmaco: farmaciDTO) {
 			model.addFarmaco(farmaco);
 		}
 

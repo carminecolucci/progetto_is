@@ -1,7 +1,7 @@
 package farmacia.entity;
 
 /**
- * Classe del package entity nel modello BCED, essa implementa la sessione utente.
+ * Classe che rappresenta la sessione di un utente.
  */
 public class Sessione {
 
@@ -25,7 +25,7 @@ public class Sessione {
 	 * @return l'istanza singleton di Sessione.
 	 */
 	public static Sessione getInstance() {
-		if(uniqueInstance == null) {
+		if (uniqueInstance == null) {
 			uniqueInstance = new Sessione();
 		}
 		return uniqueInstance;
@@ -47,5 +47,3 @@ public class Sessione {
 		this.utenteCorrente = utenteCorrente;
 	}
 }
-
-

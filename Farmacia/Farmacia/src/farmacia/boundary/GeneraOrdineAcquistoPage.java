@@ -55,7 +55,7 @@ public class GeneraOrdineAcquistoPage extends JFrame {
 		List<DTO> farmaci = controllerCatalogo.visualizzaCatalogo();
 		idFarmaci = new ArrayList<>();
 
-		for (DTO farmaco : farmaci) {
+		for (DTO farmaco: farmaci) {
 			model.addRow(new Object[]{farmaco.get("nome"), 0});
 			idFarmaci.add((int)farmaco.get("id"));
 		}

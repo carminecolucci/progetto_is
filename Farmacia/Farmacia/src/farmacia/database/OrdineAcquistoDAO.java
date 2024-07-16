@@ -7,6 +7,9 @@ import java.sql.SQLException;
 import java.util.*;
 import java.util.logging.Logger;
 
+/**
+ * Classe <code>DAO</code> degli ordini di fornitura della farmacia.
+ */
 public class OrdineAcquistoDAO {
 	private String id;
 	private Date dataCreazione;
@@ -16,7 +19,7 @@ public class OrdineAcquistoDAO {
 	private static final Logger logger = Logger.getLogger("OrdineAcquistoDAO");
 
 	/**
-	 * Costruttore di default di <code>OrdineAcquistoDAO</code>
+	 * Costruttore privato di <code>OrdineAcquistoDAO</code>
 	 */
 	private OrdineAcquistoDAO() {
 		ordiniAcquistoFarmaci = new HashMap<>();
@@ -34,7 +37,7 @@ public class OrdineAcquistoDAO {
 
 	/**
 	 * Costruttore che crea un nuovo OrdineAcquistoDAO. La lista dei farmaci verrà
-	 * popolato via <code>aggiungiOrdineAcquistoFarmaco</code>.
+	 * popolata attraverso {@link #aggiungiFarmaco(int, int)}.
 	 * @param id L'id (uuid) dell'ordine di acquisto.
 	 * @param dataCreazione La data di creazione dell'ordine di acquisto.
 	 * @param ricevuto lo stato iniziale dell'ordine di acquisto.
@@ -52,7 +55,7 @@ public class OrdineAcquistoDAO {
 	 * @param quantita La quantità di farmaco desiderata.
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se il farmaco non esiste.
 	 */
-	public void aggiungiOrdineAcquistoFarmaco(int idFarmaco, int quantita) throws DBException {
+	public void aggiungiFarmaco(int idFarmaco, int quantita) throws DBException {
 		this.ordiniAcquistoFarmaci.put(new FarmacoDAO(idFarmaco), quantita);
 	}
 
@@ -78,8 +81,7 @@ public class OrdineAcquistoDAO {
 		try {
 			DBManager.getInstance().executeQuery(query);
 		} catch (ClassNotFoundException | SQLException e) {
-			logger.warning(String.format("Errore durante l'aggiornamento dell'ordine d'acquisto '%s'.", this.id));
-			throw new DBException("Errore durante l'aggiornamento dell'ordine d'acquisto. " + e.getMessage());
+			throw new DBException(String.format("Errore durante l'aggiornamento dell'ordine d'acquisto '%s'.%n%s", this.id, e.getMessage()));
 		}
 
 		this.ricevuto = true;
@@ -96,8 +98,7 @@ public class OrdineAcquistoDAO {
 		try {
 			DBManager.getInstance().executeQuery(query);
 		} catch (ClassNotFoundException | SQLException e) {
-			logger.warning(String.format("Errore durante l'eliminazione dal DB dell'ordine '%s'.", id));
-			throw new DBException(String.format("Errore durante l'eliminazione dal DB dell'ordine '%s'.", id));
+			throw new DBException(String.format("Errore durante l'eliminazione dal DB dell'ordine '%s'.%n%s", id, e.getMessage()));
 		}
 		// i farmaci presenti nell'ordine sono cancellati automaticamente dalla tabella ordini_acquisto_farmaci
 		// poiché abbiamo utilizzato la politica ON DELETE CASCADE.
@@ -105,7 +106,7 @@ public class OrdineAcquistoDAO {
 
 	/**
 	 * Funzione privata che popola l'OrdineAcquistoDAO consultando il DB a partire dall'id.
-	 * @param id l'<code>id</code> dell'ordine di acquisto da cariacare.
+	 * @param id l'<code>id</code> dell'ordine di acquisto da caricare.
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se l'ordine di acquisto non esiste.
 	 */
 	private void caricaDaDB(String id) throws DBException {
@@ -113,14 +114,13 @@ public class OrdineAcquistoDAO {
 		logger.info(query);
 		try (ResultSet rs = DBManager.getInstance().selectQuery(query)) {
 			if (rs.next()) {
-				this.id = id;
 				this.dataCreazione = rs.getDate("dataCreazione");
 				this.ricevuto = rs.getBoolean("ricevuto");
+				this.id = id;
 			}
 		} catch (ClassNotFoundException | SQLException e) {
-			logger.warning(String.format("Errore durante il caricamento dell'ordine di acquisto con id '%s'.%n%s",
-					this.id, e.getMessage()));
-			throw new DBException("Errore nel caricamento dell'ordine di acquisto con id '" + this.id + "'.");
+			throw new DBException(String.format("Errore nel caricamento dell'ordine di acquisto con id '%s'.%n%s",
+				this.id, e.getMessage()));
 		}
 
 		this.caricaOrdiniAcquistoFarmaciDaDB();
@@ -140,17 +140,15 @@ public class OrdineAcquistoDAO {
 				this.ordiniAcquistoFarmaci.put(new FarmacoDAO(idFarmaco), quantita);
 			}
 		} catch (ClassNotFoundException | SQLException e) {
-			logger.warning(String.format("Errore durante il caricamento dell'ordine di acquisto con id '%s'.%n%s",
+			throw new DBException(String.format("Errore nel caricamento delle informazioni dell'ordine di acquisto con id '%s.%n%s",
 				this.id, e.getMessage()));
-			throw new DBException(String.format("Errore nel caricamento delle informazioni dell'ordine di acquisto con id '%s.",
-				this.id));
 		}
 	}
 
 	/**
 	 * Funzione privata che salva l'ordine di acquisto nel DB. Il metodo presuppone che l'istanza di <code>OrdineAcquistoDAO</code>
 	 * sulla quale viene richiamato abbia popolati gli attributi <code>id</code>, <code>dataCreazione</code> e <code>ricevuto</code>.
-	 * @return '-1' se non è stato possibile inserire l'ordine di acquisto, altrimenti ritorna il numero di farmaci nell'ordine di acquisto.
+	 * @return Il numero di farmaci nell'ordine di acquisto.
 	 * @throws DBException Lanciata se non è possibile accedere al DB o se l'ordine di acquisto già esiste.
 	 */
 	private int salvaInDB() throws DBException {
@@ -159,14 +157,11 @@ public class OrdineAcquistoDAO {
 			this.id, data, this.ricevuto ? 1 : 0);
 		logger.info(query);
 
-		int rs = -1;
+		int rs;
 		try {
 			rs = DBManager.getInstance().executeQuery(query);
 		} catch (ClassNotFoundException | SQLException e) {
-			logger.warning(String.format("Errore durante l'inserimento dell'ordine di acquisto '%s' nel database.%n%s",
-					this.id, e.getMessage())
-			);
-			throw new DBException(String.format("Errore nel salvataggio dell'ordine di acquisto'%s'.", this.id));
+			throw new DBException(String.format("Errore nel salvataggio dell'ordine di acquisto '%s'.%n%s", this.id, e.getMessage()));
 		}
 
 		query = "INSERT INTO ordini_acquisto_farmaci (ordineAcquisto, farmacoAcquisto, quantita) " +
@@ -176,7 +171,7 @@ public class OrdineAcquistoDAO {
 			try {
 				rs = DBManager.getInstance().executeQuery(String.format(query, this.id, item.getKey().getId(), item.getValue()));
 			} catch (ClassNotFoundException | SQLException e) {
-				logger.warning("Errore durante l'inserimento dell'ordine di acquisto con id '" + this.id + "'.");
+				throw new DBException(String.format("Errore nel salvataggio dell'ordine di acquisto '%s'.%n%s", this.id, e.getMessage()));
 			}
 		}
 		return rs;
@@ -202,8 +197,6 @@ public class OrdineAcquistoDAO {
 				ordiniAcquisto.add(ordine);
 			}
 		} catch (ClassNotFoundException | SQLException e) {
-			logger.warning(String.format("Errore durante il caricamento degli ordini di acquisto" +
-					".%n%s", e.getMessage()));
 			throw new DBException("Errore durante il caricamento degli ordini di acquisto: " + e.getMessage());
 		}
 		return ordiniAcquisto;

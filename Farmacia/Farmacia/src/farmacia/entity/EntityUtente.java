@@ -1,11 +1,15 @@
 package farmacia.entity;
 
-import farmacia.util.TipoUtente;
+
+import farmacia.TipoUtente;
 import farmacia.database.UtenteDAO;
 import farmacia.exceptions.DBException;
 
 import java.util.Date;
 
+/**
+ * Classe che rappresenta un utente della farmacia.
+ */
 public class EntityUtente {
 	private int id;
 	private String username;
@@ -15,11 +19,6 @@ public class EntityUtente {
 	private Date dataNascita;
 	private TipoUtente tipoUtente;
 	private String email;
-
-	/**
-	 * Costruttore di default che crea un'istanza vuota.
-	 */
-	public EntityUtente() { }
 
 	/**
 	 * Costruttore che crea un nuovo <code>EntityUtente</code>

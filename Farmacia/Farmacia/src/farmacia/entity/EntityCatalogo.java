@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Classe che rappresenta il catalogo della farmacia.
+ */
 public class EntityCatalogo {
 	/**
 	 * L'unica istanza di <code>EntityCatalogo</code> che implementa il pattern Singleton.
@@ -23,7 +26,7 @@ public class EntityCatalogo {
 	private EntityCatalogo() {
 		farmaci = new ArrayList<>();
 		try {
-			for (FarmacoDAO farmaco : FarmacoDAO.getFarmaci()) {
+			for (FarmacoDAO farmaco: FarmacoDAO.getFarmaci()) {
 				farmaci.add(new EntityFarmaco(farmaco));
 			}
 		} catch (DBException e) {
@@ -72,7 +75,7 @@ public class EntityCatalogo {
 	public void modificaFarmaco(int id, float prezzo, boolean prescrizione, String nome, int scorte) throws FarmacoNotFoundException {
 		try {
 			FarmacoDAO.aggiornaFarmacoDB(id, prezzo, prescrizione, nome, scorte);
-			for (EntityFarmaco farmaco : farmaci) {
+			for (EntityFarmaco farmaco: farmaci) {
 				if (farmaco.getId() == id) {
 					farmaco.setPrezzo(prezzo);
 					farmaco.setPrescrizione(prescrizione);
@@ -93,7 +96,7 @@ public class EntityCatalogo {
 	 * @throws DBException se non è possibile accedere al DB.
 	 */
 	public void eliminaFarmaco(int id) throws FarmacoNotFoundException, DBException {
-		for (EntityFarmaco farmaco : farmaci) {
+		for (EntityFarmaco farmaco: farmaci) {
 			if (farmaco.getId() == id) {
 				farmaco.eliminaDaDB();
 				farmaci.remove(farmaco);
@@ -110,15 +113,13 @@ public class EntityCatalogo {
 	 * @throws FarmacoNotFoundException se il farmaco non è stato trovato.
 	 */
 	public EntityFarmaco cercaFarmacoById(int id) throws FarmacoNotFoundException {
-		for (EntityFarmaco farmaco : farmaci) {
+		for (EntityFarmaco farmaco: farmaci) {
 			if (farmaco.getId() == id) {
 				return farmaco;
 			}
 		}
 		throw new FarmacoNotFoundException(FARMACO_NON_TROVATO);
 	}
-
-	// cercaById è necessario?
 
 	/**
 	 * Cerca un farmaco nella farmacia a partire dal suo nome.
@@ -127,7 +128,7 @@ public class EntityCatalogo {
 	 * @throws FarmacoNotFoundException se il farmaco non è stato trovato.
 	 */
 	public EntityFarmaco cercaFarmaco(String nome) throws FarmacoNotFoundException {
-		for (EntityFarmaco farmaco : farmaci) {
+		for (EntityFarmaco farmaco: farmaci) {
 			if (farmaco.getNome().equalsIgnoreCase(nome)) {
 				return farmaco;
 			}
@@ -162,7 +163,7 @@ public class EntityCatalogo {
 	 * @return numero di scorte rimanenti del farmaco.
 	 */
 	private int aggiornaScorte(int idFarmaco, int quantita) throws FarmacoNotFoundException {
-		for (EntityFarmaco farmaco : farmaci) {
+		for (EntityFarmaco farmaco: farmaci) {
 			if (farmaco.getId() == idFarmaco) {
 				int nuoveScorte = farmaco.getScorte() + quantita;
 				try {
@@ -182,8 +183,8 @@ public class EntityCatalogo {
 	 * @return true se tutte i farmaci di <code>farmacoQuantita</code> hanno scorte sufficienti, false altrimenti
 	 */
 	public boolean checkScorte(Map<Integer, Integer> farmacoQuantita) {
-		for (Map.Entry<Integer, Integer>  entry : farmacoQuantita.entrySet()) {
-			for (EntityFarmaco farmaco : farmaci) {
+		for (Map.Entry<Integer, Integer>  entry: farmacoQuantita.entrySet()) {
+			for (EntityFarmaco farmaco: farmaci) {
 				if (farmaco.getId() == entry.getKey() && farmaco.getScorte() - entry.getValue() < 0) {
 					return false;
 				}

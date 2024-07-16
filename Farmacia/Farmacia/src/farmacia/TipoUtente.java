@@ -1,4 +1,4 @@
-package farmacia.util;
+package farmacia;
 
 public enum TipoUtente {
 	CLIENTE,

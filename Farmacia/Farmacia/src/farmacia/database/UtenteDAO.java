@@ -5,9 +5,12 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.logging.Logger;
 
-import farmacia.util.TipoUtente;
+import farmacia.TipoUtente;
 import farmacia.exceptions.DBException;
 
+/**
+ * Classe <code>DAO</code> degli utenti della farmacia.
+ */
 public class UtenteDAO {
 	private int id;
 	private String nome;
@@ -76,9 +79,7 @@ public class UtenteDAO {
 				return rs.getString("username");
 			}
 		} catch (ClassNotFoundException | SQLException e) {
-			logger.warning(String.format("Errore nella ricerca dell'utente con id %d.%n%s",
-				id, e.getMessage()));
-			throw new DBException(String.format("Errore nella ricerca dell'utente con id %d", id));
+			throw new DBException(String.format("Errore nella ricerca dell'utente con id %d.%n%s", id, e.getMessage()));
 		}
 		return "";
 	}
@@ -142,9 +143,7 @@ public class UtenteDAO {
 				return -1;
 			return rs.getInt("id");
 		} catch (ClassNotFoundException | SQLException e) {
-			logger.warning(String.format("Errore nella ricerca dell'utente '%s'.%n%s",
-				username, e.getMessage()));
-			throw new DBException(String.format("Errore nella ricerca dell'utente '%s'", username));
+			throw new DBException(String.format("Errore nella ricerca dell'utente '%s'.%n%s", username, e.getMessage()));
 		}
 	}
 
@@ -160,9 +159,7 @@ public class UtenteDAO {
 		try (ResultSet rs = DBManager.getInstance().selectQuery(query)) {
 			return rs.next();
 		} catch (ClassNotFoundException | SQLException e) {
-			logger.warning(String.format("Errore nella ricerca dell'utente '%s'.%n%s",
-				username, e.getMessage()));
-			throw new DBException(String.format("Errore nella ricerca dell'email '%s'", email));
+			throw new DBException(String.format("Errore nella ricerca dell'email '%s'.%n%s", email, e.getMessage()));
 		}
 	}
 
@@ -179,22 +176,22 @@ public class UtenteDAO {
 	 */
 	private int salvaInDB(String nome, String cognome, String username, String password, Date dataNascita, String email) throws DBException {
 		String query = String.format("INSERT INTO utenti (nome, cognome, username, password, dataNascita, tipo, email) " +
-				"VALUES ('%s', '%s', '%s', '%s', '%s', %d, '%s');",
+			"VALUES ('%s', '%s', '%s', '%s', '%s', %d, '%s');",
 			nome, cognome, username, password, dataNascita, TipoUtente.CLIENTE.ordinal(), email);
 		logger.info(query);
 
 		try {
 			return DBManager.getInstance().executeQuery(query);
 		} catch (ClassNotFoundException | SQLException e) {
-			logger.warning(String.format("Errore durante l'inserimento dell'utente " +
-					"['%s', '%s', '%s', '%s', '%s', '%s'] nel database.%n%s",
-				nome, cognome, username, password, dataNascita, email, e.getMessage()));
-			throw new DBException(String.format("Errore nel salvataggio dell'utente '%s'", username));
+			throw new DBException(String.format("Errore nel salvataggio dell'utente '%s'.%n%s", username, e.getMessage()));
 		}
 	}
 
+	/**
+	 * Funzione che cancella l'istanza di <code>UtenteDAO</code> dal DB.
+	 * @throws DBException se non è possibile accedere al DB.
+	 */
 	public void deleteUtente() throws DBException {
-		// uso questo metodo nei test
 		eliminaDaDB();
 	}
 
@@ -209,8 +206,7 @@ public class UtenteDAO {
 		try {
 			DBManager.getInstance().executeQuery(query);
 		} catch (ClassNotFoundException | SQLException e) {
-			logger.warning(String.format("Errore durante l'eliminazione dal DB dell'utente '%s'.", this.username));
-			throw new DBException(String.format("Errore durante l'eliminazione dal DB dell'utente '%s'.", this.username));
+			throw new DBException(String.format("Errore durante l'eliminazione dal DB dell'utente '%s'.%n%s", this.username, e.getMessage()));
 		}
 	}
 

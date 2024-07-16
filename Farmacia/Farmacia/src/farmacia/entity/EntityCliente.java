@@ -1,6 +1,7 @@
 package farmacia.entity;
 
-import farmacia.util.TipoUtente;
+
+import farmacia.TipoUtente;
 import farmacia.database.OrdineDAO;
 import farmacia.database.UtenteDAO;
 import farmacia.exceptions.DBException;
@@ -9,6 +10,9 @@ import farmacia.exceptions.OrderCreationFailedException;
 
 import java.util.*;
 
+/**
+ * Classe che rappresenta l'entità cliente.
+ */
 public class EntityCliente extends EntityUtente {
 	private final List<EntityOrdine> storicoOrdini;
 
@@ -27,7 +31,7 @@ public class EntityCliente extends EntityUtente {
 	}
 
 	/**
-	 * Costruttore che permette di popolare una EntityCliente a partire
+	 * Costruttore che permette di popolare un <code>EntityCliente</code> a partire
 	 * da un <code>UtenteDA0</code>. Lo usiamo per la registrazione.
 	 * @param utenteDAO istanza di <code>UtenteDA0</code> già popolata
 	 */
@@ -37,15 +41,6 @@ public class EntityCliente extends EntityUtente {
 		for (OrdineDAO ordineDAO : OrdineDAO.getOrdiniByCliente(utenteDAO.getId())) {
 			storicoOrdini.add(new EntityOrdine(ordineDAO));
 		}
-	}
-
-	/**
-	 * Costruttore che crea un <code>EntityCliente</code> a partire dal suo id.
-	 * @param id id del cliente.
-	 * @throws DBException se non è possibile accedere al DB.
-	 */
-	public EntityCliente(int id) throws DBException {
-		this(new UtenteDAO(id));
 	}
 
 	/**
@@ -74,14 +69,14 @@ public class EntityCliente extends EntityUtente {
 		EntityOrdine ordine = new EntityOrdine(this.getId());
 		try {
 			EntityOrdineAcquisto ordineAcquisto = new EntityOrdineAcquisto();
-			for (Map.Entry<Integer, Integer> entry : farmaciQuantita.entrySet()) {
+			for (Map.Entry<Integer, Integer> entry: farmaciQuantita.entrySet()) {
 				int id = entry.getKey();
 				int quantita = entry.getValue();
 				EntityFarmaco farmaco = catalogo.cercaFarmacoById(id);
-				ordine.aggiungiOrdineFarmaco(farmaco, quantita);
+				ordine.aggiungiFarmaco(farmaco, quantita);
 				int scorteResidue = catalogo.decrementaScorte(id, quantita);
 				if (scorteResidue == 0) {
-					ordineAcquisto.aggiungiOrdineAcquistoFarmaco(farmaco, EntityOrdineAcquisto.QUANTITA_ORDINE_DEFAULT);
+					ordineAcquisto.aggiungiFarmaco(farmaco, EntityOrdineAcquisto.QUANTITA_ORDINE_DEFAULT);
 				}
 			}
 			if (!ordineAcquisto.getQuantitaFarmaci().isEmpty()) {

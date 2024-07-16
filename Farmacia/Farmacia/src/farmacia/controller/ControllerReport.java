@@ -12,6 +12,9 @@ import java.util.List;
 import java.util.Date;
 import java.util.Map;
 
+/**
+ * Classe che ha la responsabilità di gestire la creazione dei report del direttore della farmacia.
+ */
 public class ControllerReport {
 	/**
 	 * L'unica istanza di <code>ControllerReport</code> che implementa il pattern Singleton.
@@ -64,11 +67,11 @@ public class ControllerReport {
 			Map<String, Integer> farmaciVendutiBanco = new HashMap<>();
 			Map<String, Integer> farmaciVendutiPrescrizione = new HashMap<>();
 
-			for (EntityOrdine ordine : ordini) {
+			for (EntityOrdine ordine: ordini) {
 				Date dataCreazione = ordine.getDataCreazione();
 				if (!(dataCreazione.before(dataInizio) || dataCreazione.after(dataFine))) {
 					Map<EntityFarmaco, Integer> quantitaFarmaci = ordine.getQuantitaFarmaci();
-					for (Map.Entry<EntityFarmaco, Integer> entry : quantitaFarmaci.entrySet()) {
+					for (Map.Entry<EntityFarmaco, Integer> entry: quantitaFarmaci.entrySet()) {
 						EntityFarmaco farmaco = entry.getKey();
 						int quantita = entry.getValue();
 						if (farmaco.isPrescrizione()){
