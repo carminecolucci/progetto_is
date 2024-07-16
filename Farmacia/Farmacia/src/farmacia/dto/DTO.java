@@ -22,10 +22,20 @@ public class DTO {
 		data = new HashMap<>();
 	}
 
+	/**
+	 * Funzione che restituisce il valore associato alla chiave.
+	 * @param key chiave da cercare nel <code>DTO</code>.
+	 * @return un <code>Object</code>, valore di <code>key</code>.
+	 */
 	public Object get(String key) {
 		return data.get(key);
 	}
 
+	/**
+	 * Aggiunge la coppia (<code>key</code>, <code>value</code>) al <code>DTO</code>.
+	 * @param key chiave da aggiungere.
+	 * @param value valore da aggiungere.
+	 */
 	public void set(String key, Object value) {
 		data.put(key, value);
 	}
@@ -65,6 +75,7 @@ public class DTO {
 	/**
 	 * Funzione di utilità che crea un <code>DTO</code> di un ordine a partire da un <code>EntityOrdine</code>.
 	 * @param ordine ordine da trasformare.
+	 * @throws DBException se non è possibile accedere al DB per prelevare l'username del cliente che ha creato l'ordine.
 	 * @return <code>DTO</code> che rappresenta un ordine.
 	 */
 	public static DTO getDTOOrdine(EntityOrdine ordine) throws DBException {

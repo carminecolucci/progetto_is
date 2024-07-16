@@ -140,6 +140,7 @@ public class EntityCatalogo {
 	 * Funzione che incrementa le scorte in <code>EntityCatalogo</code> e nel DB.
 	 * @param idFarmaco id del farmaco di cui aggiornare le scorte.
 	 * @param quantita quantità da aggiungere alle scorte.
+	 * @throws FarmacoNotFoundException se il farmaco non esiste.
 	 * @return numero di scorte rimanenti del farmaco.
 	 */
 	public int incrementaScorte(int idFarmaco, int quantita) throws FarmacoNotFoundException {
@@ -150,6 +151,7 @@ public class EntityCatalogo {
 	 * Funzione che decrementa le scorte in <code>EntityCatalogo</code> e nel DB.
 	 * @param idFarmaco id del farmaco di cui aggiornare le scorte.
 	 * @param quantita quantità da sottrarre alle scorte.
+	 * @throws FarmacoNotFoundException se il farmaco non esiste.
 	 * @return numero di scorte rimanenti del farmaco.
 	 */
 	public int decrementaScorte(int idFarmaco, int quantita) throws FarmacoNotFoundException {
@@ -179,6 +181,7 @@ public class EntityCatalogo {
 	}
 
 	/**
+	 * Funzione che controlla se ci sono abbastanza scorte nel catalogo.
 	 * @param farmacoQuantita serie di coppie (idFarmaco, quantita)
 	 * @return true se tutte i farmaci di <code>farmacoQuantita</code> hanno scorte sufficienti, false altrimenti
 	 */

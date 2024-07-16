@@ -43,6 +43,12 @@ public class EntityFarmacia {
 
 	/**
 	 * Funzione che permette di registrare un nuovo cliente.
+	 * @param username username del cliente.
+	 * @param password password del cliente.
+	 * @param nome nome del cliente.
+	 * @param cognome cognome del cliente.
+	 * @param dataNascita data di nascita del cliente.
+	 * @param email email del cliente.
 	 * @throws RegistrationFailedException sollevata quando la registrazione di un utente fallisce.
 	 */
 	public void registraCliente(String username, String password, String nome, String cognome, Date dataNascita, String email) throws RegistrationFailedException {
@@ -86,6 +92,7 @@ public class EntityFarmacia {
 
 	/**
 	 * Funzione che consente di visualizzare tutti gli ordini effettuati dai clienti della farmacia.
+	 * @throws DBException se non è possibile accedere al DB.
 	 * @return <code>List&lt;EntityOrdine&gt;</code> lista di ordini.
 	 */
 	public List<EntityOrdine> visualizzaOrdini() throws DBException {
@@ -99,7 +106,8 @@ public class EntityFarmacia {
 	/**
 	 * Funzione che permette di creare un nuovo OrdineAcquisto.
 	 * @param farmaciQuantita una serie di coppie (idFarmaco, quantita).
-	 * @throws OrderCreationFailedException lanciata quando un farmaco non viene trovato o quando le scorte sono insufficienti
+	 * @throws OrderCreationFailedException lanciata quando un farmaco non viene trovato o quando le scorte sono insufficienti.
+	 * @return id dell'ordine di acquisto.
 	 */
 	public String creaOrdineAcquisto(Map<Integer, Integer> farmaciQuantita) throws OrderCreationFailedException {
 		if (farmaciQuantita.isEmpty())

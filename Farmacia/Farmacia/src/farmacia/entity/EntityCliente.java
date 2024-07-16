@@ -33,7 +33,8 @@ public class EntityCliente extends EntityUtente {
 	/**
 	 * Costruttore che permette di popolare un <code>EntityCliente</code> a partire
 	 * da un <code>UtenteDA0</code>. Lo usiamo per la registrazione.
-	 * @param utenteDAO istanza di <code>UtenteDA0</code> già popolata
+	 * @param utenteDAO istanza di <code>UtenteDA0</code> già popolata.
+	 * @throws DBException se non è possibile accedere al DB.
 	 */
 	public EntityCliente(UtenteDAO utenteDAO) throws DBException {
 		super(utenteDAO);

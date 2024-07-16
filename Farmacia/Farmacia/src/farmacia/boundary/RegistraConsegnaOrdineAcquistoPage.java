@@ -46,7 +46,7 @@ public class RegistraConsegnaOrdineAcquistoPage extends JFrame {
 		List<DTO> ordiniAcquistoNonRicevuti = new ArrayList<>();
 
 		ordiniAcquisto = controllerOrdini.visualizzaOrdiniAcquistoFarmacia();
-		for (DTO ordineAcquisto : ordiniAcquisto) {
+		for (DTO ordineAcquisto: ordiniAcquisto) {
 			if (!(boolean)ordineAcquisto.get("ricevuto")){
 				ordiniAcquistoNonRicevuti.add(ordineAcquisto);
 				String idOrdineAcquisto = (String)ordineAcquisto.get("id");

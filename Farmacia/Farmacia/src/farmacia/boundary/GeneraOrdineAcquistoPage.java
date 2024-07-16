@@ -33,7 +33,7 @@ public class GeneraOrdineAcquistoPage extends JFrame {
 		DefaultTableModel model = new DefaultTableModel(new Object[][]{}, new String[]{"Nome", "Quantità"}){
 			@Override
 			public boolean isCellEditable(int row, int column) {
-				return column != 0;
+				return column == 1;
 			}
 		};
 		tblFarmaci.setModel(model);
@@ -82,7 +82,7 @@ public class GeneraOrdineAcquistoPage extends JFrame {
 				JOptionPane.showMessageDialog(this, String.format("Ordine di acquisto confermato! Numero ordine: '%s'.", idOrdine));
 				dispose();
 			} else {
-				JOptionPane.showMessageDialog(this, "Ordine nullo!");
+				JOptionPane.showMessageDialog(this, "Ordine nullo!", "Errore", JOptionPane.ERROR_MESSAGE);
 			}
 		} catch (OrderCreationFailedException ex) {
 			farmaciOrdineAcquisto.clear();

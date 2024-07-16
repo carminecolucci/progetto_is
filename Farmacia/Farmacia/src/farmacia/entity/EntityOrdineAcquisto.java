@@ -20,6 +20,10 @@ public class EntityOrdineAcquisto {
 	private boolean ricevuto;
 	private final Map<EntityFarmaco, Integer> quantitaFarmaci;
 
+	/**
+	 * Quantità da ordinare di default per un farmaco quando viene creato un ordine di acquisto, in seguito a un ordine
+	 * che ha provocato la terminazione delle scorte di uno o più farmaci.
+	 */
 	public static final int QUANTITA_ORDINE_DEFAULT = 50;
 
 	/**
