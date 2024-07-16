@@ -23,7 +23,7 @@ public class GeneraOrdineAcquistoPage extends JFrame {
 	private final List<Integer> idFarmaci;
 
 	public GeneraOrdineAcquistoPage() {
-		setTitle("Richiesta fornitura");
+		setTitle("Richiedi una fornitura");
 		setSize(600, 400);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setContentPane(mainPanel);

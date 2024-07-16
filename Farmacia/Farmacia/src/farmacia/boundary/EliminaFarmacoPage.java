@@ -16,7 +16,7 @@ public class EliminaFarmacoPage extends JFrame {
 	private JLabel lblRichiesta;
 
 	public EliminaFarmacoPage() {
-		setTitle("Elimina Farmaco");
+		setTitle("Elimina un farmaco");
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setSize(500, 500);
 		setLocationRelativeTo(null);

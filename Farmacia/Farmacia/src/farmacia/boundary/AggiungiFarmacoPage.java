@@ -25,7 +25,7 @@ public class AggiungiFarmacoPage extends JFrame {
 	private JPanel pnlDati;
 
 	public AggiungiFarmacoPage (){
-		setTitle("Aggiungi Farmaco");
+		setTitle("Aggiungi un farmaco");
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setSize(500,200);
 		setLocationRelativeTo(null);

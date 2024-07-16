@@ -18,7 +18,7 @@ public class VisualizzaOrdiniClientiPage extends JFrame {
 	private JButton btnVisualizzaOrdine;
 
 	public VisualizzaOrdiniClientiPage() {
-		setTitle("Visualizza Ordini Clienti");
+		setTitle("Visualizza gli ordini dei clienti");
 		setSize(1000, 400);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);

@@ -16,7 +16,7 @@ public class VisualizzaOrdiniAcquistoPage extends JFrame {
 	private JButton btnVisualizzaOrdineAcquisto;
 
 	public VisualizzaOrdiniAcquistoPage() {
-		setTitle("Visualizza ordini acquisto");
+		setTitle("Visualizza le forniture");
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setContentPane(mainPanel);
 		setSize(600, 400);

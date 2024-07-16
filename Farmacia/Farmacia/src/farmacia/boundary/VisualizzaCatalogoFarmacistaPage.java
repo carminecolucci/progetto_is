@@ -16,7 +16,7 @@ public class VisualizzaCatalogoFarmacistaPage extends JFrame {
 
 	public VisualizzaCatalogoFarmacistaPage() {
 
-		setTitle("Visualizza Catalogo");
+		setTitle("Visualizza il catalogo");
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setSize(600, 400);
 		setLocationRelativeTo(null);

@@ -26,7 +26,7 @@ public class ModificaFarmacoPage extends JFrame {
 
 	public ModificaFarmacoPage(JFrame scegliFarmacoModificaPage, DTO farmaco) {
 
-		setTitle(String.format("Modifica farmaco '%s'", farmaco.get("nome")));
+		setTitle(String.format("Modifica il farmaco '%s'", farmaco.get("nome")));
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		txtNome.setText((String)farmaco.get("nome"));
 		setSize(500,200);

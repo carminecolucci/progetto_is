@@ -18,7 +18,7 @@ public class ScegliFarmacoModificaPage extends JFrame {
 	private JButton btnModifica;
 
 	public ScegliFarmacoModificaPage() {
-		setTitle("Modifica farmaco");
+		setTitle("Modifica un farmaco");
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setSize(800, 400);
 		setLocationRelativeTo(null);

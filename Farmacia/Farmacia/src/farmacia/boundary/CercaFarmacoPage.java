@@ -15,7 +15,7 @@ public class CercaFarmacoPage extends JFrame {
 	private JScrollPane scrollPane;
 
 	public CercaFarmacoPage() {
-		setTitle("Cerca Farmaco");
+		setTitle("Cerca un farmaco");
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setSize(500, 500);
 		setLocationRelativeTo(null);

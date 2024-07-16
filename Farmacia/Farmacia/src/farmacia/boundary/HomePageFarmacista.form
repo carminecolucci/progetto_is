@@ -7,117 +7,160 @@
     <properties/>
     <border type="none"/>
     <children>
-      <component id="b1240" class="javax.swing.JLabel" binding="lblBenvenuto">
-        <constraints border-constraint="North"/>
-        <properties>
-          <horizontalAlignment value="0"/>
-          <text value=""/>
-        </properties>
-      </component>
-      <grid id="f43e5" layout-manager="GridLayoutManager" row-count="8" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-        <margin top="0" left="0" bottom="0" right="0"/>
+      <grid id="6585a" layout-manager="BorderLayout" hgap="0" vgap="0">
         <constraints border-constraint="Center"/>
         <properties/>
         <border type="none"/>
         <children>
-          <component id="f111e" class="javax.swing.JLabel" binding="lblScelta">
-            <constraints>
-              <grid row="0" column="1" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
+          <tabbedpane id="2f92c" binding="tpnFarmacista">
+            <constraints border-constraint="Center"/>
+            <properties/>
+            <border type="empty">
+              <size top="0" left="0" bottom="0" right="0"/>
+            </border>
+            <children>
+              <grid id="bb70f" binding="pnlCatalogo" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints>
+                  <tabbedpane title="Catalogo"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="ad10b" class="javax.swing.JButton" binding="btnVisualizzaCatalogo">
+                    <constraints>
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Visualizza il catalogo"/>
+                    </properties>
+                  </component>
+                  <grid id="7e1d0" binding="pnlFarmaci" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                    <margin top="0" left="0" bottom="0" right="0"/>
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <component id="5a4f3" class="javax.swing.JButton" binding="btnAggiungiFarmaco">
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="Aggiungi un farmaco"/>
+                        </properties>
+                      </component>
+                      <component id="2cb70" class="javax.swing.JButton" binding="btnEliminaFarmaco">
+                        <constraints>
+                          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="Elimina un farmaco"/>
+                        </properties>
+                      </component>
+                      <component id="59635" class="javax.swing.JButton" binding="btnModificaFarmaco">
+                        <constraints>
+                          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="Modifica un farmaco"/>
+                        </properties>
+                      </component>
+                      <component id="3c994" class="javax.swing.JButton" binding="btnCercaFarmaco">
+                        <constraints>
+                          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="Cerca un farmaco"/>
+                        </properties>
+                      </component>
+                    </children>
+                  </grid>
+                </children>
+              </grid>
+              <grid id="e69dc" binding="pnlClienti" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints>
+                  <tabbedpane title="Ordini dei clienti"/>
+                </constraints>
+                <properties/>
+                <border type="empty">
+                  <size top="0" left="50" bottom="0" right="50"/>
+                </border>
+                <children>
+                  <component id="fb555" class="javax.swing.JButton" binding="btnVisualizzaOrdiniClienti">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Visualizza ordini dei clienti"/>
+                    </properties>
+                  </component>
+                  <component id="f0f1e" class="javax.swing.JButton" binding="btnRegistraRitiro">
+                    <constraints>
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Registra ritiro di un ordine"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+              <grid id="bfea7" binding="pnlForniture" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="true" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints>
+                  <tabbedpane title="Forniture"/>
+                </constraints>
+                <properties/>
+                <border type="empty">
+                  <size top="0" left="50" bottom="0" right="50"/>
+                </border>
+                <children>
+                  <component id="a5b49" class="javax.swing.JButton" binding="btnGeneraOrdineAcquisto">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Richiedi una fornitura"/>
+                    </properties>
+                  </component>
+                  <component id="ecb2d" class="javax.swing.JButton" binding="btnVisualizzaOrdiniAcquisto">
+                    <constraints>
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Visualizza le richieste di fornitura"/>
+                    </properties>
+                  </component>
+                  <component id="1f4bb" class="javax.swing.JButton" binding="btnRegistraConsegnaOrdineAcquisto">
+                    <constraints>
+                      <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Registra una fornitura"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+            </children>
+          </tabbedpane>
+        </children>
+      </grid>
+      <grid id="8af54" binding="pnlBenvenuto" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints border-constraint="North"/>
+        <properties/>
+        <border type="empty">
+          <size top="0" left="0" bottom="20" right="0"/>
+        </border>
+        <children>
+          <component id="8b783" class="javax.swing.JLabel" binding="lblBenvenuto">
+            <constraints border-constraint="North"/>
             <properties>
-              <text value="Cosa desideri fare?"/>
+              <horizontalAlignment value="0"/>
+              <text value="Label"/>
             </properties>
           </component>
-          <component id="d17a2" class="javax.swing.JButton" binding="btnGeneraOrdineAcquisto">
-            <constraints>
-              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Richiedi una fornitura"/>
-            </properties>
-          </component>
-          <vspacer id="2039">
-            <constraints>
-              <grid row="1" column="0" row-span="7" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-            </constraints>
-          </vspacer>
-          <component id="3d142" class="javax.swing.JButton" binding="btnVisualizzaOrdiniClienti">
-            <constraints>
-              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Visualizza gli ordini dei clienti"/>
-            </properties>
-          </component>
-          <component id="df5a0" class="javax.swing.JButton" binding="btnVisualizzaOrdiniAcquisto">
-            <constraints>
-              <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Visualizza le richieste di fornitura"/>
-            </properties>
-          </component>
-          <component id="7e42e" class="javax.swing.JButton" binding="btnRegistraConsegnaOrdineAcquisto">
-            <constraints>
-              <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Registra consegna di una fornitura"/>
-            </properties>
-          </component>
-          <component id="40bed" class="javax.swing.JButton" binding="btnRegistraRitiro">
-            <constraints>
-              <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Registra ritiro di un ordine"/>
-            </properties>
-          </component>
-          <component id="75cc1" class="javax.swing.JButton" binding="btnVisualizzaCatalogo">
-            <constraints>
-              <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Visualizza il catalogo"/>
-            </properties>
-          </component>
-          <component id="52d5" class="javax.swing.JButton" binding="btnAggiungiFarmaco">
-            <constraints>
-              <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Aggiungi un farmaco"/>
-            </properties>
-          </component>
-          <component id="30b33" class="javax.swing.JButton" binding="btnModificaFarmaco">
-            <constraints>
-              <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Modifica un farmaco"/>
-            </properties>
-          </component>
-          <component id="292cb" class="javax.swing.JButton" binding="btnEliminaFarmaco">
-            <constraints>
-              <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Elimina un farmaco"/>
-            </properties>
-          </component>
-          <component id="5d741" class="javax.swing.JButton" binding="btnCercaFarmaco">
-            <constraints>
-              <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Cerca un farmaco"/>
-            </properties>
-          </component>
-          <vspacer id="13164">
-            <constraints>
-              <grid row="1" column="3" row-span="7" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-            </constraints>
-          </vspacer>
         </children>
       </grid>
     </children>

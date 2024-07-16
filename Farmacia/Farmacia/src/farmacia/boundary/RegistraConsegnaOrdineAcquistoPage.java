@@ -21,7 +21,7 @@ public class RegistraConsegnaOrdineAcquistoPage extends JFrame {
 
 	public RegistraConsegnaOrdineAcquistoPage() {
 
-		setTitle("Registra ritiro ordine acquisto");
+		setTitle("Registra una fornitura");
 		setSize(600, 400);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);

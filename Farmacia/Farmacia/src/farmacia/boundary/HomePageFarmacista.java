@@ -7,8 +7,11 @@ import java.util.Locale;
 
 public class HomePageFarmacista extends JFrame {
 	private JPanel mainPanel;
+	private JTabbedPane tpnFarmacista;
+	private JPanel pnlClienti;
+	private JPanel pnlForniture;
+	private JPanel pnlCatalogo;
 	private JLabel lblBenvenuto;
-	private JLabel lblScelta;
 	private JButton btnGeneraOrdineAcquisto;
 	private JButton btnVisualizzaOrdiniClienti;
 	private JButton btnVisualizzaOrdiniAcquisto;
@@ -18,11 +21,13 @@ public class HomePageFarmacista extends JFrame {
 	private JButton btnAggiungiFarmaco;
 	private JButton btnEliminaFarmaco;
 	private JButton btnVisualizzaCatalogo;
+	private JPanel pnlFarmaci;
 	private JButton btnCercaFarmaco;
+	private JPanel pnlBenvenuto;
 
 	public HomePageFarmacista(DTO farmacista) {
 		setTitle("Homepage Farmacista");
-		setSize(600, 400);
+		setSize(500, 320);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setContentPane(mainPanel);
