@@ -119,7 +119,7 @@ I test sono stati implementati utilizzando il framework \texttt{JUnit}. Per la c
 \begin{table}[!hb]
 	\centering
 	\footnotesize
-	\begin{testsuite}{colspec = lXXXlXX}
+	\begin{testsuite}{colspec = lXXXlXXl}
 		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-condizioni \\ Attese} & Esito\\
 		1 & Tutti gli input validi & Nome, Cognome, Username, Password, Email, DataNascita validi & Il cliente non è ancora registrato nel sistema & {Nome: Mario \\ Cognome: Rossi \\ Username: mariorossi \\ Password: miapassword \\ Email: mario@gmail.com \\ DataNascita: 22-06-1989} & Registrazione effettuata & Il cliente è stato correttamente registrato nel sistema & \texttt{PASS} \\
 		13 & Username già presente nel sistema & Username già esistente \texttt{[ERROR]}, Nome, Cognome, Password, DataNascita ed Email validi & Username ``pippo2002'' già presente nel sistema & {Nome: Pippo \\ Cognome: Baudo \\ Username: pippo2002 \\ Password: miapassword \\ Email: pippo@gmail.com \\ DataNascita: 1989-06-22} & {Username già \\ utilizzato} & -- & \texttt{PASS} \\
@@ -132,7 +132,7 @@ I test sono stati implementati utilizzando il framework \texttt{JUnit}. Per la c
 \begin{table}[H]
 	\centering
 	\footnotesize
-	\begin{testsuite}{colspec = lXXXXXX}
+	\begin{testsuite}{colspec = lXXXXXXl}
 		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-condizioni \\ Attese} & Esito \\
 		1 & Tutti gli input validi & Username, Password validi & {L'utente deve essere \\ correttamente \\ registrato nel sistema} & {Username: mariorossi \\ Password: miapassword} & Login effettuato & L'utente è entrato correttamente nel sistema & \texttt{PASS}\\
 		6 & Password errata & Password errata \texttt{[ERROR]}, Username valido & L'utente esiste nel sistema e ha come password `passwd' & {Username: mariorossi \\ Password: ciao} & Password errata & -- & \texttt{PASS}\\
@@ -145,7 +145,7 @@ I test sono stati implementati utilizzando il framework \texttt{JUnit}. Per la c
 \begin{table}[H]
 	\centering
 	\footnotesize
-	\begin{testsuite}{colspec = lXXXlXX}
+	\begin{testsuite}{colspec = lXXXlXXl}
 		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-condizioni \\ Attese} & Esito \\
 		1 & Tutti gli input validi & Nome, Prezzo, Scorte e Prescrizione (sia \texttt{True} che \texttt{False}) validi & Il farmaco non è presente nel sistema & {Nome: Rocefin \\ Prezzo: 15.00 \euro \\ Scorte: 60 \\ Prescrizione: \texttt{boolean}} & Farmaco aggiunto & Il farmaco viene correttamente aggiunto al catalogo & \texttt{FAIL} \\
 		6 & Nome già memorizzato & Nome già memorizzato \texttt{[ERROR]}, Prezzo, Scorte e Prescrizione (sia \texttt{True} che \texttt{False}) validi & Esiste già un farmaco con il nome inserito & {Nome: Cistalgan \\ Prezzo: 19.90 \euro \\ Scorte: 50 \\ Prescrizione : \texttt{boolean}} & Farmaco già esistente & -- & \texttt{PASS} \\
@@ -170,7 +170,7 @@ Tale problematica è presente in ogni metodo delle classi \texttt{DAO} che esegu
 \begin{table}[H]
 	\centering
 	\footnotesize
-	\begin{testsuite}{colspec = lXXXlXl}
+	\begin{testsuite}{colspec = lXXXlXll}
 		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-\\condizioni \\ Attese} & Esito \\
 		1 & Nome del farmaco valido & Nome del farmaco valido & Il farmaco è presente nel catalogo & Nome: Tachipirina & Il farmaco viene mostrato a video & -- & \texttt{PASS} \\
 		4 & Nome di un farmaco che non esiste & Nome di un farmaco che non esiste \texttt{[ERROR]} & Il farmaco con nome ``Tachipirina'' non esiste & Nome: Tachipirina & Il farmaco non esiste & -- & \texttt{PASS} \\
@@ -182,7 +182,7 @@ Tale problematica è presente in ogni metodo delle classi \texttt{DAO} che esegu
 \begin{table}[H]
 	\centering
 	\footnotesize
-	\begin{testsuite}{colspec = lXXXlXX}
+	\begin{testsuite}{colspec = lXXXlXXl}
 		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-condizioni \\ Attese} & Esito \\
 		1 & Nome del farmaco valido & Nome del farmaco valido & Il farmaco è presente nel catalogo & Nome: Tachipirina & Farmaco cancellato & Il farmaco viene cancellato dal catalogo & \texttt{PASS} \\
 		4 & Il farmaco non esiste & Farmaco non presente nel sistema \texttt{[ERROR]} & Non esiste il farmaco chiamato ``Tachipirina'' & Nome: Tachipirina & Non puoi eliminare un farmaco che non esiste & -- & \texttt{PASS} \\
@@ -194,7 +194,7 @@ Tale problematica è presente in ogni metodo delle classi \texttt{DAO} che esegu
 \begin{table}[H]
 	\centering
 	\footnotesize
-	\begin{testsuite}{colspec = lXXXlXX}
+	\begin{testsuite}{colspec = lXXXlXXl}
 		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-condizioni \\ Attese} & Esito \\
 		1 & Tutti gli input validi, prescrizione \texttt{True} & Nome, Prezzo, Scorte e Prescrizione (\texttt{True}) validi & Il farmaco è presente nel sistema & {Nome: Tachipirina \\ Prezzo: 11.44 \euro \\ Scorte: 100 \\ Prescrizione: \texttt{True}} & {Modifica \\ effettuata} & Il farmaco viene correttamente modificato & \texttt{PASS} \\
 		2 & Tutti gli input validi, prescrizione \texttt{False} & Nome, Prezzo, Scorte e Prescrizione (\texttt{False}) validi & Il farmaco è presente nel sistema & {Nome: Tachipirina \\ Prezzo: 11.44 \euro \\ Scorte: 100 \\ Prescrizione: \texttt{False}} & {Modifica \\ effettuata} & Il farmaco viene correttamente modificato & \texttt{PASS} \\
@@ -207,7 +207,7 @@ Tale problematica è presente in ogni metodo delle classi \texttt{DAO} che esegu
 \begin{table}[H]
 	\centering
 	\footnotesize
-	\begin{testsuite}{colspec = llXXX}
+	\begin{testsuite}{colspec = llXXXl}
 		{Test \\ Case \\ ID} & Descrizione & {Classi di Equivalenza \\ Coperte} & Input & Output Attesi & Esito \\
 		1 & {Tutti gli input \\ validi} & DataInizio, DataFine validi & {DataInizio: 01-06-2024 \\ DataFine: 31-06-2024} & Il report viene generato & \texttt{PASS} \\
 	\end{testsuite}
@@ -218,7 +218,7 @@ Tale problematica è presente in ogni metodo delle classi \texttt{DAO} che esegu
 \begin{table}[H]
 	\centering
 	\footnotesize
-	\begin{testsuite}{colspec = lXXXlXX}
+	\begin{testsuite}{colspec = lXXXlXXl}
 		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-condizioni \\ Attese} & Esito \\
 		1 & Ordine valido & Farmaci-Quantità valido & Esistono nel sistema i farmaci 'Tachipirina' e 'Fluifort' & {[('Tachipirina', 5),\\ ('Fluifort', 10)]} & Ordine di acquisto generato & Un ordine di acquisto viene correttamente creato & \texttt{PASS} \\
 		2 & Ordine vuoto & Lista vuota \texttt{[ERROR]} & -- & -- & Non puoi creare un ordine di acquisto vuoto & -- & \texttt{PASS} \\
@@ -230,7 +230,7 @@ Tale problematica è presente in ogni metodo delle classi \texttt{DAO} che esegu
 \begin{table}[H]
 	\centering
 	\footnotesize
-	\begin{testsuite}{colspec = lXXXXXX}
+	\begin{testsuite}{colspec = lXXXXXXl}
 		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-condizioni \\ Attese} & Esito \\
 		1 & Id dell'ordine valido & Id dell'ordine valido & -- & Id: 5ea930bc-f0a5-427a-8ca1-f9a2a6146948 & Stato ordine cambiato con successo & Lo stato dell'ordine è stato cambiato con successo & \texttt{PASS} \\
 		4 & Id inesistente & Id inesistente \texttt{[ERROR]} & Non esiste un farmaco con id ``5ea930bc-f0a5-427a-8ca1-f9a2a6146948'' & Id: 5ea930bc-f0a5-427a-8ca1-f9a2a6146948 & L'ordine non esiste & -- & \texttt{PASS} \\
@@ -242,7 +242,7 @@ Tale problematica è presente in ogni metodo delle classi \texttt{DAO} che esegu
 \begin{table}[H]
 	\centering
 	\footnotesize
-	\begin{testsuite}{colspec = lXXXXXX}
+	\begin{testsuite}{colspec = lXXXXXXl}
 		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-condizioni \\ Attese} & Esito \\
 		1 & Id dell'ordine di acquisto valido & Id dell'ordine di acquisto valido & -- & {Id: 5ea930bc-f0a5-427a-8ca1-f9a2a6146948} & Ordine ricevuto & Lo stato dell'ordine di acquisto e le scorte in magazzino sono aggiornati & \texttt{PASS} \\
 		4 & Id inesistente & Id inesistente \texttt{[ERROR]} & Non esiste un ordine di acquisto con Id ``5ea930bc-f0a5-427a-8ca1-f9a2a6146948'' & Id: 5ea930bc-f0a5-427a-8ca1-f9a2a6146948 & L'ordine di acquisto non esiste & -- & \texttt{PASS} \\
@@ -254,11 +254,11 @@ Tale problematica è presente in ogni metodo delle classi \texttt{DAO} che esegu
 \begin{table}[H]
 	\centering
 	\footnotesize
-	\begin{testsuite}{colspec = lXXXlXX}
+	\begin{testsuite}{colspec = lXXXlXXl}
 		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-condizioni \\ Attese} & Esito \\
 		1 & Ordine valido, l'ordine non esaurisce le scorte di nessun farmaco & Farmaci-Quantità valido & Esistono nel sistema i farmaci 'Tachipirina' e 'Fluifort' con scorte rispettivamente di 80 e 120 & {[('Tachipirina', 5),\\ ('Fluifort', 10)]} & Ordine generato & Ordine creato: scorte in magazzino decrementate & \texttt{PASS} \\
 		2 & Ordine valido, l'ordine esaurisce le scorte di un farmaco & Farmaci-Quantità valido & Esistono nel sistema i farmaci 'Tachipirina' e 'Fluifort' con scorte rispettivamente di 80 e 120 & {[('Tachipirina', 80),\\ ('Fluifort', 10)]} & Ordine generato & Ordine creato. Le scorte in magazzino vengono correttamente decrementate e viene generato un ordine di fornitura per il farmaco esaurito, richiedendone una quantità di default & \texttt{PASS} \\
-		3 & Ordine vuoto & Lista vuota \texttt{[ERROR]} & -- & -- & Non puoi creare un ordine vuoto & -- & \texttt{PASS} \\
-		4 & Ordine invalido per scorte insufficienti & Scorte insufficienti \texttt{[ERROR]} & Esistono nel sistema i farmaci 'Tachipirina' e 'Fluifort' con scorte rispettivamente di 80 e 120 & {[('Tachipirina', 5),\\ ('Fluifort', 150)]} & Ordine non creato per scorte insufficienti & -- & \texttt{PASS} \\
+		3 & Ordine invalido per scorte insufficienti & Scorte insufficienti \texttt{[ERROR]} & Esistono nel sistema i farmaci 'Tachipirina' e 'Fluifort' con scorte rispettivamente di 80 e 120 & {[('Tachipirina', 5),\\ ('Fluifort', 150)]} & Ordine non creato per scorte insufficienti & -- & \texttt{PASS} \\
+		4 & Ordine vuoto & Lista vuota \texttt{[ERROR]} & -- & -- & Non puoi creare un ordine vuoto & -- & \texttt{PASS} \\
 	\end{testsuite}
 \end{table}

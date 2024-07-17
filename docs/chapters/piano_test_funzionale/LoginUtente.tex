@@ -49,6 +49,6 @@
 	\footnotesize
 	\begin{testsuite}{colspec = lXXXXXl}
 		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-\\condizioni \\ Attese} \\
-		7 & Username non registrato & Username non registrato \texttt{[ERROR]} & L'utente non esiste nel sistema & {Username: geronimo \\ Password: stilton} & Utente non registrato & -- \\
+		7 & Username valido ma non presente nel sistema & Username valido ma non presente nel sistema\texttt{[ERROR]} & L'utente non esiste nel sistema & {Username: geronimo \\ Password: stilton} & Utente non registrato & -- \\
 	\end{testsuite}
 \end{table}

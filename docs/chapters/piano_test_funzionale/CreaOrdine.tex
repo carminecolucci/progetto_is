@@ -6,10 +6,10 @@
 	\begin{partest}{colspec = XXXl}
 		Farmaci-Quantità \\
 		\begin{itemize}[leftmargin=*]
-			\item Lista di coppie (nomeFarmaco, quantità) non vuota. Per ogni nomeFarmaco esiste un corrispondente farmaco nel sistema ed ogni quantità richiesta è $<$ delle scorte in magazzino.
+			\item Lista di coppie (nomeFarmaco, quantità) non vuota. Per ogni nomeFarmaco esiste un corrispondente farmaco nel sistema ed ogni quantità richiesta è minore delle scorte in magazzino.
 			\item Lista di coppie (nomeFarmaco, quantità) non vuota. Per ogni nomeFarmaco esiste un corrispondente farmaco nel sistema ed esiste almeno un farmaco la cui quantità richiesta è esattamente uguale alle scorte in magazzino.
-			\item Lista vuota \texttt{[ERROR]}
 			\item Lista di coppie (nomeFarmaco, quantità). Per ogni nomeFarmaco esiste un corrispondente farmaco nel sistema ed esiste almeno un farmaco la cui quantità richiesta è $>$ delle scorte in magazzino \texttt{[ERROR]}.
+			\item Lista vuota \texttt{[ERROR]}
 		\end{itemize}
 	\end{partest}
 \end{table}
@@ -25,7 +25,7 @@
 		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-condizioni \\ Attese} \\
 		1 & Ordine valido, l'ordine non esaurisce le scorte di nessun farmaco & Farmaci-Quantità valido & Esistono nel sistema i farmaci 'Tachipirina' e 'Fluifort' con scorte rispettivamente di 80 e 120 & {[('Tachipirina', 5),\\ ('Fluifort', 10)]} & Ordine generato & Ordine creato: scorte in magazzino decrementate \\
 		2 & Ordine valido, l'ordine esaurisce le scorte di un farmaco & Farmaci-Quantità valido & Esistono nel sistema i farmaci 'Tachipirina' e 'Fluifort' con scorte rispettivamente di 80 e 120 & {[('Tachipirina', 80),\\ ('Fluifort', 10)]} & Ordine generato & Ordine creato. Le scorte in magazzino vengono correttamente decrementate e viene generato un ordine di fornitura per il farmaco esaurito, richiedendone una quantità di default \\
-		3 & Ordine vuoto & Lista vuota \texttt{[ERROR]} & -- & -- & Non puoi creare un ordine vuoto & -- \\
-		4 & Ordine invalido per scorte insufficienti & Scorte insufficienti \texttt{[ERROR]} & Esistono nel sistema i farmaci 'Tachipirina' e 'Fluifort' con scorte rispettivamente di 80 e 120 & {[('Tachipirina', 5),\\ ('Fluifort', 150)]} & Ordine non creato per scorte insufficienti & -- \\
+		3 & Ordine invalido per scorte insufficienti & Scorte insufficienti \texttt{[ERROR]} & Esistono nel sistema i farmaci 'Tachipirina' e 'Fluifort' con scorte rispettivamente di 80 e 120 & {[('Tachipirina', 5),\\ ('Fluifort', 150)]} & Ordine non creato per scorte insufficienti & -- \\
+		4 & Ordine vuoto & Lista vuota \texttt{[ERROR]} & -- & -- & Non puoi creare un ordine vuoto & -- \\
 	\end{testsuite}
 \end{table}

@@ -11,7 +11,7 @@ Il progetto consiste nello sviluppo di un sistema integrato per la gestione di u
 
 \noindent \Func{Ogni volta che un cliente effettua un ordine le quantità in magazzino del farmaco devono essere opportunamente decrementate} ed \Func{in caso di terminazione delle scorte, un} \Class{ordine di acquisto} \Func{deve essere creato con una quantità di prodotto da ordinare di default}. \`E compito del \Actor{farmacista} poter \Func{visualizzare l'elenco degli ordini d'acquisto in corso} e \Func{registrare l'avvenuta consegna di un ordine, con opportuno incremento delle quantità in magazzino}.
 
-\noindent Infine, una caratteristica distintiva di questo sistema è il ruolo del ``\Actor{Direttore della Farmacia}'', che ha accesso a strumenti analitici e di reporting per una gestione strategica delle attività commerciali. Il direttore ha la capacità di \Func{generare report dettagliati}. Questi \Class{report} forniscono insight sui \Attr{farmaci venduti} e sull'\Attr{incasso generato in un dato periodo} (in una specifica data oppure in un intervallo compreso fra due date). In particolare, il sistema differenzia tra le vendite da banco, che contribuiscono all'incasso della farmacia, e le vendite di farmaci su prescrizione, che non generano incassi diretti. I report includeranno dati come \Attr{il numero totale di farmaci venduti}, \Attr{la categoria di vendita} (da banco o su prescrizione) e \Attr{l'incasso totale delle vendite da banco}.
+\noindent Infine, una caratteristica distintiva di questo sistema è il ruolo del ``\Actor{Direttore della Farmacia}'', che ha accesso a strumenti analitici e di reporting per una gestione strategica delle attività commerciali. \Func{Il direttore ha la capacità di generare report dettagliati. Questi report forniscono insight sui farmaci venduti e sull'incasso generato in un dato periodo (in una specifica data oppure in un intervallo compreso fra due date)}. In particolare, il sistema differenzia tra le vendite da banco, che contribuiscono all'incasso della farmacia, e le vendite di farmaci su prescrizione, che non generano incassi diretti. I report includeranno dati come il numero totale di farmaci venduti, la categoria di vendita (da banco o su prescrizione) e l'incasso totale delle vendite da banco.
 
 \begin{table}[h]
 	\centering
@@ -46,7 +46,7 @@ Il progetto consiste nello sviluppo di un sistema integrato per la gestione di u
 	\item Il sistema deve generare un ordine di acquisto in caso di esaurimento delle scorte di un prodotto;
 	\item Il sistema deve permettere al farmacista di visualizzare l'elenco degli ordini d'acquisto in corso;
 	\item Il sistema deve permettere al farmacista di registrare l'avvenuta consegna di un ordine d'acquisto, con opportuno incremento delle quantità in magazzino;
-	\item Il sistema deve permettere al Direttore di generare report dettagliati;
+	\item Il direttore ha la capacità di generare report dettagliati che forniscono insight sui farmaci venduti e sull'incasso generato in un dato periodo;
 	\item Il report fornisce informazioni sul numero totale di farmaci venduti, sulla loro categoria di vendita e sull'incasso totale in un dato periodo;
 	\item Nella generazione dei report, soltanto le vendite da banco contribuiscono al calcolo dell'incasso totale;
 \end{enumerate}
@@ -104,13 +104,13 @@ In seguito ad un ulteriore colloquio tenuto con il committente, si è ritenuto o
 	\Req{rf}{10} & {Il sistema deve generare un ordine di acquisto in caso di esaurimento \\ delle scorte di un prodotto} & 13 \\
 	\Req{rf}{11} & {Il sistema deve permettere al farmacista di visualizzare \\ l'elenco degli ordini d'acquisto in corso} & 14 \\
 	\Req{rf}{12} & {Il sistema deve permettere al farmacista di registrare l'avvenuta consegna \\ di un ordine d'acquisto, con opportuno incremento delle quantità in magazzino} & 15 \\
-	\Req{rf}{13} & Il sistema deve permettere al Direttore di generare report dettagliati & 16 \\
+	\Req{rf}{13} & {Il direttore ha la capacità di generare report dettagliati che forniscono insight sui farmaci venduti e sull'incasso generato in un dato periodo} & 16 \\
 	\Req{rf}{14} & Il sistema deve permettere al farmacista di visualizzare gli ordini dei clienti & 19 \\
 	\Req{rf}{15} & Il sistema deve permettere al farmacista di gestire gli ordini dei clienti & 20 \\
 	\Req{rf}{16} & Il sistema deve permettere al cliente di visualizzare i propri ordini & 21 \\
 	\Req{rf}{17} & Il sistema deve generare una ricevuta per il cliente in seguito alla creazione di un ordine & 22 \\
 	\Req{rf}{18} & Il sistema deve permettere al cliente di cercare un farmaco all'interno del catalogo & 23 \\
-	\Req{rf}{19} & Il sistema deve permettere al farmacista di ordinare nuove forniture di un farmaco. & 24
+	\Req{rf}{19} & Il sistema deve permettere al farmacista di ordinare nuove forniture di un farmaco & 24
 \end{tblr}
 
 \subsection{Requisiti sui Dati}
@@ -124,7 +124,6 @@ In seguito ad un ulteriore colloquio tenuto con il committente, si è ritenuto o
 	\label{rd01}\Req{rd}{01} & {I farmaci sono caratterizzati da nome, codice identificativo, \\ prezzo e tipologia di farmaco} & 1 \\
 	\label{rd02}\Req{rd}{02} & Un farmaco può essere da banco o da prescrizione & 2 \\
 	\label{rd03}\Req{rd}{03} & {Di ogni cliente si vogliono memorizzare le informazioni personali e \\ lo storico dei farmaci acquistati} & 8 \\
-	\label{rd04}\Req{rd}{04} & {Il report fornisce informazioni sul numero totale di farmaci venduti, \\ sulla loro categoria di vendita e sull'incasso totale in un dato periodo} & 17 \\
 \end{tblr}
 
 \subsection{Vincoli/Altri Requisiti}
