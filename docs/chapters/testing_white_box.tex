@@ -119,11 +119,11 @@ I test sono stati implementati utilizzando il framework \texttt{JUnit}. Per la c
 \begin{table}[!hb]
 	\centering
 	\footnotesize
-	\begin{testsuite}{colspec = lXXXlXXl}
-		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & Pre-condizioni & Input & {Output \\ Attesi} & {Post-condizioni \\ Attese} & Esito\\
-		1 & Tutti gli input validi & Nome, Cognome, Username, Password, Email, DataNascita validi & Il cliente non è ancora registrato nel sistema & {Nome: Mario \\ Cognome: Rossi \\ Username: mariorossi \\ Password: miapassword \\ Email: mario@gmail.com \\ DataNascita: 22-06-1989} & Registrazione effettuata & Il cliente è stato correttamente registrato nel sistema & \texttt{PASS} \\
-		13 & Username già presente nel sistema & Username già esistente \texttt{[ERROR]}, Nome, Cognome, Password, DataNascita ed Email validi & Username ``pippo2002'' già presente nel sistema & {Nome: Pippo \\ Cognome: Baudo \\ Username: pippo2002 \\ Password: miapassword \\ Email: pippo@gmail.com \\ DataNascita: 1989-06-22} & {Username già \\ utilizzato} & -- & \texttt{PASS} \\
-		14 & Email già presente nel sistema & Email già esistente \texttt{[ERROR]}, Nome, Cognome, Password, DataNascita e Username validi & Email ``pippo@gmail.com'' già presente nel sistema & {Nome: Pippo \\ Cognome: Baudo \\ Username: pippo2002 \\ Password: miapassword \\ Email: pippo@gmail.com \\ DataNascita: 1989-06-22} & {Email già \\ utilizzata} & -- & \texttt{PASS} \\
+	\begin{testsuite}{colspec = lXXllXXl}
+		{Test \\ Case \\ ID} & Descrizione & Classi di Equivalenza Coperte & {Pre-\\condizioni} & Input & {Output \\ Attesi} & {Post-condizioni \\ Attese} & Esito\\
+		1 & Tutti gli input validi & Nome, Cognome, Username, Password, Email, DataNascita validi & {Il cliente non \\ è ancora \\ registrato \\ nel sistema} & {Nome: Mario \\ Cognome: Rossi \\ Username: mariorossi \\ Password: miapassword \\ Email: mario@gmail.com \\ DataNascita: 22-06-1989} & Registrazione effettuata & Il cliente è stato correttamente registrato nel sistema & \texttt{PASS} \\
+		13 & Username già presente nel sistema & Username già esistente \texttt{[ERROR]}, Nome, Cognome, Password, DataNascita ed Email validi & {Username \\ ``pippo2002'' \\ già presente \\ nel sistema} & {Nome: Pippo \\ Cognome: Baudo \\ Username: pippo2002 \\ Password: miapassword \\ Email: pippo@gmail.com \\ DataNascita: 1989-06-22} & {Username già \\ utilizzato} & -- & \texttt{PASS} \\
+		14 & Email già presente nel sistema & Email già esistente \texttt{[ERROR]}, Nome, Cognome, Password, DataNascita e Username validi & {Email ``pippo@-\\gmail.com'' \\ già presente \\ nel sistema} & {Nome: Pippo \\ Cognome: Baudo \\ Username: pippo2002 \\ Password: miapassword \\ Email: pippo@gmail.com \\ DataNascita: 1989-06-22} & {Email già \\ utilizzata} & -- & \texttt{PASS} \\
 	\end{testsuite}
 \end{table}
 
