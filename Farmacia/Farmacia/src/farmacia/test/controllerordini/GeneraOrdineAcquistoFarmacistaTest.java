@@ -8,6 +8,7 @@ import farmacia.dto.DTO;
 import farmacia.exceptions.*;
 import static farmacia.dto.DTO.contains;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -21,7 +22,7 @@ import static org.junit.Assert.assertTrue;
 public class GeneraOrdineAcquistoFarmacistaTest {
 	private static ControllerOrdini controllerOrdini;
 	private static ControllerCatalogo controllerCatalogo;
-	private String idOrdineSuccess;
+	private static String idOrdineSuccess;
 	private static final String FARMACO_ORDINE_ACQUISTO1 = "FarmacoOrdineAcquisto1";
 	private static final String FARMACO_ORDINE_ACQUISTO2 = "FarmacoOrdineAcquisto2";
 
@@ -85,8 +86,8 @@ public class GeneraOrdineAcquistoFarmacistaTest {
 		assertFalse(esito);
 	}
 
-	@After
-	public void tearDown() throws DBException {
+	@AfterClass
+	public static void tearDown() throws DBException {
 		FarmacoDAO.deleteFarmaco(FARMACO_ORDINE_ACQUISTO1);
 		FarmacoDAO.deleteFarmaco(FARMACO_ORDINE_ACQUISTO2);
 		OrdineAcquistoDAO.deleteOrdineAcquisto(idOrdineSuccess);
