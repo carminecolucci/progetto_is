@@ -25,6 +25,7 @@ public class CreaOrdinePage extends JFrame {
 		OrdineTableColumnModel columnModel = new OrdineTableColumnModel();
 		tblFarmaciOrdine = new JTable(model, columnModel);
 		tblFarmaciOrdine.createDefaultColumnsFromModel();
+		tblFarmaciOrdine.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		columnModel.begin();
 
 		JScrollPane scrollPane = new JScrollPane(tblFarmaciOrdine);
